@@ -1,0 +1,581 @@
+{
+  "kind": "build_request",
+  "title": "Add Phase 3 - Advanced Image Tools Module",
+  "projectName": "All-in-One Utility Platform",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "text": "Create ImageToolsPage component at /image-tools route that displays a comprehensive grid of 16 image tools organized by category: Government Document Photos (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (JPG to PNG, PNG to JPG, WEBP Converter, Background Remover)",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Create new main route: /image-tools",
+          "Create SEO individual routes: /passport-photo-maker /aadhaar-photo-resize /pan-photo-resize /ssc-photo-resize /railway-photo-resize /police-army-photo /visa-photo-resize /signature-resize /image-compressor /image-cropper /dpi-changer /custom-image-resize /jpg-to-png /png-to-jpg /webp-converter /background-remover"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Main landing page at /image-tools displays all 16 image tools in a grid layout",
+        "Tools are organized into clear categories: Government Documents, Image Processing, Format Conversion",
+        "Each tool card shows icon, title, and brief description",
+        "Clicking a tool card navigates to its individual route",
+        "Page layout is consistent with existing PDFToolsPage and CalculatorsPage design patterns"
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "text": "Create PassportPhotoMaker component at /passport-photo-maker with preset passport photo dimensions, drag & drop upload, live preview, target size selector (20KB-200KB), maintain aspect ratio toggle, and secure blob download showing original vs new size",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/passport-photo-maker",
+          "Drag & Drop upload",
+          "Live preview before download",
+          "Target size selector (20KB–200KB)",
+          "Show original size vs new size"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component accepts image upload via drag & drop or click",
+        "Preset passport photo dimensions are available",
+        "Live preview shows the resized image before download",
+        "User can select target file size between 20KB and 200KB",
+        "Aspect ratio toggle allows maintaining or changing proportions",
+        "Download generates secure blob with passport photo specifications",
+        "Display shows both original and final file sizes"
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "text": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar card photo specifications, target size selector, custom dimensions input, maintain aspect ratio toggle, live preview, and blob-based secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/aadhaar-photo-resize",
+          "Target size selector (20KB–200KB)",
+          "Custom width & height input",
+          "Maintain aspect ratio toggle"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component uses Aadhaar photo dimension presets",
+        "Target file size selector works between 20KB-200KB",
+        "Custom width and height inputs are available",
+        "Aspect ratio can be maintained or changed",
+        "Live preview updates as settings change",
+        "Secure download uses blob-based approach"
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "text": "Create PANPhotoResize component at /pan-photo-resize with PAN card photo specifications, target size control, dimension customization, ratio maintenance toggle, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/pan-photo-resize",
+          "Target dimensions (width × height)",
+          "Auto maintain ratio"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component uses PAN card photo dimension presets",
+        "Target size and dimensions are customizable",
+        "Aspect ratio maintenance is toggleable",
+        "Live preview shows changes in real-time",
+        "Download provides secure blob-based file"
+      ]
+    },
+    {
+      "id": "REQ-33",
+      "text": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam photo specifications from government exam presets, target size selector (20KB-200KB), custom dimensions, maintain ratio toggle, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/ssc-photo-resize",
+          "Government exam presets",
+          "Target file size in KB"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component includes SSC government exam preset dimensions",
+        "Target file size is selectable within 20KB-200KB range",
+        "Custom dimension inputs are available",
+        "Maintain aspect ratio toggle functions correctly",
+        "Live preview displays the resized photo",
+        "Secure blob download is implemented"
+      ]
+    },
+    {
+      "id": "REQ-34",
+      "text": "Create RailwayPhotoResize component at /railway-photo-resize with Indian Railway exam photo specifications, target size selector, custom dimensions, ratio toggle, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/railway-photo-resize",
+          "Government exam presets"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component uses Railway exam preset photo dimensions",
+        "Target size selector ranges from 20KB to 200KB",
+        "Custom width and height can be specified",
+        "Aspect ratio maintenance is optional",
+        "Live preview shows the adjusted image",
+        "Download uses secure blob generation"
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "text": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment photo specifications, target size control (20KB-200KB), dimension customization, ratio toggle, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/police-army-photo",
+          "Government exam presets"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component includes Police/Army recruitment photo presets",
+        "Target file size is adjustable between 20KB-200KB",
+        "Custom dimensions can be entered",
+        "Aspect ratio toggle works correctly",
+        "Live preview displays before download",
+        "Secure blob-based download is provided"
+      ]
+    },
+    {
+      "id": "REQ-36",
+      "text": "Create VisaPhotoResize component at /visa-photo-resize with international visa photo specifications from passport presets, target size selector, custom dimensions, ratio maintenance, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/visa-photo-resize",
+          "Passport presets"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component uses international visa photo dimension presets",
+        "Target size selector operates between 20KB-200KB",
+        "Custom width and height inputs are available",
+        "Aspect ratio can be locked or unlocked",
+        "Live preview shows the resized visa photo",
+        "Download generates secure blob"
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "text": "Create SignatureResize component at /signature-resize with government exam and application signature presets, target size selector (20KB-200KB), custom dimensions, ratio toggle, live preview, and secure download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/signature-resize",
+          "Signature presets",
+          "Government exam presets"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component includes signature dimension presets for government exams/applications",
+        "Target file size is selectable from 20KB to 200KB",
+        "Custom dimensions can be specified",
+        "Maintain aspect ratio toggle functions",
+        "Live preview displays the resized signature",
+        "Secure blob download is implemented"
+      ]
+    },
+    {
+      "id": "REQ-38",
+      "text": "Create ImageCompressor component at /image-compressor with compression level selector, target size control (20KB-200KB), live preview, original vs compressed size comparison, reset button, and secure blob download using browser-based compression libraries",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/image-compressor",
+          "Compression level selector",
+          "Target size selector (20KB–200KB)",
+          "Show original size vs new size",
+          "Client-side processing only"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Compression level can be adjusted with a slider or preset options",
+        "Target file size can be specified between 20KB-200KB",
+        "Live preview shows compressed image before download",
+        "Display shows both original and compressed file sizes with comparison",
+        "Reset button clears all inputs and preview",
+        "Processing happens entirely in the browser using client-side libraries",
+        "Download provides secure blob-based file"
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "text": "Create ImageCropper component at /image-cropper with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/image-cropper",
+          "Maintain aspect ratio toggle",
+          "Pixel resize",
+          "Live preview before download"
+        ]
+      },
+      "acceptanceCriteria": [
+        "User can select crop area by dragging on the image",
+        "Aspect ratio presets (1:1, 4:3, 16:9, free) are available",
+        "Aspect ratio can be locked or free",
+        "Cropped image can be resized by pixel dimensions",
+        "Live preview shows the cropped result",
+        "Download uses secure blob generation"
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "text": "Create DPIChanger component at /dpi-changer with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/dpi-changer",
+          "DPI changer (100 / 200 / 300)"
+        ]
+      },
+      "acceptanceCriteria": [
+        "DPI can be selected from presets: 100, 200, or 300 DPI",
+        "Custom DPI value can be entered",
+        "Live preview shows the image with adjusted DPI metadata",
+        "Display shows original DPI and new DPI values",
+        "Download generates secure blob with updated DPI"
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "text": "Create CustomImageResize component at /custom-image-resize with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/custom-image-resize",
+          "Custom width & height input",
+          "Maintain aspect ratio toggle",
+          "Pixel resize"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Width and height can be entered in pixels",
+        "Aspect ratio maintenance is toggleable",
+        "Live preview updates as dimensions change",
+        "Display shows original dimensions and new dimensions",
+        "Download provides secure blob-based file"
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "text": "Create JPGToPNG component at /jpg-to-png with JPG image upload, instant format conversion to PNG, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/jpg-to-png",
+          "JPG/PNG/WEBP converter",
+          "Client-side processing only"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component accepts JPG/JPEG file uploads",
+        "Conversion to PNG format happens instantly in browser",
+        "Live preview shows the converted PNG image",
+        "Display shows original (JPG) and converted (PNG) file sizes",
+        "Download uses secure blob generation"
+      ]
+    },
+    {
+      "id": "REQ-43",
+      "text": "Create PNGToJPG component at /png-to-jpg with PNG image upload, instant format conversion to JPG with quality selection, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/png-to-jpg",
+          "JPG/PNG/WEBP converter",
+          "Compression level selector"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component accepts PNG file uploads",
+        "Conversion to JPG format happens instantly in browser",
+        "Quality/compression level can be adjusted",
+        "Live preview shows the converted JPG image",
+        "Display shows original (PNG) and converted (JPG) file sizes",
+        "Download uses secure blob generation"
+      ]
+    },
+    {
+      "id": "REQ-44",
+      "text": "Create WEBPConverter component at /webp-converter with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/webp-converter",
+          "JPG/PNG/WEBP converter",
+          "Client-side processing only"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Component accepts JPG, PNG, and WEBP uploads",
+        "Can convert to WEBP from other formats",
+        "Can convert from WEBP to JPG or PNG",
+        "Quality selector is available for compression",
+        "Live preview shows the converted image",
+        "Display shows original and converted file sizes",
+        "Download uses secure blob generation"
+      ]
+    },
+    {
+      "id": "REQ-45",
+      "text": "Create BackgroundRemover component at /background-remover with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "/background-remover",
+          "Background remover (client-side only)",
+          "Client-side processing only",
+          "No paid APIs"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background removal happens entirely in browser without external API calls",
+        "Component accepts image uploads via drag & drop",
+        "Processing animation displays during background removal",
+        "Live preview shows image with transparent background",
+        "Download generates PNG with transparency as secure blob",
+        "Uses browser-compatible background removal library"
+      ]
+    },
+    {
+      "id": "REQ-46",
+      "text": "Implement Job Form Special Mode across all government document photo tools (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature) with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "JOB FORM SPECIAL MODE: User can choose: • Target file size in KB • Target dimensions (width × height) • Auto maintain ratio • Government exam presets • Passport presets • Signature presets"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All government document tools have a Job Form mode toggle",
+        "Job Form mode displays target file size input (KB)",
+        "Job Form mode displays target dimensions (width x height) inputs",
+        "Auto maintain ratio toggle is available in Job Form mode",
+        "Government exam presets are available in relevant tools",
+        "Passport presets are available in passport/visa tools",
+        "Signature presets are available in signature tool",
+        "Presets auto-populate dimensions and file size targets"
+      ]
+    },
+    {
+      "id": "REQ-47",
+      "text": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools: /passport-photo-maker, /aadhaar-photo-resize, /pan-photo-resize, /ssc-photo-resize, /railway-photo-resize, /police-army-photo, /visa-photo-resize, /signature-resize, /image-compressor, /image-cropper, /dpi-changer, /custom-image-resize, /jpg-to-png, /png-to-jpg, /webp-converter, /background-remover",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Create new main route: /image-tools",
+          "Create SEO individual routes: /passport-photo-maker /aadhaar-photo-resize /pan-photo-resize /ssc-photo-resize /railway-photo-resize /police-army-photo /visa-photo-resize /signature-resize /image-compressor /image-cropper /dpi-changer /custom-image-resize /jpg-to-png /png-to-jpg /webp-converter /background-remover"
+        ]
+      },
+      "acceptanceCriteria": [
+        "App.tsx includes route for /image-tools main page",
+        "App.tsx includes all 16 individual image tool routes",
+        "All routes are properly mapped to their respective components",
+        "Navigation works correctly for all image tool pages"
+      ]
+    },
+    {
+      "id": "REQ-48",
+      "text": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links to Calculator Hub and PDF Tools",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "SEO: • Unique H1 for each tool • 100–150 word description • FAQ section • Internal linking to Calculator Hub & PDF Tools"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each image tool has a unique, descriptive H1 heading",
+        "Each page includes a 100-150 word description of the tool's purpose",
+        "FAQ section with 3-5 common questions is present on each page",
+        "Meta titles are unique and optimized for each tool",
+        "Meta descriptions are unique and compelling for each tool",
+        "Structured data (JSON-LD) is included for better search visibility",
+        "Open Graph tags are present for social media sharing",
+        "Internal navigation links to Calculator Hub (/calculators) and PDF Tools (/pdf-tools) are included",
+        "Page follows the same SEO wrapper pattern as existing calculator pages"
+      ]
+    },
+    {
+      "id": "REQ-49",
+      "text": "Style all image tool components with modern clean card layout, dark/light mode compatibility using existing Tailwind theme variables, smooth processing animations, AdSense-ready semantic structure with proper heading hierarchy, and fast loading performance",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "UI: • Modern clean card layout • Dark / Light mode compatible • Fast loading • AdSense-ready layout • Smooth processing animation"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All image tools use consistent card-based layout design",
+        "Components properly use existing Tailwind dark mode classes",
+        "Processing animations are smooth and visually indicate progress",
+        "Semantic HTML structure supports AdSense integration",
+        "Proper heading hierarchy (h1, h2, h3) is maintained",
+        "Components load quickly with minimal initial bundle size",
+        "Layout is consistent with existing PDFTools and Calculator styling"
+      ]
+    },
+    {
+      "id": "REQ-50",
+      "text": "Ensure all 16 image tool components are fully mobile responsive, display correctly on screens from 320px width upward, support touch gestures for drag & drop, maintain usability on mobile devices, and adapt layouts for tablet and desktop viewports",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Mobile responsive",
+          "• Drag & Drop upload"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All components display properly on 320px width screens (small mobile)",
+        "Drag & drop functionality works with touch gestures on mobile",
+        "Upload zones are touch-friendly with appropriate target sizes",
+        "Layouts adapt appropriately for tablet (768px+) and desktop (1024px+)",
+        "Text remains readable at all viewport sizes",
+        "Interactive elements are accessible via touch on mobile devices",
+        "No horizontal scrolling occurs on mobile viewports"
+      ]
+    },
+    {
+      "id": "REQ-51",
+      "text": "Update HomePage to expand the existing Image Tools section to showcase the new comprehensive image tools, displaying Government Document Photos category (8 tools), Image Processing category (4 tools), and Format Conversion category (4 tools) with total count of 16 image tools",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "PHASE 3 – ADVANCED IMAGE TOOLS MODULE",
+          "Do NOT modify Phase 1 (Calculator Hub). Do NOT modify Phase 2 (PDF Tools). Only extend the project by adding Phase 3."
+        ]
+      },
+      "acceptanceCriteria": [
+        "HomePage Image Tools section now displays 16 image tools (updated from 4)",
+        "Tools are organized into three categories: Government Document Photos (8), Image Processing (4), Format Conversion (4)",
+        "Section includes brief category descriptions",
+        "Clicking navigates to /image-tools main page",
+        "Existing Calculator Hub and PDF Tools sections remain unchanged",
+        "Visual layout is consistent with existing tool sections"
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "text": "Update Footer component to display the copyright notice: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Footer: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Footer displays the exact copyright text: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+        "Copyright year is updated to 2026",
+        "Company name is displayed in full capitals as specified",
+        "Footer maintains existing layout and styling"
+      ]
+    }
+  ],
+  "constraints": [
+    "Do NOT modify Phase 1 (Calculator Hub) - all existing calculator components and routes must remain unchanged",
+    "Do NOT modify Phase 2 (PDF Tools) - all existing PDF tool components and routes must remain unchanged",
+    "All image processing must happen client-side only using browser-based JavaScript libraries",
+    "Do NOT use external APIs for any image processing functionality",
+    "Do NOT store any images on the server or backend",
+    "Do NOT use paid APIs or services",
+    "All downloads must use secure blob-based approach",
+    "Must maintain compatibility with existing dark/light theme system",
+    "Must follow existing Tailwind CSS and component patterns from PDFTools and Calculators"
+  ],
+  "nonGoals": [
+    "Backend storage for images",
+    "Server-side image processing",
+    "External API integrations for image manipulation",
+    "Real-time collaborative editing",
+    "Cloud storage integration",
+    "Advanced AI-based image enhancement beyond background removal",
+    "Batch processing of multiple images simultaneously",
+    "Image history or version control",
+    "User accounts or saved presets",
+    "Modifying existing Phase 1 Calculator Hub features",
+    "Modifying existing Phase 2 PDF Tools features"
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

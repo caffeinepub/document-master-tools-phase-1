@@ -1,0 +1,332 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-23T07:40:09.417Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 24,
+    "implemented": 21,
+    "items": [
+      {
+        "id": "REQ-29",
+        "summary": "Create ImageToolsPage component at /image-tools route that displays a comprehensive grid of 16 image tools organized by category: Government Document Photos (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (JPG to PNG, PNG to JPG, WEBP Converter, Background Remover)",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/ImageToolsPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/ImageToolsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-30",
+        "summary": "Create PassportPhotoMaker component at /passport-photo-maker with preset passport photo dimensions, drag & drop upload, live preview, target size selector (20KB-200KB), maintain aspect ratio toggle, and secure blob download showing original vs new size",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-31",
+        "summary": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar card photo specifications, target size selector, custom dimensions input, maintain aspect ratio toggle, live preview, and blob-based secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-32",
+        "summary": "Create PANPhotoResize component at /pan-photo-resize with PAN card photo specifications, target size control, dimension customization, ratio maintenance toggle, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/PANPhotoResize.tsx",
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-33",
+        "summary": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam photo specifications from government exam presets, target size selector (20KB-200KB), custom dimensions, maintain ratio toggle, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/SSCPhotoResize.tsx",
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-34",
+        "summary": "Create RailwayPhotoResize component at /railway-photo-resize with Indian Railway exam photo specifications, target size selector, custom dimensions, ratio toggle, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-35",
+        "summary": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment photo specifications, target size control (20KB-200KB), dimension customization, ratio toggle, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-36",
+        "summary": "Create VisaPhotoResize component at /visa-photo-resize with international visa photo specifications from passport presets, target size selector, custom dimensions, ratio maintenance, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/VisaPhotoResize.tsx",
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-37",
+        "summary": "Create SignatureResize component at /signature-resize with government exam and application signature presets, target size selector (20KB-200KB), custom dimensions, ratio toggle, live preview, and secure download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/SignatureResize.tsx",
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-38",
+        "summary": "Create ImageCompressor component at /image-compressor with compression level selector, target size control (20KB-200KB), live preview, original vs compressed size comparison, reset button, and secure blob download using browser-based compression libraries",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/ImageCompressorTool.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-39",
+        "summary": "Create ImageCropper component at /image-cropper with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/ImageCropper.tsx",
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-40",
+        "summary": "Create DPIChanger component at /dpi-changer with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/DPIChanger.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-41",
+        "summary": "Create CustomImageResize component at /custom-image-resize with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/CustomImageResize.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-42",
+        "summary": "Create JPGToPNG component at /jpg-to-png with JPG image upload, instant format conversion to PNG, live preview, file size comparison, and secure blob download using browser-based conversion",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/JPGToPNG.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-43",
+        "summary": "Create PNGToJPG component at /png-to-jpg with PNG image upload, instant format conversion to JPG with quality selection, live preview, file size comparison, and secure blob download using browser-based conversion",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/PNGToJPG.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-44",
+        "summary": "Create WEBPConverter component at /webp-converter with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download using browser-based conversion",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/WEBPConverter.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-45",
+        "summary": "Create BackgroundRemover component at /background-remover with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/BackgroundRemoverTool.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-46",
+        "summary": "Implement Job Form Special Mode across all government document photo tools (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature) with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/JobFormMode.tsx",
+          "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
+          "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
+          "frontend/src/components/image-tools/PANPhotoResize.tsx",
+          "frontend/src/components/image-tools/SSCPhotoResize.tsx",
+          "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
+          "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
+          "frontend/src/components/image-tools/VisaPhotoResize.tsx",
+          "frontend/src/components/image-tools/SignatureResize.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-47",
+        "summary": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools: /passport-photo-maker, /aadhaar-photo-resize, /pan-photo-resize, /ssc-photo-resize, /railway-photo-resize, /police-army-photo, /visa-photo-resize, /signature-resize, /image-compressor, /image-cropper, /dpi-changer, /custom-image-resize, /jpg-to-png, /png-to-jpg, /webp-converter, /background-remover",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-48",
+        "summary": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links to Calculator Hub and PDF Tools",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/SEOWrapper.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-49",
+        "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility using existing Tailwind theme variables, smooth processing animations, AdSense-ready semantic structure with proper heading hierarchy, and fast loading performance",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/image-tools/ImageToolCard.tsx",
+          "frontend/src/index.css"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-50",
+        "summary": "Ensure all 16 image tool components are fully mobile responsive, display correctly on screens from 320px width upward, support touch gestures for drag & drop, maintain usability on mobile devices, and adapt layouts for tablet and desktop viewports",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/FileUploadZone.tsx",
+          "frontend/src/components/image-tools/ImageToolCard.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/FileUploadZone.tsx"
+        ]
+      },
+      {
+        "id": "REQ-51",
+        "summary": "Update HomePage to expand the existing Image Tools section to showcase the new comprehensive image tools, displaying Government Document Photos category (8 tools), Image Processing category (4 tools), and Format Conversion category (4 tools) with total count of 16 image tools",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-52",
+        "summary": "Update Footer component to display the copyright notice: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/components/Footer.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/Footer.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "build-request.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/src/App.tsx",
+    "frontend/src/components/FileUploadZone.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/image-tools/PhotoResizeTool.tsx",
+    "frontend/src/lib/imageProcessing.ts",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/ImageToolsPage.tsx",
+    "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+    "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+    "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+    "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+    "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+    "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+    "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+    "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+    "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+    "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+    "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

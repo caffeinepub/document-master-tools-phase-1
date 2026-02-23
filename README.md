@@ -1,2 +1,3 @@
-# document-master-tools-phase-1
-Exported from Caffeine project: Document Master Tools   Phase 1
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

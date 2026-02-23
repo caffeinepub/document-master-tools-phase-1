@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Image, FileEdit, Scissors, Minimize2, Image as ImageIcon, FileType, Hash, ArrowUpDown, Lock, Unlock, FileX, ListOrdered, Droplet, PenTool, ScanText, Ruler, Palette, Heart, X, Download } from 'lucide-react';
+import { FileText, Image, FileEdit, Scissors, Minimize2, Image as ImageIcon, FileType, Hash, ArrowUpDown, Lock, Unlock, FileX, ListOrdered, Droplet, PenTool, ScanText, Ruler, Palette, Heart, X, Download, Calculator } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
@@ -39,11 +39,28 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     { id: 'ocr', name: 'OCR to Searchable', description: 'Make scanned PDFs searchable', icon: ScanText },
   ];
 
-  const imageTools = [
-    { id: 'compressor', name: 'Image Compressor', description: 'Reduce image file size', icon: Minimize2 },
-    { id: 'kb-resizer', name: 'Photo KB Resizer', description: 'Resize to specific file sizes', icon: Ruler },
-    { id: 'bg-remover', name: 'Background Remover', description: 'Remove backgrounds automatically', icon: Scissors },
-    { id: 'bg-changer', name: 'Background Changer', description: 'Replace backgrounds with colors', icon: Palette },
+  const calculatorCategories = [
+    { 
+      id: 'academic', 
+      name: 'Academic Calculators', 
+      description: '9 calculators for students', 
+      icon: '/assets/generated/academic-calc-icon.dim_128x128.png',
+      count: 9
+    },
+    { 
+      id: 'financial', 
+      name: 'Financial Calculators', 
+      description: '8 calculators for finance', 
+      icon: '/assets/generated/financial-calc-icon.dim_128x128.png',
+      count: 8
+    },
+    { 
+      id: 'health', 
+      name: 'Health & General', 
+      description: '4 calculators for health & time', 
+      icon: '/assets/generated/health-calc-icon.dim_128x128.png',
+      count: 4
+    },
   ];
 
   const resumeTemplates = [
@@ -103,11 +120,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 <div className="flex flex-col items-center gap-2 p-4 rounded-lg bg-background/50 backdrop-blur-sm border shadow-sm min-w-[120px]">
                   <img 
                     src="/assets/generated/tools-badge-transparent.dim_120x40.png" 
-                    alt="20+ Tools" 
+                    alt="40+ Tools" 
                     className="h-8 w-auto"
                   />
                   <div className="text-center">
-                    <div className="text-xl md:text-2xl font-bold text-primary">20+</div>
+                    <div className="text-xl md:text-2xl font-bold text-primary">40+</div>
                     <div className="text-xs md:text-sm text-muted-foreground font-medium">Tools</div>
                   </div>
                 </div>
@@ -131,6 +148,41 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         {/* Tools Grid */}
         <section className="py-8 md:py-12">
           <div className="container mx-auto px-4">
+            {/* Calculator Hub */}
+            <div className="mb-10">
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 rounded-lg bg-orange-500/10 flex items-center justify-center">
+                  <Calculator className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold">Calculator Hub</h2>
+                  <p className="text-sm text-muted-foreground">21 calculators for academic, financial & health needs</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {calculatorCategories.map((category) => (
+                  <Card
+                    key={category.id}
+                    className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
+                    onClick={() => onNavigate('calculators')}
+                  >
+                    <CardHeader className="p-4">
+                      <div className="w-16 h-16 rounded-lg bg-orange-500/10 flex items-center justify-center mb-3 group-hover:bg-orange-500/20 transition-colors mx-auto">
+                        <img src={category.icon} alt={category.name} className="w-12 h-12" />
+                      </div>
+                      <CardTitle className="text-base text-center">{category.name}</CardTitle>
+                      <CardDescription className="text-xs text-center">{category.description}</CardDescription>
+                      <div className="text-center mt-2">
+                        <span className="text-sm font-semibold text-orange-600 dark:text-orange-400">{category.count} Tools</span>
+                      </div>
+                    </CardHeader>
+                  </Card>
+                ))}
+              </div>
+            </div>
+
+            <Separator className="my-8" />
+
             {/* PDF Tools */}
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
@@ -166,7 +218,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
             <Separator className="my-8" />
 
-            {/* Image Tools */}
+            {/* Image Tools - Updated to show 16 tools */}
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
@@ -174,68 +226,111 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Image Tools</h2>
-                  <p className="text-sm text-muted-foreground">4 powerful image editing tools</p>
+                  <p className="text-sm text-muted-foreground">16 comprehensive image tools for government documents, processing & conversion</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                {imageTools.map((tool) => {
-                  const Icon = tool.icon;
-                  return (
-                    <Card
-                      key={tool.id}
-                      className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
-                      onClick={() => onNavigate('image-tools')}
-                    >
-                      <CardHeader className="p-4">
-                        <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center mb-2 group-hover:bg-green-500/20 transition-colors">
-                          <Icon className="h-5 w-5 text-green-600 dark:text-green-400" />
-                        </div>
-                        <CardTitle className="text-sm leading-tight">{tool.name}</CardTitle>
-                        <CardDescription className="text-xs line-clamp-2">{tool.description}</CardDescription>
-                      </CardHeader>
-                    </Card>
-                  );
-                })}
+              
+              <div className="space-y-6">
+                {/* Government Document Photos */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Government Document Photos (8 tools)</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Resize and optimize photos for Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa applications, and Signatures with preset dimensions.
+                  </p>
+                </div>
+
+                {/* Image Processing */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">Image Processing (4 tools)</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Compress, crop, change DPI, and custom resize images with advanced controls and live preview.
+                  </p>
+                </div>
+
+                {/* Format Conversion */}
+                <div>
+                  <h3 className="text-lg font-semibold mb-2 text-purple-600 dark:text-purple-400">Format Conversion (4 tools)</h3>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Convert between JPG, PNG, and WEBP formats, plus remove backgrounds automatically.
+                  </p>
+                </div>
+
+                <Button 
+                  onClick={() => onNavigate('image-tools')} 
+                  size="lg"
+                  className="w-full md:w-auto"
+                >
+                  View All Image Tools
+                </Button>
               </div>
             </div>
 
             <Separator className="my-8" />
 
             {/* Resume Builder */}
-            <div>
+            <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
                   <img src="/assets/generated/resume-builder-icon-transparent.dim_64x64.png" alt="Resume Builder" className="w-6 h-6" />
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Resume Builder</h2>
-                  <p className="text-sm text-muted-foreground">5 professional resume templates</p>
+                  <p className="text-sm text-muted-foreground">5 professional templates for job seekers</p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-3">
-                {resumeTemplates.map((template) => (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                {resumeTemplates.slice(0, 3).map((template) => (
                   <Card
                     key={template.id}
                     className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
                     onClick={() => onNavigate('resume-builder')}
                   >
                     <CardHeader className="p-4">
-                      <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center mb-2 group-hover:bg-purple-500/20 transition-colors">
-                        <FileEdit className="h-5 w-5 text-purple-600 dark:text-purple-400" />
+                      <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-3 group-hover:bg-purple-500/20 transition-colors">
+                        <FileEdit className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                       </div>
-                      <CardTitle className="text-sm leading-tight">{template.name}</CardTitle>
-                      <CardDescription className="text-xs line-clamp-2">{template.description}</CardDescription>
+                      <CardTitle className="text-base">{template.name}</CardTitle>
+                      <CardDescription className="text-xs">{template.description}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
               </div>
+              <div className="mt-4 text-center">
+                <Button variant="outline" onClick={() => onNavigate('resume-builder')}>
+                  View All Templates
+                </Button>
+              </div>
             </div>
           </div>
         </section>
+
+        {/* App Download Banner */}
+        {showAppBanner && (
+          <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-primary/90 to-primary/80 backdrop-blur-sm text-primary-foreground p-4 shadow-lg z-50 animate-slide-up">
+            <div className="container mx-auto flex items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <img src="/assets/generated/app-download-icon.dim_48x48.png" alt="App" className="w-10 h-10" />
+                <div>
+                  <p className="font-semibold text-sm md:text-base">Get the DocMasterTools App</p>
+                  <p className="text-xs md:text-sm opacity-90">Access all tools offline on your mobile device</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="secondary" size="sm" className="hidden md:inline-flex">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download
+                </Button>
+                <Button variant="ghost" size="icon" onClick={() => setShowAppBanner(false)} className="text-primary-foreground hover:bg-primary-foreground/20">
+                  <X className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Footer */}
-      <footer className="border-t bg-muted/30 mt-8">
+      <footer className="border-t bg-muted/30">
         <div className="container mx-auto px-4 py-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
@@ -248,6 +343,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             <div>
               <h3 className="font-semibold mb-3">Quick Links</h3>
               <ul className="space-y-2 text-sm">
+                <li>
+                  <button onClick={() => onNavigate('calculators')} className="text-muted-foreground hover:text-primary transition-colors">
+                    Calculator Hub
+                  </button>
+                </li>
                 <li>
                   <button onClick={() => onNavigate('pdf-tools')} className="text-muted-foreground hover:text-primary transition-colors">
                     PDF Tools
@@ -288,62 +388,22 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             </div>
           </div>
           
-          <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
+          <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground space-y-2">
+            <p>© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.</p>
             <p className="flex items-center justify-center gap-1">
-              © 2025. Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
-              <a href="https://caffeine.ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+              Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
+              <a 
+                href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="text-primary hover:underline"
+              >
                 caffeine.ai
               </a>
             </p>
           </div>
         </div>
       </footer>
-
-      {/* App Download Popup Banner */}
-      {showAppBanner && (
-        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 z-50 animate-in slide-in-from-bottom-5 duration-500">
-          <div className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg shadow-2xl p-4 border-2 border-primary-foreground/20 animate-pulse">
-            <button
-              onClick={() => setShowAppBanner(false)}
-              className="absolute -top-2 -right-2 bg-background text-foreground rounded-full p-1 shadow-lg hover:bg-muted transition-colors"
-              aria-label="Close banner"
-            >
-              <X className="h-4 w-4" />
-            </button>
-            
-            <div className="flex items-center gap-3">
-              <div className="flex-shrink-0">
-                <img 
-                  src="/assets/generated/app-download-icon.dim_48x48.png" 
-                  alt="App Icon" 
-                  className="w-12 h-12"
-                />
-              </div>
-              
-              <div className="flex-1 min-w-0">
-                <p className="font-semibold text-sm md:text-base mb-1">
-                  Get the DocMasterTools App – Faster & Easier
-                </p>
-                <p className="text-xs opacity-90 mb-2">
-                  Access all tools on the go
-                </p>
-                <Button
-                  size="sm"
-                  variant="secondary"
-                  className="w-full md:w-auto font-semibold"
-                  onClick={() => {
-                    // Link to Play Store or APK download
-                    window.open('https://play.google.com/store', '_blank');
-                  }}
-                >
-                  <Download className="h-4 w-4 mr-2" />
-                  Download App
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

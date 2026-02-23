@@ -1,0 +1,525 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 5,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment. SEO-optimized individual pages, mobile responsive, AdSense ready.",
+  "architectural_notes": [
+    "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
+    "Each calculator gets individual SEO-friendly page",
+    "Client-side instant calculation without page reload",
+    "Mobile-first responsive design required",
+    "Phase 3: Advanced Image Tools Module - client-side only processing, no server storage, no paid APIs",
+    "Image tools use browser-based libraries for format conversion, compression, and background removal",
+    "Job form special mode for government exam/passport/signature presets with target dimensions and file size",
+    "Footer updated: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-calculatorspage-component-that-serves-as-the-main-landing-page-for-all-calculators-displaying-a-grid-of-calculator-cards-organized-by-category-academic-financial-health-general",
+      "title": "Create a CalculatorsPage component that serves as the main landing page for all calculators, displaying a grid of calculator cards organized by category (Academic, Financial, Health & General)",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cgpa-calculator-with-support-for-semester-wise-grade-input-credit-hours-per-course-and-instant-calculation-displaying-final-cgpa-on-a-10-0-scale",
+      "title": "Implement CGPA Calculator with support for semester-wise grade input, credit hours per course, and instant calculation displaying final CGPA on a 10.0 scale",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-sgpa-calculator-with-course-wise-grade-and-credit-input-instant-calculation-displaying-semester-gpa-on-a-10-0-scale",
+      "title": "Implement SGPA Calculator with course-wise grade and credit input, instant calculation displaying semester GPA on a 10.0 scale",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cgpa-to-percentage-converter-supporting-both-cbse-formula-cgpa-9-5-and-engineering-formula-cgpa-10-with-instant-conversion-and-formula-selection-toggle",
+      "title": "Implement CGPA to Percentage Converter supporting both CBSE formula (CGPA × 9.5) and Engineering formula (CGPA × 10), with instant conversion and formula selection toggle",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-percentage-to-cgpa-converter-with-formula-selection-divide-by-9-5-for-cbse-divide-by-10-for-engineering-instant-conversion-as-user-types",
+      "title": "Implement Percentage to CGPA Converter with formula selection (divide by 9.5 for CBSE, divide by 10 for Engineering), instant conversion as user types",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-grade-calculator-that-converts-letter-grades-a-a-b-b-c-c-d-e-f-to-grade-points-with-customizable-grading-scale-and-instant-results",
+      "title": "Implement Grade Calculator that converts letter grades (A+, A, B+, B, C+, C, D, E, F) to grade points with customizable grading scale and instant results",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-gpa-calculator-supporting-both-4-0-scale-and-10-0-scale-with-scale-toggle-course-wise-input-and-instant-gpa-calculation",
+      "title": "Implement GPA Calculator supporting both 4.0 scale and 10.0 scale with scale toggle, course-wise input, and instant GPA calculation",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-marks-percentage-calculator-that-accepts-obtained-marks-and-total-marks-calculates-percentage-instantly-and-displays-result-with-pass-fail-indication",
+      "title": "Implement Marks Percentage Calculator that accepts obtained marks and total marks, calculates percentage instantly, and displays result with pass/fail indication",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-division-calculator-that-determines-academic-division-1st-2nd-3rd-division-or-fail-based-on-percentage-input-with-instant-classification",
+      "title": "Implement Division Calculator that determines academic division (1st/2nd/3rd division or fail) based on percentage input with instant classification",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-gst-calculator-with-two-modes-add-gst-calculate-gst-amount-to-add-to-base-price-and-remove-gst-extract-gst-from-total-amount-supporting-multiple-gst-rates-5-12-18-28-with-instant-calculation",
+      "title": "Implement GST Calculator with two modes: Add GST (calculate GST amount to add to base price) and Remove GST (extract GST from total amount), supporting multiple GST rates (5%, 12%, 18%, 28%) with instant calculation",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-emi-calculator-that-accepts-loan-amount-interest-rate-and-tenure-months-years-calculates-monthly-emi-total-interest-and-total-payment-with-instant-results-and-amortization-summary",
+      "title": "Implement EMI Calculator that accepts loan amount, interest rate, and tenure (months/years), calculates monthly EMI, total interest, and total payment with instant results and amortization summary",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-loan-calculator-with-inputs-for-loan-amount-interest-rate-monthly-payment-calculates-total-interest-and-loan-tenure-with-instant-results",
+      "title": "Implement Loan Calculator with inputs for loan amount, interest rate, monthly payment, calculates total interest and loan tenure with instant results",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-compound-interest-calculator-with-inputs-for-principal-rate-time-and-compounding-frequency-yearly-half-yearly-quarterly-monthly-calculates-final-amount-and-interest-earned-with-instant-results",
+      "title": "Implement Compound Interest Calculator with inputs for principal, rate, time, and compounding frequency (yearly, half-yearly, quarterly, monthly), calculates final amount and interest earned with instant results",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-simple-interest-calculator-with-inputs-for-principal-rate-and-time-calculates-interest-and-total-amount-with-instant-results",
+      "title": "Implement Simple Interest Calculator with inputs for principal, rate, and time, calculates interest and total amount with instant results",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-discount-calculator-that-accepts-original-price-and-discount-percentage-calculates-discount-amount-final-price-and-savings-with-instant-results",
+      "title": "Implement Discount Calculator that accepts original price and discount percentage, calculates discount amount, final price, and savings with instant results",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-profit-loss-percentage-calculator-that-accepts-cost-price-and-selling-price-calculates-profit-or-loss-amount-and-percentage-with-instant-results-and-clear-indication-of-profit-or-loss",
+      "title": "Implement Profit/Loss Percentage Calculator that accepts cost price and selling price, calculates profit or loss amount and percentage with instant results and clear indication of profit or loss",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-salary-hike-calculator-that-accepts-current-salary-and-hike-percentage-calculates-new-salary-increment-amount-and-annual-increment-with-instant-results",
+      "title": "Implement Salary Hike Calculator that accepts current salary and hike percentage, calculates new salary, increment amount, and annual increment with instant results",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-bmi-calculator-that-accepts-weight-kg-lbs-and-height-cm-feet-inches-calculates-bmi-with-instant-result-displays-bmi-category-underweight-normal-overweight-obese-and-shows-healthy-weight-range",
+      "title": "Implement BMI Calculator that accepts weight (kg/lbs) and height (cm/feet-inches), calculates BMI with instant result, displays BMI category (underweight, normal, overweight, obese), and shows healthy weight range",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-age-calculator-that-accepts-date-of-birth-calculates-exact-age-in-years-months-and-days-displays-next-birthday-date-and-shows-countdown-to-next-birthday-with-instant-results",
+      "title": "Implement Age Calculator that accepts date of birth, calculates exact age in years, months, and days, displays next birthday date, and shows countdown to next birthday with instant results",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-date-difference-calculator-that-accepts-two-dates-calculates-difference-in-years-months-days-weeks-and-total-days-with-instant-results",
+      "title": "Implement Date Difference Calculator that accepts two dates, calculates difference in years, months, days, weeks, and total days with instant results",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-time-duration-calculator-that-accepts-start-time-and-end-time-calculates-duration-in-hours-minutes-and-seconds-with-instant-results-and-option-to-add-subtract-time-periods",
+      "title": "Implement Time Duration Calculator that accepts start time and end time, calculates duration in hours, minutes, and seconds with instant results and option to add/subtract time periods",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-individual-seo-friendly-calculator-pages-with-unique-urls-following-pattern-calculators-calculator-name-each-with-proper-meta-titles-descriptions-structured-data-and-open-graph-tags",
+      "title": "Create individual SEO-friendly calculator pages with unique URLs following pattern /calculators/[calculator-name], each with proper meta titles, descriptions, structured data, and Open Graph tags",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-a-calculators-route-that-displays-the-calculatorspage-and-individual-routes-for-each-calculator-component",
+      "title": "Update App.tsx routing to include a calculators route that displays the CalculatorsPage and individual routes for each calculator component",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-header-component-to-include-a-calculators-navigation-link-that-directs-users-to-the-main-calculators-page",
+      "title": "Update Header component to include a Calculators navigation link that directs users to the main calculators page",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-include-a-calculator-hub-section-alongside-existing-pdf-tools-image-tools-and-resume-builder-sections-displaying-calculator-categories-with-card-previews",
+      "title": "Update HomePage to include a Calculator Hub section alongside existing PDF Tools, Image Tools, and Resume Builder sections, displaying calculator categories with card previews",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-calculator-components-are-mobile-responsive-display-properly-on-screens-from-320px-width-upward-and-maintain-usability-on-touch-devices",
+      "title": "Ensure all calculator components are mobile responsive, display properly on screens from 320px width upward, and maintain usability on touch devices",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-all-calculator-pages-with-clean-modern-ui-using-tailwind-css-and-existing-design-system-ensuring-consistent-appearance-with-the-rest-of-the-application",
+      "title": "Style all calculator pages with clean, modern UI using Tailwind CSS and existing design system, ensuring consistent appearance with the rest of the application",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-structure-all-calculator-pages-with-semantic-html-and-appropriate-heading-hierarchy-to-support-adsense-integration-and-improve-accessibility",
+      "title": "Structure all calculator pages with semantic HTML and appropriate heading hierarchy to support AdSense integration and improve accessibility",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagetoolspage-component-at-image-tools-route-that-displays-a-comprehensive-grid-of-16-image-tools-organized-by-category-government-document-photos-passport-aadhaar-pan-ssc-railway-police-army-visa-signature-image-processing-compressor-cropper-dpi-changer-custom-resize-and-format-conversion-jpg-to-png-png-to-jpg-webp-converter-background-remover",
+      "title": "Create ImageToolsPage component at /image-tools route that displays a comprehensive grid of 16 image tools organized by category: Government Document Photos (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (JPG to PNG, PNG to JPG, WEBP Converter, Background Remover)",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-passportphotomaker-component-at-passport-photo-maker-with-preset-passport-photo-dimensions-drag-drop-upload-live-preview-target-size-selector-20kb-200kb-maintain-aspect-ratio-toggle-and-secure-blob-download-showing-original-vs-new-size",
+      "title": "Create PassportPhotoMaker component at /passport-photo-maker with preset passport photo dimensions, drag & drop upload, live preview, target size selector (20KB-200KB), maintain aspect ratio toggle, and secure blob download showing original vs new size",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-aadhaarphotoresize-component-at-aadhaar-photo-resize-with-aadhaar-card-photo-specifications-target-size-selector-custom-dimensions-input-maintain-aspect-ratio-toggle-live-preview-and-blob-based-secure-download",
+      "title": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar card photo specifications, target size selector, custom dimensions input, maintain aspect ratio toggle, live preview, and blob-based secure download",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-panphotoresize-component-at-pan-photo-resize-with-pan-card-photo-specifications-target-size-control-dimension-customization-ratio-maintenance-toggle-live-preview-and-secure-download",
+      "title": "Create PANPhotoResize component at /pan-photo-resize with PAN card photo specifications, target size control, dimension customization, ratio maintenance toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-sscphotoresize-component-at-ssc-photo-resize-with-ssc-exam-photo-specifications-from-government-exam-presets-target-size-selector-20kb-200kb-custom-dimensions-maintain-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam photo specifications from government exam presets, target size selector (20KB-200KB), custom dimensions, maintain ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-railwayphotoresize-component-at-railway-photo-resize-with-indian-railway-exam-photo-specifications-target-size-selector-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create RailwayPhotoResize component at /railway-photo-resize with Indian Railway exam photo specifications, target size selector, custom dimensions, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-policearmyphoto-component-at-police-army-photo-with-police-and-army-recruitment-photo-specifications-target-size-control-20kb-200kb-dimension-customization-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment photo specifications, target size control (20KB-200KB), dimension customization, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-visaphotoresize-component-at-visa-photo-resize-with-international-visa-photo-specifications-from-passport-presets-target-size-selector-custom-dimensions-ratio-maintenance-live-preview-and-secure-download",
+      "title": "Create VisaPhotoResize component at /visa-photo-resize with international visa photo specifications from passport presets, target size selector, custom dimensions, ratio maintenance, live preview, and secure download",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-signatureresize-component-at-signature-resize-with-government-exam-and-application-signature-presets-target-size-selector-20kb-200kb-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create SignatureResize component at /signature-resize with government exam and application signature presets, target size selector (20KB-200KB), custom dimensions, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagecompressor-component-at-image-compressor-with-compression-level-selector-target-size-control-20kb-200kb-live-preview-original-vs-compressed-size-comparison-reset-button-and-secure-blob-download-using-browser-based-compression-libraries",
+      "title": "Create ImageCompressor component at /image-compressor with compression level selector, target size control (20KB-200KB), live preview, original vs compressed size comparison, reset button, and secure blob download using browser-based compression libraries",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagecropper-component-at-image-cropper-with-drag-based-crop-area-selection-aspect-ratio-presets-1-1-4-3-16-9-free-maintain-aspect-ratio-toggle-pixel-resize-after-crop-live-preview-and-secure-blob-download",
+      "title": "Create ImageCropper component at /image-cropper with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-dpichanger-component-at-dpi-changer-with-dpi-preset-selector-100-200-300-dpi-custom-dpi-input-live-preview-original-vs-new-dpi-display-and-secure-blob-download",
+      "title": "Create DPIChanger component at /dpi-changer with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-customimageresize-component-at-custom-image-resize-with-width-and-height-input-fields-maintain-aspect-ratio-toggle-pixel-and-percentage-resize-modes-live-preview-original-vs-new-size-display-and-secure-blob-download",
+      "title": "Create CustomImageResize component at /custom-image-resize with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-jpgtopng-component-at-jpg-to-png-with-jpg-image-upload-instant-format-conversion-to-png-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create JPGToPNG component at /jpg-to-png with JPG image upload, instant format conversion to PNG, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-pngtojpg-component-at-png-to-jpg-with-png-image-upload-instant-format-conversion-to-jpg-with-quality-selection-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create PNGToJPG component at /png-to-jpg with PNG image upload, instant format conversion to JPG with quality selection, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-webpconverter-component-at-webp-converter-with-bidirectional-conversion-any-format-to-webp-webp-to-any-format-quality-selector-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create WEBPConverter component at /webp-converter with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-backgroundremover-component-at-background-remover-with-client-side-background-removal-using-browser-based-libraries-no-external-apis-drag-drop-upload-processing-animation-live-preview-with-transparent-background-and-secure-png-blob-download",
+      "title": "Create BackgroundRemover component at /background-remover with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-image-tools-main-route-and-individual-routes-for-all-16-image-tools-passport-photo-maker-aadhaar-photo-resize-pan-photo-resize-ssc-photo-resize-railway-photo-resize-police-army-photo-visa-photo-resize-signature-resize-image-compressor-image-cropper-dpi-changer-custom-image-resize-jpg-to-png-png-to-jpg-webp-converter-background-remover",
+      "title": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools: /passport-photo-maker, /aadhaar-photo-resize, /pan-photo-resize, /ssc-photo-resize, /railway-photo-resize, /police-army-photo, /visa-photo-resize, /signature-resize, /image-compressor, /image-cropper, /dpi-changer, /custom-image-resize, /jpg-to-png, /png-to-jpg, /webp-converter, /background-remover",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-16-image-tool-components-are-fully-mobile-responsive-display-correctly-on-screens-from-320px-width-upward-support-touch-gestures-for-drag-drop-maintain-usability-on-mobile-devices-and-adapt-layouts-for-tablet-and-desktop-viewports",
+      "title": "Ensure all 16 image tool components are fully mobile responsive, display correctly on screens from 320px width upward, support touch gestures for drag & drop, maintain usability on mobile devices, and adapt layouts for tablet and desktop viewports",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-expand-the-existing-image-tools-section-to-showcase-the-new-comprehensive-image-tools-displaying-government-document-photos-category-8-tools-image-processing-category-4-tools-and-format-conversion-category-4-tools-with-total-count-of-16-image-tools",
+      "title": "Update HomePage to expand the existing Image Tools section to showcase the new comprehensive image tools, displaying Government Document Photos category (8 tools), Image Processing category (4 tools), and Format Conversion category (4 tools) with total count of 16 image tools",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-footer-component-to-display-the-copyright-notice-2026-rjy-total-manpowers-services-private-limited-all-rights-reserved",
+      "title": "Update Footer component to display the copyright notice: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Academic calculators: CGPA, SGPA, CGPA to Percentage, Percentage to CGPA, Grade Calculator, GPA Calculator (4.0 & 10.0), Marks Percentage, Division Calculator",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Financial calculators: GST (Add/Remove), EMI, Loan, Compound Interest, Simple Interest, Discount, Profit/Loss %, Salary Hike",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Health & General calculators: BMI, Age (with birthday countdown), Date Difference, Time Duration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "All calculators must have instant results (no page reload), SEO optimized individual pages, mobile responsive, clean UI, AdSense ready",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Image Tools main landing page at /image-tools displaying all image tool categories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Government document photo tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa photo makers with preset dimensions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Signature resize tool with government exam presets",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Image compressor with target size selector (20KB-200KB) and compression level control",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Image cropper with aspect ratio toggle and live preview",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "DPI changer supporting 100/200/300 DPI options",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Custom image resize with width/height input and maintain aspect ratio toggle",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Format converters: JPG to PNG, PNG to JPG, WEBP converter (bidirectional)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Client-side background remover with no external APIs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "All image tools must have drag & drop upload, live preview, original vs new size display, secure blob download, mobile responsive, SEO optimized with H1/description/FAQ, internal linking to Calculator & PDF modules",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Implement Job Form Special Mode across all government document photo tools (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature) with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links to Calculator Hub and PDF Tools",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility using existing Tailwind theme variables, smooth processing animations, AdSense-ready semantic structure with proper heading hierarchy, and fast loading performance",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Document Master Tools",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

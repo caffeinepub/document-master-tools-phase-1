@@ -20,6 +20,11 @@ export default function Footer({ onNavigate }: FooterProps) {
             <h3 className="font-semibold mb-3">Quick Links</h3>
             <ul className="space-y-2 text-sm">
               <li>
+                <button onClick={() => onNavigate('calculators')} className="text-muted-foreground hover:text-primary transition-colors">
+                  Calculator Hub
+                </button>
+              </li>
+              <li>
                 <button onClick={() => onNavigate('pdf-tools')} className="text-muted-foreground hover:text-primary transition-colors">
                   PDF Tools
                 </button>
@@ -59,10 +64,16 @@ export default function Footer({ onNavigate }: FooterProps) {
           </div>
         </div>
         
-        <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground">
+        <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground space-y-2">
+          <p>© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.</p>
           <p className="flex items-center justify-center gap-1">
-            © 2025. Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
-            <a href="https://caffeine.ai" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+            Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
+            <a 
+              href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="text-primary hover:underline"
+            >
               caffeine.ai
             </a>
           </p>

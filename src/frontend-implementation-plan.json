@@ -1,0 +1,594 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Phase 3 - Advanced Image Tools Module",
+  "requirements": [
+    {
+      "id": "REQ-29",
+      "summary": "Create ImageToolsPage component at /image-tools route displaying a comprehensive grid of 16 image tools organized by category",
+      "acceptanceCriteria": [
+        "Main landing page at /image-tools displays all 16 image tools in a grid layout",
+        "Tools are organized into clear categories: Government Documents, Image Processing, Format Conversion",
+        "Each tool card shows icon, title, and brief description",
+        "Clicking a tool card navigates to its individual route",
+        "Page layout is consistent with existing PDFToolsPage and CalculatorsPage design patterns"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ImageToolsPage.tsx",
+          "operation": "modify",
+          "description": "Expand the existing ImageToolsPage to display all 16 image tools organized into three categories: Government Document Photos (8 tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (4 tools: Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (4 tools: JPG to PNG, PNG to JPG, WEBP Converter, Background Remover). Update the grid layout to accommodate all tools with consistent card design showing icons, titles, and descriptions. Follow the existing pattern from PDFToolsPage for tool selection and conditional rendering."
+        }
+      ]
+    },
+    {
+      "id": "REQ-30",
+      "summary": "Create PassportPhotoMaker component at /passport-photo-maker with preset dimensions, drag & drop upload, live preview, target size selector, and secure download",
+      "acceptanceCriteria": [
+        "Component accepts image upload via drag & drop or click",
+        "Preset passport photo dimensions are available",
+        "Live preview shows the resized image before download",
+        "User can select target file size between 20KB and 200KB",
+        "Aspect ratio toggle allows maintaining or changing proportions",
+        "Download generates secure blob with passport photo specifications",
+        "Display shows both original and final file sizes"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
+          "operation": "create",
+          "description": "Create PassportPhotoMaker component with FileUploadZone integration for drag & drop, canvas-based image resizing with preset passport dimensions (e.g., 2x2 inches at 300 DPI), target file size selector (20KB-200KB range), maintain aspect ratio toggle, live canvas preview, and secure blob download using URL.createObjectURL. Display original vs compressed file sizes. Process images entirely client-side using canvas API for resizing and compression."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for PassportPhotoMaker with unique H1 'Passport Photo Maker - Create Government Standard Photos', 100-150 word description about passport photo requirements, FAQ section with 3-5 questions about passport photo dimensions and file size, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools. Follow the pattern established in frontend/src/pages/calculators/AgeCalculatorPage.tsx for consistent wrapper structure."
+        }
+      ]
+    },
+    {
+      "id": "REQ-31",
+      "summary": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar specifications, target size selector, custom dimensions, and secure download",
+      "acceptanceCriteria": [
+        "Component uses Aadhaar photo dimension presets",
+        "Target file size selector works between 20KB-200KB",
+        "Custom width and height inputs are available",
+        "Aspect ratio can be maintained or changed",
+        "Live preview updates as settings change",
+        "Secure download uses blob-based approach"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
+          "operation": "create",
+          "description": "Create AadhaarPhotoResize component with FileUploadZone integration, Aadhaar-specific dimension presets (as per government specifications), target file size selector (20KB-200KB), custom width/height input fields, maintain aspect ratio toggle, canvas-based live preview, and secure blob download. Use client-side canvas API for all processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for AadhaarPhotoResize with unique H1 'Aadhaar Photo Resize - Government ID Photo Tool', 100-150 word description about Aadhaar photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-32",
+      "summary": "Create PANPhotoResize component at /pan-photo-resize with PAN card specifications, target size control, dimension customization, and secure download",
+      "acceptanceCriteria": [
+        "Component uses PAN card photo dimension presets",
+        "Target size and dimensions are customizable",
+        "Aspect ratio maintenance is toggleable",
+        "Live preview shows changes in real-time",
+        "Download provides secure blob-based file"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/PANPhotoResize.tsx",
+          "operation": "create",
+          "description": "Create PANPhotoResize component with FileUploadZone integration, PAN card-specific dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for PANPhotoResize with unique H1 'PAN Card Photo Resize - ID Photo Tool', 100-150 word description about PAN card photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-33",
+      "summary": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam specifications, government presets, target size selector, and secure download",
+      "acceptanceCriteria": [
+        "Component includes SSC government exam preset dimensions",
+        "Target file size is selectable within 20KB-200KB range",
+        "Custom dimension inputs are available",
+        "Maintain aspect ratio toggle functions correctly",
+        "Live preview displays the resized photo",
+        "Secure blob download is implemented"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/SSCPhotoResize.tsx",
+          "operation": "create",
+          "description": "Create SSCPhotoResize component with FileUploadZone integration, SSC government exam dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for SSCPhotoResize with unique H1 'SSC Photo Resize - Government Exam Photo Tool', 100-150 word description about SSC exam photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-34",
+      "summary": "Create RailwayPhotoResize component at /railway-photo-resize with Railway exam specifications, target size selector, and secure download",
+      "acceptanceCriteria": [
+        "Component uses Railway exam preset photo dimensions",
+        "Target size selector ranges from 20KB to 200KB",
+        "Custom width and height can be specified",
+        "Aspect ratio maintenance is optional",
+        "Live preview shows the adjusted image",
+        "Download uses secure blob generation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
+          "operation": "create",
+          "description": "Create RailwayPhotoResize component with FileUploadZone integration, Indian Railway exam dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for RailwayPhotoResize with unique H1 'Railway Photo Resize - Railway Exam Photo Tool', 100-150 word description about Railway exam photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-35",
+      "summary": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment specifications, target size control, and secure download",
+      "acceptanceCriteria": [
+        "Component includes Police/Army recruitment photo presets",
+        "Target file size is adjustable between 20KB-200KB",
+        "Custom dimensions can be entered",
+        "Aspect ratio toggle works correctly",
+        "Live preview displays before download",
+        "Secure blob-based download is provided"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
+          "operation": "create",
+          "description": "Create PoliceArmyPhoto component with FileUploadZone integration, Police and Army recruitment dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for PoliceArmyPhoto with unique H1 'Police Army Photo Resize - Recruitment Photo Tool', 100-150 word description about Police and Army recruitment photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-36",
+      "summary": "Create VisaPhotoResize component at /visa-photo-resize with international visa specifications, target size selector, and secure download",
+      "acceptanceCriteria": [
+        "Component uses international visa photo dimension presets",
+        "Target size selector operates between 20KB-200KB",
+        "Custom width and height inputs are available",
+        "Aspect ratio can be locked or unlocked",
+        "Live preview shows the resized visa photo",
+        "Download generates secure blob"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/VisaPhotoResize.tsx",
+          "operation": "create",
+          "description": "Create VisaPhotoResize component with FileUploadZone integration, international visa dimension presets (US, UK, Schengen, etc.), target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for VisaPhotoResize with unique H1 'Visa Photo Resize - International Visa Photo Tool', 100-150 word description about international visa photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-37",
+      "summary": "Create SignatureResize component at /signature-resize with government exam signature presets, target size selector, and secure download",
+      "acceptanceCriteria": [
+        "Component includes signature dimension presets for government exams/applications",
+        "Target file size is selectable from 20KB to 200KB",
+        "Custom dimensions can be specified",
+        "Maintain aspect ratio toggle functions",
+        "Live preview displays the resized signature",
+        "Secure blob download is implemented"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/SignatureResize.tsx",
+          "operation": "create",
+          "description": "Create SignatureResize component with FileUploadZone integration, government exam and application signature dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for SignatureResize with unique H1 'Signature Resize - Government Application Signature Tool', 100-150 word description about signature requirements for government applications, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-38",
+      "summary": "Create ImageCompressor component at /image-compressor with compression level selector, target size control, live preview, size comparison, and secure download",
+      "acceptanceCriteria": [
+        "Compression level can be adjusted with a slider or preset options",
+        "Target file size can be specified between 20KB-200KB",
+        "Live preview shows compressed image before download",
+        "Display shows both original and compressed file sizes with comparison",
+        "Reset button clears all inputs and preview",
+        "Processing happens entirely in the browser using client-side libraries",
+        "Download provides secure blob-based file"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/ImageCompressorTool.tsx",
+          "operation": "modify",
+          "description": "Enhance the existing ImageCompressorTool component to add target file size selector (20KB-200KB range), advanced compression controls, reset button functionality, and improved file size comparison display showing original vs compressed with percentage reduction. Maintain existing quality slider and client-side canvas-based compression."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for ImageCompressor with unique H1 'Image Compressor - Reduce Image File Size', 100-150 word description about image compression benefits and use cases, FAQ section with 3-5 questions about compression quality and file size, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "summary": "Create ImageCropper component at /image-cropper with drag-based crop selection, aspect ratio presets, pixel resize, live preview, and secure download",
+      "acceptanceCriteria": [
+        "User can select crop area by dragging on the image",
+        "Aspect ratio presets (1:1, 4:3, 16:9, free) are available",
+        "Aspect ratio can be locked or free",
+        "Cropped image can be resized by pixel dimensions",
+        "Live preview shows the cropped result",
+        "Download uses secure blob generation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/ImageCropper.tsx",
+          "operation": "create",
+          "description": "Create ImageCropper component with FileUploadZone integration, interactive canvas-based crop area selection with draggable handles, aspect ratio preset buttons (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, post-crop pixel resize inputs (width/height), canvas-based live preview, and secure blob download. Implement client-side cropping using canvas API with mouse/touch event handlers for drag selection."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for ImageCropper with unique H1 'Image Cropper - Crop and Resize Photos Online', 100-150 word description about image cropping use cases and aspect ratios, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "summary": "Create DPIChanger component at /dpi-changer with DPI preset selector, custom DPI input, live preview, DPI display, and secure download",
+      "acceptanceCriteria": [
+        "DPI can be selected from presets: 100, 200, or 300 DPI",
+        "Custom DPI value can be entered",
+        "Live preview shows the image with adjusted DPI metadata",
+        "Display shows original DPI and new DPI values",
+        "Download generates secure blob with updated DPI"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/DPIChanger.tsx",
+          "operation": "create",
+          "description": "Create DPIChanger component with FileUploadZone integration, DPI preset buttons (100, 200, 300 DPI), custom DPI input field, canvas-based image processing to embed DPI metadata, live preview, original vs new DPI display, and secure blob download. Use client-side canvas API and EXIF metadata manipulation libraries for DPI changes."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for DPIChanger with unique H1 'DPI Changer - Change Image Resolution', 100-150 word description about DPI importance for printing and digital use, FAQ section with 3-5 questions about DPI settings, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "summary": "Create CustomImageResize component at /custom-image-resize with width/height inputs, aspect ratio toggle, pixel/percentage modes, live preview, and secure download",
+      "acceptanceCriteria": [
+        "Width and height can be entered in pixels",
+        "Aspect ratio maintenance is toggleable",
+        "Live preview updates as dimensions change",
+        "Display shows original dimensions and new dimensions",
+        "Download provides secure blob-based file"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/CustomImageResize.tsx",
+          "operation": "create",
+          "description": "Create CustomImageResize component with FileUploadZone integration, width and height input fields (pixels), maintain aspect ratio toggle with auto-calculation, canvas-based live preview that updates on dimension changes, original vs new dimensions display, and secure blob download using client-side canvas API for resizing."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for CustomImageResize with unique H1 'Custom Image Resize - Resize Photos to Any Dimension', 100-150 word description about custom image resizing use cases, FAQ section with 3-5 questions about aspect ratio and dimensions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-42",
+      "summary": "Create JPGToPNG component at /jpg-to-png with JPG upload, instant PNG conversion, live preview, file size comparison, and secure download",
+      "acceptanceCriteria": [
+        "Component accepts JPG/JPEG file uploads",
+        "Conversion to PNG format happens instantly in browser",
+        "Live preview shows the converted PNG image",
+        "Display shows original (JPG) and converted (PNG) file sizes",
+        "Download uses secure blob generation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/JPGToPNG.tsx",
+          "operation": "create",
+          "description": "Create JPGToPNG component with FileUploadZone integration (accept JPG/JPEG only), canvas-based instant format conversion to PNG, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with 'image/png' type for client-side conversion."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for JPGToPNG with unique H1 'JPG to PNG Converter - Convert JPEG to PNG Online', 100-150 word description about JPG to PNG conversion benefits and transparency support, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-43",
+      "summary": "Create PNGToJPG component at /png-to-jpg with PNG upload, instant JPG conversion with quality selection, live preview, file size comparison, and secure download",
+      "acceptanceCriteria": [
+        "Component accepts PNG file uploads",
+        "Conversion to JPG format happens instantly in browser",
+        "Quality/compression level can be adjusted",
+        "Live preview shows the converted JPG image",
+        "Display shows original (PNG) and converted (JPG) file sizes",
+        "Download uses secure blob generation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/PNGToJPG.tsx",
+          "operation": "create",
+          "description": "Create PNGToJPG component with FileUploadZone integration (accept PNG only), quality/compression slider (0.1-1.0), canvas-based instant format conversion to JPG, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with 'image/jpeg' type and quality parameter for client-side conversion."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for PNGToJPG with unique H1 'PNG to JPG Converter - Convert PNG to JPEG Online', 100-150 word description about PNG to JPG conversion and file size reduction, FAQ section with 3-5 questions about quality settings, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-44",
+      "summary": "Create WEBPConverter component at /webp-converter with bidirectional conversion, quality selector, live preview, file size comparison, and secure download",
+      "acceptanceCriteria": [
+        "Component accepts JPG, PNG, and WEBP uploads",
+        "Can convert to WEBP from other formats",
+        "Can convert from WEBP to JPG or PNG",
+        "Quality selector is available for compression",
+        "Live preview shows the converted image",
+        "Display shows original and converted file sizes",
+        "Download uses secure blob generation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/WEBPConverter.tsx",
+          "operation": "create",
+          "description": "Create WEBPConverter component with FileUploadZone integration (accept JPG, PNG, WEBP), output format selector (WEBP, JPG, PNG), quality slider for compression, canvas-based bidirectional format conversion, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with appropriate MIME types for client-side conversion."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for WEBPConverter with unique H1 'WEBP Converter - Convert Images to and from WEBP', 100-150 word description about WEBP format benefits and browser support, FAQ section with 3-5 questions about WEBP compression and compatibility, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-45",
+      "summary": "Create BackgroundRemover component at /background-remover with client-side background removal, drag & drop upload, processing animation, live preview, and secure PNG download",
+      "acceptanceCriteria": [
+        "Background removal happens entirely in browser without external API calls",
+        "Component accepts image uploads via drag & drop",
+        "Processing animation displays during background removal",
+        "Live preview shows image with transparent background",
+        "Download generates PNG with transparency as secure blob",
+        "Uses browser-compatible background removal library"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/BackgroundRemoverTool.tsx",
+          "operation": "modify",
+          "description": "Enhance the existing BackgroundRemoverTool component to integrate a client-side background removal library (such as @imgly/background-removal or similar browser-compatible library), add processing animation with progress indicator, improve live preview with transparent background checkerboard pattern, and ensure PNG output with transparency. Replace mock processing with actual client-side background removal algorithm. Maintain FileUploadZone integration and secure blob download."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "operation": "create",
+          "description": "Create SEO-optimized page wrapper for BackgroundRemover with unique H1 'Background Remover - Remove Image Background Online', 100-150 word description about background removal use cases and transparency, FAQ section with 3-5 questions about processing time and supported formats, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-46",
+      "summary": "Implement Job Form Special Mode across all government document photo tools with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+      "acceptanceCriteria": [
+        "All government document tools have a Job Form mode toggle",
+        "Job Form mode displays target file size input (KB)",
+        "Job Form mode displays target dimensions (width x height) inputs",
+        "Auto maintain ratio toggle is available in Job Form mode",
+        "Government exam presets are available in relevant tools",
+        "Passport presets are available in passport/visa tools",
+        "Signature presets are available in signature tool",
+        "Presets auto-populate dimensions and file size targets"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/JobFormMode.tsx",
+          "operation": "create",
+          "description": "Create a reusable JobFormMode component that can be integrated into government document photo tools. Include Job Form mode toggle switch, target file size input (KB), target dimensions inputs (width x height), auto maintain ratio toggle, and preset selector with categories (Government Exam, Passport, Signature). When a preset is selected, auto-populate the dimensions and file size. Export interface for preset configurations to be used by parent components."
+        },
+        {
+          "path": "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into PassportPhotoMaker. Add Job Form mode toggle that shows/hides the Job Form controls. Wire preset selection to update canvas dimensions and target file size. Ensure passport-specific presets are available in the preset selector."
+        },
+        {
+          "path": "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into AadhaarPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/PANPhotoResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into PANPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/SSCPhotoResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into SSCPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into RailwayPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into PoliceArmyPhoto. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/VisaPhotoResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into VisaPhotoResize. Add Job Form mode toggle and wire passport-specific presets to update dimensions and target file size."
+        },
+        {
+          "path": "frontend/src/components/image-tools/SignatureResize.tsx",
+          "operation": "modify",
+          "description": "Integrate JobFormMode component into SignatureResize. Add Job Form mode toggle and wire signature-specific presets to update dimensions and target file size."
+        }
+      ]
+    },
+    {
+      "id": "REQ-47",
+      "summary": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools",
+      "acceptanceCriteria": [
+        "App.tsx includes route for /image-tools main page",
+        "App.tsx includes all 16 individual image tool routes",
+        "All routes are properly mapped to their respective components",
+        "Navigation works correctly for all image tool pages"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Add route imports for all 16 image tool page components. Add Route definitions for /image-tools (ImageToolsPage), /passport-photo-maker (PassportPhotoMakerPage), /aadhaar-photo-resize (AadhaarPhotoResizePage), /pan-photo-resize (PANPhotoResizePage), /ssc-photo-resize (SSCPhotoResizePage), /railway-photo-resize (RailwayPhotoResizePage), /police-army-photo (PoliceArmyPhotoPage), /visa-photo-resize (VisaPhotoResizePage), /signature-resize (SignatureResizePage), /image-compressor (ImageCompressorPage), /image-cropper (ImageCropperPage), /dpi-changer (DPIChangerPage), /custom-image-resize (CustomImageResizePage), /jpg-to-png (JPGToPNGPage), /png-to-jpg (PNGToJPGPage), /webp-converter (WEBPConverterPage), /background-remover (BackgroundRemoverPage). Maintain existing routes for calculators and PDF tools."
+        }
+      ]
+    },
+    {
+      "id": "REQ-48",
+      "summary": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, descriptions, FAQ sections, meta tags, structured data, and internal links",
+      "acceptanceCriteria": [
+        "Each image tool has a unique, descriptive H1 heading",
+        "Each page includes a 100-150 word description of the tool's purpose",
+        "FAQ section with 3-5 common questions is present on each page",
+        "Meta titles are unique and optimized for each tool",
+        "Meta descriptions are unique and compelling for each tool",
+        "Structured data (JSON-LD) is included for better search visibility",
+        "Open Graph tags are present for social media sharing",
+        "Internal navigation links to Calculator Hub (/calculators) and PDF Tools (/pdf-tools) are included",
+        "Page follows the same SEO wrapper pattern as existing calculator pages"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SEOWrapper.tsx",
+          "operation": "create",
+          "description": "Create a reusable SEOWrapper component that accepts props for H1, description, FAQ items, meta title, meta description, and page-specific structured data. Component should render Helmet for meta tags and Open Graph tags, display H1 and description above the tool, render FAQ section below the tool, include internal navigation links to /calculators and /pdf-tools, and inject JSON-LD structured data. Follow the pattern from existing calculator pages but extract it into a reusable wrapper."
+        }
+      ]
+    },
+    {
+      "id": "REQ-49",
+      "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility, smooth animations, AdSense-ready structure, and fast loading",
+      "acceptanceCriteria": [
+        "All image tools use consistent card-based layout design",
+        "Components properly use existing Tailwind dark mode classes",
+        "Processing animations are smooth and visually indicate progress",
+        "Semantic HTML structure supports AdSense integration",
+        "Proper heading hierarchy (h1, h2, h3) is maintained",
+        "Components load quickly with minimal initial bundle size",
+        "Layout is consistent with existing PDFTools and Calculator styling"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/ImageToolCard.tsx",
+          "operation": "create",
+          "description": "Create a reusable ImageToolCard component that provides consistent card-based layout for all image tools. Include Tailwind classes for dark/light mode (bg-white dark:bg-gray-800, etc.), rounded corners, shadows, padding, and responsive spacing. Component should accept title, children (tool content), and optional className props. Use semantic HTML with proper article/section structure for AdSense compatibility."
+        },
+        {
+          "path": "frontend/src/index.css",
+          "operation": "modify",
+          "description": "Add any necessary global styles for image tool animations if not already present, such as smooth fade-in animations, loading spinner keyframes, and progress bar transitions. Ensure all styles leverage existing OKLCH color variables for dark/light mode compatibility."
+        }
+      ]
+    },
+    {
+      "id": "REQ-50",
+      "summary": "Ensure all 16 image tool components are fully mobile responsive with touch gesture support and adaptive layouts",
+      "acceptanceCriteria": [
+        "All components display properly on 320px width screens (small mobile)",
+        "Drag & drop functionality works with touch gestures on mobile",
+        "Upload zones are touch-friendly with appropriate target sizes",
+        "Layouts adapt appropriately for tablet (768px+) and desktop (1024px+)",
+        "Text remains readable at all viewport sizes",
+        "Interactive elements are accessible via touch on mobile devices",
+        "No horizontal scrolling occurs on mobile viewports"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/FileUploadZone.tsx",
+          "operation": "modify",
+          "description": "Enhance FileUploadZone to support touch events (touchstart, touchend) in addition to mouse events. Add touch-friendly target sizes (min-height: 48px), ensure drag & drop works with touch gestures, and add responsive padding/sizing for mobile viewports (min-width: 320px). Test and verify touch compatibility across iOS and Android devices."
+        },
+        {
+          "path": "frontend/src/components/image-tools/ImageToolCard.tsx",
+          "operation": "modify",
+          "description": "Add responsive Tailwind classes to ImageToolCard for mobile (text-sm md:text-base), tablet (p-4 md:p-6), and desktop layouts. Ensure card width adapts (w-full md:max-w-2xl), buttons are touch-friendly (min-h-12), and all interactive elements have sufficient touch target sizes (44x44px minimum)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-51",
+      "summary": "Update HomePage to expand the existing Image Tools section to showcase 16 comprehensive image tools organized by category",
+      "acceptanceCriteria": [
+        "HomePage Image Tools section now displays 16 image tools (updated from 4)",
+        "Tools are organized into three categories: Government Document Photos (8), Image Processing (4), Format Conversion (4)",
+        "Section includes brief category descriptions",
+        "Clicking navigates to /image-tools main page",
+        "Existing Calculator Hub and PDF Tools sections remain unchanged",
+        "Visual layout is consistent with existing tool sections"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Expand the existing Image Tools section on HomePage to display all 16 image tools. Update the tool count from 4 to 16. Organize tools into three visible categories: Government Document Photos (8 tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (4 tools: Compressor, Cropper, DPI Changer, Custom Resize), Format Conversion (4 tools: JPG to PNG, PNG to JPG, WEBP Converter, Background Remover). Add brief category descriptions (1-2 sentences each). Ensure the 'View All Image Tools' button navigates to /image-tools. Do not modify the Calculator Hub or PDF Tools sections. Maintain the same visual card layout and styling as existing sections."
+        }
+      ]
+    },
+    {
+      "id": "REQ-52",
+      "summary": "Update Footer component to display the copyright notice with 2026 year and RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED company name",
+      "acceptanceCriteria": [
+        "Footer displays the exact copyright text: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+        "Copyright year is updated to 2026",
+        "Company name is displayed in full capitals as specified",
+        "Footer maintains existing layout and styling"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Update the copyright notice in Footer component to display '© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.' Replace any existing year (2025) with 2026 and update company name to full capitals as specified. Maintain existing Footer layout, styling, and navigation structure."
+        }
+      ]
+    }
+  ]
+}

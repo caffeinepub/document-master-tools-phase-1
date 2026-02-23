@@ -1,0 +1,96 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-23T07:40:09.410Z",
+  "summary": "The diff implements the majority of Phase 3 requirements. 16 image tool pages are created with basic structure, routing is added to App.tsx, and core image processing utilities exist. However, several requirements are partially implemented (DPI Changer, Image Cropper, Background Remover, WEBP Converter only show upload UI without full functionality), and critical features like Job Form Special Mode (REQ-46) and full SEO optimization with FAQs (REQ-48) are missing or incomplete. HomePage correctly shows 16 image tools organized into 3 categories, and Footer displays the updated copyright.",
+  "missing_requirements": [
+    {
+      "id": "REQ-46",
+      "requirement": "Implement Job Form Special Mode across all government document photo tools with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+      "reason": "PhotoResizeTool.tsx does not contain any Job Form mode toggle or special mode functionality",
+      "evidence": [
+        "frontend/src/components/image-tools/PhotoResizeTool.tsx"
+      ]
+    },
+    {
+      "id": "REQ-40",
+      "requirement": "Create DPIChanger component with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
+      "reason": "DPIChangerPage.tsx only shows file upload zone; no DPI selector, custom input, processing logic, or download functionality",
+      "evidence": [
+        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-39",
+      "requirement": "Create ImageCropper component with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
+      "reason": "ImageCropperPage.tsx only shows file upload zone; no cropping interface, aspect ratio controls, or processing logic",
+      "evidence": [
+        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-45",
+      "requirement": "Create BackgroundRemover component with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
+      "reason": "BackgroundRemoverPage.tsx only shows file upload zone; no background removal processing, library integration, or download functionality",
+      "evidence": [
+        "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-44",
+      "requirement": "Create WEBPConverter component with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download",
+      "reason": "WEBPConverterPage.tsx only shows file upload zone; no format conversion logic, quality selector, or bidirectional conversion functionality",
+      "evidence": [
+        "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-48",
+      "requirement": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links",
+      "reason": "Only PassportPhotoMakerPage has FAQ and SEO content; the other 15 image tools lack FAQ sections, meta tags, structured data, and internal links to Calculator Hub/PDF Tools",
+      "evidence": [
+        "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+        "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+        "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-41",
+      "requirement": "Create CustomImageResize component with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
+      "reason": "CustomImageResizePage uses PhotoResizeTool which does not support percentage resize mode; only pixel mode is implemented",
+      "evidence": [
+        "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+        "frontend/src/components/image-tools/PhotoResizeTool.tsx"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.85,
+  "changed_files": [
+    "frontend-file-summaries.txt",
+    "frontend/src/App.tsx",
+    "frontend/src/components/FileUploadZone.tsx",
+    "frontend/src/components/Footer.tsx",
+    "frontend/src/components/image-tools/PhotoResizeTool.tsx",
+    "frontend/src/lib/imageProcessing.ts",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/ImageToolsPage.tsx",
+    "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+    "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+    "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+    "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+    "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+    "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+    "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+    "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+    "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+    "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+    "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+    "project_state.json"
+  ]
+}

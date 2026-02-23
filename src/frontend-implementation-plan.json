@@ -1,592 +1,423 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Phase 3 - Advanced Image Tools Module",
+  "title": "Add Advanced Resume Builder Module with 14 Templates",
   "requirements": [
     {
-      "id": "REQ-29",
-      "summary": "Create ImageToolsPage component at /image-tools route displaying a comprehensive grid of 16 image tools organized by category",
+      "id": "REQ-72",
+      "summary": "Create ResumeBuilderPage component displaying 14 resume templates in two categories",
       "acceptanceCriteria": [
-        "Main landing page at /image-tools displays all 16 image tools in a grid layout",
-        "Tools are organized into clear categories: Government Documents, Image Processing, Format Conversion",
-        "Each tool card shows icon, title, and brief description",
-        "Clicking a tool card navigates to its individual route",
-        "Page layout is consistent with existing PDFToolsPage and CalculatorsPage design patterns"
+        "ResumeBuilderPage component exists at frontend/src/pages/ResumeBuilderPage.tsx",
+        "Route /resume-builder is configured in App.tsx",
+        "Page displays two distinct category sections: Indian Format and International Format",
+        "Each category shows 7 template cards with names matching the specification exactly",
+        "Template cards are clickable and lead to individual template builders"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ImageToolsPage.tsx",
+          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
           "operation": "modify",
-          "description": "Expand the existing ImageToolsPage to display all 16 image tools organized into three categories: Government Document Photos (8 tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (4 tools: Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (4 tools: JPG to PNG, PNG to JPG, WEBP Converter, Background Remover). Update the grid layout to accommodate all tools with consistent card design showing icons, titles, and descriptions. Follow the existing pattern from PDFToolsPage for tool selection and conditional rendering."
-        }
-      ]
-    },
-    {
-      "id": "REQ-30",
-      "summary": "Create PassportPhotoMaker component at /passport-photo-maker with preset dimensions, drag & drop upload, live preview, target size selector, and secure download",
-      "acceptanceCriteria": [
-        "Component accepts image upload via drag & drop or click",
-        "Preset passport photo dimensions are available",
-        "Live preview shows the resized image before download",
-        "User can select target file size between 20KB and 200KB",
-        "Aspect ratio toggle allows maintaining or changing proportions",
-        "Download generates secure blob with passport photo specifications",
-        "Display shows both original and final file sizes"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
-          "operation": "create",
-          "description": "Create PassportPhotoMaker component with FileUploadZone integration for drag & drop, canvas-based image resizing with preset passport dimensions (e.g., 2x2 inches at 300 DPI), target file size selector (20KB-200KB range), maintain aspect ratio toggle, live canvas preview, and secure blob download using URL.createObjectURL. Display original vs compressed file sizes. Process images entirely client-side using canvas API for resizing and compression."
+          "description": "Replace existing ResumeBuilderPage with new hub page displaying 14 resume templates organized into two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume). Each template card includes icon, name, brief description, and navigation to individual builder route. Add SEO component with title 'Resume Builder - 14 Professional Templates | Document Master Tools' and meta description. Include BreadcrumbNavigation and AdPlaceholder components (top banner after H1)."
         },
-        {
-          "path": "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for PassportPhotoMaker with unique H1 'Passport Photo Maker - Create Government Standard Photos', 100-150 word description about passport photo requirements, FAQ section with 3-5 questions about passport photo dimensions and file size, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools. Follow the pattern established in frontend/src/pages/calculators/AgeCalculatorPage.tsx for consistent wrapper structure."
-        }
-      ]
-    },
-    {
-      "id": "REQ-31",
-      "summary": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar specifications, target size selector, custom dimensions, and secure download",
-      "acceptanceCriteria": [
-        "Component uses Aadhaar photo dimension presets",
-        "Target file size selector works between 20KB-200KB",
-        "Custom width and height inputs are available",
-        "Aspect ratio can be maintained or changed",
-        "Live preview updates as settings change",
-        "Secure download uses blob-based approach"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
-          "operation": "create",
-          "description": "Create AadhaarPhotoResize component with FileUploadZone integration, Aadhaar-specific dimension presets (as per government specifications), target file size selector (20KB-200KB), custom width/height input fields, maintain aspect ratio toggle, canvas-based live preview, and secure blob download. Use client-side canvas API for all processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for AadhaarPhotoResize with unique H1 'Aadhaar Photo Resize - Government ID Photo Tool', 100-150 word description about Aadhaar photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-32",
-      "summary": "Create PANPhotoResize component at /pan-photo-resize with PAN card specifications, target size control, dimension customization, and secure download",
-      "acceptanceCriteria": [
-        "Component uses PAN card photo dimension presets",
-        "Target size and dimensions are customizable",
-        "Aspect ratio maintenance is toggleable",
-        "Live preview shows changes in real-time",
-        "Download provides secure blob-based file"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/PANPhotoResize.tsx",
-          "operation": "create",
-          "description": "Create PANPhotoResize component with FileUploadZone integration, PAN card-specific dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for PANPhotoResize with unique H1 'PAN Card Photo Resize - ID Photo Tool', 100-150 word description about PAN card photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-33",
-      "summary": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam specifications, government presets, target size selector, and secure download",
-      "acceptanceCriteria": [
-        "Component includes SSC government exam preset dimensions",
-        "Target file size is selectable within 20KB-200KB range",
-        "Custom dimension inputs are available",
-        "Maintain aspect ratio toggle functions correctly",
-        "Live preview displays the resized photo",
-        "Secure blob download is implemented"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/SSCPhotoResize.tsx",
-          "operation": "create",
-          "description": "Create SSCPhotoResize component with FileUploadZone integration, SSC government exam dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for SSCPhotoResize with unique H1 'SSC Photo Resize - Government Exam Photo Tool', 100-150 word description about SSC exam photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-34",
-      "summary": "Create RailwayPhotoResize component at /railway-photo-resize with Railway exam specifications, target size selector, and secure download",
-      "acceptanceCriteria": [
-        "Component uses Railway exam preset photo dimensions",
-        "Target size selector ranges from 20KB to 200KB",
-        "Custom width and height can be specified",
-        "Aspect ratio maintenance is optional",
-        "Live preview shows the adjusted image",
-        "Download uses secure blob generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
-          "operation": "create",
-          "description": "Create RailwayPhotoResize component with FileUploadZone integration, Indian Railway exam dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for RailwayPhotoResize with unique H1 'Railway Photo Resize - Railway Exam Photo Tool', 100-150 word description about Railway exam photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-35",
-      "summary": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment specifications, target size control, and secure download",
-      "acceptanceCriteria": [
-        "Component includes Police/Army recruitment photo presets",
-        "Target file size is adjustable between 20KB-200KB",
-        "Custom dimensions can be entered",
-        "Aspect ratio toggle works correctly",
-        "Live preview displays before download",
-        "Secure blob-based download is provided"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
-          "operation": "create",
-          "description": "Create PoliceArmyPhoto component with FileUploadZone integration, Police and Army recruitment dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for PoliceArmyPhoto with unique H1 'Police Army Photo Resize - Recruitment Photo Tool', 100-150 word description about Police and Army recruitment photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-36",
-      "summary": "Create VisaPhotoResize component at /visa-photo-resize with international visa specifications, target size selector, and secure download",
-      "acceptanceCriteria": [
-        "Component uses international visa photo dimension presets",
-        "Target size selector operates between 20KB-200KB",
-        "Custom width and height inputs are available",
-        "Aspect ratio can be locked or unlocked",
-        "Live preview shows the resized visa photo",
-        "Download generates secure blob"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/VisaPhotoResize.tsx",
-          "operation": "create",
-          "description": "Create VisaPhotoResize component with FileUploadZone integration, international visa dimension presets (US, UK, Schengen, etc.), target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for VisaPhotoResize with unique H1 'Visa Photo Resize - International Visa Photo Tool', 100-150 word description about international visa photo requirements, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-37",
-      "summary": "Create SignatureResize component at /signature-resize with government exam signature presets, target size selector, and secure download",
-      "acceptanceCriteria": [
-        "Component includes signature dimension presets for government exams/applications",
-        "Target file size is selectable from 20KB to 200KB",
-        "Custom dimensions can be specified",
-        "Maintain aspect ratio toggle functions",
-        "Live preview displays the resized signature",
-        "Secure blob download is implemented"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/SignatureResize.tsx",
-          "operation": "create",
-          "description": "Create SignatureResize component with FileUploadZone integration, government exam and application signature dimension presets, target file size selector (20KB-200KB), custom dimension inputs, maintain aspect ratio toggle, canvas-based live preview, and secure blob download using client-side processing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for SignatureResize with unique H1 'Signature Resize - Government Application Signature Tool', 100-150 word description about signature requirements for government applications, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-38",
-      "summary": "Create ImageCompressor component at /image-compressor with compression level selector, target size control, live preview, size comparison, and secure download",
-      "acceptanceCriteria": [
-        "Compression level can be adjusted with a slider or preset options",
-        "Target file size can be specified between 20KB-200KB",
-        "Live preview shows compressed image before download",
-        "Display shows both original and compressed file sizes with comparison",
-        "Reset button clears all inputs and preview",
-        "Processing happens entirely in the browser using client-side libraries",
-        "Download provides secure blob-based file"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/ImageCompressorTool.tsx",
-          "operation": "modify",
-          "description": "Enhance the existing ImageCompressorTool component to add target file size selector (20KB-200KB range), advanced compression controls, reset button functionality, and improved file size comparison display showing original vs compressed with percentage reduction. Maintain existing quality slider and client-side canvas-based compression."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for ImageCompressor with unique H1 'Image Compressor - Reduce Image File Size', 100-150 word description about image compression benefits and use cases, FAQ section with 3-5 questions about compression quality and file size, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-39",
-      "summary": "Create ImageCropper component at /image-cropper with drag-based crop selection, aspect ratio presets, pixel resize, live preview, and secure download",
-      "acceptanceCriteria": [
-        "User can select crop area by dragging on the image",
-        "Aspect ratio presets (1:1, 4:3, 16:9, free) are available",
-        "Aspect ratio can be locked or free",
-        "Cropped image can be resized by pixel dimensions",
-        "Live preview shows the cropped result",
-        "Download uses secure blob generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/ImageCropper.tsx",
-          "operation": "create",
-          "description": "Create ImageCropper component with FileUploadZone integration, interactive canvas-based crop area selection with draggable handles, aspect ratio preset buttons (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, post-crop pixel resize inputs (width/height), canvas-based live preview, and secure blob download. Implement client-side cropping using canvas API with mouse/touch event handlers for drag selection."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for ImageCropper with unique H1 'Image Cropper - Crop and Resize Photos Online', 100-150 word description about image cropping use cases and aspect ratios, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-40",
-      "summary": "Create DPIChanger component at /dpi-changer with DPI preset selector, custom DPI input, live preview, DPI display, and secure download",
-      "acceptanceCriteria": [
-        "DPI can be selected from presets: 100, 200, or 300 DPI",
-        "Custom DPI value can be entered",
-        "Live preview shows the image with adjusted DPI metadata",
-        "Display shows original DPI and new DPI values",
-        "Download generates secure blob with updated DPI"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/DPIChanger.tsx",
-          "operation": "create",
-          "description": "Create DPIChanger component with FileUploadZone integration, DPI preset buttons (100, 200, 300 DPI), custom DPI input field, canvas-based image processing to embed DPI metadata, live preview, original vs new DPI display, and secure blob download. Use client-side canvas API and EXIF metadata manipulation libraries for DPI changes."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for DPIChanger with unique H1 'DPI Changer - Change Image Resolution', 100-150 word description about DPI importance for printing and digital use, FAQ section with 3-5 questions about DPI settings, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-41",
-      "summary": "Create CustomImageResize component at /custom-image-resize with width/height inputs, aspect ratio toggle, pixel/percentage modes, live preview, and secure download",
-      "acceptanceCriteria": [
-        "Width and height can be entered in pixels",
-        "Aspect ratio maintenance is toggleable",
-        "Live preview updates as dimensions change",
-        "Display shows original dimensions and new dimensions",
-        "Download provides secure blob-based file"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/CustomImageResize.tsx",
-          "operation": "create",
-          "description": "Create CustomImageResize component with FileUploadZone integration, width and height input fields (pixels), maintain aspect ratio toggle with auto-calculation, canvas-based live preview that updates on dimension changes, original vs new dimensions display, and secure blob download using client-side canvas API for resizing."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for CustomImageResize with unique H1 'Custom Image Resize - Resize Photos to Any Dimension', 100-150 word description about custom image resizing use cases, FAQ section with 3-5 questions about aspect ratio and dimensions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-42",
-      "summary": "Create JPGToPNG component at /jpg-to-png with JPG upload, instant PNG conversion, live preview, file size comparison, and secure download",
-      "acceptanceCriteria": [
-        "Component accepts JPG/JPEG file uploads",
-        "Conversion to PNG format happens instantly in browser",
-        "Live preview shows the converted PNG image",
-        "Display shows original (JPG) and converted (PNG) file sizes",
-        "Download uses secure blob generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/JPGToPNG.tsx",
-          "operation": "create",
-          "description": "Create JPGToPNG component with FileUploadZone integration (accept JPG/JPEG only), canvas-based instant format conversion to PNG, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with 'image/png' type for client-side conversion."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for JPGToPNG with unique H1 'JPG to PNG Converter - Convert JPEG to PNG Online', 100-150 word description about JPG to PNG conversion benefits and transparency support, FAQ section with 3-5 questions, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-43",
-      "summary": "Create PNGToJPG component at /png-to-jpg with PNG upload, instant JPG conversion with quality selection, live preview, file size comparison, and secure download",
-      "acceptanceCriteria": [
-        "Component accepts PNG file uploads",
-        "Conversion to JPG format happens instantly in browser",
-        "Quality/compression level can be adjusted",
-        "Live preview shows the converted JPG image",
-        "Display shows original (PNG) and converted (JPG) file sizes",
-        "Download uses secure blob generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/PNGToJPG.tsx",
-          "operation": "create",
-          "description": "Create PNGToJPG component with FileUploadZone integration (accept PNG only), quality/compression slider (0.1-1.0), canvas-based instant format conversion to JPG, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with 'image/jpeg' type and quality parameter for client-side conversion."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for PNGToJPG with unique H1 'PNG to JPG Converter - Convert PNG to JPEG Online', 100-150 word description about PNG to JPG conversion and file size reduction, FAQ section with 3-5 questions about quality settings, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-44",
-      "summary": "Create WEBPConverter component at /webp-converter with bidirectional conversion, quality selector, live preview, file size comparison, and secure download",
-      "acceptanceCriteria": [
-        "Component accepts JPG, PNG, and WEBP uploads",
-        "Can convert to WEBP from other formats",
-        "Can convert from WEBP to JPG or PNG",
-        "Quality selector is available for compression",
-        "Live preview shows the converted image",
-        "Display shows original and converted file sizes",
-        "Download uses secure blob generation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/WEBPConverter.tsx",
-          "operation": "create",
-          "description": "Create WEBPConverter component with FileUploadZone integration (accept JPG, PNG, WEBP), output format selector (WEBP, JPG, PNG), quality slider for compression, canvas-based bidirectional format conversion, live preview of converted image, original vs converted file size comparison display, and secure blob download. Use canvas.toBlob with appropriate MIME types for client-side conversion."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for WEBPConverter with unique H1 'WEBP Converter - Convert Images to and from WEBP', 100-150 word description about WEBP format benefits and browser support, FAQ section with 3-5 questions about WEBP compression and compatibility, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-45",
-      "summary": "Create BackgroundRemover component at /background-remover with client-side background removal, drag & drop upload, processing animation, live preview, and secure PNG download",
-      "acceptanceCriteria": [
-        "Background removal happens entirely in browser without external API calls",
-        "Component accepts image uploads via drag & drop",
-        "Processing animation displays during background removal",
-        "Live preview shows image with transparent background",
-        "Download generates PNG with transparency as secure blob",
-        "Uses browser-compatible background removal library"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/BackgroundRemoverTool.tsx",
-          "operation": "modify",
-          "description": "Enhance the existing BackgroundRemoverTool component to integrate a client-side background removal library (such as @imgly/background-removal or similar browser-compatible library), add processing animation with progress indicator, improve live preview with transparent background checkerboard pattern, and ensure PNG output with transparency. Replace mock processing with actual client-side background removal algorithm. Maintain FileUploadZone integration and secure blob download."
-        },
-        {
-          "path": "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-          "operation": "create",
-          "description": "Create SEO-optimized page wrapper for BackgroundRemover with unique H1 'Background Remover - Remove Image Background Online', 100-150 word description about background removal use cases and transparency, FAQ section with 3-5 questions about processing time and supported formats, meta tags, Open Graph tags, structured data (JSON-LD), and internal links to /calculators and /pdf-tools."
-        }
-      ]
-    },
-    {
-      "id": "REQ-46",
-      "summary": "Implement Job Form Special Mode across all government document photo tools with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
-      "acceptanceCriteria": [
-        "All government document tools have a Job Form mode toggle",
-        "Job Form mode displays target file size input (KB)",
-        "Job Form mode displays target dimensions (width x height) inputs",
-        "Auto maintain ratio toggle is available in Job Form mode",
-        "Government exam presets are available in relevant tools",
-        "Passport presets are available in passport/visa tools",
-        "Signature presets are available in signature tool",
-        "Presets auto-populate dimensions and file size targets"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/JobFormMode.tsx",
-          "operation": "create",
-          "description": "Create a reusable JobFormMode component that can be integrated into government document photo tools. Include Job Form mode toggle switch, target file size input (KB), target dimensions inputs (width x height), auto maintain ratio toggle, and preset selector with categories (Government Exam, Passport, Signature). When a preset is selected, auto-populate the dimensions and file size. Export interface for preset configurations to be used by parent components."
-        },
-        {
-          "path": "frontend/src/components/image-tools/PassportPhotoMaker.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into PassportPhotoMaker. Add Job Form mode toggle that shows/hides the Job Form controls. Wire preset selection to update canvas dimensions and target file size. Ensure passport-specific presets are available in the preset selector."
-        },
-        {
-          "path": "frontend/src/components/image-tools/AadhaarPhotoResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into AadhaarPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/PANPhotoResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into PANPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/SSCPhotoResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into SSCPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/RailwayPhotoResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into RailwayPhotoResize. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/PoliceArmyPhoto.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into PoliceArmyPhoto. Add Job Form mode toggle and wire government exam presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/VisaPhotoResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into VisaPhotoResize. Add Job Form mode toggle and wire passport-specific presets to update dimensions and target file size."
-        },
-        {
-          "path": "frontend/src/components/image-tools/SignatureResize.tsx",
-          "operation": "modify",
-          "description": "Integrate JobFormMode component into SignatureResize. Add Job Form mode toggle and wire signature-specific presets to update dimensions and target file size."
-        }
-      ]
-    },
-    {
-      "id": "REQ-47",
-      "summary": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools",
-      "acceptanceCriteria": [
-        "App.tsx includes route for /image-tools main page",
-        "App.tsx includes all 16 individual image tool routes",
-        "All routes are properly mapped to their respective components",
-        "Navigation works correctly for all image tool pages"
-      ],
-      "file_operations": [
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add route imports for all 16 image tool page components. Add Route definitions for /image-tools (ImageToolsPage), /passport-photo-maker (PassportPhotoMakerPage), /aadhaar-photo-resize (AadhaarPhotoResizePage), /pan-photo-resize (PANPhotoResizePage), /ssc-photo-resize (SSCPhotoResizePage), /railway-photo-resize (RailwayPhotoResizePage), /police-army-photo (PoliceArmyPhotoPage), /visa-photo-resize (VisaPhotoResizePage), /signature-resize (SignatureResizePage), /image-compressor (ImageCompressorPage), /image-cropper (ImageCropperPage), /dpi-changer (DPIChangerPage), /custom-image-resize (CustomImageResizePage), /jpg-to-png (JPGToPNGPage), /png-to-jpg (PNGToJPGPage), /webp-converter (WEBPConverterPage), /background-remover (BackgroundRemoverPage). Maintain existing routes for calculators and PDF tools."
+          "description": "Add route configuration for /resume-builder displaying ResumeBuilderPage and 14 individual template routes following pattern /resume-builder/:templateSlug where templateSlug matches: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume. Each template route renders ResumeTemplateBuilderPage component with template prop."
         }
       ]
     },
     {
-      "id": "REQ-48",
-      "summary": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, descriptions, FAQ sections, meta tags, structured data, and internal links",
+      "id": "REQ-73",
+      "summary": "Implement multi-step form wizard with progressive sections and add/remove functionality",
       "acceptanceCriteria": [
-        "Each image tool has a unique, descriptive H1 heading",
-        "Each page includes a 100-150 word description of the tool's purpose",
-        "FAQ section with 3-5 common questions is present on each page",
-        "Meta titles are unique and optimized for each tool",
-        "Meta descriptions are unique and compelling for each tool",
-        "Structured data (JSON-LD) is included for better search visibility",
-        "Open Graph tags are present for social media sharing",
-        "Internal navigation links to Calculator Hub (/calculators) and PDF Tools (/pdf-tools) are included",
-        "Page follows the same SEO wrapper pattern as existing calculator pages"
+        "Form wizard component displays step indicators showing current progress",
+        "Each section (Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) has dedicated form fields",
+        "Users can add multiple entries for Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References",
+        "Each repeatable section has Add and Remove buttons",
+        "Form validates required fields before allowing progression to next step",
+        "Navigation between steps works via Next/Previous buttons"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/SEOWrapper.tsx",
+          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
           "operation": "create",
-          "description": "Create a reusable SEOWrapper component that accepts props for H1, description, FAQ items, meta title, meta description, and page-specific structured data. Component should render Helmet for meta tags and Open Graph tags, display H1 and description above the tool, render FAQ section below the tool, include internal navigation links to /calculators and /pdf-tools, and inject JSON-LD structured data. Follow the pattern from existing calculator pages but extract it into a reusable wrapper."
-        }
-      ]
-    },
-    {
-      "id": "REQ-49",
-      "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility, smooth animations, AdSense-ready structure, and fast loading",
-      "acceptanceCriteria": [
-        "All image tools use consistent card-based layout design",
-        "Components properly use existing Tailwind dark mode classes",
-        "Processing animations are smooth and visually indicate progress",
-        "Semantic HTML structure supports AdSense integration",
-        "Proper heading hierarchy (h1, h2, h3) is maintained",
-        "Components load quickly with minimal initial bundle size",
-        "Layout is consistent with existing PDFTools and Calculator styling"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/image-tools/ImageToolCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable ImageToolCard component that provides consistent card-based layout for all image tools. Include Tailwind classes for dark/light mode (bg-white dark:bg-gray-800, etc.), rounded corners, shadows, padding, and responsive spacing. Component should accept title, children (tool content), and optional className props. Use semantic HTML with proper article/section structure for AdSense compatibility."
+          "description": "Create multi-step form wizard component with step indicator showing 9 sections: Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References. Implement state management for current step, form data, and validation. Personal Info section includes fields: name, email, phone, address, LinkedIn, portfolio URL. Repeatable sections (Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) include Add Entry and Remove buttons with dynamic form arrays. Each section validates required fields before allowing Next step navigation. Include Previous/Next buttons with disabled states based on validation. Emit onChange events to parent component with complete form data."
         },
         {
-          "path": "frontend/src/index.css",
-          "operation": "modify",
-          "description": "Add any necessary global styles for image tool animations if not already present, such as smooth fade-in animations, loading spinner keyframes, and progress bar transitions. Ensure all styles leverage existing OKLCH color variables for dark/light mode compatibility."
+          "path": "frontend/src/types/resume.ts",
+          "operation": "create",
+          "description": "Define TypeScript interfaces for resume data structures including ResumeData (root), PersonalInfo, Education, Experience, Skill, Project, Certification, Language, Achievement, Reference. Include optional fields and validation constraints. Define TemplateType enum with all 14 template names as string literals. Define ColorTheme type with palette name and color values. Export all types for use across resume components."
         }
       ]
     },
     {
-      "id": "REQ-50",
-      "summary": "Ensure all 16 image tool components are fully mobile responsive with touch gesture support and adaptive layouts",
+      "id": "REQ-74",
+      "summary": "Create live preview component with real-time rendering matching selected template",
       "acceptanceCriteria": [
-        "All components display properly on 320px width screens (small mobile)",
-        "Drag & drop functionality works with touch gestures on mobile",
-        "Upload zones are touch-friendly with appropriate target sizes",
-        "Layouts adapt appropriately for tablet (768px+) and desktop (1024px+)",
-        "Text remains readable at all viewport sizes",
-        "Interactive elements are accessible via touch on mobile devices",
-        "No horizontal scrolling occurs on mobile viewports"
+        "Preview pane displays side-by-side with form on desktop layouts",
+        "Preview updates in real-time as user types or modifies any field",
+        "Preview shows exact layout and styling that will appear in downloaded PDF",
+        "Preview is scrollable and maintains A4 aspect ratio",
+        "All template-specific formatting rules are applied in preview"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/FileUploadZone.tsx",
-          "operation": "modify",
-          "description": "Enhance FileUploadZone to support touch events (touchstart, touchend) in addition to mouse events. Add touch-friendly target sizes (min-height: 48px), ensure drag & drop works with touch gestures, and add responsive padding/sizing for mobile viewports (min-width: 320px). Test and verify touch compatibility across iOS and Android devices."
+          "path": "frontend/src/components/resume/ResumePreview.tsx",
+          "operation": "create",
+          "description": "Create live preview component that renders resume in A4 aspect ratio (210mm x 297mm / 8.27\" x 11.69\"). Accept props: resumeData, selectedTemplate, colorTheme. Use React.memo for performance optimization. Render template-specific layout by importing and conditionally rendering template components based on selectedTemplate prop. Apply colorTheme to headers, borders, and accent elements. Maintain scrollable container with fixed aspect ratio. Update instantly on prop changes without re-mount."
         },
         {
-          "path": "frontend/src/components/image-tools/ImageToolCard.tsx",
-          "operation": "modify",
-          "description": "Add responsive Tailwind classes to ImageToolCard for mobile (text-sm md:text-base), tablet (p-4 md:p-6), and desktop layouts. Ensure card width adapts (w-full md:max-w-2xl), buttons are touch-friendly (min-h-12), and all interactive elements have sufficient touch target sizes (44x44px minimum)."
+          "path": "frontend/src/components/resume/templates/FresherResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Fresher Resume template component for Indian job market. Layout: header with photo (if provided), name, contact details, professional summary, education section, skills with bullet points, projects, certifications, languages. Apply template-specific typography and spacing. Accept resumeData and colorTheme props. Use Tailwind classes for styling matching A4 proportions."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/GovernmentJobResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Government Job Resume template component for Indian government applications. Layout: formal header with photo, personal details in structured format, education with marks/grades, experience in reverse chronological order, skills, certifications, languages, references. Use formal typography and conservative styling. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/PrivateJobResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Private Job Resume template component for Indian private sector. Layout: modern header with photo, professional summary, key skills highlighted, experience with achievements, education, projects, certifications. Use contemporary styling with moderate color accents. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/HindiResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Hindi Resume template component with bilingual support. Layout: header with photo, personal info, professional summary in Hindi, education, experience, skills in Hindi/English mix. Use Hindi-friendly fonts and RTL-aware spacing. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/BiodataForMarriageTemplate.tsx",
+          "operation": "create",
+          "description": "Create Biodata for Marriage template component following Indian matrimonial format. Layout: centered photo, personal details (name, DOB, height, religion, caste, gotra), family details, education, profession, contact information. Use traditional styling with decorative borders. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/TeacherResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Teacher Resume template component for education sector. Layout: header with photo, teaching philosophy/summary, education credentials, teaching experience with subjects taught, certifications, skills (classroom management, curriculum development), achievements, references. Use professional academic styling. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/PoliceArmyResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Police/Army Resume template component for defense services. Layout: formal header with photo, personal details, physical attributes, education, training/certifications, relevant experience, skills, references. Use military-style structured format with clear sections. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/ATSFriendlyResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create ATS Friendly Resume template component optimized for applicant tracking systems. Layout: no photo, simple header, contact info, professional summary with keywords, experience with action verbs and metrics, education, skills in comma-separated format, certifications. Use minimal styling, standard fonts, no tables/graphics. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/USResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create US Resume template component following American format. Layout: no photo, header with name and contact, professional summary, experience with quantified achievements, education, skills, certifications. Use clean modern design with strategic white space. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/UKCVTemplate.tsx",
+          "operation": "create",
+          "description": "Create UK CV template component following British format. Layout: optional small photo, header, personal profile, work experience (detailed and chronological), education, key skills, interests/hobbies, references available upon request. Use British English conventions. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/CanadaResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Canada Resume template component following Canadian format. Layout: no photo, header, professional summary, core competencies, professional experience with achievements, education, certifications, volunteer work. Use clean professional layout. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/EuropassCVTemplate.tsx",
+          "operation": "create",
+          "description": "Create Europass CV template component following EU standard format. Layout: photo (optional), personal information, work experience, education and training, personal skills (language skills with CEFR levels, communication skills, organizational skills, digital skills), additional information. Use standardized Europass section headings and formatting. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/CreativeResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Creative Resume template component for design/creative industries. Layout: asymmetric header with optional photo, visual skills representation (progress bars/icons), experience with project highlights, education, portfolio links prominently displayed. Use bold colors, modern typography, creative visual elements. Accept resumeData and colorTheme props."
+        },
+        {
+          "path": "frontend/src/components/resume/templates/CorporateResumeTemplate.tsx",
+          "operation": "create",
+          "description": "Create Corporate Resume template component for executive/corporate positions. Layout: no photo, executive summary, core competencies grid, professional experience with leadership achievements, education, board memberships/affiliations, speaking engagements. Use sophisticated minimal design with elegant typography. Accept resumeData and colorTheme props."
         }
       ]
     },
     {
-      "id": "REQ-51",
-      "summary": "Update HomePage to expand the existing Image Tools section to showcase 16 comprehensive image tools organized by category",
+      "id": "REQ-75",
+      "summary": "Add photo upload with drag-and-drop, crop/resize, and template-aware placement",
       "acceptanceCriteria": [
-        "HomePage Image Tools section now displays 16 image tools (updated from 4)",
-        "Tools are organized into three categories: Government Document Photos (8), Image Processing (4), Format Conversion (4)",
-        "Section includes brief category descriptions",
-        "Clicking navigates to /image-tools main page",
-        "Existing Calculator Hub and PDF Tools sections remain unchanged",
-        "Visual layout is consistent with existing tool sections"
+        "Photo upload section supports drag-and-drop and click-to-upload",
+        "Uploaded image displays in crop/resize preview with aspect ratio controls",
+        "Indian format templates display uploaded photo in header or sidebar",
+        "International format templates either hide photo or show it minimally based on template design",
+        "Photo can be removed after upload"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/resume/PhotoUploadSection.tsx",
+          "operation": "create",
+          "description": "Create photo upload component with drag-and-drop zone and click-to-upload button. Handle image file validation (JPEG, PNG, max 5MB). After upload, display crop/resize preview with aspect ratio selector (1:1, 3:4, 4:3). Provide crop controls using HTML canvas or react-easy-crop library. Include Remove Photo button. Emit cropped image data URL to parent component. Show upload instructions and file size guidance."
+        },
+        {
+          "path": "frontend/src/hooks/usePhotoUpload.ts",
+          "operation": "create",
+          "description": "Create custom hook for managing photo upload state and operations. Handle file reading, validation, crop state, aspect ratio changes, and final cropped image generation. Return uploadedPhoto, cropSettings, handleFileUpload, handleCrop, handleRemove, and isProcessing state. Use FileReader API for local file reading and Canvas API for cropping."
+        }
+      ]
+    },
+    {
+      "id": "REQ-76",
+      "summary": "Implement custom color theme selector with 6 predefined palettes",
+      "acceptanceCriteria": [
+        "Color theme selector displays 6+ color palette options",
+        "Selecting a color palette instantly updates preview with new colors",
+        "Colors apply to headers, borders, section dividers, and accent elements",
+        "Text remains readable with proper contrast ratios",
+        "Selected theme persists when downloading PDF"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/resume/ColorThemeSelector.tsx",
+          "operation": "create",
+          "description": "Create color theme selector component displaying 6 predefined color palettes: Professional Blue (#1e40af, #3b82f6, #dbeafe), Corporate Black (#1f2937, #4b5563, #e5e7eb), Creative Purple (#7c3aed, #a78bfa, #ede9fe), Modern Teal (#0d9488, #14b8a6, #ccfbf1), Classic Gray (#374151, #6b7280, #f3f4f6), Elegant Maroon (#991b1b, #dc2626, #fee2e2). Display palette swatches as clickable cards showing primary, secondary, and light colors. Emit selected theme to parent component. Show checkmark on selected theme."
+        },
+        {
+          "path": "frontend/src/lib/colorThemes.ts",
+          "operation": "create",
+          "description": "Define color theme constants and utility functions. Export COLOR_THEMES array with 6 predefined palettes, each containing name, primary, secondary, light, and text color values. Provide applyThemeToElement utility function that accepts theme and returns CSS class mappings. Include contrast ratio validation function ensuring text readability (WCAG AA compliance)."
+        }
+      ]
+    },
+    {
+      "id": "REQ-77",
+      "summary": "Create auto-formatting logic for skills, dates, phone numbers, and capitalization",
+      "acceptanceCriteria": [
+        "Skills entries automatically convert to bullet point format",
+        "Date inputs auto-format to MM/YYYY pattern",
+        "Phone numbers format to +91-XXXXX-XXXXX for Indian templates",
+        "Phone numbers format to international standard for International templates",
+        "Proper nouns in name fields auto-capitalize first letters",
+        "Consistent line spacing and margins apply across all sections"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/resumeFormatters.ts",
+          "operation": "create",
+          "description": "Create formatting utility functions: formatSkillsAsBullets (converts comma-separated or array to bullet list), formatDateToMMYYYY (accepts Date or string, returns MM/YYYY), formatPhoneNumber (detects template category, formats to +91-XXXXX-XXXXX for Indian, international E.164 for others), capitalizeProperNouns (capitalizes first letter of each word in names), formatExperienceDuration (calculates duration between dates, formats as 'X years Y months'). Export all formatters for use in form components and templates."
+        },
+        {
+          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "operation": "modify",
+          "description": "Import formatting functions from resumeFormatters.ts. Apply formatDateToMMYYYY to date inputs onChange. Apply formatPhoneNumber to phone field based on selected template category. Apply capitalizeProperNouns to name fields onChange. Auto-format skills section entries using formatSkillsAsBullets before passing to preview. Ensure formatted values update form state and trigger preview updates."
+        }
+      ]
+    },
+    {
+      "id": "REQ-78",
+      "summary": "Implement PDF download with A4 sizing, intelligent page breaks, and embedded fonts",
+      "acceptanceCriteria": [
+        "Download PDF button generates PDF file with user's resume data",
+        "PDF uses A4 page dimensions (210mm x 297mm)",
+        "Page breaks intelligently avoid splitting sections or list items",
+        "Fonts are embedded in PDF for consistent cross-platform rendering",
+        "Downloaded PDF exactly matches live preview styling",
+        "PDF filename includes template name and timestamp"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/pdfGenerator.ts",
+          "operation": "create",
+          "description": "Create PDF generation utility using jsPDF library. Implement generateResumePDF function accepting resumeData, selectedTemplate, colorTheme. Configure jsPDF with A4 dimensions (210mm x 297mm), orientation portrait. Use html2canvas to capture preview component as image, then add to PDF with proper scaling. Implement intelligent page break detection by analyzing section heights and inserting manual page breaks before sections that would split. Embed fonts using jsPDF font API. Generate filename: 'Resume_{TemplateName}_{Timestamp}.pdf'. Return download promise."
+        },
+        {
+          "path": "frontend/src/hooks/usePDFDownload.ts",
+          "operation": "create",
+          "description": "Create custom hook for PDF download functionality. Manage download state (idle, generating, ready, error). Provide handleDownloadPDF function that calls generateResumePDF, handles loading states, error catching, and triggers browser download. Return isGenerating, downloadError, handleDownloadPDF, downloadProgress (0-100). Show toast notifications on success/failure."
+        },
+        {
+          "path": "frontend/src/components/resume/DownloadPDFButton.tsx",
+          "operation": "create",
+          "description": "Create Download PDF button component using usePDFDownload hook. Display button with download icon, show loading spinner when isGenerating is true, disable button during generation. Show progress bar if downloadProgress available. Handle click to trigger PDF generation and download. Use shadcn Button component with primary variant."
+        }
+      ]
+    },
+    {
+      "id": "REQ-79",
+      "summary": "Add basic AI summary generator using local logic without external APIs",
+      "acceptanceCriteria": [
+        "AI Summary Generator button appears in Personal Info section",
+        "Generator analyzes filled experience and skills data locally",
+        "Generated summary is 2-3 sentences with professional tone",
+        "Summary includes quantifiable experience (years) and key skills",
+        "Summary uses action words and achievement-focused language",
+        "No external API calls are made during generation",
+        "User can edit generated summary after creation"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/lib/summaryGenerator.ts",
+          "operation": "create",
+          "description": "Create local AI summary generator using rule-based logic. Implement generateProfessionalSummary function analyzing experience array (calculate total years), skills array (extract top 3-5 skills), and achievements. Use template patterns: '[X] years of experience in [domain] with expertise in [skills]. Proven track record of [achievement]. Seeking to leverage [skills] in [objective].' Include action verb dictionary (developed, managed, led, implemented, optimized). Randomly select verbs and combine with user data. No external API calls. Return 2-3 sentence summary string."
+        },
+        {
+          "path": "frontend/src/components/resume/SummaryGeneratorButton.tsx",
+          "operation": "create",
+          "description": "Create AI Summary Generator button component for Personal Info section. Display button with sparkles icon and 'Generate Summary' label. On click, call generateProfessionalSummary with current form data (experience, skills, achievements), show loading state (1-2 second delay for realism), populate professional summary field with generated text. User can edit generated summary in textarea. Include regenerate option. Use shadcn Button component with secondary variant."
+        }
+      ]
+    },
+    {
+      "id": "REQ-80",
+      "summary": "Create individual SEO-friendly pages for each of 14 resume templates with unique meta, FAQs, and internal links",
+      "acceptanceCriteria": [
+        "Each of 14 templates has individual route at /resume-builder/[template-slug]",
+        "SEO component is integrated with unique title for each template",
+        "Meta descriptions are 150-160 characters highlighting template benefits",
+        "Open Graph tags include og:title, og:description, og:image",
+        "FAQ section with 3-5 questions specific to each template format",
+        "Internal links to Calculator Hub, PDF Tools, and Image Tools are present",
+        "BreadcrumbNavigation component shows Home > Resume Builder > [Template Name]"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+          "operation": "create",
+          "description": "Create individual resume template builder page component accepting templateSlug param from route. Map templateSlug to template configuration (name, description, FAQs, seoTitle, metaDescription). Render SEO component with unique title '[Template Name] Resume Builder - Free Online Tool | Document Master Tools' and meta description highlighting template benefits. Include Open Graph tags (og:title, og:description, og:image using generated/resume-builder-icon-transparent.dim_64x64.png). Display BreadcrumbNavigation with Home > Resume Builder > [Template Name]. Render ResumeFormWizard and ResumePreview side-by-side with selected template. Include AdPlaceholder components (top banner after H1, in-content between form and preview, sidebar on >1024px). Add template-specific FAQ section with 3-5 Q&As. Include internal links section to Calculator Hub, PDF Tools, Image Tools at bottom."
+        },
+        {
+          "path": "frontend/src/data/resumeTemplateConfigs.ts",
+          "operation": "create",
+          "description": "Define configuration objects for all 14 resume templates. Each config includes: slug, name, category (Indian/International), description, seoTitle, metaDescription (150-160 chars), faqs array with 3-5 template-specific questions and answers, targetAudience, keyFeatures array. Export RESUME_TEMPLATE_CONFIGS array and getTemplateBySlug utility function."
+        }
+      ]
+    },
+    {
+      "id": "REQ-81",
+      "summary": "Ensure full mobile responsiveness for all Resume Builder components",
+      "acceptanceCriteria": [
+        "Resume Builder hub displays template grid in 1 column on mobile (<768px)",
+        "Form wizard uses vertical layout on mobile with collapsible sections",
+        "All input fields are touch-friendly with appropriate sizing",
+        "Live preview appears below form on mobile devices",
+        "Preview scales properly for mobile viewport widths",
+        "Navigation and buttons are easily tappable on touch devices",
+        "Layout remains functional and usable on 320px width screens"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
+          "operation": "modify",
+          "description": "Add responsive grid classes for template cards: grid-cols-1 (mobile default), md:grid-cols-2 (tablets ≥768px), lg:grid-cols-3 (desktop ≥1024px). Ensure cards stack vertically on mobile with full width. Test layout at 320px minimum width."
+        },
+        {
+          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "operation": "modify",
+          "description": "Wrap form in responsive container with vertical layout on mobile. Implement collapsible sections using shadcn Accordion component on mobile (<768px), expanded sections on desktop. Increase input field min-height to 44px for touch-friendly interaction. Add responsive step indicator: horizontal on desktop, vertical/collapsed on mobile. Ensure Next/Previous buttons are large enough (min 44x44px) and properly spaced for touch."
+        },
+        {
+          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+          "operation": "modify",
+          "description": "Implement responsive layout: side-by-side form and preview on desktop (≥1024px) using grid-cols-2, stacked layout on mobile with form above preview. Preview component below form on mobile with reduced scale (80-90%) to fit mobile viewport. Hide sidebar ads on mobile. Ensure all navigation buttons and CTAs are touch-friendly (44px minimum). Test scrolling behavior on mobile devices."
+        }
+      ]
+    },
+    {
+      "id": "REQ-82",
+      "summary": "Style Resume Builder with modern UI matching Tailwind design system",
+      "acceptanceCriteria": [
+        "Form sections use card-based layout with rounded corners and shadows",
+        "Step transitions have smooth fade or slide animations",
+        "Progress indicator displays percentage completion",
+        "Save Draft button stores form data to localStorage",
+        "Primary action buttons (Next, Download PDF) use consistent brand colors",
+        "Spacing and typography match existing tool pages",
+        "Color scheme follows Tailwind configuration with light/dark mode support"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "operation": "modify",
+          "description": "Style form sections using shadcn Card component with rounded-lg and shadow-md classes. Implement progress indicator showing completion percentage (calculated from filled required fields / total required fields * 100). Add smooth transitions between steps using Tailwind transition-opacity duration-300. Create Save Draft button that serializes current form state to localStorage with key 'resume_draft_{template}'. Use primary brand colors for Next and Download PDF buttons (refer to frontend/tailwind.config.js). Match spacing (space-y-6 for sections, space-y-4 for fields) and typography (text-lg for headings, text-sm for labels) with existing calculator/PDF tool pages."
+        },
+        {
+          "path": "frontend/src/hooks/useDraftStorage.ts",
+          "operation": "create",
+          "description": "Create custom hook for managing resume draft storage. Implement saveDraft function serializing resumeData to JSON and storing in localStorage with timestamp. Implement loadDraft function retrieving and parsing stored draft. Implement clearDraft function removing draft. Auto-save on form change with debounce (2 seconds). Return savedAt timestamp, saveDraft, loadDraft, clearDraft, hasDraft boolean. Handle localStorage quota errors gracefully."
+        }
+      ]
+    },
+    {
+      "id": "REQ-83",
+      "summary": "Update HomePage to add Resume Builder section with category preview cards",
+      "acceptanceCriteria": [
+        "HomePage includes Resume Builder section after existing tool sections",
+        "Section header displays total count (14 Resume Templates)",
+        "Two category cards show Indian Format (7) and International Format (7)",
+        "Each category card has icon, description, and View Templates button",
+        "Cards link to /resume-builder with smooth scroll or navigation",
+        "Section styling matches existing Calculator, PDF, and Image Tools sections"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Expand the existing Image Tools section on HomePage to display all 16 image tools. Update the tool count from 4 to 16. Organize tools into three visible categories: Government Document Photos (8 tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (4 tools: Compressor, Cropper, DPI Changer, Custom Resize), Format Conversion (4 tools: JPG to PNG, PNG to JPG, WEBP Converter, Background Remover). Add brief category descriptions (1-2 sentences each). Ensure the 'View All Image Tools' button navigates to /image-tools. Do not modify the Calculator Hub or PDF Tools sections. Maintain the same visual card layout and styling as existing sections."
+          "description": "Add Resume Builder section after Image Tools section and before Footer. Use same container and spacing as existing tool sections (max-w-7xl mx-auto px-4 py-16). Display section header 'Resume Builder' with subtitle '14 Professional Resume Templates' using text-3xl font-bold. Create two category preview cards in grid-cols-1 md:grid-cols-2 layout. Each card shows category icon (use generated/resume-builder-icon-transparent.dim_64x64.png), category name (Indian Format / International Format), template count (7 templates each), brief description (Indian Format: 'Tailored for Indian job market and cultural requirements' / International Format: 'Optimized for global standards and ATS systems'), and 'View Templates' button linking to /resume-builder. Match card styling with existing tool category cards (rounded-lg, shadow-md, hover effects)."
         }
       ]
     },
     {
-      "id": "REQ-52",
-      "summary": "Update Footer component to display the copyright notice with 2026 year and RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED company name",
+      "id": "REQ-84",
+      "summary": "Update Header component navigation to include Resume Builder link",
       "acceptanceCriteria": [
-        "Footer displays the exact copyright text: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
-        "Copyright year is updated to 2026",
-        "Company name is displayed in full capitals as specified",
-        "Footer maintains existing layout and styling"
+        "Header component includes Resume Builder navigation link",
+        "Link positioned logically in navigation order",
+        "Link styling matches other header navigation items",
+        "Link is responsive and displays properly on mobile menu",
+        "Clicking link navigates to /resume-builder route"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Footer.tsx",
+          "path": "frontend/src/components/Header.tsx",
           "operation": "modify",
-          "description": "Update the copyright notice in Footer component to display '© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.' Replace any existing year (2025) with 2026 and update company name to full capitals as specified. Maintain existing Footer layout, styling, and navigation structure."
+          "description": "Add Resume Builder navigation link to Header component after Calculator Hub link. Use same styling as existing navigation items (text-sm font-medium hover:text-primary transition-colors). Wrap link in Link component from react-router-dom targeting /resume-builder route. On mobile menu, include Resume Builder as menu item with proper spacing and tap target sizing. Ensure responsive behavior matches existing navigation items."
+        }
+      ]
+    },
+    {
+      "id": "REQ-85",
+      "summary": "Integrate AdPlaceholder components into Resume Builder pages with strategic placement",
+      "acceptanceCriteria": [
+        "Top banner AdPlaceholder appears after H1 on all Resume Builder pages",
+        "In-content AdPlaceholder positioned between form and preview on desktop",
+        "Sidebar AdPlaceholder displays in right column on viewports >1024px",
+        "Ads use aspect ratio boxes to prevent layout shift",
+        "Ads do not obscure form inputs or preview content",
+        "Ad containers are marked with 'Advertisement' label"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
+          "operation": "modify",
+          "description": "Import AdPlaceholder component. Add top banner ad (format='banner' 728×90) immediately after H1 heading and before template grid. Ensure ad container has proper spacing (mb-8) and is centered on page."
+        },
+        {
+          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+          "operation": "modify",
+          "description": "Import AdPlaceholder component. Add top banner ad (format='banner' 728×90) after H1 and breadcrumbs. Add in-content ad (format='in-content' 300×250) between form wizard and preview sections on desktop layout with mx-4 spacing. Add sidebar ad (format='sidebar' 160×600) in right column when viewport width >1024px using conditional rendering with hidden lg:block classes. Ensure ads use aspect-ratio boxes to prevent layout shift. Add 'Advertisement' label above each ad using text-xs text-muted-foreground."
+        }
+      ]
+    },
+    {
+      "id": "REQ-86",
+      "summary": "Update App.tsx routing to include all Resume Builder routes with correct slugs",
+      "acceptanceCriteria": [
+        "Route /resume-builder is configured in App.tsx",
+        "All 14 individual template routes are configured with correct slugs",
+        "Each template route renders appropriate template builder component",
+        "Routes follow consistent naming pattern with hyphens",
+        "Navigation between hub and individual templates works correctly"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Import ResumeBuilderPage and ResumeTemplateBuilderPage components. Add route configuration for /resume-builder rendering ResumeBuilderPage. Add 14 individual template routes following pattern /resume-builder/:templateSlug where templateSlug param matches one of: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume. Each route renders ResumeTemplateBuilderPage component which reads templateSlug from useParams hook. Place Resume Builder routes after Image Tools routes and before legal pages. Ensure routes are properly nested within BrowserRouter."
         }
       ]
     }

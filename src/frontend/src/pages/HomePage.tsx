@@ -3,6 +3,7 @@ import { FileText, Image, FileEdit, Scissors, Minimize2, Image as ImageIcon, Fil
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
+import SEO from '@/components/SEO';
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -71,8 +72,68 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     { id: 'creative', name: 'Creative Template', description: 'Stand out with unique design' },
   ];
 
+  // WebApplication structured data
+  const webAppStructuredData = {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Document Master Tools",
+    "description": "Free online tools for document processing, PDF manipulation, image editing, and calculations. 52+ tools including calculators, PDF converters, and image processors.",
+    "url": window.location.origin,
+    "applicationCategory": "UtilityApplication",
+    "operatingSystem": "Any",
+    "browserRequirements": "Requires JavaScript. Modern browser recommended.",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    }
+  };
+
   return (
     <>
+      <SEO
+        title="Document Master Tools - Free Online Calculators, PDF & Image Tools"
+        description="DocMasterTools.com offers 52+ free online tools for students, professionals, and everyday users. Access calculators for academic and financial needs, PDF tools for merging, splitting, and converting documents, and image tools for resizing, compressing, and editing photos. All tools work directly in your browser with complete privacy - no uploads to servers."
+        canonicalUrl={window.location.origin}
+      />
+
+      {/* WebApplication Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppStructuredData) }}
+      />
+
+      {/* App Download Banner */}
+      {showAppBanner && (
+        <div className="fixed bottom-4 left-4 right-4 md:left-auto md:right-4 md:w-96 bg-gradient-to-r from-primary to-primary/80 text-primary-foreground rounded-lg shadow-2xl p-4 z-50 animate-pulse">
+          <button
+            onClick={() => setShowAppBanner(false)}
+            className="absolute top-2 right-2 p-1 hover:bg-primary-foreground/20 rounded-full transition-colors"
+            aria-label="Close banner"
+          >
+            <X className="h-4 w-4" />
+          </button>
+          
+          <div className="flex items-start gap-3 pr-6">
+            <div className="w-12 h-12 bg-primary-foreground/20 rounded-lg flex items-center justify-center flex-shrink-0">
+              <Download className="h-6 w-6" />
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-sm mb-1">Get Our Mobile App</h3>
+              <p className="text-xs opacity-90 mb-3">Access all tools on the go. Download now for Android & iOS!</p>
+              <Button 
+                size="sm" 
+                variant="secondary" 
+                className="w-full text-xs"
+                onClick={() => alert('App download coming soon!')}
+              >
+                Download App
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Main Content */}
       <main className="flex-1">
         {/* Hero Section */}
@@ -82,6 +143,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             <img 
               src="/assets/generated/hero-banner.dim_1200x400.png" 
               alt="" 
+              loading="eager"
               className="w-full h-full object-cover"
             />
           </div>
@@ -109,6 +171,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   <img 
                     src="/assets/generated/private-badge-transparent.dim_120x40.png" 
                     alt="100% Private" 
+                    loading="lazy"
                     className="h-8 w-auto"
                   />
                   <div className="text-center">
@@ -121,10 +184,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   <img 
                     src="/assets/generated/tools-badge-transparent.dim_120x40.png" 
                     alt="40+ Tools" 
+                    loading="lazy"
                     className="h-8 w-auto"
                   />
                   <div className="text-center">
-                    <div className="text-xl md:text-2xl font-bold text-primary">40+</div>
+                    <div className="text-xl md:text-2xl font-bold text-primary">52+</div>
                     <div className="text-xs md:text-sm text-muted-foreground font-medium">Tools</div>
                   </div>
                 </div>
@@ -133,6 +197,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   <img 
                     src="/assets/generated/free-badge-transparent.dim_120x40.png" 
                     alt="Free Forever" 
+                    loading="lazy"
                     className="h-8 w-auto"
                   />
                   <div className="text-center">
@@ -156,28 +221,46 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 </div>
                 <div>
                   <h2 className="text-2xl font-bold">Calculator Hub</h2>
-                  <p className="text-sm text-muted-foreground">21 calculators for academic, financial & health needs</p>
+                  <p className="text-sm text-muted-foreground">20 calculators for academic, financial & health needs</p>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {calculatorCategories.map((category) => (
-                  <Card
-                    key={category.id}
-                    className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
+                  <Card 
+                    key={category.id} 
+                    className="cursor-pointer hover:shadow-lg transition-all hover:scale-[1.02]"
                     onClick={() => onNavigate('calculators')}
                   >
-                    <CardHeader className="p-4">
-                      <div className="w-16 h-16 rounded-lg bg-orange-500/10 flex items-center justify-center mb-3 group-hover:bg-orange-500/20 transition-colors mx-auto">
-                        <img src={category.icon} alt={category.name} className="w-12 h-12" />
+                    <CardHeader>
+                      <div className="flex items-center gap-3 mb-2">
+                        <img 
+                          src={category.icon} 
+                          alt={category.name}
+                          loading="lazy"
+                          className="w-12 h-12"
+                        />
+                        <div>
+                          <CardTitle className="text-lg">{category.name}</CardTitle>
+                          <div className="text-sm text-muted-foreground">{category.count} tools</div>
+                        </div>
                       </div>
-                      <CardTitle className="text-base text-center">{category.name}</CardTitle>
-                      <CardDescription className="text-xs text-center">{category.description}</CardDescription>
-                      <div className="text-center mt-2">
-                        <span className="text-sm font-semibold text-orange-600 dark:text-orange-400">{category.count} Tools</span>
-                      </div>
+                      <CardDescription>{category.description}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
+              </div>
+
+              {/* Cross-links to other categories */}
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Button variant="outline" size="sm" onClick={() => onNavigate('pdf-tools')}>
+                  <FileText className="mr-2 h-4 w-4" />
+                  Explore PDF Tools
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => onNavigate('image-tools')}>
+                  <Image className="mr-2 h-4 w-4" />
+                  Explore Image Tools
+                </Button>
               </div>
             </div>
 
@@ -186,81 +269,94 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             {/* PDF Tools */}
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <img src="/assets/generated/pdf-tools-icon-transparent.dim_64x64.png" alt="PDF Tools" className="w-6 h-6" />
-                </div>
+                <img 
+                  src="/assets/generated/pdf-tools-icon-transparent.dim_64x64.png" 
+                  alt="PDF Tools"
+                  loading="lazy"
+                  className="w-10 h-10"
+                />
                 <div>
                   <h2 className="text-2xl font-bold">PDF Tools</h2>
-                  <p className="text-sm text-muted-foreground">16 professional PDF processing tools</p>
+                  <p className="text-sm text-muted-foreground">16 tools for PDF processing & conversion</p>
                 </div>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-3">
                 {pdfTools.map((tool) => {
                   const Icon = tool.icon;
                   return (
-                    <Card
-                      key={tool.id}
-                      className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
+                    <Card 
+                      key={tool.id} 
+                      className="cursor-pointer hover:shadow-md transition-all hover:scale-[1.02]"
                       onClick={() => onNavigate('pdf-tools')}
                     >
                       <CardHeader className="p-4">
-                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-colors">
-                          <Icon className="h-5 w-5 text-primary" />
+                        <div className="flex flex-col items-center text-center gap-2">
+                          <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                            <Icon className="w-5 h-5 text-primary" />
+                          </div>
+                          <CardTitle className="text-sm">{tool.name}</CardTitle>
                         </div>
-                        <CardTitle className="text-sm leading-tight">{tool.name}</CardTitle>
-                        <CardDescription className="text-xs line-clamp-2">{tool.description}</CardDescription>
                       </CardHeader>
                     </Card>
                   );
                 })}
               </div>
+
+              {/* Cross-links */}
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Button variant="outline" size="sm" onClick={() => onNavigate('calculators')}>
+                  <Calculator className="mr-2 h-4 w-4" />
+                  Explore Calculators
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => onNavigate('image-tools')}>
+                  <Image className="mr-2 h-4 w-4" />
+                  Explore Image Tools
+                </Button>
+              </div>
             </div>
 
             <Separator className="my-8" />
 
-            {/* Image Tools - Updated to show 16 tools */}
+            {/* Image Tools */}
             <div className="mb-10">
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
-                  <img src="/assets/generated/image-tools-icon-transparent.dim_64x64.png" alt="Image Tools" className="w-6 h-6" />
-                </div>
+                <img 
+                  src="/assets/generated/image-tools-icon-transparent.dim_64x64.png" 
+                  alt="Image Tools"
+                  loading="lazy"
+                  className="w-10 h-10"
+                />
                 <div>
                   <h2 className="text-2xl font-bold">Image Tools</h2>
-                  <p className="text-sm text-muted-foreground">16 comprehensive image tools for government documents, processing & conversion</p>
+                  <p className="text-sm text-muted-foreground">16 tools for image processing & editing</p>
                 </div>
               </div>
               
-              <div className="space-y-6">
-                {/* Government Document Photos */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-2 text-blue-600 dark:text-blue-400">Government Document Photos (8 tools)</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Resize and optimize photos for Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa applications, and Signatures with preset dimensions.
-                  </p>
-                </div>
+              <Card 
+                className="cursor-pointer hover:shadow-lg transition-all hover:scale-[1.01]"
+                onClick={() => onNavigate('image-tools')}
+              >
+                <CardHeader>
+                  <CardTitle>Explore All Image Tools</CardTitle>
+                  <CardDescription>
+                    Resize, compress, convert, and edit images. Includes specialized tools for passport photos, government documents, and more.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <Button className="w-full">View All Image Tools</Button>
+                </CardContent>
+              </Card>
 
-                {/* Image Processing */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-2 text-green-600 dark:text-green-400">Image Processing (4 tools)</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Compress, crop, change DPI, and custom resize images with advanced controls and live preview.
-                  </p>
-                </div>
-
-                {/* Format Conversion */}
-                <div>
-                  <h3 className="text-lg font-semibold mb-2 text-purple-600 dark:text-purple-400">Format Conversion (4 tools)</h3>
-                  <p className="text-sm text-muted-foreground mb-3">
-                    Convert between JPG, PNG, and WEBP formats, plus remove backgrounds automatically.
-                  </p>
-                </div>
-
-                <Button 
-                  onClick={() => onNavigate('image-tools')} 
-                  size="lg"
-                  className="w-full md:w-auto"
-                >
-                  View All Image Tools
+              {/* Cross-links */}
+              <div className="flex flex-wrap gap-3 mt-4">
+                <Button variant="outline" size="sm" onClick={() => onNavigate('calculators')}>
+                  <Calculator className="mr-2 h-4 w-4" />
+                  Explore Calculators
+                </Button>
+                <Button variant="outline" size="sm" onClick={() => onNavigate('pdf-tools')}>
+                  <FileText className="mr-2 h-4 w-4" />
+                  Explore PDF Tools
                 </Button>
               </div>
             </div>
@@ -268,142 +364,125 @@ export default function HomePage({ onNavigate }: HomePageProps) {
             <Separator className="my-8" />
 
             {/* Resume Builder */}
-            <div className="mb-10">
+            <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-purple-500/10 flex items-center justify-center">
-                  <img src="/assets/generated/resume-builder-icon-transparent.dim_64x64.png" alt="Resume Builder" className="w-6 h-6" />
-                </div>
+                <img 
+                  src="/assets/generated/resume-builder-icon-transparent.dim_64x64.png" 
+                  alt="Resume Builder"
+                  loading="lazy"
+                  className="w-10 h-10"
+                />
                 <div>
                   <h2 className="text-2xl font-bold">Resume Builder</h2>
-                  <p className="text-sm text-muted-foreground">5 professional templates for job seekers</p>
+                  <p className="text-sm text-muted-foreground">Create professional resumes with ease</p>
                 </div>
               </div>
+              
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {resumeTemplates.slice(0, 3).map((template) => (
-                  <Card
-                    key={template.id}
-                    className="cursor-pointer hover:shadow-md transition-all duration-200 hover:-translate-y-0.5 group"
+                {resumeTemplates.map((template) => (
+                  <Card 
+                    key={template.id} 
+                    className="cursor-pointer hover:shadow-md transition-all hover:scale-[1.02]"
                     onClick={() => onNavigate('resume-builder')}
                   >
-                    <CardHeader className="p-4">
-                      <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-3 group-hover:bg-purple-500/20 transition-colors">
-                        <FileEdit className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+                    <CardHeader>
+                      <div className="flex items-center gap-3 mb-2">
+                        <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                          <FileEdit className="w-5 h-5 text-primary" />
+                        </div>
+                        <CardTitle className="text-base">{template.name}</CardTitle>
                       </div>
-                      <CardTitle className="text-base">{template.name}</CardTitle>
-                      <CardDescription className="text-xs">{template.description}</CardDescription>
+                      <CardDescription className="text-sm">{template.description}</CardDescription>
                     </CardHeader>
                   </Card>
                 ))}
-              </div>
-              <div className="mt-4 text-center">
-                <Button variant="outline" onClick={() => onNavigate('resume-builder')}>
-                  View All Templates
-                </Button>
               </div>
             </div>
           </div>
         </section>
 
-        {/* App Download Banner */}
-        {showAppBanner && (
-          <div className="fixed bottom-0 left-0 right-0 bg-gradient-to-r from-primary/90 to-primary/80 backdrop-blur-sm text-primary-foreground p-4 shadow-lg z-50 animate-slide-up">
-            <div className="container mx-auto flex items-center justify-between gap-4">
-              <div className="flex items-center gap-3">
-                <img src="/assets/generated/app-download-icon.dim_48x48.png" alt="App" className="w-10 h-10" />
-                <div>
-                  <p className="font-semibold text-sm md:text-base">Get the DocMasterTools App</p>
-                  <p className="text-xs md:text-sm opacity-90">Access all tools offline on your mobile device</p>
-                </div>
+        {/* Footer */}
+        <footer className="bg-muted/30 border-t py-8 mt-12">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+              {/* Quick Links */}
+              <div>
+                <h3 className="font-semibold mb-3">Quick Links</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>
+                    <button onClick={() => onNavigate('calculators')} className="hover:text-foreground transition-colors">
+                      Calculator Hub
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('pdf-tools')} className="hover:text-foreground transition-colors">
+                      PDF Tools
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('image-tools')} className="hover:text-foreground transition-colors">
+                      Image Tools
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('resume-builder')} className="hover:text-foreground transition-colors">
+                      Resume Builder
+                    </button>
+                  </li>
+                </ul>
               </div>
-              <div className="flex items-center gap-2">
-                <Button variant="secondary" size="sm" className="hidden md:inline-flex">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download
-                </Button>
-                <Button variant="ghost" size="icon" onClick={() => setShowAppBanner(false)} className="text-primary-foreground hover:bg-primary-foreground/20">
-                  <X className="h-4 w-4" />
-                </Button>
+
+              {/* Legal */}
+              <div>
+                <h3 className="font-semibold mb-3">Legal</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li>
+                    <button onClick={() => onNavigate('privacy')} className="hover:text-foreground transition-colors">
+                      Privacy Policy
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('terms')} className="hover:text-foreground transition-colors">
+                      Terms of Use
+                    </button>
+                  </li>
+                  <li>
+                    <button onClick={() => onNavigate('disclaimer')} className="hover:text-foreground transition-colors">
+                      Disclaimer
+                    </button>
+                  </li>
+                </ul>
+              </div>
+
+              {/* About */}
+              <div>
+                <h3 className="font-semibold mb-3">About</h3>
+                <p className="text-sm text-muted-foreground">
+                  DocMasterTools.com provides free online tools for document processing, calculations, and image editing. All tools work directly in your browser with complete privacy.
+                </p>
               </div>
             </div>
-          </div>
-        )}
-      </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-muted/30">
-        <div className="container mx-auto px-4 py-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div>
-              <h3 className="font-semibold mb-3">Document Master Tools</h3>
-              <p className="text-sm text-muted-foreground">
-                Professional document processing tools for PDF, images, and resumes. All processing happens in your browser for maximum privacy.
+            <Separator className="my-6" />
+
+            {/* Copyright */}
+            <div className="text-center text-sm text-muted-foreground space-y-2">
+              <p>© {new Date().getFullYear()} RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.</p>
+              <p className="flex items-center justify-center gap-1">
+                Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
+                <a 
+                  href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-primary hover:underline"
+                >
+                  caffeine.ai
+                </a>
               </p>
             </div>
-            
-            <div>
-              <h3 className="font-semibold mb-3">Quick Links</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <button onClick={() => onNavigate('calculators')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Calculator Hub
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => onNavigate('pdf-tools')} className="text-muted-foreground hover:text-primary transition-colors">
-                    PDF Tools
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => onNavigate('image-tools')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Image Tools
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => onNavigate('resume-builder')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Resume Builder
-                  </button>
-                </li>
-              </ul>
-            </div>
-            
-            <div>
-              <h3 className="font-semibold mb-3">Legal</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <button onClick={() => onNavigate('privacy')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Privacy Policy
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => onNavigate('terms')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Terms of Use
-                  </button>
-                </li>
-                <li>
-                  <button onClick={() => onNavigate('disclaimer')} className="text-muted-foreground hover:text-primary transition-colors">
-                    Disclaimer
-                  </button>
-                </li>
-              </ul>
-            </div>
           </div>
-          
-          <div className="mt-8 pt-6 border-t text-center text-sm text-muted-foreground space-y-2">
-            <p>© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.</p>
-            <p className="flex items-center justify-center gap-1">
-              Built with <Heart className="h-4 w-4 text-red-500 fill-red-500" /> using{' '}
-              <a 
-                href={`https://caffeine.ai/?utm_source=Caffeine-footer&utm_medium=referral&utm_content=${encodeURIComponent(window.location.hostname)}`}
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="text-primary hover:underline"
-              >
-                caffeine.ai
-              </a>
-            </p>
-          </div>
-        </div>
-      </footer>
+        </footer>
+      </main>
     </>
   );
 }

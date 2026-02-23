@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 5,
-  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment. SEO-optimized individual pages, mobile responsive, AdSense ready.",
+  "projectStateVersion": 9,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. SEO-optimized individual pages, mobile responsive, AdSense ready.",
   "architectural_notes": [
     "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
     "Each calculator gets individual SEO-friendly page",
@@ -10,7 +10,9 @@
     "Phase 3: Advanced Image Tools Module - client-side only processing, no server storage, no paid APIs",
     "Image tools use browser-based libraries for format conversion, compression, and background removal",
     "Job form special mode for government exam/passport/signature presets with target dimensions and file size",
-    "Footer updated: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED"
+    "Footer updated: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED",
+    "Phase 4: SEO & Monetization Foundation - no tool logic changes, only extend SEO structure and AdSense-ready layouts",
+    "All pages get dynamic SEO meta tags, Open Graph, Twitter cards, canonical tags, and structured data"
   ],
   "known_issues": [],
   "isFixRequest": false,
@@ -406,6 +408,190 @@
         "REQ-52"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-a-reusable-seo-component-frontend-src-components-seo-tsx-that-dynamically-sets-document-title-meta-descriptions-open-graph-tags-og-title-og-description-og-image-og-url-og-type-twitter-card-meta-tags-twitter-card-twitter-title-twitter-description-twitter-image-and-canonical-link-tag-based-on-props-title-description-canonicalurl-ogimage-ogtype",
+      "title": "Create a reusable SEO component (frontend/src/components/SEO.tsx) that dynamically sets document title, meta descriptions, Open Graph tags (og:title, og:description, og:image, og:url, og:type), Twitter Card meta tags (twitter:card, twitter:title, twitter:description, twitter:image), and canonical link tag based on props (title, description, canonicalUrl, ogImage, ogType)",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-seo-component-into-all-calculator-pages-20-pages-pdf-tool-pages-16-pages-image-tool-pages-16-pages-and-main-hub-pages-calculatorspage-pdftoolspage-imagetoolspage-homepage-with-unique-tool-specific-titles-and-descriptions-following-pattern-tool-name-free-online-tool-type-document-master-tools",
+      "title": "Integrate the SEO component into all calculator pages (20 pages), PDF tool pages (16 pages), image tool pages (16 pages), and main hub pages (CalculatorsPage, PDFToolsPage, ImageToolsPage, HomePage) with unique, tool-specific titles and descriptions following pattern '[Tool Name] - Free Online [Tool Type] | Document Master Tools'",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-breadcrumbnavigation-component-frontend-src-components-breadcrumbnavigation-tsx-that-displays-hierarchical-navigation-paths-home-calculators-cgpa-calculator-with-proper-schema-org-breadcrumblist-structured-data-markup-and-integrate-it-into-all-tool-pages-below-the-header",
+      "title": "Create a BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx) that displays hierarchical navigation paths (Home > Calculators > CGPA Calculator) with proper schema.org/BreadcrumbList structured data markup, and integrate it into all tool pages below the header",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-faq-schema-markup-schema-org-faqpage-to-all-calculator-pages-pdf-tool-pages-and-image-tool-pages-by-creating-a-reusable-faqschema-component-frontend-src-components-faqschema-tsx-that-accepts-faq-items-and-renders-json-ld-structured-data-then-integrate-it-into-existing-faq-sections",
+      "title": "Add FAQ schema markup (schema.org/FAQPage) to all calculator pages, PDF tool pages, and image tool pages by creating a reusable FAQSchema component (frontend/src/components/FAQSchema.tsx) that accepts FAQ items and renders JSON-LD structured data, then integrate it into existing FAQ sections",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-webapplication-structured-data-schema-org-webapplication-to-the-homepage-component-with-json-ld-markup-including-applicationcategory-utilityapplication-operatingsystem-any-offers-free-browserrequirements-and-aggregaterating",
+      "title": "Add WebApplication structured data (schema.org/WebApplication) to the HomePage component with JSON-LD markup including applicationCategory ('UtilityApplication'), operatingSystem ('Any'), offers (free), browserRequirements, and aggregateRating",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-sitemap-generation-utility-frontend-src-utils-generatesitemap-ts-that-programmatically-generates-an-xml-sitemap-including-all-routes-calculators-pdf-tools-image-tools-static-pages-with-lastmod-changefreq-and-priority-values-and-create-a-public-sitemap-xml-file-that-can-be-updated-during-build",
+      "title": "Create a sitemap generation utility (frontend/src/utils/generateSitemap.ts) that programmatically generates an XML sitemap including all routes (calculators, PDF tools, image tools, static pages) with lastmod, changefreq, and priority values, and create a public/sitemap.xml file that can be updated during build",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-public-robots-txt-file-that-allows-all-user-agents-references-the-sitemap-location-sitemap-https-domain-sitemap-xml-and-includes-appropriate-crawl-delay-if-needed",
+      "title": "Create a public/robots.txt file that allows all user agents, references the sitemap location (Sitemap: https://[domain]/sitemap.xml), and includes appropriate crawl-delay if needed",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-adplaceholder-component-frontend-src-components-adplaceholder-tsx-that-renders-a-styled-container-for-adsense-ads-with-props-for-ad-type-banner-in-content-sidebar-displays-advertisement-label-and-uses-aspect-ratio-boxes-to-prevent-cumulative-layout-shift-cls",
+      "title": "Create an AdPlaceholder component (frontend/src/components/AdPlaceholder.tsx) that renders a styled container for AdSense ads with props for ad type (banner, in-content, sidebar), displays 'Advertisement' label, and uses aspect ratio boxes to prevent Cumulative Layout Shift (CLS)",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-adplaceholder-components-into-all-calculator-pages-with-top-banner-ad-after-h1-heading-and-in-content-ad-after-the-calculator-result-section-ensuring-ads-do-not-interfere-with-tool-functionality",
+      "title": "Integrate AdPlaceholder components into all calculator pages with top banner ad after H1 heading and in-content ad after the calculator result section, ensuring ads do not interfere with tool functionality",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-relatedtools-component-frontend-src-components-relatedtools-tsx-that-displays-3-4-related-tool-cards-with-tool-name-icon-description-and-link-and-integrate-it-at-the-bottom-of-all-calculator-pages-suggesting-related-calculators-from-the-same-category",
+      "title": "Create a RelatedTools component (frontend/src/components/RelatedTools.tsx) that displays 3-4 related tool cards with tool name, icon, description, and link, and integrate it at the bottom of all calculator pages suggesting related calculators from the same category",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-cross-category-navigation-links-by-creating-a-toolcategories-component-frontend-src-components-toolcategories-tsx-that-displays-quick-links-to-calculator-hub-pdf-tools-and-image-tools-hub-pages-and-integrate-it-into-all-tool-pages-in-the-sidebar-or-below-related-tools-section",
+      "title": "Add cross-category navigation links by creating a ToolCategories component (frontend/src/components/ToolCategories.tsx) that displays quick links to Calculator Hub, PDF Tools, and Image Tools hub pages, and integrate it into all tool pages in the sidebar or below related tools section",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-include-cross-linking-between-tool-categories-by-adding-explore-more-tools-sections-within-each-category-card-that-link-to-related-categories-e-g-calculator-section-links-to-pdf-tools-and-image-tools",
+      "title": "Update HomePage to include cross-linking between tool categories by adding 'Explore More Tools' sections within each category card that link to related categories (e.g., Calculator section links to PDF Tools and Image Tools)",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-resumebuilderpage-component-at-resume-builder-route-displaying-14-resume-templates-organized-in-two-categories-indian-format-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-and-international-format-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "title": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates organized in two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume)",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-multi-step-form-wizard-with-progressive-sections-including-personal-info-name-email-phone-address-linkedin-portfolio-education-degree-institution-year-grade-experience-company-role-duration-responsibilities-skills-technical-soft-skills-projects-certifications-languages-achievements-and-references-with-ability-to-add-remove-individual-entries-within-each-section",
+      "title": "Implement multi-step form wizard with progressive sections including Personal Info (name, email, phone, address, LinkedIn, portfolio), Education (degree, institution, year, grade), Experience (company, role, duration, responsibilities), Skills (technical, soft skills), Projects, Certifications, Languages, Achievements, and References with ability to add/remove individual entries within each section",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-live-preview-component-that-renders-resume-in-real-time-as-user-fills-form-fields-updating-instantly-without-page-reload-and-displaying-exactly-how-the-final-pdf-will-appear-with-proper-formatting-spacing-and-typography-matching-the-selected-template",
+      "title": "Create live preview component that renders resume in real-time as user fills form fields, updating instantly without page reload and displaying exactly how the final PDF will appear with proper formatting, spacing, and typography matching the selected template",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-custom-color-theme-selector-with-at-least-6-predefined-color-palettes-professional-blue-corporate-black-creative-purple-modern-teal-classic-gray-elegant-maroon-that-dynamically-apply-to-resume-headers-section-borders-accent-lines-and-text-highlights-without-affecting-readability",
+      "title": "Implement custom color theme selector with at least 6 predefined color palettes (Professional Blue, Corporate Black, Creative Purple, Modern Teal, Classic Gray, Elegant Maroon) that dynamically apply to resume headers, section borders, accent lines, and text highlights without affecting readability",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-auto-formatting-logic-that-converts-skills-section-entries-into-bullet-points-auto-formats-dates-to-mm-yyyy-format-formats-phone-numbers-to-indian-91-or-international-format-based-on-selected-template-category-capitalizes-proper-nouns-and-ensures-consistent-spacing-throughout-the-resume",
+      "title": "Create auto-formatting logic that converts Skills section entries into bullet points, auto-formats dates to MM/YYYY format, formats phone numbers to Indian (+91) or International format based on selected template category, capitalizes proper nouns, and ensures consistent spacing throughout the resume",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-ai-summary-generator-using-local-logic-no-external-api-calls-that-analyzes-user-s-experience-entries-and-skills-to-generate-2-3-sentence-professional-summary-focusing-on-years-of-experience-key-skills-notable-achievements-and-career-objectives-using-action-oriented-language-and-industry-standard-phrasing",
+      "title": "Add basic AI summary generator using local logic (no external API calls) that analyzes user's experience entries and skills to generate 2-3 sentence professional summary focusing on years of experience, key skills, notable achievements, and career objectives using action-oriented language and industry-standard phrasing",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-individual-seo-friendly-pages-for-each-of-the-14-resume-templates-at-routes-resume-builder-template-slug-with-unique-meta-titles-following-pattern-template-name-resume-builder-free-online-tool-document-master-tools-descriptions-highlighting-template-specific-benefits-open-graph-tags-faq-sections-answering-common-questions-about-each-template-format-and-internal-links-to-calculator-hub-pdf-tools-and-image-tools",
+      "title": "Create individual SEO-friendly pages for each of the 14 resume templates at routes /resume-builder/[template-slug] with unique meta titles following pattern '[Template Name] Resume Builder - Free Online Tool | Document Master Tools', descriptions highlighting template-specific benefits, Open Graph tags, FAQ sections answering common questions about each template format, and internal links to Calculator Hub, PDF Tools, and Image Tools",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-resume-builder-components-including-main-hub-page-template-selection-form-wizard-live-preview-and-individual-template-pages-are-fully-mobile-responsive-with-vertical-form-layout-on-screens-below-768px-collapsible-sections-on-mobile-touch-friendly-input-controls-preview-positioned-below-form-on-mobile-and-proper-scaling-from-320px-width-upward",
+      "title": "Ensure all Resume Builder components including main hub page, template selection, form wizard, live preview, and individual template pages are fully mobile responsive with vertical form layout on screens below 768px, collapsible sections on mobile, touch-friendly input controls, preview positioned below form on mobile, and proper scaling from 320px width upward",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-resume-builder-with-modern-clean-ui-matching-existing-tailwind-design-system-using-card-based-layout-for-form-sections-smooth-transitions-for-step-navigation-progress-indicator-showing-completion-percentage-optional-save-draft-functionality-storing-data-in-localstorage-clear-primary-call-to-action-buttons-next-download-pdf-and-consistent-spacing-aligned-with-calculator-pdf-and-image-tools-styling",
+      "title": "Style Resume Builder with modern clean UI matching existing Tailwind design system using card-based layout for form sections, smooth transitions for step navigation, progress indicator showing completion percentage, optional save draft functionality storing data in localStorage, clear primary call-to-action buttons (Next, Download PDF), and consistent spacing aligned with Calculator, PDF, and Image Tools styling",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-adplaceholder-components-into-resume-builder-pages-with-top-banner-ad-728-90-after-h1-heading-in-content-ad-300-250-positioned-between-form-wizard-and-preview-sections-on-desktop-and-sidebar-ad-160-600-in-right-sidebar-layout-when-viewport-width-exceeds-1024px-ensuring-ads-do-not-interfere-with-form-functionality-or-preview-visibility",
+      "title": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad (728×90) after H1 heading, in-content ad (300×250) positioned between form wizard and preview sections on desktop, and sidebar ad (160×600) in right sidebar layout when viewport width exceeds 1024px, ensuring ads do not interfere with form functionality or preview visibility",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-resume-builder-main-route-displaying-resumebuilderpage-and-individual-routes-for-all-14-resume-templates-following-pattern-resume-builder-template-slug-where-slugs-are-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "title": "Update App.tsx routing to include /resume-builder main route displaying ResumeBuilderPage and individual routes for all 14 resume templates following pattern /resume-builder/[template-slug] where slugs are: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -514,6 +700,208 @@
       "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility using existing Tailwind theme variables, smooth processing animations, AdSense-ready semantic structure with proper heading hierarchy, and fast loading performance",
       "reqIds": [
         "REQ-49"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Global SEO structure: Dynamic page titles, unique meta descriptions per tool, Open Graph tags, Twitter meta tags, canonical tags, XML sitemap auto-generation, robots.txt file",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Structured data & navigation: Breadcrumb navigation, FAQ schema markup, WebApplication structured data for all tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "AdSense-ready layout: Top banner ad placeholder, in-content ad section, sidebar ad (desktop only), responsive ad containers with no CLS layout shift",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Performance optimization: Lazy loading, code minification, Lighthouse optimization, improved page speed score",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Internal linking: Cross-module linking between Calculator, PDF, and Image Tools; improved crawlability; related tools section on each tool page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Integrate AdPlaceholder components into all PDF tool pages with top banner ad after H1 heading, in-content ad after file upload zone, and sidebar ad (desktop only) in a right sidebar layout when viewport width exceeds 1024px",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Integrate AdPlaceholder components into all image tool pages with top banner ad after H1 heading, in-content ad between upload and preview sections, and sidebar ad (desktop only) for viewport widths above 1024px",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Implement lazy loading for all heavy components (calculator tools, PDF tools, image tools) using React.lazy() and Suspense to improve initial page load performance and Lighthouse scores",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Optimize image assets by ensuring all images in frontend/public/assets use appropriate formats (WebP with fallbacks), are properly sized for their display dimensions, and implement lazy loading with loading='lazy' attribute on img tags",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Integrate RelatedTools component into all PDF tool pages showing 3-4 related PDF tools, and into all image tool pages showing 3-4 related image tools, creating internal linking network within each tool category",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Optimize Tailwind CSS bundle by configuring PurgeCSS/content paths in tailwind.config.js to remove unused styles, and ensure production builds use minified CSS to reduce bundle size and improve page load speed",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-59",
+      "summary": "Configure production build optimization in frontend build configuration (vite.config.ts or equivalent) to enable code minification, tree shaking, and chunk splitting for optimal bundle sizes and faster load times",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-60",
+      "summary": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates in two categories: Indian Format (Fresher, Government Job, Private Job, Hindi, Biodata for Marriage, Teacher, Police/Army) and International Format (ATS Friendly, US, UK CV, Canada, Europass CV, Creative, Corporate)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-61",
+      "summary": "Implement multi-step form wizard with sections: Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References with Add/Remove section capability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-62",
+      "summary": "Create live preview component that updates in real-time as user fills form, showing exactly how resume will look in selected template with proper formatting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-63",
+      "summary": "Add optional photo upload with drag & drop, crop preview, and proper placement based on template (Indian formats show photo, International formats hide by default)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "Implement custom color theme selector with predefined color palettes (Professional Blue, Corporate Black, Creative Purple, etc.) that apply to headers, borders, and accents",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-65",
+      "summary": "Create auto formatting logic: Skills section auto-converts to bullet points, dates auto-format to MM/YYYY, phone numbers format to Indian/International standards based on template",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Implement PDF download with proper A4 page sizing, page breaks, font embedding, and template-specific styling using client-side PDF generation library",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Add basic AI summary generator using local logic (no paid APIs): analyze experience/skills input and generate professional summary with action words and achievements focus",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Create individual SEO-friendly pages for each of 14 resume templates with unique meta titles, descriptions, Open Graph tags, FAQ sections, and internal links to Calculator, PDF, and Image Tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Ensure all resume builder components are fully mobile responsive with collapsible form sections, vertical layout on mobile, horizontal layout on desktop, touch-friendly controls, and proper preview scaling",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Style Resume Builder with modern clean UI matching existing design system: card-based form sections, smooth transitions, progress indicator, save draft functionality, clear call-to-action buttons",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "Update HomePage to add Resume Builder section alongside Calculator Hub, PDF Tools, and Image Tools, displaying template categories and quick access to popular templates",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "Update Header navigation to include Resume Builder link",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad after H1, in-content ad between form and preview sections, and sidebar ad on desktop viewport",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "Add optional photo upload feature with drag-and-drop support, image crop/resize preview, and template-aware placement logic where Indian format templates (Fresher, Government Job, Private Job, Hindi, Biodata, Teacher, Police/Army) show photo prominently while International format templates (ATS, US, UK, Canada, Europass, Creative, Corporate) hide photo by default or place it minimally",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-80",
+      "summary": "Implement PDF download functionality with proper A4 page sizing (210mm x 297mm), intelligent page breaks that avoid splitting sections mid-content, embedded fonts to ensure consistent rendering across devices, and template-specific styling preserved using client-side PDF generation library (jsPDF or similar)",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-85",
+      "summary": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections, displaying both template categories (Indian Format: 7 templates, International Format: 7 templates) with representative preview cards showing template names, brief descriptions, and call-to-action buttons linking to /resume-builder",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-86",
+      "summary": "Update Header component navigation to include Resume Builder link that directs users to /resume-builder, positioned after Calculator Hub link and maintaining consistent navigation styling with other header links",
+      "reqIds": [
+        "REQ-84"
       ],
       "status": "pending"
     }

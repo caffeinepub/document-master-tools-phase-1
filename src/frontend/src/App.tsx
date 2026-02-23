@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import PDFToolsPage from './pages/PDFToolsPage';
 import ImageToolsPage from './pages/ImageToolsPage';
 import ResumeBuilderPage from './pages/ResumeBuilderPage';
+import ResumeTemplateBuilderPage from './pages/resume-builder/ResumeTemplateBuilderPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfUsePage from './pages/TermsOfUsePage';
 import DisclaimerPage from './pages/DisclaimerPage';
@@ -59,7 +60,10 @@ type Page =
   | 'passport-photo-maker' | 'aadhaar-photo-resize' | 'pan-photo-resize' | 'ssc-photo-resize'
   | 'railway-photo-resize' | 'police-army-photo' | 'visa-photo-resize' | 'signature-resize'
   | 'image-compressor' | 'image-cropper' | 'dpi-changer' | 'custom-image-resize'
-  | 'jpg-to-png' | 'png-to-jpg' | 'webp-converter' | 'background-remover';
+  | 'jpg-to-png' | 'png-to-jpg' | 'webp-converter' | 'background-remover'
+  | 'fresher-resume' | 'government-job-resume' | 'private-job-resume' | 'hindi-resume'
+  | 'biodata-for-marriage' | 'teacher-resume' | 'police-army-resume' | 'ats-friendly-resume'
+  | 'us-resume' | 'uk-cv-format' | 'canada-resume' | 'europass-cv' | 'creative-resume' | 'corporate-resume';
 
 const queryClient = new QueryClient();
 
@@ -83,7 +87,7 @@ function App() {
       case 'image-tools':
         return <ImageToolsPage onBack={() => setCurrentPage('home')} onNavigate={handleNavigate} />;
       case 'resume-builder':
-        return <ResumeBuilderPage onBack={() => setCurrentPage('home')} />;
+        return <ResumeBuilderPage onBack={() => setCurrentPage('home')} onNavigate={handleNavigate} />;
       case 'privacy':
         return <PrivacyPolicyPage onBack={() => setCurrentPage('home')} />;
       case 'terms':
@@ -164,6 +168,34 @@ function App() {
         return <WEBPConverterPage onBack={() => setCurrentPage('image-tools')} />;
       case 'background-remover':
         return <BackgroundRemoverPage onBack={() => setCurrentPage('image-tools')} />;
+      case 'fresher-resume':
+        return <ResumeTemplateBuilderPage templateSlug="fresher-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'government-job-resume':
+        return <ResumeTemplateBuilderPage templateSlug="government-job-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'private-job-resume':
+        return <ResumeTemplateBuilderPage templateSlug="private-job-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'hindi-resume':
+        return <ResumeTemplateBuilderPage templateSlug="hindi-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'biodata-for-marriage':
+        return <ResumeTemplateBuilderPage templateSlug="biodata-for-marriage" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'teacher-resume':
+        return <ResumeTemplateBuilderPage templateSlug="teacher-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'police-army-resume':
+        return <ResumeTemplateBuilderPage templateSlug="police-army-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'ats-friendly-resume':
+        return <ResumeTemplateBuilderPage templateSlug="ats-friendly-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'us-resume':
+        return <ResumeTemplateBuilderPage templateSlug="us-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'uk-cv-format':
+        return <ResumeTemplateBuilderPage templateSlug="uk-cv-format" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'canada-resume':
+        return <ResumeTemplateBuilderPage templateSlug="canada-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'europass-cv':
+        return <ResumeTemplateBuilderPage templateSlug="europass-cv" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'creative-resume':
+        return <ResumeTemplateBuilderPage templateSlug="creative-resume" onBack={() => setCurrentPage('resume-builder')} />;
+      case 'corporate-resume':
+        return <ResumeTemplateBuilderPage templateSlug="corporate-resume" onBack={() => setCurrentPage('resume-builder')} />;
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }

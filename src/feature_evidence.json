@@ -2,10 +2,11 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-imagetoolspage-component-at-image-tools-route-that-displays-a-comprehensive-grid-of-16-image-tools-organized-by-category-government-document-photos-passport-aadhaar-pan-ssc-railway-police-army-visa-signature-image-processing-compressor-cropper-dpi-changer-custom-resize-and-format-conversion-jpg-to-png-png-to-jpg-webp-converter-background-remover",
-      "featureTitle": "Create ImageToolsPage component at /image-tools route that displays a comprehensive grid of 16 image tools organized by category: Government Document Photos (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (JPG to PNG, PNG to JPG, WEBP Converter, Background Remover)",
+      "featureId": "feature-create-resumebuilderpage-component-at-resume-builder-route-displaying-14-resume-templates-organized-in-two-categories-indian-format-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-and-international-format-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "featureTitle": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates organized in two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume)",
       "files": [
-        "frontend/src/pages/ImageToolsPage.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/pages/ResumeBuilderPage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -16,15 +17,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-29"
+        "REQ-72"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-passportphotomaker-component-at-passport-photo-maker-with-preset-passport-photo-dimensions-drag-drop-upload-live-preview-target-size-selector-20kb-200kb-maintain-aspect-ratio-toggle-and-secure-blob-download-showing-original-vs-new-size",
-      "featureTitle": "Create PassportPhotoMaker component at /passport-photo-maker with preset passport photo dimensions, drag & drop upload, live preview, target size selector (20KB-200KB), maintain aspect ratio toggle, and secure blob download showing original vs new size",
+      "featureId": "feature-implement-multi-step-form-wizard-with-progressive-sections-including-personal-info-name-email-phone-address-linkedin-portfolio-education-degree-institution-year-grade-experience-company-role-duration-responsibilities-skills-technical-soft-skills-projects-certifications-languages-achievements-and-references-with-ability-to-add-remove-individual-entries-within-each-section",
+      "featureTitle": "Implement multi-step form wizard with progressive sections including Personal Info (name, email, phone, address, LinkedIn, portfolio), Education (degree, institution, year, grade), Experience (company, role, duration, responsibilities), Skills (technical, soft skills), Projects, Certifications, Languages, Achievements, and References with ability to add/remove individual entries within each section",
       "files": [
-        "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx"
+        "frontend/src/components/resume/ResumeFormWizard.tsx",
+        "frontend/src/types/resume.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -35,15 +37,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-30"
+        "REQ-73"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-aadhaarphotoresize-component-at-aadhaar-photo-resize-with-aadhaar-card-photo-specifications-target-size-selector-custom-dimensions-input-maintain-aspect-ratio-toggle-live-preview-and-blob-based-secure-download",
-      "featureTitle": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar card photo specifications, target size selector, custom dimensions input, maintain aspect ratio toggle, live preview, and blob-based secure download",
+      "featureId": "feature-create-live-preview-component-that-renders-resume-in-real-time-as-user-fills-form-fields-updating-instantly-without-page-reload-and-displaying-exactly-how-the-final-pdf-will-appear-with-proper-formatting-spacing-and-typography-matching-the-selected-template",
+      "featureTitle": "Create live preview component that renders resume in real-time as user fills form fields, updating instantly without page reload and displaying exactly how the final PDF will appear with proper formatting, spacing, and typography matching the selected template",
       "files": [
-        "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx"
+        "frontend/src/components/resume/ResumePreview.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -54,15 +56,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-31"
+        "REQ-74"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-panphotoresize-component-at-pan-photo-resize-with-pan-card-photo-specifications-target-size-control-dimension-customization-ratio-maintenance-toggle-live-preview-and-secure-download",
-      "featureTitle": "Create PANPhotoResize component at /pan-photo-resize with PAN card photo specifications, target size control, dimension customization, ratio maintenance toggle, live preview, and secure download",
+      "featureId": "feature-implement-custom-color-theme-selector-with-at-least-6-predefined-color-palettes-professional-blue-corporate-black-creative-purple-modern-teal-classic-gray-elegant-maroon-that-dynamically-apply-to-resume-headers-section-borders-accent-lines-and-text-highlights-without-affecting-readability",
+      "featureTitle": "Implement custom color theme selector with at least 6 predefined color palettes (Professional Blue, Corporate Black, Creative Purple, Modern Teal, Classic Gray, Elegant Maroon) that dynamically apply to resume headers, section borders, accent lines, and text highlights without affecting readability",
       "files": [
-        "frontend/src/pages/image-tools/PANPhotoResizePage.tsx"
+        "frontend/src/components/resume/ColorThemeSelector.tsx",
+        "frontend/src/lib/colorThemes.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -73,15 +76,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-32"
+        "REQ-76"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-sscphotoresize-component-at-ssc-photo-resize-with-ssc-exam-photo-specifications-from-government-exam-presets-target-size-selector-20kb-200kb-custom-dimensions-maintain-ratio-toggle-live-preview-and-secure-download",
-      "featureTitle": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam photo specifications from government exam presets, target size selector (20KB-200KB), custom dimensions, maintain ratio toggle, live preview, and secure download",
+      "featureId": "feature-create-auto-formatting-logic-that-converts-skills-section-entries-into-bullet-points-auto-formats-dates-to-mm-yyyy-format-formats-phone-numbers-to-indian-91-or-international-format-based-on-selected-template-category-capitalizes-proper-nouns-and-ensures-consistent-spacing-throughout-the-resume",
+      "featureTitle": "Create auto-formatting logic that converts Skills section entries into bullet points, auto-formats dates to MM/YYYY format, formats phone numbers to Indian (+91) or International format based on selected template category, capitalizes proper nouns, and ensures consistent spacing throughout the resume",
       "files": [
-        "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx"
+        "frontend/src/components/resume/ResumeFormWizard.tsx",
+        "frontend/src/lib/resumeFormatters.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -92,15 +96,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-33"
+        "REQ-77"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-railwayphotoresize-component-at-railway-photo-resize-with-indian-railway-exam-photo-specifications-target-size-selector-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
-      "featureTitle": "Create RailwayPhotoResize component at /railway-photo-resize with Indian Railway exam photo specifications, target size selector, custom dimensions, ratio toggle, live preview, and secure download",
+      "featureId": "feature-add-basic-ai-summary-generator-using-local-logic-no-external-api-calls-that-analyzes-user-s-experience-entries-and-skills-to-generate-2-3-sentence-professional-summary-focusing-on-years-of-experience-key-skills-notable-achievements-and-career-objectives-using-action-oriented-language-and-industry-standard-phrasing",
+      "featureTitle": "Add basic AI summary generator using local logic (no external API calls) that analyzes user's experience entries and skills to generate 2-3 sentence professional summary focusing on years of experience, key skills, notable achievements, and career objectives using action-oriented language and industry-standard phrasing",
       "files": [
-        "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx"
+        "frontend/src/lib/summaryGenerator.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -111,15 +115,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-34"
+        "REQ-79"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-policearmyphoto-component-at-police-army-photo-with-police-and-army-recruitment-photo-specifications-target-size-control-20kb-200kb-dimension-customization-ratio-toggle-live-preview-and-secure-download",
-      "featureTitle": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment photo specifications, target size control (20KB-200KB), dimension customization, ratio toggle, live preview, and secure download",
+      "featureId": "feature-create-individual-seo-friendly-pages-for-each-of-the-14-resume-templates-at-routes-resume-builder-template-slug-with-unique-meta-titles-following-pattern-template-name-resume-builder-free-online-tool-document-master-tools-descriptions-highlighting-template-specific-benefits-open-graph-tags-faq-sections-answering-common-questions-about-each-template-format-and-internal-links-to-calculator-hub-pdf-tools-and-image-tools",
+      "featureTitle": "Create individual SEO-friendly pages for each of the 14 resume templates at routes /resume-builder/[template-slug] with unique meta titles following pattern '[Template Name] Resume Builder - Free Online Tool | Document Master Tools', descriptions highlighting template-specific benefits, Open Graph tags, FAQ sections answering common questions about each template format, and internal links to Calculator Hub, PDF Tools, and Image Tools",
       "files": [
-        "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx"
+        "frontend/src/data/resumeTemplateConfigs.ts",
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -130,15 +135,17 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-35"
+        "REQ-80"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-visaphotoresize-component-at-visa-photo-resize-with-international-visa-photo-specifications-from-passport-presets-target-size-selector-custom-dimensions-ratio-maintenance-live-preview-and-secure-download",
-      "featureTitle": "Create VisaPhotoResize component at /visa-photo-resize with international visa photo specifications from passport presets, target size selector, custom dimensions, ratio maintenance, live preview, and secure download",
+      "featureId": "feature-ensure-all-resume-builder-components-including-main-hub-page-template-selection-form-wizard-live-preview-and-individual-template-pages-are-fully-mobile-responsive-with-vertical-form-layout-on-screens-below-768px-collapsible-sections-on-mobile-touch-friendly-input-controls-preview-positioned-below-form-on-mobile-and-proper-scaling-from-320px-width-upward",
+      "featureTitle": "Ensure all Resume Builder components including main hub page, template selection, form wizard, live preview, and individual template pages are fully mobile responsive with vertical form layout on screens below 768px, collapsible sections on mobile, touch-friendly input controls, preview positioned below form on mobile, and proper scaling from 320px width upward",
       "files": [
-        "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx"
+        "frontend/src/components/resume/ResumeFormWizard.tsx",
+        "frontend/src/pages/ResumeBuilderPage.tsx",
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -149,15 +156,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-36"
+        "REQ-81"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-signatureresize-component-at-signature-resize-with-government-exam-and-application-signature-presets-target-size-selector-20kb-200kb-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
-      "featureTitle": "Create SignatureResize component at /signature-resize with government exam and application signature presets, target size selector (20KB-200KB), custom dimensions, ratio toggle, live preview, and secure download",
+      "featureId": "feature-style-resume-builder-with-modern-clean-ui-matching-existing-tailwind-design-system-using-card-based-layout-for-form-sections-smooth-transitions-for-step-navigation-progress-indicator-showing-completion-percentage-optional-save-draft-functionality-storing-data-in-localstorage-clear-primary-call-to-action-buttons-next-download-pdf-and-consistent-spacing-aligned-with-calculator-pdf-and-image-tools-styling",
+      "featureTitle": "Style Resume Builder with modern clean UI matching existing Tailwind design system using card-based layout for form sections, smooth transitions for step navigation, progress indicator showing completion percentage, optional save draft functionality storing data in localStorage, clear primary call-to-action buttons (Next, Download PDF), and consistent spacing aligned with Calculator, PDF, and Image Tools styling",
       "files": [
-        "frontend/src/pages/image-tools/SignatureResizePage.tsx"
+        "frontend/src/components/resume/ResumeFormWizard.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -168,15 +175,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-37"
+        "REQ-82"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-imagecompressor-component-at-image-compressor-with-compression-level-selector-target-size-control-20kb-200kb-live-preview-original-vs-compressed-size-comparison-reset-button-and-secure-blob-download-using-browser-based-compression-libraries",
-      "featureTitle": "Create ImageCompressor component at /image-compressor with compression level selector, target size control (20KB-200KB), live preview, original vs compressed size comparison, reset button, and secure blob download using browser-based compression libraries",
+      "featureId": "feature-integrate-adplaceholder-components-into-resume-builder-pages-with-top-banner-ad-728-90-after-h1-heading-in-content-ad-300-250-positioned-between-form-wizard-and-preview-sections-on-desktop-and-sidebar-ad-160-600-in-right-sidebar-layout-when-viewport-width-exceeds-1024px-ensuring-ads-do-not-interfere-with-form-functionality-or-preview-visibility",
+      "featureTitle": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad (728×90) after H1 heading, in-content ad (300×250) positioned between form wizard and preview sections on desktop, and sidebar ad (160×600) in right sidebar layout when viewport width exceeds 1024px, ensuring ads do not interfere with form functionality or preview visibility",
       "files": [
-        "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+        "frontend/src/pages/ResumeBuilderPage.tsx",
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -187,146 +195,13 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-38"
+        "REQ-85"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-create-imagecropper-component-at-image-cropper-with-drag-based-crop-area-selection-aspect-ratio-presets-1-1-4-3-16-9-free-maintain-aspect-ratio-toggle-pixel-resize-after-crop-live-preview-and-secure-blob-download",
-      "featureTitle": "Create ImageCropper component at /image-cropper with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
-      "files": [
-        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-39"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-dpichanger-component-at-dpi-changer-with-dpi-preset-selector-100-200-300-dpi-custom-dpi-input-live-preview-original-vs-new-dpi-display-and-secure-blob-download",
-      "featureTitle": "Create DPIChanger component at /dpi-changer with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
-      "files": [
-        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-40"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-customimageresize-component-at-custom-image-resize-with-width-and-height-input-fields-maintain-aspect-ratio-toggle-pixel-and-percentage-resize-modes-live-preview-original-vs-new-size-display-and-secure-blob-download",
-      "featureTitle": "Create CustomImageResize component at /custom-image-resize with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
-      "files": [
-        "frontend/src/pages/image-tools/CustomImageResizePage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-41"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-jpgtopng-component-at-jpg-to-png-with-jpg-image-upload-instant-format-conversion-to-png-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
-      "featureTitle": "Create JPGToPNG component at /jpg-to-png with JPG image upload, instant format conversion to PNG, live preview, file size comparison, and secure blob download using browser-based conversion",
-      "files": [
-        "frontend/src/pages/image-tools/JPGToPNGPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-42"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-pngtojpg-component-at-png-to-jpg-with-png-image-upload-instant-format-conversion-to-jpg-with-quality-selection-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
-      "featureTitle": "Create PNGToJPG component at /png-to-jpg with PNG image upload, instant format conversion to JPG with quality selection, live preview, file size comparison, and secure blob download using browser-based conversion",
-      "files": [
-        "frontend/src/pages/image-tools/PNGToJPGPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-43"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-webpconverter-component-at-webp-converter-with-bidirectional-conversion-any-format-to-webp-webp-to-any-format-quality-selector-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
-      "featureTitle": "Create WEBPConverter component at /webp-converter with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download using browser-based conversion",
-      "files": [
-        "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-44"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-create-backgroundremover-component-at-background-remover-with-client-side-background-removal-using-browser-based-libraries-no-external-apis-drag-drop-upload-processing-animation-live-preview-with-transparent-background-and-secure-png-blob-download",
-      "featureTitle": "Create BackgroundRemover component at /background-remover with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
-      "files": [
-        "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-45"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-app-tsx-routing-to-include-image-tools-main-route-and-individual-routes-for-all-16-image-tools-passport-photo-maker-aadhaar-photo-resize-pan-photo-resize-ssc-photo-resize-railway-photo-resize-police-army-photo-visa-photo-resize-signature-resize-image-compressor-image-cropper-dpi-changer-custom-image-resize-jpg-to-png-png-to-jpg-webp-converter-background-remover",
-      "featureTitle": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools: /passport-photo-maker, /aadhaar-photo-resize, /pan-photo-resize, /ssc-photo-resize, /railway-photo-resize, /police-army-photo, /visa-photo-resize, /signature-resize, /image-compressor, /image-cropper, /dpi-changer, /custom-image-resize, /jpg-to-png, /png-to-jpg, /webp-converter, /background-remover",
+      "featureId": "feature-update-app-tsx-routing-to-include-resume-builder-main-route-displaying-resumebuilderpage-and-individual-routes-for-all-14-resume-templates-following-pattern-resume-builder-template-slug-where-slugs-are-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "featureTitle": "Update App.tsx routing to include /resume-builder main route displaying ResumeBuilderPage and individual routes for all 14 resume templates following pattern /resume-builder/[template-slug] where slugs are: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume",
       "files": [
         "frontend/src/App.tsx"
       ],
@@ -339,64 +214,7 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-47"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-ensure-all-16-image-tool-components-are-fully-mobile-responsive-display-correctly-on-screens-from-320px-width-upward-support-touch-gestures-for-drag-drop-maintain-usability-on-mobile-devices-and-adapt-layouts-for-tablet-and-desktop-viewports",
-      "featureTitle": "Ensure all 16 image tool components are fully mobile responsive, display correctly on screens from 320px width upward, support touch gestures for drag & drop, maintain usability on mobile devices, and adapt layouts for tablet and desktop viewports",
-      "files": [
-        "frontend/src/components/FileUploadZone.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-50"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-homepage-to-expand-the-existing-image-tools-section-to-showcase-the-new-comprehensive-image-tools-displaying-government-document-photos-category-8-tools-image-processing-category-4-tools-and-format-conversion-category-4-tools-with-total-count-of-16-image-tools",
-      "featureTitle": "Update HomePage to expand the existing Image Tools section to showcase the new comprehensive image tools, displaying Government Document Photos category (8 tools), Image Processing category (4 tools), and Format Conversion category (4 tools) with total count of 16 image tools",
-      "files": [
-        "frontend/src/pages/HomePage.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-51"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-update-footer-component-to-display-the-copyright-notice-2026-rjy-total-manpowers-services-private-limited-all-rights-reserved",
-      "featureTitle": "Update Footer component to display the copyright notice: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
-      "files": [
-        "frontend/src/components/Footer.tsx"
-      ],
-      "components": [
-        "blob-storage@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-52"
+        "REQ-86"
       ],
       "confidence": "high"
     }

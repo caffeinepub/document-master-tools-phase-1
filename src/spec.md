@@ -1,19 +1,23 @@
 # Specification
 
 ## Summary
-**Goal:** Add Phase 3 - Advanced Image Tools Module with 16 comprehensive image processing tools organized into Government Document Photos, Image Processing, and Format Conversion categories.
+**Goal:** Add a comprehensive Resume Builder module with 14 professional templates organized into Indian and International formats, featuring multi-step form wizard, live preview, color themes, AI summary generation, and PDF download capabilities.
 
 **Planned changes:**
-- Create ImageToolsPage component at /image-tools route displaying 16 image tools in a grid layout organized by category
-- Create 8 Government Document Photo tools: PassportPhotoMaker, AadhaarPhotoResize, PANPhotoResize, SSCPhotoResize, RailwayPhotoResize, PoliceArmyPhoto, VisaPhotoResize, SignatureResize with Job Form Special Mode, target size selectors, dimension controls, and aspect ratio toggles
-- Create 4 Image Processing tools: ImageCompressor with compression levels, ImageCropper with aspect ratio presets, DPIChanger with preset/custom DPI, CustomImageResize with pixel/percentage modes
-- Create 4 Format Conversion tools: JPGToPNG, PNGToJPG, WEBPConverter for bidirectional conversion, BackgroundRemover using client-side processing
-- Implement Job Form Special Mode across all government document tools with presets for government exams, passports, and signatures
-- Add 17 new routes in App.tsx: /image-tools main page plus 16 individual tool routes
-- Create SEO-optimized page wrappers for all 16 tools with unique H1s, 100-150 word descriptions, FAQ sections, meta tags, structured data, and internal links
-- Style all components with modern card layouts, dark/light mode compatibility, smooth processing animations, and AdSense-ready semantic structure
-- Ensure full mobile responsiveness from 320px width with touch-friendly drag & drop on all 16 tools
-- Update HomePage Image Tools section to showcase all 16 tools organized by category
-- Update Footer copyright to: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.
+- Create ResumeBuilderPage component at /resume-builder route displaying 14 templates in two categories (Indian Format: 7 templates, International Format: 7 templates)
+- Implement multi-step form wizard with progressive sections (Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) with add/remove functionality for repeatable entries
+- Build live preview component that renders resume in real-time with exact PDF formatting
+- Add optional photo upload with drag-and-drop, crop/resize preview, and template-aware placement (prominent for Indian formats, minimal/hidden for International formats)
+- Implement custom color theme selector with 6+ predefined palettes that apply to headers, borders, and accents
+- Create auto-formatting logic for skills bullets, dates (MM/YYYY), phone numbers (Indian +91 or International), proper noun capitalization, and consistent spacing
+- Add PDF download functionality with A4 sizing, intelligent page breaks, embedded fonts, and preserved styling
+- Integrate basic AI summary generator using local logic to analyze experience/skills and generate 2-3 sentence professional summaries
+- Create individual SEO-optimized pages for all 14 templates at /resume-builder/[template-slug] with unique meta titles, descriptions, Open Graph tags, FAQ sections, and internal links
+- Ensure full mobile responsiveness with vertical layouts below 768px, collapsible sections, touch-friendly controls, and preview below form on mobile
+- Style with modern card-based UI, smooth step transitions, progress indicators, optional localStorage save draft, and consistent Tailwind design system
+- Update HomePage to add Resume Builder section showing both template categories with preview cards
+- Update Header navigation to include Resume Builder link
+- Integrate AdPlaceholder components (top banner 728×90, in-content 300×250, sidebar 160×600) without interfering with form functionality
+- Configure all routes in App.tsx: main /resume-builder route and 14 individual template routes with slugs (fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume)
 
-**User-visible outcome:** Users can access a comprehensive suite of 16 image tools for government document photo preparation, image processing, and format conversion - all processing client-side with drag & drop uploads, live previews, and secure downloads. The Image Tools section is now featured on the homepage alongside Calculator Hub and PDF Tools.
+**User-visible outcome:** Users can access a full-featured Resume Builder from the homepage and header navigation, select from 14 professional templates across Indian and International formats, fill out a guided multi-step form with live preview, customize colors, optionally upload photos, generate AI-powered summaries, and download professionally formatted PDF resumes optimized for their target job market.

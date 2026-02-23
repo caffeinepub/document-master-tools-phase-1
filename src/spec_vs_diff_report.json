@@ -1,96 +1,120 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T07:40:09.410Z",
-  "summary": "The diff implements the majority of Phase 3 requirements. 16 image tool pages are created with basic structure, routing is added to App.tsx, and core image processing utilities exist. However, several requirements are partially implemented (DPI Changer, Image Cropper, Background Remover, WEBP Converter only show upload UI without full functionality), and critical features like Job Form Special Mode (REQ-46) and full SEO optimization with FAQs (REQ-48) are missing or incomplete. HomePage correctly shows 16 image tools organized into 3 categories, and Footer displays the updated copyright.",
+  "generatedAt": "2026-02-23T11:18:37.168Z",
+  "summary": "The diff implements a comprehensive Resume Builder module with 14 templates, multi-step form wizard, live preview, photo upload, color themes, auto-formatting, and PDF download. However, several requirements are missing: individual template route implementation, PDF generation logic, SEO integration, mobile responsiveness validation, HomePage integration, Header navigation update, and AdPlaceholder integration.",
   "missing_requirements": [
     {
-      "id": "REQ-46",
-      "requirement": "Implement Job Form Special Mode across all government document photo tools with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
-      "reason": "PhotoResizeTool.tsx does not contain any Job Form mode toggle or special mode functionality",
+      "id": "REQ-72",
+      "requirement": "Template cards are clickable and lead to individual template builders",
+      "reason": "ResumeBuilderPage shows template cards but the click handlers call onNavigate with page strings instead of template slugs. No evidence of routing to individual template builder pages.",
       "evidence": [
-        "frontend/src/components/image-tools/PhotoResizeTool.tsx"
+        "frontend/src/pages/ResumeBuilderPage.tsx"
       ]
     },
     {
-      "id": "REQ-40",
-      "requirement": "Create DPIChanger component with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
-      "reason": "DPIChangerPage.tsx only shows file upload zone; no DPI selector, custom input, processing logic, or download functionality",
+      "id": "REQ-78",
+      "requirement": "Implement PDF download functionality with proper A4 page sizing, intelligent page breaks, embedded fonts, and template-specific styling using jsPDF or similar",
+      "reason": "ResumePreview component has a handleDownloadPDF function that only shows toast notifications with setTimeout. No actual PDF generation library (jsPDF) is imported or used. No A4 sizing, page breaks, or font embedding logic implemented.",
       "evidence": [
-        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+        "frontend/src/components/resume/ResumePreview.tsx"
       ]
     },
     {
-      "id": "REQ-39",
-      "requirement": "Create ImageCropper component with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
-      "reason": "ImageCropperPage.tsx only shows file upload zone; no cropping interface, aspect ratio controls, or processing logic",
+      "id": "REQ-80",
+      "requirement": "FAQ section with 3-5 questions specific to each template format",
+      "reason": "FAQSchema component is added to ResumeTemplateBuilderPage, but the FAQ content is not rendered in the visible page UI. The schema exists for structured data but users cannot see the FAQs on the page.",
       "evidence": [
-        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ]
     },
     {
-      "id": "REQ-45",
-      "requirement": "Create BackgroundRemover component with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
-      "reason": "BackgroundRemoverPage.tsx only shows file upload zone; no background removal processing, library integration, or download functionality",
+      "id": "REQ-80",
+      "requirement": "Internal links to Calculator Hub, PDF Tools, and Image Tools are present",
+      "reason": "RelatedTools component is defined in ResumeTemplateBuilderPage but is not rendered in the JSX return statement. The component exists but is not displayed to users.",
       "evidence": [
-        "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ]
     },
     {
-      "id": "REQ-44",
-      "requirement": "Create WEBPConverter component with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download",
-      "reason": "WEBPConverterPage.tsx only shows file upload zone; no format conversion logic, quality selector, or bidirectional conversion functionality",
+      "id": "REQ-81",
+      "requirement": "Resume Builder hub displays template grid in 1 column on mobile (<768px)",
+      "reason": "ResumeBuilderPage uses grid-cols-1 md:grid-cols-2 lg:grid-cols-3, which displays 1 column on mobile. However, explicit validation that all Resume Builder components including form wizard and live preview are fully responsive is not evident. ResumeFormWizard has isMobile logic but no validation of touch-friendly controls or 320px width testing.",
       "evidence": [
-        "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+        "frontend/src/pages/ResumeBuilderPage.tsx",
+        "frontend/src/components/resume/ResumeFormWizard.tsx"
       ]
     },
     {
-      "id": "REQ-48",
-      "requirement": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links",
-      "reason": "Only PassportPhotoMakerPage has FAQ and SEO content; the other 15 image tools lack FAQ sections, meta tags, structured data, and internal links to Calculator Hub/PDF Tools",
+      "id": "REQ-83",
+      "requirement": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections",
+      "reason": "No changes to HomePage are shown in the diff. The HomePage modification to add Resume Builder section with category cards is missing.",
+      "evidence": []
+    },
+    {
+      "id": "REQ-84",
+      "requirement": "Update Header component navigation to include Resume Builder link",
+      "reason": "No changes to Header component are shown in the diff. The Header navigation update to add Resume Builder link is missing.",
+      "evidence": []
+    },
+    {
+      "id": "REQ-85",
+      "requirement": "Integrate AdPlaceholder components into Resume Builder pages with top banner, in-content, and sidebar ads",
+      "reason": "AdPlaceholder component is imported and used in ResumeBuilderPage, but ResumeTemplateBuilderPage (the actual template builder page where users fill forms) does not show AdPlaceholder integration in the diff content. The most important page for ad placement is missing ads.",
       "evidence": [
-        "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-        "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-        "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
       ]
     },
     {
-      "id": "REQ-41",
-      "requirement": "Create CustomImageResize component with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
-      "reason": "CustomImageResizePage uses PhotoResizeTool which does not support percentage resize mode; only pixel mode is implemented",
+      "id": "REQ-86",
+      "requirement": "All 14 individual template routes are configured with correct slugs",
+      "reason": "App.tsx shows routing logic for resume-builder and calls to ResumeTemplateBuilderPage with templateSlug, but the diff is truncated. Cannot verify all 14 individual template routes are configured. The visible portion shows conditional rendering but not all route definitions.",
       "evidence": [
-        "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-        "frontend/src/components/image-tools/PhotoResizeTool.tsx"
+        "frontend/src/App.tsx"
       ]
     }
   ],
-  "hallucinated_features": [],
-  "confidence": 0.85,
+  "hallucinated_features": [
+    {
+      "description": "RelatedTools component defined but not rendered in ResumeTemplateBuilderPage",
+      "reason": "The RelatedTools component is created with Calculator Hub, PDF Tools, and Image Tools links, but it is never included in the JSX return statement, making it dead code.",
+      "evidence": [
+        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
+      ]
+    },
+    {
+      "description": "validateContrast function in colorThemes.ts that always returns true",
+      "reason": "A validateContrast function is implemented but is a placeholder that always returns true instead of performing actual contrast ratio validation. This was not requested and provides no real functionality.",
+      "evidence": [
+        "frontend/src/lib/colorThemes.ts"
+      ]
+    }
+  ],
+  "confidence": 0.75,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/App.tsx",
-    "frontend/src/components/FileUploadZone.tsx",
-    "frontend/src/components/Footer.tsx",
-    "frontend/src/components/image-tools/PhotoResizeTool.tsx",
-    "frontend/src/lib/imageProcessing.ts",
-    "frontend/src/pages/HomePage.tsx",
-    "frontend/src/pages/ImageToolsPage.tsx",
-    "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-    "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-    "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-    "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-    "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-    "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-    "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-    "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-    "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-    "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-    "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+    "frontend/src/components/resume/ColorThemeSelector.tsx",
+    "frontend/src/components/resume/ResumeEditor.tsx",
+    "frontend/src/components/resume/ResumeFormWizard.tsx",
+    "frontend/src/components/resume/ResumePreview.tsx",
+    "frontend/src/components/resume/ResumeTemplateSelector.tsx",
+    "frontend/src/components/resume/forms/AchievementsForm.tsx",
+    "frontend/src/components/resume/forms/CertificationsForm.tsx",
+    "frontend/src/components/resume/forms/EducationForm.tsx",
+    "frontend/src/components/resume/forms/ExperienceForm.tsx",
+    "frontend/src/components/resume/forms/LanguagesForm.tsx",
+    "frontend/src/components/resume/forms/PersonalInfoForm.tsx",
+    "frontend/src/components/resume/forms/ProjectsForm.tsx",
+    "frontend/src/components/resume/forms/ReferencesForm.tsx",
+    "frontend/src/components/resume/forms/SkillsForm.tsx",
+    "frontend/src/data/resumeTemplateConfigs.ts",
+    "frontend/src/lib/colorThemes.ts",
+    "frontend/src/lib/resumeFormatters.ts",
+    "frontend/src/lib/summaryGenerator.ts",
+    "frontend/src/pages/ResumeBuilderPage.tsx",
+    "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+    "frontend/src/types/resume.ts",
     "project_state.json"
   ]
 }

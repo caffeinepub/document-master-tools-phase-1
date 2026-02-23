@@ -1,236 +1,223 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T11:18:37.176Z",
+  "generatedAt": "2026-02-23T12:55:02.044Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
-    "total": 15,
-    "implemented": 11,
+    "total": 11,
+    "implemented": 7,
     "items": [
       {
-        "id": "REQ-72",
-        "summary": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates organized in two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume)",
+        "id": "REQ-87",
+        "summary": "Create LanguageSelector component (frontend/src/components/LanguageSelector.tsx) that renders a dropdown in the header displaying 9 supported languages: English (en, default), Hindi (hi), Bengali (bn), Tamil (ta), Telugu (te), Marathi (mr), Gujarati (gu), Kannada (kn), Malayalam (ml), Urdu (ur) with flag icons or language codes, current selected language indicator, and smooth dropdown animation",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/pages/ResumeBuilderPage.tsx",
+          "frontend/src/components/LanguageSelector.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/components/LanguageSelector.tsx"
+        ]
+      },
+      {
+        "id": "REQ-88",
+        "summary": "Create i18n infrastructure with context provider (frontend/src/contexts/LanguageContext.tsx) that manages current language state, provides language switching functionality, persists language preference to localStorage, and exposes useLanguage hook for components to access translation functions and current language",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx",
           "frontend/src/App.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/pages/ResumeBuilderPage.tsx",
+          "frontend/src/contexts/LanguageContext.tsx",
           "frontend/src/App.tsx"
         ]
       },
       {
-        "id": "REQ-73",
-        "summary": "Implement multi-step form wizard with progressive sections including Personal Info (name, email, phone, address, LinkedIn, portfolio), Education (degree, institution, year, grade), Experience (company, role, duration, responsibilities), Skills (technical, soft skills), Projects, Certifications, Languages, Achievements, and References with ability to add/remove individual entries within each section",
+        "id": "REQ-89",
+        "summary": "Create translation JSON files (frontend/src/locales/en.json, hi.json, bn.json, ta.json, te.json, mr.json, gu.json, kn.json, ml.json, ur.json) containing translations for all UI text including navigation labels, page headings, descriptions, button labels, form labels, error messages, and SEO meta titles/descriptions. Do NOT translate calculation logic, formulas, or numerical operations",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/resume/ResumeFormWizard.tsx",
-          "frontend/src/types/resume.ts"
+          "frontend/src/locales/en.json",
+          "frontend/src/locales/hi.json",
+          "frontend/src/locales/bn.json",
+          "frontend/src/locales/ta.json",
+          "frontend/src/locales/te.json",
+          "frontend/src/locales/mr.json",
+          "frontend/src/locales/gu.json",
+          "frontend/src/locales/kn.json",
+          "frontend/src/locales/ml.json",
+          "frontend/src/locales/ur.json"
         ],
         "matchedFiles": [
-          "frontend/src/components/resume/ResumeFormWizard.tsx",
-          "frontend/src/types/resume.ts"
+          "frontend/src/locales/en.json",
+          "frontend/src/locales/hi.json",
+          "frontend/src/locales/bn.json",
+          "frontend/src/locales/ta.json",
+          "frontend/src/locales/te.json",
+          "frontend/src/locales/mr.json",
+          "frontend/src/locales/gu.json",
+          "frontend/src/locales/kn.json",
+          "frontend/src/locales/ml.json",
+          "frontend/src/locales/ur.json"
         ]
       },
       {
-        "id": "REQ-74",
-        "summary": "Create live preview component that renders resume in real-time as user fills form fields, updating instantly without page reload and displaying exactly how the final PDF will appear with proper formatting, spacing, and typography matching the selected template",
+        "id": "REQ-90",
+        "summary": "Update App.tsx routing to support language-prefixed URLs following pattern /:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder with default English routes preserved at existing paths (/calculators, /pdf-tools, etc.) and language parameter extracted from URL to set active language",
         "status": "implemented",
         "plannedFiles": [
-          "frontend/src/components/resume/ResumePreview.tsx",
-          "frontend/src/components/resume/templates/FresherResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/GovernmentJobResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/PrivateJobResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/HindiResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/BiodataForMarriageTemplate.tsx",
-          "frontend/src/components/resume/templates/TeacherResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/PoliceArmyResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/ATSFriendlyResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/USResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/UKCVTemplate.tsx",
-          "frontend/src/components/resume/templates/CanadaResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/EuropassCVTemplate.tsx",
-          "frontend/src/components/resume/templates/CreativeResumeTemplate.tsx",
-          "frontend/src/components/resume/templates/CorporateResumeTemplate.tsx"
+          "frontend/src/App.tsx",
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/Footer.tsx"
         ],
         "matchedFiles": [
-          "frontend/src/components/resume/ResumePreview.tsx"
+          "frontend/src/App.tsx",
+          "frontend/src/components/Header.tsx"
         ]
       },
       {
-        "id": "REQ-75",
-        "summary": "Add optional photo upload feature with drag-and-drop support, image crop/resize preview, and template-aware placement logic where Indian format templates (Fresher, Government Job, Private Job, Hindi, Biodata, Teacher, Police/Army) show photo prominently while International format templates (ATS, US, UK, Canada, Europass, Creative, Corporate) hide photo by default or place it minimally",
+        "id": "REQ-91",
+        "summary": "Update SEO component to render hreflang link tags for all 9 supported languages on every page, pointing to language-specific URL variants, with x-default hreflang pointing to English version, and language-specific canonical tags pointing to current language URL",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/components/resume/PhotoUploadSection.tsx",
-          "frontend/src/hooks/usePhotoUpload.ts"
+          "frontend/src/components/SEO.tsx"
         ],
         "matchedFiles": []
       },
       {
-        "id": "REQ-76",
-        "summary": "Implement custom color theme selector with at least 6 predefined color palettes (Professional Blue, Corporate Black, Creative Purple, Modern Teal, Classic Gray, Elegant Maroon) that dynamically apply to resume headers, section borders, accent lines, and text highlights without affecting readability",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/resume/ColorThemeSelector.tsx",
-          "frontend/src/lib/colorThemes.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/resume/ColorThemeSelector.tsx",
-          "frontend/src/lib/colorThemes.ts"
-        ]
-      },
-      {
-        "id": "REQ-77",
-        "summary": "Create auto-formatting logic that converts Skills section entries into bullet points, auto-formats dates to MM/YYYY format, formats phone numbers to Indian (+91) or International format based on selected template category, capitalizes proper nouns, and ensures consistent spacing throughout the resume",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/lib/resumeFormatters.ts",
-          "frontend/src/components/resume/ResumeFormWizard.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/lib/resumeFormatters.ts",
-          "frontend/src/components/resume/ResumeFormWizard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-78",
-        "summary": "Implement PDF download functionality with proper A4 page sizing (210mm x 297mm), intelligent page breaks that avoid splitting sections mid-content, embedded fonts to ensure consistent rendering across devices, and template-specific styling preserved using client-side PDF generation library (jsPDF or similar)",
+        "id": "REQ-92",
+        "summary": "Update all page components (calculators, PDF tools, image tools, resume builder, hub pages) to use translation keys from language context instead of hardcoded English strings for page titles, headings, descriptions, button labels, and form fields while preserving calculation logic, formulas, and numerical displays in their original form",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/lib/pdfGenerator.ts",
-          "frontend/src/hooks/usePDFDownload.ts",
-          "frontend/src/components/resume/DownloadPDFButton.tsx"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-79",
-        "summary": "Add basic AI summary generator using local logic (no external API calls) that analyzes user's experience entries and skills to generate 2-3 sentence professional summary focusing on years of experience, key skills, notable achievements, and career objectives using action-oriented language and industry-standard phrasing",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/lib/summaryGenerator.ts",
-          "frontend/src/components/resume/SummaryGeneratorButton.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/lib/summaryGenerator.ts"
-        ]
-      },
-      {
-        "id": "REQ-80",
-        "summary": "Create individual SEO-friendly pages for each of the 14 resume templates at routes /resume-builder/[template-slug] with unique meta titles following pattern '[Template Name] Resume Builder - Free Online Tool | Document Master Tools', descriptions highlighting template-specific benefits, Open Graph tags, FAQ sections answering common questions about each template format, and internal links to Calculator Hub, PDF Tools, and Image Tools",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-          "frontend/src/data/resumeTemplateConfigs.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-          "frontend/src/data/resumeTemplateConfigs.ts"
-        ]
-      },
-      {
-        "id": "REQ-81",
-        "summary": "Ensure all Resume Builder components including main hub page, template selection, form wizard, live preview, and individual template pages are fully mobile responsive with vertical form layout on screens below 768px, collapsible sections on mobile, touch-friendly input controls, preview positioned below form on mobile, and proper scaling from 320px width upward",
-        "status": "implemented",
-        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx",
+          "frontend/src/pages/CalculatorsPage.tsx",
+          "frontend/src/pages/calculators/AgeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/BMICalculatorPage.tsx",
+          "frontend/src/pages/calculators/CGPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/CGPAToPercentageConverterPage.tsx",
+          "frontend/src/pages/calculators/CompoundInterestCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DateDifferenceCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DiscountCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DivisionCalculatorPage.tsx",
+          "frontend/src/pages/calculators/EMICalculatorPage.tsx",
+          "frontend/src/pages/calculators/GPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/GradeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/GSTCalculatorPage.tsx",
+          "frontend/src/pages/calculators/LoanCalculatorPage.tsx",
+          "frontend/src/pages/calculators/MarksPercentageCalculatorPage.tsx",
+          "frontend/src/pages/calculators/PercentageToCGPAConverterPage.tsx",
+          "frontend/src/pages/calculators/ProfitLossCalculatorPage.tsx",
+          "frontend/src/pages/calculators/SalaryHikeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/SGPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/SimpleInterestCalculatorPage.tsx",
+          "frontend/src/pages/calculators/TimeDurationCalculatorPage.tsx",
+          "frontend/src/pages/PDFToolsPage.tsx",
+          "frontend/src/pages/ImageToolsPage.tsx",
           "frontend/src/pages/ResumeBuilderPage.tsx",
-          "frontend/src/components/resume/ResumeFormWizard.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ResumeBuilderPage.tsx",
-          "frontend/src/components/resume/ResumeFormWizard.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-82",
-        "summary": "Style Resume Builder with modern clean UI matching existing Tailwind design system using card-based layout for form sections, smooth transitions for step navigation, progress indicator showing completion percentage, optional save draft functionality storing data in localStorage, clear primary call-to-action buttons (Next, Download PDF), and consistent spacing aligned with Calculator, PDF, and Image Tools styling",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/resume/ResumeFormWizard.tsx",
-          "frontend/src/hooks/useDraftStorage.ts"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/resume/ResumeFormWizard.tsx"
-        ]
-      },
-      {
-        "id": "REQ-83",
-        "summary": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections, displaying both template categories (Indian Format: 7 templates, International Format: 7 templates) with representative preview cards showing template names, brief descriptions, and call-to-action buttons linking to /resume-builder",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/pages/HomePage.tsx"
+          "frontend/src/pages/PrivacyPolicyPage.tsx",
+          "frontend/src/pages/TermsOfUsePage.tsx",
+          "frontend/src/pages/DisclaimerPage.tsx",
+          "frontend/src/components/calculators/AgeCalculator.tsx",
+          "frontend/src/components/calculators/BMICalculator.tsx",
+          "frontend/src/components/calculators/CGPACalculator.tsx",
+          "frontend/src/components/calculators/CGPAToPercentageConverter.tsx",
+          "frontend/src/components/calculators/CompoundInterestCalculator.tsx",
+          "frontend/src/components/calculators/DateDifferenceCalculator.tsx",
+          "frontend/src/components/calculators/DiscountCalculator.tsx",
+          "frontend/src/components/calculators/DivisionCalculator.tsx",
+          "frontend/src/components/calculators/EMICalculator.tsx",
+          "frontend/src/components/calculators/GPACalculator.tsx",
+          "frontend/src/components/calculators/GradeCalculator.tsx",
+          "frontend/src/components/calculators/GSTCalculator.tsx",
+          "frontend/src/components/calculators/LoanCalculator.tsx",
+          "frontend/src/components/calculators/MarksPercentageCalculator.tsx",
+          "frontend/src/components/calculators/PercentageToCGPAConverter.tsx",
+          "frontend/src/components/calculators/ProfitLossCalculator.tsx",
+          "frontend/src/components/calculators/SalaryHikeCalculator.tsx",
+          "frontend/src/components/calculators/SGPACalculator.tsx",
+          "frontend/src/components/calculators/SimpleInterestCalculator.tsx",
+          "frontend/src/components/calculators/TimeDurationCalculator.tsx",
+          "frontend/src/components/BreadcrumbNavigation.tsx",
+          "frontend/src/components/RelatedTools.tsx",
+          "frontend/src/components/ToolCategories.tsx",
+          "frontend/src/components/Hero.tsx"
         ],
         "matchedFiles": []
       },
       {
-        "id": "REQ-84",
-        "summary": "Update Header component navigation to include Resume Builder link that directs users to /resume-builder, positioned after Calculator Hub link and maintaining consistent navigation styling with other header links",
+        "id": "REQ-93",
+        "summary": "Implement lazy loading for translation files using dynamic imports so language JSON files are only loaded when user switches to that language, with loading state indicator during language switch and error handling for failed translation file loads",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx"
+        ]
+      },
+      {
+        "id": "REQ-94",
+        "summary": "Update SEO component to accept language parameter and render language-specific meta titles and descriptions using translated strings from active language file, maintaining existing SEO structure with Open Graph tags and Twitter Card tags in the selected language",
         "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/SEO.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-95",
+        "summary": "Implement optional browser language auto-detection on initial page load that reads navigator.language or navigator.languages, matches to one of the 9 supported languages (with fallback to English), and optionally redirects user to detected language URL if different from current URL language",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/contexts/LanguageContext.tsx"
+        ]
+      },
+      {
+        "id": "REQ-96",
+        "summary": "Integrate LanguageSelector into Header component positioned after existing navigation links with proper spacing, ensure mobile responsive design with dropdown overlay on small screens, and verify language switching works across all pages without breaking layouts or functionality",
+        "status": "implemented",
         "plannedFiles": [
           "frontend/src/components/Header.tsx"
         ],
+        "matchedFiles": [
+          "frontend/src/components/Header.tsx"
+        ]
+      },
+      {
+        "id": "REQ-97",
+        "summary": "Update sitemap.xml generation utility to include language-specific URLs for all pages across all 9 languages following pattern example.com/en/calculators/cgpa-calculator, example.com/hi/calculators/cgpa-calculator, etc. with proper lastmod, changefreq, and priority values maintained for each language variant",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/utils/generateSitemap.ts",
+          "frontend/public/sitemap.xml"
+        ],
         "matchedFiles": []
-      },
-      {
-        "id": "REQ-85",
-        "summary": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad (728×90) after H1 heading, in-content ad (300×250) positioned between form wizard and preview sections on desktop, and sidebar ad (160×600) in right sidebar layout when viewport width exceeds 1024px, ensuring ads do not interfere with form functionality or preview visibility",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/ResumeBuilderPage.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/ResumeBuilderPage.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-86",
-        "summary": "Update App.tsx routing to include /resume-builder main route displaying ResumeBuilderPage and individual routes for all 14 resume templates following pattern /resume-builder/[template-slug] where slugs are: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
-        ]
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
     "feature_evidence.json",
-    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
     "frontend/src/App.tsx",
-    "frontend/src/components/resume/ColorThemeSelector.tsx",
-    "frontend/src/components/resume/ResumeEditor.tsx",
-    "frontend/src/components/resume/ResumeFormWizard.tsx",
-    "frontend/src/components/resume/ResumePreview.tsx",
-    "frontend/src/components/resume/ResumeTemplateSelector.tsx",
-    "frontend/src/components/resume/forms/AchievementsForm.tsx",
-    "frontend/src/components/resume/forms/CertificationsForm.tsx",
-    "frontend/src/components/resume/forms/EducationForm.tsx",
-    "frontend/src/components/resume/forms/ExperienceForm.tsx",
-    "frontend/src/components/resume/forms/LanguagesForm.tsx",
-    "frontend/src/components/resume/forms/PersonalInfoForm.tsx",
-    "frontend/src/components/resume/forms/ProjectsForm.tsx",
-    "frontend/src/components/resume/forms/ReferencesForm.tsx",
-    "frontend/src/components/resume/forms/SkillsForm.tsx",
-    "frontend/src/data/resumeTemplateConfigs.ts",
-    "frontend/src/lib/colorThemes.ts",
-    "frontend/src/lib/resumeFormatters.ts",
-    "frontend/src/lib/summaryGenerator.ts",
-    "frontend/src/pages/ResumeBuilderPage.tsx",
-    "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-    "frontend/src/types/resume.ts",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageSelector.tsx",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/locales/bn.json",
+    "frontend/src/locales/en.json",
+    "frontend/src/locales/gu.json",
+    "frontend/src/locales/hi.json",
+    "frontend/src/locales/kn.json",
+    "frontend/src/locales/ml.json",
+    "frontend/src/locales/mr.json",
+    "frontend/src/locales/ta.json",
+    "frontend/src/locales/te.json",
+    "frontend/src/locales/ur.json",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

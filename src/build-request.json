@@ -1,336 +1,261 @@
 {
   "kind": "build_request",
-  "title": "Add Advanced Resume Builder Module with 14 Templates",
+  "title": "Implement Global Multi-Language System with 9 Languages",
   "projectName": "Document Master Tools",
   "priority": "normal",
   "requirements": [
     {
-      "id": "REQ-72",
-      "text": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates organized in two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume)",
+      "id": "REQ-87",
+      "text": "Create LanguageSelector component (frontend/src/components/LanguageSelector.tsx) that renders a dropdown in the header displaying 9 supported languages: English (en, default), Hindi (hi), Bengali (bn), Tamil (ta), Telugu (te), Marathi (mr), Gujarati (gu), Kannada (kn), Malayalam (ml), Urdu (ur) with flag icons or language codes, current selected language indicator, and smooth dropdown animation",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "Create main route: /resume-builder",
-          "Add two main categories: 1️⃣ INDIAN FORMAT: • Fresher Resume • Government Job Resume • Private Job Resume • Hindi Resume • Biodata for Marriage • Teacher Resume • Police / Army Resume 2️⃣ INTERNATIONAL FORMAT: • ATS Friendly Resume • US Resume • UK CV Format • Canada Resume • Europass CV • Creative Resume • Corporate Resume"
+          "Add language dropdown in header. Primary supported languages: English (default) Hindi Bengali Tamil Telugu Marathi Gujarati Kannada Malayalam Urdu"
         ]
       },
       "acceptanceCriteria": [
-        "ResumeBuilderPage component exists at frontend/src/pages/ResumeBuilderPage.tsx",
-        "Route /resume-builder is configured in App.tsx",
-        "Page displays two distinct category sections: Indian Format and International Format",
-        "Each category shows 7 template cards with names matching the specification exactly",
-        "Template cards are clickable and lead to individual template builders"
+        "LanguageSelector component renders in Header component",
+        "Dropdown displays all 9 languages with proper labels",
+        "Current language is highlighted",
+        "Mobile responsive with touch-friendly tap targets",
+        "Smooth open/close animations"
       ]
     },
     {
-      "id": "REQ-73",
-      "text": "Implement multi-step form wizard with progressive sections including Personal Info (name, email, phone, address, LinkedIn, portfolio), Education (degree, institution, year, grade), Experience (company, role, duration, responsibilities), Skills (technical, soft skills), Projects, Certifications, Languages, Achievements, and References with ability to add/remove individual entries within each section",
+      "id": "REQ-88",
+      "text": "Create i18n infrastructure with context provider (frontend/src/contexts/LanguageContext.tsx) that manages current language state, provides language switching functionality, persists language preference to localStorage, and exposes useLanguage hook for components to access translation functions and current language",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Multi-step form wizard",
-          "• Add / Remove sections",
-          "• Editable sections"
+          "Implement scalable i18n structure. - Separate translation JSON files per language - Dynamic content switching - Preserve routes - Maintain SEO structure"
         ]
       },
       "acceptanceCriteria": [
-        "Form wizard component displays step indicators showing current progress",
-        "Each section (Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) has dedicated form fields",
-        "Users can add multiple entries for Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References",
-        "Each repeatable section has Add and Remove buttons",
-        "Form validates required fields before allowing progression to next step",
-        "Navigation between steps works via Next/Previous buttons"
+        "LanguageContext provides currentLanguage state",
+        "setLanguage function updates language without page reload",
+        "Language preference persists in localStorage",
+        "useLanguage hook accessible in all components",
+        "Context wrapped around App in main.tsx"
       ]
     },
     {
-      "id": "REQ-74",
-      "text": "Create live preview component that renders resume in real-time as user fills form fields, updating instantly without page reload and displaying exactly how the final PDF will appear with proper formatting, spacing, and typography matching the selected template",
+      "id": "REQ-89",
+      "text": "Create translation JSON files (frontend/src/locales/en.json, hi.json, bn.json, ta.json, te.json, mr.json, gu.json, kn.json, ml.json, ur.json) containing translations for all UI text including navigation labels, page headings, descriptions, button labels, form labels, error messages, and SEO meta titles/descriptions. Do NOT translate calculation logic, formulas, or numerical operations",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Live preview",
-          "• Auto formatting"
+          "Separate translation JSON files per language",
+          "Do NOT translate tool calculation logic. Only UI text + headings + descriptions"
         ]
       },
       "acceptanceCriteria": [
-        "Preview pane displays side-by-side with form on desktop layouts",
-        "Preview updates in real-time as user types or modifies any field",
-        "Preview shows exact layout and styling that will appear in downloaded PDF",
-        "Preview is scrollable and maintains A4 aspect ratio",
-        "All template-specific formatting rules are applied in preview"
+        "10 JSON files created in frontend/src/locales/",
+        "Each file contains complete translations for all UI strings",
+        "Translation keys are consistent across all language files",
+        "Calculator formulas and logic remain in English",
+        "Footer copyright text remains unchanged",
+        "File structure supports nested keys for organization"
       ]
     },
     {
-      "id": "REQ-75",
-      "text": "Add optional photo upload feature with drag-and-drop support, image crop/resize preview, and template-aware placement logic where Indian format templates (Fresher, Government Job, Private Job, Hindi, Biodata, Teacher, Police/Army) show photo prominently while International format templates (ATS, US, UK, Canada, Europass, Creative, Corporate) hide photo by default or place it minimally",
+      "id": "REQ-90",
+      "text": "Update App.tsx routing to support language-prefixed URLs following pattern /:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder with default English routes preserved at existing paths (/calculators, /pdf-tools, etc.) and language parameter extracted from URL to set active language",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Photo optional"
+          "URL Structure: example.com/en/ example.com/hi/ example.com/bn/ etc.",
+          "Preserve routes"
         ]
       },
       "acceptanceCriteria": [
-        "Photo upload section supports drag-and-drop and click-to-upload",
-        "Uploaded image displays in crop/resize preview with aspect ratio controls",
-        "Indian format templates display uploaded photo in header or sidebar",
-        "International format templates either hide photo or show it minimally based on template design",
-        "Photo can be removed after upload"
+        "Routes support optional /:lang prefix",
+        "Language code in URL sets active language automatically",
+        "Default routes without prefix use English",
+        "Navigation preserves current language in URLs",
+        "All existing routes work with language prefixes"
       ]
     },
     {
-      "id": "REQ-76",
-      "text": "Implement custom color theme selector with at least 6 predefined color palettes (Professional Blue, Corporate Black, Creative Purple, Modern Teal, Classic Gray, Elegant Maroon) that dynamically apply to resume headers, section borders, accent lines, and text highlights without affecting readability",
+      "id": "REQ-91",
+      "text": "Update SEO component to render hreflang link tags for all 9 supported languages on every page, pointing to language-specific URL variants, with x-default hreflang pointing to English version, and language-specific canonical tags pointing to current language URL",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Custom color themes"
+          "SEO: - hreflang tags - Canonical per language - Language-based meta titles & descriptions"
         ]
       },
       "acceptanceCriteria": [
-        "Color theme selector displays 6+ color palette options",
-        "Selecting a color palette instantly updates preview with new colors",
-        "Colors apply to headers, borders, section dividers, and accent elements",
-        "Text remains readable with proper contrast ratios",
-        "Selected theme persists when downloading PDF"
+        "hreflang tags generated for all 9 languages on every page",
+        "x-default hreflang points to English version",
+        "Canonical tag reflects current language URL",
+        "Alternate language URLs properly constructed",
+        "Tags render in document <head>"
       ]
     },
     {
-      "id": "REQ-77",
-      "text": "Create auto-formatting logic that converts Skills section entries into bullet points, auto-formats dates to MM/YYYY format, formats phone numbers to Indian (+91) or International format based on selected template category, capitalizes proper nouns, and ensures consistent spacing throughout the resume",
+      "id": "REQ-92",
+      "text": "Update all page components (calculators, PDF tools, image tools, resume builder, hub pages) to use translation keys from language context instead of hardcoded English strings for page titles, headings, descriptions, button labels, and form fields while preserving calculation logic, formulas, and numerical displays in their original form",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Auto formatting",
-          "• Skills auto bullet format"
+          "Dynamic content switching",
+          "Only UI text + headings + descriptions",
+          "Do NOT translate tool calculation logic"
         ]
       },
       "acceptanceCriteria": [
-        "Skills entries automatically convert to bullet point format",
-        "Date inputs auto-format to MM/YYYY pattern",
-        "Phone numbers format to +91-XXXXX-XXXXX for Indian templates",
-        "Phone numbers format to international standard for International templates",
-        "Proper nouns in name fields auto-capitalize first letters",
-        "Consistent line spacing and margins apply across all sections"
+        "All page titles use translation keys",
+        "All UI headings and descriptions translated",
+        "Button labels and form fields use translations",
+        "Calculator formulas remain untranslated",
+        "Numerical outputs and operations unchanged",
+        "Changes applied to 50+ page components"
       ]
     },
     {
-      "id": "REQ-78",
-      "text": "Implement PDF download functionality with proper A4 page sizing (210mm x 297mm), intelligent page breaks that avoid splitting sections mid-content, embedded fonts to ensure consistent rendering across devices, and template-specific styling preserved using client-side PDF generation library (jsPDF or similar)",
+      "id": "REQ-93",
+      "text": "Implement lazy loading for translation files using dynamic imports so language JSON files are only loaded when user switches to that language, with loading state indicator during language switch and error handling for failed translation file loads",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Download PDF"
+          "Performance: - Lazy load language files - No heavy reload"
         ]
       },
       "acceptanceCriteria": [
-        "Download PDF button generates PDF file with user's resume data",
-        "PDF uses A4 page dimensions (210mm x 297mm)",
-        "Page breaks intelligently avoid splitting sections or list items",
-        "Fonts are embedded in PDF for consistent cross-platform rendering",
-        "Downloaded PDF exactly matches live preview styling",
-        "PDF filename includes template name and timestamp"
+        "Translation files loaded on-demand via dynamic import()",
+        "Loading indicator shown during language switch",
+        "Translations cached after first load",
+        "Error handling for network failures",
+        "No full page reload on language change"
       ]
     },
     {
-      "id": "REQ-79",
-      "text": "Add basic AI summary generator using local logic (no external API calls) that analyzes user's experience entries and skills to generate 2-3 sentence professional summary focusing on years of experience, key skills, notable achievements, and career objectives using action-oriented language and industry-standard phrasing",
+      "id": "REQ-94",
+      "text": "Update SEO component to accept language parameter and render language-specific meta titles and descriptions using translated strings from active language file, maintaining existing SEO structure with Open Graph tags and Twitter Card tags in the selected language",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Basic AI summary generator (local logic, no paid API)"
+          "Language-based meta titles & descriptions",
+          "Maintain SEO structure"
         ]
       },
       "acceptanceCriteria": [
-        "AI Summary Generator button appears in Personal Info section",
-        "Generator analyzes filled experience and skills data locally",
-        "Generated summary is 2-3 sentences with professional tone",
-        "Summary includes quantifiable experience (years) and key skills",
-        "Summary uses action words and achievement-focused language",
-        "No external API calls are made during generation",
-        "User can edit generated summary after creation"
+        "SEO component accepts language prop",
+        "Meta titles use translated strings",
+        "Meta descriptions use translated strings",
+        "Open Graph tags reflect current language",
+        "Twitter Card tags use current language",
+        "Canonical and hreflang tags properly set"
       ]
     },
     {
-      "id": "REQ-80",
-      "text": "Create individual SEO-friendly pages for each of the 14 resume templates at routes /resume-builder/[template-slug] with unique meta titles following pattern '[Template Name] Resume Builder - Free Online Tool | Document Master Tools', descriptions highlighting template-specific benefits, Open Graph tags, FAQ sections answering common questions about each template format, and internal links to Calculator Hub, PDF Tools, and Image Tools",
+      "id": "REQ-95",
+      "text": "Implement optional browser language auto-detection on initial page load that reads navigator.language or navigator.languages, matches to one of the 9 supported languages (with fallback to English), and optionally redirects user to detected language URL if different from current URL language",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Resume optimized keywords",
-          "• Unique meta per template",
-          "• FAQ section",
-          "• Internal linking to tools"
+          "Auto detect browser language (optional redirect)"
         ]
       },
       "acceptanceCriteria": [
-        "Each of 14 templates has individual route at /resume-builder/[template-slug]",
-        "SEO component is integrated with unique title for each template",
-        "Meta descriptions are 150-160 characters highlighting template benefits",
-        "Open Graph tags include og:title, og:description, og:image",
-        "FAQ section with 3-5 questions specific to each template format",
-        "Internal links to Calculator Hub, PDF Tools, and Image Tools are present",
-        "BreadcrumbNavigation component shows Home > Resume Builder > [Template Name]"
+        "Browser language detected on first visit",
+        "Language code mapped to supported languages",
+        "Falls back to English for unsupported languages",
+        "Optional redirect to detected language URL",
+        "User preference in localStorage overrides detection",
+        "Detection only runs once per session"
       ]
     },
     {
-      "id": "REQ-81",
-      "text": "Ensure all Resume Builder components including main hub page, template selection, form wizard, live preview, and individual template pages are fully mobile responsive with vertical form layout on screens below 768px, collapsible sections on mobile, touch-friendly input controls, preview positioned below form on mobile, and proper scaling from 320px width upward",
+      "id": "REQ-96",
+      "text": "Integrate LanguageSelector into Header component positioned after existing navigation links with proper spacing, ensure mobile responsive design with dropdown overlay on small screens, and verify language switching works across all pages without breaking layouts or functionality",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Mobile responsive design"
+          "Add language dropdown in header",
+          "Mobile responsive"
         ]
       },
       "acceptanceCriteria": [
-        "Resume Builder hub displays template grid in 1 column on mobile (<768px)",
-        "Form wizard uses vertical layout on mobile with collapsible sections",
-        "All input fields are touch-friendly with appropriate sizing",
-        "Live preview appears below form on mobile devices",
-        "Preview scales properly for mobile viewport widths",
-        "Navigation and buttons are easily tappable on touch devices",
-        "Layout remains functional and usable on 320px width screens"
+        "LanguageSelector integrated in Header component",
+        "Positioned appropriately in header layout",
+        "Mobile responsive with touch-friendly UI",
+        "Dropdown closes on language selection",
+        "Language switch works on all page types",
+        "No layout shifts or broken UI after switch"
       ]
     },
     {
-      "id": "REQ-82",
-      "text": "Style Resume Builder with modern clean UI matching existing Tailwind design system using card-based layout for form sections, smooth transitions for step navigation, progress indicator showing completion percentage, optional save draft functionality storing data in localStorage, clear primary call-to-action buttons (Next, Download PDF), and consistent spacing aligned with Calculator, PDF, and Image Tools styling",
+      "id": "REQ-97",
+      "text": "Update sitemap.xml generation utility to include language-specific URLs for all pages across all 9 languages following pattern example.com/en/calculators/cgpa-calculator, example.com/hi/calculators/cgpa-calculator, etc. with proper lastmod, changefreq, and priority values maintained for each language variant",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-last"
         ],
         "quotes": [
-          "• Clean modern UI"
+          "URL Structure: example.com/en/ example.com/hi/ example.com/bn/ etc.",
+          "Maintain SEO structure"
         ]
       },
       "acceptanceCriteria": [
-        "Form sections use card-based layout with rounded corners and shadows",
-        "Step transitions have smooth fade or slide animations",
-        "Progress indicator displays percentage completion",
-        "Save Draft button stores form data to localStorage",
-        "Primary action buttons (Next, Download PDF) use consistent brand colors",
-        "Spacing and typography match existing tool pages",
-        "Color scheme follows Tailwind configuration with light/dark mode support"
-      ]
-    },
-    {
-      "id": "REQ-83",
-      "text": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections, displaying both template categories (Indian Format: 7 templates, International Format: 7 templates) with representative preview cards showing template names, brief descriptions, and call-to-action buttons linking to /resume-builder",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "HomePage includes Resume Builder section after existing tool sections",
-        "Section header displays total count (14 Resume Templates)",
-        "Two category cards show Indian Format (7) and International Format (7)",
-        "Each category card has icon, description, and View Templates button",
-        "Cards link to /resume-builder with smooth scroll or navigation",
-        "Section styling matches existing Calculator, PDF, and Image Tools sections"
-      ]
-    },
-    {
-      "id": "REQ-84",
-      "text": "Update Header component navigation to include Resume Builder link that directs users to /resume-builder, positioned after Calculator Hub link and maintaining consistent navigation styling with other header links",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Header component includes Resume Builder navigation link",
-        "Link positioned logically in navigation order",
-        "Link styling matches other header navigation items",
-        "Link is responsive and displays properly on mobile menu",
-        "Clicking link navigates to /resume-builder route"
-      ]
-    },
-    {
-      "id": "REQ-85",
-      "text": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad (728×90) after H1 heading, in-content ad (300×250) positioned between form wizard and preview sections on desktop, and sidebar ad (160×600) in right sidebar layout when viewport width exceeds 1024px, ensuring ads do not interfere with form functionality or preview visibility",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Top banner AdPlaceholder appears after H1 on all Resume Builder pages",
-        "In-content AdPlaceholder positioned between form and preview on desktop",
-        "Sidebar AdPlaceholder displays in right column on viewports >1024px",
-        "Ads use aspect ratio boxes to prevent layout shift",
-        "Ads do not obscure form inputs or preview content",
-        "Ad containers are marked with 'Advertisement' label"
-      ]
-    },
-    {
-      "id": "REQ-86",
-      "text": "Update App.tsx routing to include /resume-builder main route displaying ResumeBuilderPage and individual routes for all 14 resume templates following pattern /resume-builder/[template-slug] where slugs are: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume",
-      "target": "frontend",
-      "source": {
-        "messageIds": [
-          "msg-latest"
-        ]
-      },
-      "acceptanceCriteria": [
-        "Route /resume-builder is configured in App.tsx",
-        "All 14 individual template routes are configured with correct slugs",
-        "Each template route renders appropriate template builder component",
-        "Routes follow consistent naming pattern with hyphens",
-        "Navigation between hub and individual templates works correctly"
+        "Sitemap includes URLs for all 9 languages",
+        "All calculator pages have language variants",
+        "All PDF tool pages have language variants",
+        "All image tool pages have language variants",
+        "All resume builder pages have language variants",
+        "Hub pages have language variants",
+        "Priority and changefreq preserved per page type"
       ]
     }
   ],
   "constraints": [
-    "Do NOT rebuild full application or modify existing calculator, PDF, or image tool logic",
-    "Do NOT use external paid APIs for AI summary generation; use local logic only",
-    "Do NOT change backend architecture; all resume building happens client-side",
-    "Do NOT modify immutable frontend paths: useInternetIdentity hooks, useActor.ts, main.tsx, frontend/src/components/ui",
-    "Footer must display: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
-    "Resume Builder must use existing Tailwind design system and color variables"
+    "Do NOT rebuild entire application",
+    "Do NOT modify tool calculation logic, formulas, or numerical operations",
+    "Footer copyright text remains unchanged",
+    "Preserve existing routes and maintain backward compatibility",
+    "Maintain SEO structure with proper meta tags and structured data",
+    "Respect single-actor backend architecture (no backend changes needed)",
+    "Do NOT modify immutable frontend paths: useInternetIdentity hooks, useActor.ts, main.tsx, components/ui"
   ],
   "nonGoals": [
-    "Backend resume storage or database integration",
-    "User accounts or authentication for saving resumes",
-    "External AI API integrations (OpenAI, Anthropic, etc.)",
-    "Real-time collaboration features",
-    "Email delivery of resumes",
-    "Integration with job boards or ATS systems",
-    "Resume parsing from uploaded documents",
-    "Video or multimedia resume features"
+    "Backend translation or localization",
+    "Real-time translation APIs or external translation services",
+    "Translating calculation logic or mathematical formulas",
+    "Changing footer copyright text",
+    "Adding more than 9 specified languages",
+    "Modifying existing tool functionality beyond adding translations",
+    "Database-driven translation management"
   ],
   "imageRequirements": {
     "required": [],

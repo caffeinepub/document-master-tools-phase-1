@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "Home",
+    "calculators": "Calculators",
+    "pdfTools": "PDF Tools",
+    "imageTools": "Image Tools",
+    "resumeBuilder": "Resume Builder",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "disclaimer": "Disclaimer"
+  },
+  "home": {
+    "title": "Document Master Tools - Free Online Calculators, PDF & Image Tools",
+    "description": "DocMasterTools.com offers 52+ free online tools for students, professionals, and everyday users. Access calculators for academic and financial needs, PDF tools for merging, splitting, and converting documents, and image tools for resizing, compressing, and editing photos.",
+    "hero": {
+      "heading": "Welcome to",
+      "brand": "DocMasterTools.com",
+      "tagline": "Your All-in-One Document, Image & PDF Utility Platform",
+      "description": "DocMasterTools.com helps you manage documents effortlessly. Convert, compress, and edit PDFs, resize images, remove or change backgrounds, and create professional resumes — all directly in your browser. Fast, secure, mobile-friendly, and designed especially for students, job seekers, and everyday users.",
+      "private": "Private",
+      "tools": "Tools",
+      "free": "Forever"
+    },
+    "calculatorHub": {
+      "title": "Calculator Hub",
+      "description": "20 calculators for academic, financial & health needs",
+      "academic": "Academic Calculators",
+      "academicDesc": "9 calculators for students",
+      "financial": "Financial Calculators",
+      "financialDesc": "8 calculators for finance",
+      "health": "Health & General",
+      "healthDesc": "4 calculators for health & time"
+    },
+    "pdfTools": {
+      "title": "PDF Tools",
+      "description": "16 tools for PDF processing & conversion"
+    },
+    "imageTools": {
+      "title": "Image Tools",
+      "description": "16 tools for image processing & editing",
+      "exploreTitle": "Explore All Image Tools",
+      "exploreDesc": "Resize, compress, convert, and edit images. Includes specialized tools for passport photos, government documents, and more.",
+      "viewAll": "View All Image Tools"
+    },
+    "resumeBuilder": {
+      "title": "Resume Builder",
+      "description": "Create professional resumes with ease"
+    },
+    "buttons": {
+      "explorePDF": "Explore PDF Tools",
+      "exploreImage": "Explore Image Tools",
+      "exploreCalculators": "Explore Calculators"
+    },
+    "appBanner": {
+      "title": "Get Our Mobile App",
+      "description": "Access all tools on the go. Download now for Android & iOS!",
+      "download": "Download App"
+    }
+  },
+  "footer": {
+    "description": "Professional document processing tools for PDF, images, and resumes. All processing happens in your browser for maximum privacy.",
+    "quickLinks": "Quick Links",
+    "legal": "Legal",
+    "calculatorHub": "Calculator Hub"
+  },
+  "common": {
+    "calculate": "Calculate",
+    "download": "Download",
+    "upload": "Upload",
+    "clear": "Clear",
+    "reset": "Reset",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "save": "Save",
+    "cancel": "Cancel",
+    "close": "Close",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "tryNow": "Try Now",
+    "learnMore": "Learn More"
+  }
+}

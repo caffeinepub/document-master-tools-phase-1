@@ -1,6 +1,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'next-themes';
 import { Toaster } from '@/components/ui/sonner';
+import { LanguageProvider } from './contexts/LanguageContext';
 import Header from './components/Header';
 import HomePage from './pages/HomePage';
 import PDFToolsPage from './pages/PDFToolsPage';
@@ -204,11 +205,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <div className="min-h-screen flex flex-col bg-background">
-          <Header onNavigateHome={handleNavigateHome} onNavigate={handleNavigate} />
-          {renderPage()}
-          <Toaster />
-        </div>
+        <LanguageProvider>
+          <div className="min-h-screen flex flex-col bg-background">
+            <Header onNavigateHome={handleNavigateHome} onNavigate={handleNavigate} />
+            {renderPage()}
+            <Toaster />
+          </div>
+        </LanguageProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );

@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Calculator } from 'lucide-react';
+import LanguageSelector from './LanguageSelector';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeaderProps {
   onNavigateHome: () => void;
@@ -7,6 +9,8 @@ interface HeaderProps {
 }
 
 export default function Header({ onNavigateHome, onNavigate }: HeaderProps) {
+  const { t } = useLanguage();
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto px-4">
@@ -25,18 +29,21 @@ export default function Header({ onNavigateHome, onNavigate }: HeaderProps) {
             />
           </Button>
           
-          {onNavigate && (
-            <nav className="hidden md:flex items-center gap-6">
-              <Button
-                variant="ghost"
-                onClick={() => onNavigate('calculators')}
-                className="flex items-center gap-2"
-              >
-                <Calculator className="h-4 w-4" />
-                Calculators
-              </Button>
-            </nav>
-          )}
+          <div className="flex items-center gap-2">
+            {onNavigate && (
+              <nav className="hidden md:flex items-center gap-6">
+                <Button
+                  variant="ghost"
+                  onClick={() => onNavigate('calculators')}
+                  className="flex items-center gap-2"
+                >
+                  <Calculator className="h-4 w-4" />
+                  {t('nav.calculators')}
+                </Button>
+              </nav>
+            )}
+            <LanguageSelector />
+          </div>
         </div>
       </div>
     </header>

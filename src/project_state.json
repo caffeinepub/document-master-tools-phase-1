@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 9,
-  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. SEO-optimized individual pages, mobile responsive, AdSense ready.",
+  "projectStateVersion": 11,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. SEO-optimized individual pages, mobile responsive, AdSense ready.",
   "architectural_notes": [
     "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
     "Each calculator gets individual SEO-friendly page",
@@ -592,6 +592,62 @@
         "REQ-86"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-create-languageselector-component-frontend-src-components-languageselector-tsx-that-renders-a-dropdown-in-the-header-displaying-9-supported-languages-english-en-default-hindi-hi-bengali-bn-tamil-ta-telugu-te-marathi-mr-gujarati-gu-kannada-kn-malayalam-ml-urdu-ur-with-flag-icons-or-language-codes-current-selected-language-indicator-and-smooth-dropdown-animation",
+      "title": "Create LanguageSelector component (frontend/src/components/LanguageSelector.tsx) that renders a dropdown in the header displaying 9 supported languages: English (en, default), Hindi (hi), Bengali (bn), Tamil (ta), Telugu (te), Marathi (mr), Gujarati (gu), Kannada (kn), Malayalam (ml), Urdu (ur) with flag icons or language codes, current selected language indicator, and smooth dropdown animation",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-i18n-infrastructure-with-context-provider-frontend-src-contexts-languagecontext-tsx-that-manages-current-language-state-provides-language-switching-functionality-persists-language-preference-to-localstorage-and-exposes-uselanguage-hook-for-components-to-access-translation-functions-and-current-language",
+      "title": "Create i18n infrastructure with context provider (frontend/src/contexts/LanguageContext.tsx) that manages current language state, provides language switching functionality, persists language preference to localStorage, and exposes useLanguage hook for components to access translation functions and current language",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-translation-json-files-frontend-src-locales-en-json-hi-json-bn-json-ta-json-te-json-mr-json-gu-json-kn-json-ml-json-ur-json-containing-translations-for-all-ui-text-including-navigation-labels-page-headings-descriptions-button-labels-form-labels-error-messages-and-seo-meta-titles-descriptions-do-not-translate-calculation-logic-formulas-or-numerical-operations",
+      "title": "Create translation JSON files (frontend/src/locales/en.json, hi.json, bn.json, ta.json, te.json, mr.json, gu.json, kn.json, ml.json, ur.json) containing translations for all UI text including navigation labels, page headings, descriptions, button labels, form labels, error messages, and SEO meta titles/descriptions. Do NOT translate calculation logic, formulas, or numerical operations",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-support-language-prefixed-urls-following-pattern-lang-calculators-lang-pdf-tools-lang-image-tools-lang-resume-builder-with-default-english-routes-preserved-at-existing-paths-calculators-pdf-tools-etc-and-language-parameter-extracted-from-url-to-set-active-language",
+      "title": "Update App.tsx routing to support language-prefixed URLs following pattern /:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder with default English routes preserved at existing paths (/calculators, /pdf-tools, etc.) and language parameter extracted from URL to set active language",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-lazy-loading-for-translation-files-using-dynamic-imports-so-language-json-files-are-only-loaded-when-user-switches-to-that-language-with-loading-state-indicator-during-language-switch-and-error-handling-for-failed-translation-file-loads",
+      "title": "Implement lazy loading for translation files using dynamic imports so language JSON files are only loaded when user switches to that language, with loading state indicator during language switch and error handling for failed translation file loads",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-optional-browser-language-auto-detection-on-initial-page-load-that-reads-navigator-language-or-navigator-languages-matches-to-one-of-the-9-supported-languages-with-fallback-to-english-and-optionally-redirects-user-to-detected-language-url-if-different-from-current-url-language",
+      "title": "Implement optional browser language auto-detection on initial page load that reads navigator.language or navigator.languages, matches to one of the 9 supported languages (with fallback to English), and optionally redirects user to detected language URL if different from current URL language",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-languageselector-into-header-component-positioned-after-existing-navigation-links-with-proper-spacing-ensure-mobile-responsive-design-with-dropdown-overlay-on-small-screens-and-verify-language-switching-works-across-all-pages-without-breaking-layouts-or-functionality",
+      "title": "Integrate LanguageSelector into Header component positioned after existing navigation links with proper spacing, ensure mobile responsive design with dropdown overlay on small screens, and verify language switching works across all pages without breaking layouts or functionality",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -902,6 +958,74 @@
       "summary": "Update Header component navigation to include Resume Builder link that directs users to /resume-builder, positioned after Calculator Hub link and maintaining consistent navigation styling with other header links",
       "reqIds": [
         "REQ-84"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-87",
+      "summary": "Add language dropdown in header supporting 9 languages: English (default), Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Urdu",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "Implement scalable i18n structure with separate translation JSON files per language, dynamic content switching without page reload, preserve existing routes, maintain SEO structure",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-89",
+      "summary": "Implement language-based URL structure: example.com/en/, example.com/hi/, example.com/bn/, etc. with proper routing and navigation preservation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-90",
+      "summary": "Add language-specific SEO: hreflang tags for each language, canonical tags per language, language-based meta titles and descriptions, optional browser language auto-detection with redirect",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-91",
+      "summary": "Implement performance optimization: lazy load language files, no heavy page reload on language switch, mobile responsive language selector",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-92",
+      "summary": "Translate only UI text, headings, descriptions, and SEO content - do NOT translate tool calculation logic, formulas, or numerical operations. Footer copyright text remains unchanged.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-97",
+      "summary": "Update SEO component to render hreflang link tags for all 9 supported languages on every page, pointing to language-specific URL variants, with x-default hreflang pointing to English version, and language-specific canonical tags pointing to current language URL",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-98",
+      "summary": "Update all page components (calculators, PDF tools, image tools, resume builder, hub pages) to use translation keys from language context instead of hardcoded English strings for page titles, headings, descriptions, button labels, and form fields while preserving calculation logic, formulas, and numerical displays in their original form",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-100",
+      "summary": "Update SEO component to accept language parameter and render language-specific meta titles and descriptions using translated strings from active language file, maintaining existing SEO structure with Open Graph tags and Twitter Card tags in the selected language",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-103",
+      "summary": "Update sitemap.xml generation utility to include language-specific URLs for all pages across all 9 languages following pattern example.com/en/calculators/cgpa-calculator, example.com/hi/calculators/cgpa-calculator, etc. with proper lastmod, changefreq, and priority values maintained for each language variant",
+      "reqIds": [
+        "REQ-97"
       ],
       "status": "pending"
     }

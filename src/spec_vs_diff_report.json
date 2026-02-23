@@ -1,120 +1,67 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-23T11:18:37.168Z",
-  "summary": "The diff implements a comprehensive Resume Builder module with 14 templates, multi-step form wizard, live preview, photo upload, color themes, auto-formatting, and PDF download. However, several requirements are missing: individual template route implementation, PDF generation logic, SEO integration, mobile responsiveness validation, HomePage integration, Header navigation update, and AdPlaceholder integration.",
+  "generatedAt": "2026-02-23T12:55:02.035Z",
+  "summary": "The diff shows implementation of a global multi-language system with LanguageSelector component, LanguageContext provider, 10 translation JSON files (en, hi, bn, ta, te, mr, gu, kn, ml, ur), language switcher integrated in Header, and lazy loading infrastructure. However, several requirements are missing or not implemented in the diff, including routing updates for language-prefixed URLs, SEO component updates for hreflang tags, page component translations, browser language auto-detection, and sitemap updates.",
   "missing_requirements": [
     {
-      "id": "REQ-72",
-      "requirement": "Template cards are clickable and lead to individual template builders",
-      "reason": "ResumeBuilderPage shows template cards but the click handlers call onNavigate with page strings instead of template slugs. No evidence of routing to individual template builder pages.",
-      "evidence": [
-        "frontend/src/pages/ResumeBuilderPage.tsx"
-      ]
-    },
-    {
-      "id": "REQ-78",
-      "requirement": "Implement PDF download functionality with proper A4 page sizing, intelligent page breaks, embedded fonts, and template-specific styling using jsPDF or similar",
-      "reason": "ResumePreview component has a handleDownloadPDF function that only shows toast notifications with setTimeout. No actual PDF generation library (jsPDF) is imported or used. No A4 sizing, page breaks, or font embedding logic implemented.",
-      "evidence": [
-        "frontend/src/components/resume/ResumePreview.tsx"
-      ]
-    },
-    {
-      "id": "REQ-80",
-      "requirement": "FAQ section with 3-5 questions specific to each template format",
-      "reason": "FAQSchema component is added to ResumeTemplateBuilderPage, but the FAQ content is not rendered in the visible page UI. The schema exists for structured data but users cannot see the FAQs on the page.",
-      "evidence": [
-        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-      ]
-    },
-    {
-      "id": "REQ-80",
-      "requirement": "Internal links to Calculator Hub, PDF Tools, and Image Tools are present",
-      "reason": "RelatedTools component is defined in ResumeTemplateBuilderPage but is not rendered in the JSX return statement. The component exists but is not displayed to users.",
-      "evidence": [
-        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-      ]
-    },
-    {
-      "id": "REQ-81",
-      "requirement": "Resume Builder hub displays template grid in 1 column on mobile (<768px)",
-      "reason": "ResumeBuilderPage uses grid-cols-1 md:grid-cols-2 lg:grid-cols-3, which displays 1 column on mobile. However, explicit validation that all Resume Builder components including form wizard and live preview are fully responsive is not evident. ResumeFormWizard has isMobile logic but no validation of touch-friendly controls or 320px width testing.",
-      "evidence": [
-        "frontend/src/pages/ResumeBuilderPage.tsx",
-        "frontend/src/components/resume/ResumeFormWizard.tsx"
-      ]
-    },
-    {
-      "id": "REQ-83",
-      "requirement": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections",
-      "reason": "No changes to HomePage are shown in the diff. The HomePage modification to add Resume Builder section with category cards is missing.",
-      "evidence": []
-    },
-    {
-      "id": "REQ-84",
-      "requirement": "Update Header component navigation to include Resume Builder link",
-      "reason": "No changes to Header component are shown in the diff. The Header navigation update to add Resume Builder link is missing.",
-      "evidence": []
-    },
-    {
-      "id": "REQ-85",
-      "requirement": "Integrate AdPlaceholder components into Resume Builder pages with top banner, in-content, and sidebar ads",
-      "reason": "AdPlaceholder component is imported and used in ResumeBuilderPage, but ResumeTemplateBuilderPage (the actual template builder page where users fill forms) does not show AdPlaceholder integration in the diff content. The most important page for ad placement is missing ads.",
-      "evidence": [
-        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-      ]
-    },
-    {
-      "id": "REQ-86",
-      "requirement": "All 14 individual template routes are configured with correct slugs",
-      "reason": "App.tsx shows routing logic for resume-builder and calls to ResumeTemplateBuilderPage with templateSlug, but the diff is truncated. Cannot verify all 14 individual template routes are configured. The visible portion shows conditional rendering but not all route definitions.",
+      "id": "REQ-90",
+      "requirement": "Update App.tsx routing to support language-prefixed URLs following pattern /:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder with default English routes preserved",
+      "reason": "App.tsx shows routing changes but no evidence of /:lang prefix pattern implementation or language parameter extraction from URL",
       "evidence": [
         "frontend/src/App.tsx"
       ]
-    }
-  ],
-  "hallucinated_features": [
+    },
     {
-      "description": "RelatedTools component defined but not rendered in ResumeTemplateBuilderPage",
-      "reason": "The RelatedTools component is created with Calculator Hub, PDF Tools, and Image Tools links, but it is never included in the JSX return statement, making it dead code.",
+      "id": "REQ-91",
+      "requirement": "Update SEO component to render hreflang link tags for all 9 supported languages on every page, pointing to language-specific URL variants, with x-default hreflang pointing to English version",
+      "reason": "No SEO component modifications shown in diff to add hreflang tags, x-default tag, or language-specific canonical tags",
+      "evidence": []
+    },
+    {
+      "id": "REQ-92",
+      "requirement": "Update all page components (calculators, PDF tools, image tools, resume builder, hub pages) to use translation keys from language context instead of hardcoded English strings",
+      "reason": "No page component modifications shown in diff. HomePage and other 50+ page components need to replace hardcoded strings with translation keys using t() function",
+      "evidence": []
+    },
+    {
+      "id": "REQ-94",
+      "requirement": "Update SEO component to accept language parameter and render language-specific meta titles and descriptions using translated strings from active language file",
+      "reason": "No SEO component changes shown for accepting language prop or rendering translated meta tags",
+      "evidence": []
+    },
+    {
+      "id": "REQ-95",
+      "requirement": "Implement optional browser language auto-detection on initial page load that reads navigator.language or navigator.languages, matches to one of the 9 supported languages",
+      "reason": "LanguageContext.tsx shows auto-detection code in useEffect, but the diff is truncated at line 'if (!translations || Object.keys(transl', preventing full verification of implementation completeness",
       "evidence": [
-        "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
+        "frontend/src/contexts/LanguageContext.tsx"
       ]
     },
     {
-      "description": "validateContrast function in colorThemes.ts that always returns true",
-      "reason": "A validateContrast function is implemented but is a placeholder that always returns true instead of performing actual contrast ratio validation. This was not requested and provides no real functionality.",
-      "evidence": [
-        "frontend/src/lib/colorThemes.ts"
-      ]
+      "id": "REQ-97",
+      "requirement": "Update sitemap.xml generation utility to include language-specific URLs for all pages across all 9 languages following pattern example.com/en/calculators/cgpa-calculator, example.com/hi/calculators/cgpa-calculator",
+      "reason": "No sitemap generation utility modifications shown in diff",
+      "evidence": []
     }
   ],
+  "hallucinated_features": [],
   "confidence": 0.75,
   "changed_files": [
-    "frontend-file-summaries.txt",
     "frontend/src/App.tsx",
-    "frontend/src/components/resume/ColorThemeSelector.tsx",
-    "frontend/src/components/resume/ResumeEditor.tsx",
-    "frontend/src/components/resume/ResumeFormWizard.tsx",
-    "frontend/src/components/resume/ResumePreview.tsx",
-    "frontend/src/components/resume/ResumeTemplateSelector.tsx",
-    "frontend/src/components/resume/forms/AchievementsForm.tsx",
-    "frontend/src/components/resume/forms/CertificationsForm.tsx",
-    "frontend/src/components/resume/forms/EducationForm.tsx",
-    "frontend/src/components/resume/forms/ExperienceForm.tsx",
-    "frontend/src/components/resume/forms/LanguagesForm.tsx",
-    "frontend/src/components/resume/forms/PersonalInfoForm.tsx",
-    "frontend/src/components/resume/forms/ProjectsForm.tsx",
-    "frontend/src/components/resume/forms/ReferencesForm.tsx",
-    "frontend/src/components/resume/forms/SkillsForm.tsx",
-    "frontend/src/data/resumeTemplateConfigs.ts",
-    "frontend/src/lib/colorThemes.ts",
-    "frontend/src/lib/resumeFormatters.ts",
-    "frontend/src/lib/summaryGenerator.ts",
-    "frontend/src/pages/ResumeBuilderPage.tsx",
-    "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-    "frontend/src/types/resume.ts",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageSelector.tsx",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/locales/bn.json",
+    "frontend/src/locales/en.json",
+    "frontend/src/locales/gu.json",
+    "frontend/src/locales/hi.json",
+    "frontend/src/locales/kn.json",
+    "frontend/src/locales/ml.json",
+    "frontend/src/locales/mr.json",
+    "frontend/src/locales/ta.json",
+    "frontend/src/locales/te.json",
+    "frontend/src/locales/ur.json",
     "project_state.json"
   ]
 }

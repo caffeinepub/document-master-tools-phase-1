@@ -1,423 +1,530 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Add Advanced Resume Builder Module with 14 Templates",
+  "title": "Implement Global Multi-Language System with 9 Languages",
   "requirements": [
     {
-      "id": "REQ-72",
-      "summary": "Create ResumeBuilderPage component displaying 14 resume templates in two categories",
+      "id": "REQ-87",
+      "summary": "Create LanguageSelector component with dropdown for 9 supported languages",
       "acceptanceCriteria": [
-        "ResumeBuilderPage component exists at frontend/src/pages/ResumeBuilderPage.tsx",
-        "Route /resume-builder is configured in App.tsx",
-        "Page displays two distinct category sections: Indian Format and International Format",
-        "Each category shows 7 template cards with names matching the specification exactly",
-        "Template cards are clickable and lead to individual template builders"
+        "LanguageSelector component renders in Header component",
+        "Dropdown displays all 9 languages with proper labels",
+        "Current language is highlighted",
+        "Mobile responsive with touch-friendly tap targets",
+        "Smooth open/close animations"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
-          "operation": "modify",
-          "description": "Replace existing ResumeBuilderPage with new hub page displaying 14 resume templates organized into two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume). Each template card includes icon, name, brief description, and navigation to individual builder route. Add SEO component with title 'Resume Builder - 14 Professional Templates | Document Master Tools' and meta description. Include BreadcrumbNavigation and AdPlaceholder components (top banner after H1)."
+          "path": "frontend/src/components/LanguageSelector.tsx",
+          "operation": "create",
+          "description": "Create LanguageSelector component that renders a dropdown button displaying current language with flag icon or language code (e.g., 'EN', 'हिं', 'বাং'). On click, show dropdown menu with all 9 languages: English (en), Hindi (hi), Bengali (bn), Tamil (ta), Telugu (te), Marathi (mr), Gujarati (gu), Kannada (kn), Malayalam (ml), Urdu (ur). Highlight currently selected language. Use shadcn/ui DropdownMenu component for accessibility. Include smooth animations for dropdown open/close. Ensure touch-friendly tap targets (min 44px) for mobile. Call setLanguage from useLanguage hook when user selects a language."
+        }
+      ]
+    },
+    {
+      "id": "REQ-88",
+      "summary": "Create i18n infrastructure with LanguageContext provider",
+      "acceptanceCriteria": [
+        "LanguageContext provides currentLanguage state",
+        "setLanguage function updates language without page reload",
+        "Language preference persists in localStorage",
+        "useLanguage hook accessible in all components",
+        "Context wrapped around App in main.tsx"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/contexts/LanguageContext.tsx",
+          "operation": "create",
+          "description": "Create LanguageContext and LanguageProvider that manages currentLanguage state (default 'en'), translations object, and loading state. Provide setLanguage function that updates state, persists to localStorage key 'documentmaster_language', and dynamically imports the new language JSON file. Provide translate function (t) that accepts a translation key string and returns the translated value from the loaded translations object. Export useLanguage hook that returns { currentLanguage, setLanguage, t, isLoading }. Initialize language from localStorage or default to 'en'. Handle missing translation keys by returning the key itself as fallback."
         },
         {
           "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Add route configuration for /resume-builder displaying ResumeBuilderPage and 14 individual template routes following pattern /resume-builder/:templateSlug where templateSlug matches: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume. Each template route renders ResumeTemplateBuilderPage component with template prop."
+          "description": "Wrap the entire Router component with LanguageProvider from frontend/src/contexts/LanguageContext.tsx. Place LanguageProvider inside QueryClientProvider and ThemeProvider but outside BrowserRouter. This ensures language context is available to all routed components."
         }
       ]
     },
     {
-      "id": "REQ-73",
-      "summary": "Implement multi-step form wizard with progressive sections and add/remove functionality",
+      "id": "REQ-89",
+      "summary": "Create translation JSON files for all 10 languages with complete UI text translations",
       "acceptanceCriteria": [
-        "Form wizard component displays step indicators showing current progress",
-        "Each section (Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) has dedicated form fields",
-        "Users can add multiple entries for Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References",
-        "Each repeatable section has Add and Remove buttons",
-        "Form validates required fields before allowing progression to next step",
-        "Navigation between steps works via Next/Previous buttons"
+        "10 JSON files created in frontend/src/locales/",
+        "Each file contains complete translations for all UI strings",
+        "Translation keys are consistent across all language files",
+        "Calculator formulas and logic remain in English",
+        "Footer copyright text remains unchanged",
+        "File structure supports nested keys for organization"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "path": "frontend/src/locales/en.json",
           "operation": "create",
-          "description": "Create multi-step form wizard component with step indicator showing 9 sections: Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References. Implement state management for current step, form data, and validation. Personal Info section includes fields: name, email, phone, address, LinkedIn, portfolio URL. Repeatable sections (Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References) include Add Entry and Remove buttons with dynamic form arrays. Each section validates required fields before allowing Next step navigation. Include Previous/Next buttons with disabled states based on validation. Emit onChange events to parent component with complete form data."
+          "description": "Create English translation file with nested JSON structure containing all UI text. Include keys for: navigation (header links, footer links), page titles and headings for all calculators/PDF tools/image tools/resume builder pages, button labels (Calculate, Download, Upload, Clear, etc.), form labels and placeholders, error messages, success messages, SEO meta titles and descriptions for each page, tool descriptions, FAQ questions and answers, breadcrumb labels, and all static UI text. Use nested structure like { \"nav\": { \"home\": \"Home\", \"calculators\": \"Calculators\" }, \"calculator\": { \"age\": { \"title\": \"Age Calculator\", \"description\": \"...\" } } }. Do NOT include calculation formulas, numerical operations, or the footer copyright text."
         },
         {
-          "path": "frontend/src/types/resume.ts",
+          "path": "frontend/src/locales/hi.json",
           "operation": "create",
-          "description": "Define TypeScript interfaces for resume data structures including ResumeData (root), PersonalInfo, Education, Experience, Skill, Project, Certification, Language, Achievement, Reference. Include optional fields and validation constraints. Define TemplateType enum with all 14 template names as string literals. Define ColorTheme type with palette name and color values. Export all types for use across resume components."
+          "description": "Create Hindi translation file with identical key structure to en.json but with Hindi translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/bn.json",
+          "operation": "create",
+          "description": "Create Bengali translation file with identical key structure to en.json but with Bengali translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/ta.json",
+          "operation": "create",
+          "description": "Create Tamil translation file with identical key structure to en.json but with Tamil translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/te.json",
+          "operation": "create",
+          "description": "Create Telugu translation file with identical key structure to en.json but with Telugu translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/mr.json",
+          "operation": "create",
+          "description": "Create Marathi translation file with identical key structure to en.json but with Marathi translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/gu.json",
+          "operation": "create",
+          "description": "Create Gujarati translation file with identical key structure to en.json but with Gujarati translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/kn.json",
+          "operation": "create",
+          "description": "Create Kannada translation file with identical key structure to en.json but with Kannada translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/ml.json",
+          "operation": "create",
+          "description": "Create Malayalam translation file with identical key structure to en.json but with Malayalam translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
+        },
+        {
+          "path": "frontend/src/locales/ur.json",
+          "operation": "create",
+          "description": "Create Urdu translation file with identical key structure to en.json but with Urdu translations for all UI text, headings, descriptions, labels, and messages. Maintain same nested JSON structure. Do NOT translate calculation logic or formulas."
         }
       ]
     },
     {
-      "id": "REQ-74",
-      "summary": "Create live preview component with real-time rendering matching selected template",
+      "id": "REQ-90",
+      "summary": "Update App.tsx routing to support language-prefixed URLs",
       "acceptanceCriteria": [
-        "Preview pane displays side-by-side with form on desktop layouts",
-        "Preview updates in real-time as user types or modifies any field",
-        "Preview shows exact layout and styling that will appear in downloaded PDF",
-        "Preview is scrollable and maintains A4 aspect ratio",
-        "All template-specific formatting rules are applied in preview"
+        "Routes support optional /:lang prefix",
+        "Language code in URL sets active language automatically",
+        "Default routes without prefix use English",
+        "Navigation preserves current language in URLs",
+        "All existing routes work with language prefixes"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/resume/ResumePreview.tsx",
-          "operation": "create",
-          "description": "Create live preview component that renders resume in A4 aspect ratio (210mm x 297mm / 8.27\" x 11.69\"). Accept props: resumeData, selectedTemplate, colorTheme. Use React.memo for performance optimization. Render template-specific layout by importing and conditionally rendering template components based on selectedTemplate prop. Apply colorTheme to headers, borders, and accent elements. Maintain scrollable container with fixed aspect ratio. Update instantly on prop changes without re-mount."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/FresherResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Fresher Resume template component for Indian job market. Layout: header with photo (if provided), name, contact details, professional summary, education section, skills with bullet points, projects, certifications, languages. Apply template-specific typography and spacing. Accept resumeData and colorTheme props. Use Tailwind classes for styling matching A4 proportions."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/GovernmentJobResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Government Job Resume template component for Indian government applications. Layout: formal header with photo, personal details in structured format, education with marks/grades, experience in reverse chronological order, skills, certifications, languages, references. Use formal typography and conservative styling. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/PrivateJobResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Private Job Resume template component for Indian private sector. Layout: modern header with photo, professional summary, key skills highlighted, experience with achievements, education, projects, certifications. Use contemporary styling with moderate color accents. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/HindiResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Hindi Resume template component with bilingual support. Layout: header with photo, personal info, professional summary in Hindi, education, experience, skills in Hindi/English mix. Use Hindi-friendly fonts and RTL-aware spacing. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/BiodataForMarriageTemplate.tsx",
-          "operation": "create",
-          "description": "Create Biodata for Marriage template component following Indian matrimonial format. Layout: centered photo, personal details (name, DOB, height, religion, caste, gotra), family details, education, profession, contact information. Use traditional styling with decorative borders. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/TeacherResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Teacher Resume template component for education sector. Layout: header with photo, teaching philosophy/summary, education credentials, teaching experience with subjects taught, certifications, skills (classroom management, curriculum development), achievements, references. Use professional academic styling. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/PoliceArmyResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Police/Army Resume template component for defense services. Layout: formal header with photo, personal details, physical attributes, education, training/certifications, relevant experience, skills, references. Use military-style structured format with clear sections. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/ATSFriendlyResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create ATS Friendly Resume template component optimized for applicant tracking systems. Layout: no photo, simple header, contact info, professional summary with keywords, experience with action verbs and metrics, education, skills in comma-separated format, certifications. Use minimal styling, standard fonts, no tables/graphics. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/USResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create US Resume template component following American format. Layout: no photo, header with name and contact, professional summary, experience with quantified achievements, education, skills, certifications. Use clean modern design with strategic white space. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/UKCVTemplate.tsx",
-          "operation": "create",
-          "description": "Create UK CV template component following British format. Layout: optional small photo, header, personal profile, work experience (detailed and chronological), education, key skills, interests/hobbies, references available upon request. Use British English conventions. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/CanadaResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Canada Resume template component following Canadian format. Layout: no photo, header, professional summary, core competencies, professional experience with achievements, education, certifications, volunteer work. Use clean professional layout. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/EuropassCVTemplate.tsx",
-          "operation": "create",
-          "description": "Create Europass CV template component following EU standard format. Layout: photo (optional), personal information, work experience, education and training, personal skills (language skills with CEFR levels, communication skills, organizational skills, digital skills), additional information. Use standardized Europass section headings and formatting. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/CreativeResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Creative Resume template component for design/creative industries. Layout: asymmetric header with optional photo, visual skills representation (progress bars/icons), experience with project highlights, education, portfolio links prominently displayed. Use bold colors, modern typography, creative visual elements. Accept resumeData and colorTheme props."
-        },
-        {
-          "path": "frontend/src/components/resume/templates/CorporateResumeTemplate.tsx",
-          "operation": "create",
-          "description": "Create Corporate Resume template component for executive/corporate positions. Layout: no photo, executive summary, core competencies grid, professional experience with leadership achievements, education, board memberships/affiliations, speaking engagements. Use sophisticated minimal design with elegant typography. Accept resumeData and colorTheme props."
-        }
-      ]
-    },
-    {
-      "id": "REQ-75",
-      "summary": "Add photo upload with drag-and-drop, crop/resize, and template-aware placement",
-      "acceptanceCriteria": [
-        "Photo upload section supports drag-and-drop and click-to-upload",
-        "Uploaded image displays in crop/resize preview with aspect ratio controls",
-        "Indian format templates display uploaded photo in header or sidebar",
-        "International format templates either hide photo or show it minimally based on template design",
-        "Photo can be removed after upload"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/resume/PhotoUploadSection.tsx",
-          "operation": "create",
-          "description": "Create photo upload component with drag-and-drop zone and click-to-upload button. Handle image file validation (JPEG, PNG, max 5MB). After upload, display crop/resize preview with aspect ratio selector (1:1, 3:4, 4:3). Provide crop controls using HTML canvas or react-easy-crop library. Include Remove Photo button. Emit cropped image data URL to parent component. Show upload instructions and file size guidance."
-        },
-        {
-          "path": "frontend/src/hooks/usePhotoUpload.ts",
-          "operation": "create",
-          "description": "Create custom hook for managing photo upload state and operations. Handle file reading, validation, crop state, aspect ratio changes, and final cropped image generation. Return uploadedPhoto, cropSettings, handleFileUpload, handleCrop, handleRemove, and isProcessing state. Use FileReader API for local file reading and Canvas API for cropping."
-        }
-      ]
-    },
-    {
-      "id": "REQ-76",
-      "summary": "Implement custom color theme selector with 6 predefined palettes",
-      "acceptanceCriteria": [
-        "Color theme selector displays 6+ color palette options",
-        "Selecting a color palette instantly updates preview with new colors",
-        "Colors apply to headers, borders, section dividers, and accent elements",
-        "Text remains readable with proper contrast ratios",
-        "Selected theme persists when downloading PDF"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/components/resume/ColorThemeSelector.tsx",
-          "operation": "create",
-          "description": "Create color theme selector component displaying 6 predefined color palettes: Professional Blue (#1e40af, #3b82f6, #dbeafe), Corporate Black (#1f2937, #4b5563, #e5e7eb), Creative Purple (#7c3aed, #a78bfa, #ede9fe), Modern Teal (#0d9488, #14b8a6, #ccfbf1), Classic Gray (#374151, #6b7280, #f3f4f6), Elegant Maroon (#991b1b, #dc2626, #fee2e2). Display palette swatches as clickable cards showing primary, secondary, and light colors. Emit selected theme to parent component. Show checkmark on selected theme."
-        },
-        {
-          "path": "frontend/src/lib/colorThemes.ts",
-          "operation": "create",
-          "description": "Define color theme constants and utility functions. Export COLOR_THEMES array with 6 predefined palettes, each containing name, primary, secondary, light, and text color values. Provide applyThemeToElement utility function that accepts theme and returns CSS class mappings. Include contrast ratio validation function ensuring text readability (WCAG AA compliance)."
-        }
-      ]
-    },
-    {
-      "id": "REQ-77",
-      "summary": "Create auto-formatting logic for skills, dates, phone numbers, and capitalization",
-      "acceptanceCriteria": [
-        "Skills entries automatically convert to bullet point format",
-        "Date inputs auto-format to MM/YYYY pattern",
-        "Phone numbers format to +91-XXXXX-XXXXX for Indian templates",
-        "Phone numbers format to international standard for International templates",
-        "Proper nouns in name fields auto-capitalize first letters",
-        "Consistent line spacing and margins apply across all sections"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/resumeFormatters.ts",
-          "operation": "create",
-          "description": "Create formatting utility functions: formatSkillsAsBullets (converts comma-separated or array to bullet list), formatDateToMMYYYY (accepts Date or string, returns MM/YYYY), formatPhoneNumber (detects template category, formats to +91-XXXXX-XXXXX for Indian, international E.164 for others), capitalizeProperNouns (capitalizes first letter of each word in names), formatExperienceDuration (calculates duration between dates, formats as 'X years Y months'). Export all formatters for use in form components and templates."
-        },
-        {
-          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Import formatting functions from resumeFormatters.ts. Apply formatDateToMMYYYY to date inputs onChange. Apply formatPhoneNumber to phone field based on selected template category. Apply capitalizeProperNouns to name fields onChange. Auto-format skills section entries using formatSkillsAsBullets before passing to preview. Ensure formatted values update form state and trigger preview updates."
-        }
-      ]
-    },
-    {
-      "id": "REQ-78",
-      "summary": "Implement PDF download with A4 sizing, intelligent page breaks, and embedded fonts",
-      "acceptanceCriteria": [
-        "Download PDF button generates PDF file with user's resume data",
-        "PDF uses A4 page dimensions (210mm x 297mm)",
-        "Page breaks intelligently avoid splitting sections or list items",
-        "Fonts are embedded in PDF for consistent cross-platform rendering",
-        "Downloaded PDF exactly matches live preview styling",
-        "PDF filename includes template name and timestamp"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/pdfGenerator.ts",
-          "operation": "create",
-          "description": "Create PDF generation utility using jsPDF library. Implement generateResumePDF function accepting resumeData, selectedTemplate, colorTheme. Configure jsPDF with A4 dimensions (210mm x 297mm), orientation portrait. Use html2canvas to capture preview component as image, then add to PDF with proper scaling. Implement intelligent page break detection by analyzing section heights and inserting manual page breaks before sections that would split. Embed fonts using jsPDF font API. Generate filename: 'Resume_{TemplateName}_{Timestamp}.pdf'. Return download promise."
+          "description": "Update React Router routes to support optional /:lang parameter. For each existing route, add a duplicate route with /:lang prefix (e.g., both '/calculators' and '/:lang/calculators'). Create a wrapper component or useEffect in App.tsx that reads the :lang param from useParams(), validates it against supported languages (en|hi|bn|ta|te|mr|gu|kn|ml|ur), and calls setLanguage from useLanguage hook to update active language. If :lang param is invalid or missing, default to 'en'. Ensure all existing routes continue to work without language prefix."
         },
         {
-          "path": "frontend/src/hooks/usePDFDownload.ts",
-          "operation": "create",
-          "description": "Create custom hook for PDF download functionality. Manage download state (idle, generating, ready, error). Provide handleDownloadPDF function that calls generateResumePDF, handles loading states, error catching, and triggers browser download. Return isGenerating, downloadError, handleDownloadPDF, downloadProgress (0-100). Show toast notifications on success/failure."
-        },
-        {
-          "path": "frontend/src/components/resume/DownloadPDFButton.tsx",
-          "operation": "create",
-          "description": "Create Download PDF button component using usePDFDownload hook. Display button with download icon, show loading spinner when isGenerating is true, disable button during generation. Show progress bar if downloadProgress available. Handle click to trigger PDF generation and download. Use shadcn Button component with primary variant."
-        }
-      ]
-    },
-    {
-      "id": "REQ-79",
-      "summary": "Add basic AI summary generator using local logic without external APIs",
-      "acceptanceCriteria": [
-        "AI Summary Generator button appears in Personal Info section",
-        "Generator analyzes filled experience and skills data locally",
-        "Generated summary is 2-3 sentences with professional tone",
-        "Summary includes quantifiable experience (years) and key skills",
-        "Summary uses action words and achievement-focused language",
-        "No external API calls are made during generation",
-        "User can edit generated summary after creation"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/lib/summaryGenerator.ts",
-          "operation": "create",
-          "description": "Create local AI summary generator using rule-based logic. Implement generateProfessionalSummary function analyzing experience array (calculate total years), skills array (extract top 3-5 skills), and achievements. Use template patterns: '[X] years of experience in [domain] with expertise in [skills]. Proven track record of [achievement]. Seeking to leverage [skills] in [objective].' Include action verb dictionary (developed, managed, led, implemented, optimized). Randomly select verbs and combine with user data. No external API calls. Return 2-3 sentence summary string."
-        },
-        {
-          "path": "frontend/src/components/resume/SummaryGeneratorButton.tsx",
-          "operation": "create",
-          "description": "Create AI Summary Generator button component for Personal Info section. Display button with sparkles icon and 'Generate Summary' label. On click, call generateProfessionalSummary with current form data (experience, skills, achievements), show loading state (1-2 second delay for realism), populate professional summary field with generated text. User can edit generated summary in textarea. Include regenerate option. Use shadcn Button component with secondary variant."
-        }
-      ]
-    },
-    {
-      "id": "REQ-80",
-      "summary": "Create individual SEO-friendly pages for each of 14 resume templates with unique meta, FAQs, and internal links",
-      "acceptanceCriteria": [
-        "Each of 14 templates has individual route at /resume-builder/[template-slug]",
-        "SEO component is integrated with unique title for each template",
-        "Meta descriptions are 150-160 characters highlighting template benefits",
-        "Open Graph tags include og:title, og:description, og:image",
-        "FAQ section with 3-5 questions specific to each template format",
-        "Internal links to Calculator Hub, PDF Tools, and Image Tools are present",
-        "BreadcrumbNavigation component shows Home > Resume Builder > [Template Name]"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-          "operation": "create",
-          "description": "Create individual resume template builder page component accepting templateSlug param from route. Map templateSlug to template configuration (name, description, FAQs, seoTitle, metaDescription). Render SEO component with unique title '[Template Name] Resume Builder - Free Online Tool | Document Master Tools' and meta description highlighting template benefits. Include Open Graph tags (og:title, og:description, og:image using generated/resume-builder-icon-transparent.dim_64x64.png). Display BreadcrumbNavigation with Home > Resume Builder > [Template Name]. Render ResumeFormWizard and ResumePreview side-by-side with selected template. Include AdPlaceholder components (top banner after H1, in-content between form and preview, sidebar on >1024px). Add template-specific FAQ section with 3-5 Q&As. Include internal links section to Calculator Hub, PDF Tools, Image Tools at bottom."
-        },
-        {
-          "path": "frontend/src/data/resumeTemplateConfigs.ts",
-          "operation": "create",
-          "description": "Define configuration objects for all 14 resume templates. Each config includes: slug, name, category (Indian/International), description, seoTitle, metaDescription (150-160 chars), faqs array with 3-5 template-specific questions and answers, targetAudience, keyFeatures array. Export RESUME_TEMPLATE_CONFIGS array and getTemplateBySlug utility function."
-        }
-      ]
-    },
-    {
-      "id": "REQ-81",
-      "summary": "Ensure full mobile responsiveness for all Resume Builder components",
-      "acceptanceCriteria": [
-        "Resume Builder hub displays template grid in 1 column on mobile (<768px)",
-        "Form wizard uses vertical layout on mobile with collapsible sections",
-        "All input fields are touch-friendly with appropriate sizing",
-        "Live preview appears below form on mobile devices",
-        "Preview scales properly for mobile viewport widths",
-        "Navigation and buttons are easily tappable on touch devices",
-        "Layout remains functional and usable on 320px width screens"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
+          "path": "frontend/src/components/Header.tsx",
           "operation": "modify",
-          "description": "Add responsive grid classes for template cards: grid-cols-1 (mobile default), md:grid-cols-2 (tablets ≥768px), lg:grid-cols-3 (desktop ≥1024px). Ensure cards stack vertically on mobile with full width. Test layout at 320px minimum width."
+          "description": "Update navigation links in Header component to include current language prefix in URLs. Use currentLanguage from useLanguage hook. Update Link components to prepend `/${currentLanguage}` to existing paths (e.g., `/${currentLanguage}/calculators`). For default English, use paths without prefix (e.g., '/calculators'). Ensure logo link also preserves current language."
         },
         {
-          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "path": "frontend/src/components/Footer.tsx",
           "operation": "modify",
-          "description": "Wrap form in responsive container with vertical layout on mobile. Implement collapsible sections using shadcn Accordion component on mobile (<768px), expanded sections on desktop. Increase input field min-height to 44px for touch-friendly interaction. Add responsive step indicator: horizontal on desktop, vertical/collapsed on mobile. Ensure Next/Previous buttons are large enough (min 44x44px) and properly spaced for touch."
-        },
-        {
-          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-          "operation": "modify",
-          "description": "Implement responsive layout: side-by-side form and preview on desktop (≥1024px) using grid-cols-2, stacked layout on mobile with form above preview. Preview component below form on mobile with reduced scale (80-90%) to fit mobile viewport. Hide sidebar ads on mobile. Ensure all navigation buttons and CTAs are touch-friendly (44px minimum). Test scrolling behavior on mobile devices."
+          "description": "Update footer navigation links to include current language prefix in URLs. Use currentLanguage from useLanguage hook. Update Link components for quick links (calculators, PDF tools, image tools, resume builder) and legal links (privacy, terms, disclaimer) to prepend `/${currentLanguage}` to paths when language is not 'en'. Preserve footer copyright text unchanged."
         }
       ]
     },
     {
-      "id": "REQ-82",
-      "summary": "Style Resume Builder with modern UI matching Tailwind design system",
+      "id": "REQ-91",
+      "summary": "Update SEO component to render hreflang link tags for all languages",
       "acceptanceCriteria": [
-        "Form sections use card-based layout with rounded corners and shadows",
-        "Step transitions have smooth fade or slide animations",
-        "Progress indicator displays percentage completion",
-        "Save Draft button stores form data to localStorage",
-        "Primary action buttons (Next, Download PDF) use consistent brand colors",
-        "Spacing and typography match existing tool pages",
-        "Color scheme follows Tailwind configuration with light/dark mode support"
+        "hreflang tags generated for all 9 languages on every page",
+        "x-default hreflang points to English version",
+        "Canonical tag reflects current language URL",
+        "Alternate language URLs properly constructed",
+        "Tags render in document <head>"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "path": "frontend/src/components/SEO.tsx",
           "operation": "modify",
-          "description": "Style form sections using shadcn Card component with rounded-lg and shadow-md classes. Implement progress indicator showing completion percentage (calculated from filled required fields / total required fields * 100). Add smooth transitions between steps using Tailwind transition-opacity duration-300. Create Save Draft button that serializes current form state to localStorage with key 'resume_draft_{template}'. Use primary brand colors for Next and Download PDF buttons (refer to frontend/tailwind.config.js). Match spacing (space-y-6 for sections, space-y-4 for fields) and typography (text-lg for headings, text-sm for labels) with existing calculator/PDF tool pages."
-        },
-        {
-          "path": "frontend/src/hooks/useDraftStorage.ts",
-          "operation": "create",
-          "description": "Create custom hook for managing resume draft storage. Implement saveDraft function serializing resumeData to JSON and storing in localStorage with timestamp. Implement loadDraft function retrieving and parsing stored draft. Implement clearDraft function removing draft. Auto-save on form change with debounce (2 seconds). Return savedAt timestamp, saveDraft, loadDraft, clearDraft, hasDraft boolean. Handle localStorage quota errors gracefully."
+          "description": "Modify SEO component to accept currentLanguage and currentPath props. Generate hreflang link tags for all 9 supported languages (en, hi, bn, ta, te, mr, gu, kn, ml, ur) pointing to language-specific URL variants constructed from currentPath. Add x-default hreflang pointing to English URL (no language prefix). Update canonical link tag to reflect current language URL. Use Helmet or document.head to inject hreflang tags into <head>. Construct language URLs following pattern: base URL + '/' + lang code + currentPath (e.g., 'https://docmastertools.com/hi/calculators/age-calculator')."
         }
       ]
     },
     {
-      "id": "REQ-83",
-      "summary": "Update HomePage to add Resume Builder section with category preview cards",
+      "id": "REQ-92",
+      "summary": "Update all page components to use translation keys instead of hardcoded strings",
       "acceptanceCriteria": [
-        "HomePage includes Resume Builder section after existing tool sections",
-        "Section header displays total count (14 Resume Templates)",
-        "Two category cards show Indian Format (7) and International Format (7)",
-        "Each category card has icon, description, and View Templates button",
-        "Cards link to /resume-builder with smooth scroll or navigation",
-        "Section styling matches existing Calculator, PDF, and Image Tools sections"
+        "All page titles use translation keys",
+        "All UI headings and descriptions translated",
+        "Button labels and form fields use translations",
+        "Calculator formulas remain untranslated",
+        "Numerical outputs and operations unchanged",
+        "Changes applied to 50+ page components"
       ],
       "file_operations": [
         {
           "path": "frontend/src/pages/HomePage.tsx",
           "operation": "modify",
-          "description": "Add Resume Builder section after Image Tools section and before Footer. Use same container and spacing as existing tool sections (max-w-7xl mx-auto px-4 py-16). Display section header 'Resume Builder' with subtitle '14 Professional Resume Templates' using text-3xl font-bold. Create two category preview cards in grid-cols-1 md:grid-cols-2 layout. Each card shows category icon (use generated/resume-builder-icon-transparent.dim_64x64.png), category name (Indian Format / International Format), template count (7 templates each), brief description (Indian Format: 'Tailored for Indian job market and cultural requirements' / International Format: 'Optimized for global standards and ATS systems'), and 'View Templates' button linking to /resume-builder. Match card styling with existing tool category cards (rounded-lg, shadow-md, hover effects)."
+          "description": "Replace all hardcoded English strings with translation keys using t() function from useLanguage hook. Update hero heading, description, CTA button labels, feature statistics labels, section headings ('Calculator Tools', 'PDF Tools', etc.), and any other UI text. Do NOT translate numerical values or calculation logic. Preserve existing component structure and logic."
+        },
+        {
+          "path": "frontend/src/pages/CalculatorsPage.tsx",
+          "operation": "modify",
+          "description": "Replace all hardcoded strings with translation keys using t() from useLanguage. Update page title, category headings ('Academic Calculators', 'Financial Calculators', 'Health & General Calculators'), calculator names, and descriptions. Preserve existing layout and navigation structure."
+        },
+        {
+          "path": "frontend/src/pages/calculators/AgeCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys using t() from useLanguage. Update page title, description, informational text, and any button labels. Do NOT translate calculation logic in the AgeCalculator component itself."
+        },
+        {
+          "path": "frontend/src/pages/calculators/BMICalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, BMI category labels, and informational text. Preserve BMI calculation formulas and numerical thresholds unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/CGPACalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels ('Semester', 'Course', 'Grade Points', 'Credits'), and informational text. Do NOT translate CGPA calculation formula."
+        },
+        {
+          "path": "frontend/src/pages/calculators/CGPAToPercentageConverterPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, formula option labels ('CBSE Formula', 'Engineering Formula'), and informational text. Preserve conversion formulas (×9.5, ×10) as-is."
+        },
+        {
+          "path": "frontend/src/pages/calculators/CompoundInterestCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, compounding frequency options, and informational text. Do NOT translate the compound interest formula."
+        },
+        {
+          "path": "frontend/src/pages/calculators/DateDifferenceCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels ('Start Date', 'End Date'), and result labels. Preserve date calculation logic unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/DiscountCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, and calculation mode labels. Preserve discount calculation formulas unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/DivisionCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, division labels ('First Division', 'Second Division', 'Third Division'), and informational text. Preserve division threshold percentages unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/EMICalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels ('Principal Amount', 'Interest Rate', 'Tenure'), and result labels ('Monthly EMI', 'Total Interest'). Preserve EMI calculation formula unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/GPACalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, scale selector labels ('4.0 Scale', '10.0 Scale'), and informational text. Preserve GPA calculation logic unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/GradeCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, grade labels (A+, A, B+, etc.), and informational text. Preserve grade point mappings unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/GSTCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, GST rate options, mode labels ('Add GST', 'Remove GST'), and informational text. Preserve GST calculation formulas unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/LoanCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, result labels, and informational text. Preserve loan calculation formulas unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/MarksPercentageCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels ('Obtained Marks', 'Total Marks'), result labels, and informational text. Preserve percentage calculation formula unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/PercentageToCGPAConverterPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, formula option labels, and informational text. Preserve conversion formulas (÷9.5, ÷10) unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/ProfitLossCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels ('Cost Price', 'Selling Price'), result labels ('Profit', 'Loss'), and informational text. Preserve profit/loss calculation formulas unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/SalaryHikeCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, calculation mode labels, and result labels. Preserve salary hike calculation formulas unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/SGPACalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, and informational text. Preserve SGPA calculation formula unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/SimpleInterestCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, result labels, and informational text. Preserve simple interest formula SI = (P × R × T) / 100 unchanged."
+        },
+        {
+          "path": "frontend/src/pages/calculators/TimeDurationCalculatorPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, description, form labels, mode selector labels, and informational text. Preserve time calculation logic unchanged."
+        },
+        {
+          "path": "frontend/src/pages/PDFToolsPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, tool names, tool descriptions, and navigation labels. Preserve existing tool selection and rendering logic."
+        },
+        {
+          "path": "frontend/src/pages/ImageToolsPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, category headings, tool names, tool descriptions, and navigation labels. Preserve existing layout structure."
+        },
+        {
+          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, category headings ('Indian Resume Templates', 'International Resume Templates'), template names, template descriptions, and CTA button labels. Preserve existing template grid layout."
+        },
+        {
+          "path": "frontend/src/pages/PrivacyPolicyPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, section headings, policy text, and informational content. Preserve legal meaning and accuracy in translations."
+        },
+        {
+          "path": "frontend/src/pages/TermsOfUsePage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, section headings, terms text, and legal disclaimers. Preserve legal meaning and accuracy in translations."
+        },
+        {
+          "path": "frontend/src/pages/DisclaimerPage.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded strings with translation keys. Update page title, section headings, disclaimer text, and informational content. Preserve legal meaning and accuracy in translations."
+        },
+        {
+          "path": "frontend/src/components/calculators/AgeCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys from useLanguage. Update form labels ('Date of Birth', 'Calculate Age'), result labels ('Years', 'Months', 'Days', 'Total Months', 'Total Weeks'), and button labels. Do NOT translate the age calculation logic, date arithmetic, or numerical operations."
+        },
+        {
+          "path": "frontend/src/components/calculators/BMICalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update unit selector labels ('Metric', 'Imperial'), form labels ('Weight', 'Height'), result labels ('BMI', 'Category'), and category names ('Underweight', 'Normal', 'Overweight', 'Obese'). Do NOT translate BMI calculation formula or numerical thresholds."
+        },
+        {
+          "path": "frontend/src/components/calculators/CGPACalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels ('Add Semester', 'Add Course', 'Remove', 'Calculate CGPA'), and result label. Do NOT translate CGPA calculation logic."
+        },
+        {
+          "path": "frontend/src/components/calculators/CGPAToPercentageConverter.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, formula selector labels, button labels, and result labels. Do NOT translate conversion formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/CompoundInterestCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, frequency options ('Yearly', 'Half-Yearly', 'Quarterly', 'Monthly', 'Daily'), button labels, and result labels. Do NOT translate compound interest formula."
+        },
+        {
+          "path": "frontend/src/components/calculators/DateDifferenceCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, checkbox label ('Exclude weekends'), button labels, and result labels. Do NOT translate date calculation logic."
+        },
+        {
+          "path": "frontend/src/components/calculators/DiscountCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update mode selector labels, form labels, button labels, and result labels. Do NOT translate discount calculation formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/DivisionCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, division labels, and result display text. Do NOT translate percentage thresholds."
+        },
+        {
+          "path": "frontend/src/components/calculators/EMICalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, tenure unit selector labels ('Months', 'Years'), button labels, and result labels. Do NOT translate EMI formula."
+        },
+        {
+          "path": "frontend/src/components/calculators/GPACalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update scale selector labels, form labels, button labels ('Add Course', 'Remove', 'Calculate GPA'), and result labels. Do NOT translate GPA calculation logic."
+        },
+        {
+          "path": "frontend/src/components/calculators/GradeCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, grade options, and result labels. Do NOT translate grade point values."
+        },
+        {
+          "path": "frontend/src/components/calculators/GSTCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update mode selector labels ('Add GST', 'Remove GST'), form labels, rate options, button labels, and result labels. Do NOT translate GST calculation formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/LoanCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, and result labels. Do NOT translate loan calculation formula."
+        },
+        {
+          "path": "frontend/src/components/calculators/MarksPercentageCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, result labels, and pass/fail status labels. Do NOT translate percentage calculation formula."
+        },
+        {
+          "path": "frontend/src/components/calculators/PercentageToCGPAConverter.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, formula selector labels, button labels, and result labels. Do NOT translate conversion formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/ProfitLossCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, result labels ('Profit', 'Loss'), and status indicators. Do NOT translate profit/loss calculation formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/SalaryHikeCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update mode selector labels, form labels, button labels, and result labels. Do NOT translate salary hike calculation formulas."
+        },
+        {
+          "path": "frontend/src/components/calculators/SGPACalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels ('Add Course', 'Remove', 'Calculate SGPA'), and result labels. Do NOT translate SGPA calculation logic."
+        },
+        {
+          "path": "frontend/src/components/calculators/SimpleInterestCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update form labels, button labels, and result labels. Do NOT translate simple interest formula."
+        },
+        {
+          "path": "frontend/src/components/calculators/TimeDurationCalculator.tsx",
+          "operation": "modify",
+          "description": "Replace hardcoded UI strings with translation keys. Update mode selector labels, form labels, button labels, and result labels. Do NOT translate time calculation logic."
+        },
+        {
+          "path": "frontend/src/components/BreadcrumbNavigation.tsx",
+          "operation": "modify",
+          "description": "Update BreadcrumbNavigation component to use translation keys for breadcrumb item labels. Use t() function from useLanguage hook to translate labels like 'Home', 'Calculators', 'PDF Tools', 'Image Tools', specific tool names, etc. Preserve existing breadcrumb structure and JSON-LD generation logic."
+        },
+        {
+          "path": "frontend/src/components/RelatedTools.tsx",
+          "operation": "modify",
+          "description": "Update RelatedTools component to use translation keys for tool names, descriptions, and button labels ('Try Now'). Use t() function from useLanguage hook. Preserve existing layout and navigation logic."
+        },
+        {
+          "path": "frontend/src/components/ToolCategories.tsx",
+          "operation": "modify",
+          "description": "Update ToolCategories component to use translation keys for category titles ('Calculator Hub', 'PDF Tools', 'Image Tools'), descriptions, and tool counts. Use t() function from useLanguage hook. Preserve existing card layout."
+        },
+        {
+          "path": "frontend/src/components/Hero.tsx",
+          "operation": "modify",
+          "description": "Update Hero component to use translation keys for headline, description, CTA button labels ('Explore Tools', 'Learn More'), and feature badges ('100% Private', '20+ Tools', 'Free'). Use t() function from useLanguage hook. Preserve existing layout and image references."
         }
       ]
     },
     {
-      "id": "REQ-84",
-      "summary": "Update Header component navigation to include Resume Builder link",
+      "id": "REQ-93",
+      "summary": "Implement lazy loading for translation files with loading states",
       "acceptanceCriteria": [
-        "Header component includes Resume Builder navigation link",
-        "Link positioned logically in navigation order",
-        "Link styling matches other header navigation items",
-        "Link is responsive and displays properly on mobile menu",
-        "Clicking link navigates to /resume-builder route"
+        "Translation files loaded on-demand via dynamic import()",
+        "Loading indicator shown during language switch",
+        "Translations cached after first load",
+        "Error handling for network failures",
+        "No full page reload on language change"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/contexts/LanguageContext.tsx",
+          "operation": "modify",
+          "description": "Update LanguageContext to implement lazy loading of translation JSON files. Use dynamic import() to load language files only when setLanguage is called: `const translations = await import(`./locales/${lang}.json`)`. Maintain a cache object to store loaded translations and avoid re-fetching. Set isLoading state to true during import, false after completion. Add error handling for failed imports with try-catch block and fallback to English translations on error. Show error toast notification on load failure. Ensure no page reload occurs during language switch."
+        }
+      ]
+    },
+    {
+      "id": "REQ-94",
+      "summary": "Update SEO component to render language-specific meta titles and descriptions",
+      "acceptanceCriteria": [
+        "SEO component accepts language prop",
+        "Meta titles use translated strings",
+        "Meta descriptions use translated strings",
+        "Open Graph tags reflect current language",
+        "Twitter Card tags use current language",
+        "Canonical and hreflang tags properly set"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/SEO.tsx",
+          "operation": "modify",
+          "description": "Modify SEO component to accept language parameter and use translated meta titles and descriptions. Import useLanguage hook to access t() function. Update title, description, og:title, og:description, twitter:title, and twitter:description meta tags to use translation keys passed as props (e.g., t(titleKey)). Ensure language-specific canonical URLs are constructed. Preserve existing Open Graph, Twitter Card, and structured data functionality."
+        }
+      ]
+    },
+    {
+      "id": "REQ-95",
+      "summary": "Implement browser language auto-detection on initial page load",
+      "acceptanceCriteria": [
+        "Browser language detected on first visit",
+        "Language code mapped to supported languages",
+        "Falls back to English for unsupported languages",
+        "Optional redirect to detected language URL",
+        "User preference in localStorage overrides detection",
+        "Detection only runs once per session"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/contexts/LanguageContext.tsx",
+          "operation": "modify",
+          "description": "Add browser language auto-detection logic in LanguageProvider initialization. Check if language preference exists in localStorage first. If not, read navigator.language or navigator.languages[0], extract language code (first 2 characters), and map to supported languages (en, hi, bn, ta, te, mr, gu, kn, ml, ur). Fall back to 'en' for unsupported languages. Optionally use useNavigate to redirect to detected language URL if different from current URL (check window.location.pathname). Set a session flag in sessionStorage to prevent re-detection on subsequent page navigations within the same session."
+        }
+      ]
+    },
+    {
+      "id": "REQ-96",
+      "summary": "Integrate LanguageSelector into Header component with mobile responsiveness",
+      "acceptanceCriteria": [
+        "LanguageSelector integrated in Header component",
+        "Positioned appropriately in header layout",
+        "Mobile responsive with touch-friendly UI",
+        "Dropdown closes on language selection",
+        "Language switch works on all page types",
+        "No layout shifts or broken UI after switch"
       ],
       "file_operations": [
         {
           "path": "frontend/src/components/Header.tsx",
           "operation": "modify",
-          "description": "Add Resume Builder navigation link to Header component after Calculator Hub link. Use same styling as existing navigation items (text-sm font-medium hover:text-primary transition-colors). Wrap link in Link component from react-router-dom targeting /resume-builder route. On mobile menu, include Resume Builder as menu item with proper spacing and tap target sizing. Ensure responsive behavior matches existing navigation items."
+          "description": "Import and integrate LanguageSelector component into Header. Position LanguageSelector after navigation links but before any action buttons (if present). Use flexbox/grid to ensure proper spacing and alignment. On mobile, ensure LanguageSelector is accessible and has touch-friendly tap targets. Test that dropdown closes after language selection. Verify layout remains stable across all screen sizes after language switch. Preserve existing header functionality (logo, navigation, sticky positioning)."
         }
       ]
     },
     {
-      "id": "REQ-85",
-      "summary": "Integrate AdPlaceholder components into Resume Builder pages with strategic placement",
+      "id": "REQ-97",
+      "summary": "Update sitemap.xml generation to include language-specific URLs for all pages",
       "acceptanceCriteria": [
-        "Top banner AdPlaceholder appears after H1 on all Resume Builder pages",
-        "In-content AdPlaceholder positioned between form and preview on desktop",
-        "Sidebar AdPlaceholder displays in right column on viewports >1024px",
-        "Ads use aspect ratio boxes to prevent layout shift",
-        "Ads do not obscure form inputs or preview content",
-        "Ad containers are marked with 'Advertisement' label"
+        "Sitemap includes URLs for all 9 languages",
+        "All calculator pages have language variants",
+        "All PDF tool pages have language variants",
+        "All image tool pages have language variants",
+        "All resume builder pages have language variants",
+        "Hub pages have language variants",
+        "Priority and changefreq preserved per page type"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/pages/ResumeBuilderPage.tsx",
-          "operation": "modify",
-          "description": "Import AdPlaceholder component. Add top banner ad (format='banner' 728×90) immediately after H1 heading and before template grid. Ensure ad container has proper spacing (mb-8) and is centered on page."
+          "path": "frontend/src/utils/generateSitemap.ts",
+          "operation": "create",
+          "description": "Create sitemap generation utility that programmatically generates sitemap.xml with language-specific URLs for all 9 languages (en, hi, bn, ta, te, mr, gu, kn, ml, ur). For each page (calculators, PDF tools, image tools, resume builder templates, hub pages, legal pages), generate 9 URL variants following pattern: base URL + '/' + language code + page path (e.g., 'https://docmastertools.com/hi/calculators/cgpa-calculator'). For English, generate URLs both with and without '/en' prefix for backward compatibility. Preserve existing priority and changefreq values based on page type (e.g., priority 0.9 for calculator pages, 0.8 for tools). Output as valid XML sitemap format. This utility should be run during build process to generate frontend/public/sitemap.xml."
         },
         {
-          "path": "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+          "path": "frontend/public/sitemap.xml",
           "operation": "modify",
-          "description": "Import AdPlaceholder component. Add top banner ad (format='banner' 728×90) after H1 and breadcrumbs. Add in-content ad (format='in-content' 300×250) between form wizard and preview sections on desktop layout with mx-4 spacing. Add sidebar ad (format='sidebar' 160×600) in right column when viewport width >1024px using conditional rendering with hidden lg:block classes. Ensure ads use aspect-ratio boxes to prevent layout shift. Add 'Advertisement' label above each ad using text-xs text-muted-foreground."
-        }
-      ]
-    },
-    {
-      "id": "REQ-86",
-      "summary": "Update App.tsx routing to include all Resume Builder routes with correct slugs",
-      "acceptanceCriteria": [
-        "Route /resume-builder is configured in App.tsx",
-        "All 14 individual template routes are configured with correct slugs",
-        "Each template route renders appropriate template builder component",
-        "Routes follow consistent naming pattern with hyphens",
-        "Navigation between hub and individual templates works correctly"
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Import ResumeBuilderPage and ResumeTemplateBuilderPage components. Add route configuration for /resume-builder rendering ResumeBuilderPage. Add 14 individual template routes following pattern /resume-builder/:templateSlug where templateSlug param matches one of: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume. Each route renders ResumeTemplateBuilderPage component which reads templateSlug from useParams hook. Place Resume Builder routes after Image Tools routes and before legal pages. Ensure routes are properly nested within BrowserRouter."
+          "description": "Replace existing sitemap.xml content with generated sitemap containing all language-specific URLs. Include URL entries for all 9 languages for every page: all 20+ calculator pages, 16 PDF tool pages, 8+ image tool pages, 14 resume templates, hub pages (calculators, PDF tools, image tools, resume builder), legal pages (privacy, terms, disclaimer), and homepage. For English pages, include both versioned (/en/path) and non-versioned (/path) URLs. Maintain proper XML structure with <urlset>, <url>, <loc>, <lastmod>, <changefreq>, and <priority> tags for each entry."
         }
       ]
     }

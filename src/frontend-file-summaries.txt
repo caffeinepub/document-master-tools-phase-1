@@ -1,0 +1,8 @@
+{
+  "frontend/src/App.tsx": "Main application component with page routing, theme provider, query client setup, and global Header component that persists across all pages.",
+  "frontend/src/components/pdf-tools/PDFSplitTool.tsx": "PDF splitting tool that generates multiple individual PDF files with separate download buttons for each split page, no ZIP file generation.",
+  "frontend/src/index.css": "Global CSS with OKLCH-based design tokens for light/dark themes and custom pulse animation for the app download banner.",
+  "frontend/src/pages/HomePage.tsx": "Home page with hero section, trust badges, tool categories grid, footer, and app download popup banner (header removed as it's now in App.tsx).",
+  "frontend/src/components/DownloadSection.tsx": "Download section component supporting both single file and multiple file downloads with individual download buttons for each file, no ZIP bundling.",
+  "frontend/src/components/Header.tsx": "Reusable header component with clickable DocMasterTools logo on the left that navigates to home page, featuring responsive scaling and hover effects."
+}

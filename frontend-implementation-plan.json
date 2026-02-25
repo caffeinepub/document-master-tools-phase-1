@@ -1,0 +1,27 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Remove duplicate upper footer section, keep only Document Master Tools footer",
+  "requirements": [
+    {
+      "id": "REQ-131",
+      "summary": "Remove the first (upper) footer section entirely from Footer.tsx, keeping only the lower footer section that begins with 'Document Master Tools'",
+      "acceptanceCriteria": [
+        "The website renders exactly one footer section site-wide.",
+        "The retained footer section starts with 'Document Master Tools' branding.",
+        "The removed section (containing Quick Links, Legal, About, copyright, and 'Built with ❤️ using caffeine.ai') is no longer rendered anywhere.",
+        "All links, copyright text (© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.), and external link attributes (target, rel) in the remaining footer section are unchanged.",
+        "Footer styling (colors, typography, spacing, padding) is identical to the pre-change state.",
+        "Footer is fully mobile responsive and displays correctly at 320px width and above.",
+        "No other components or layout sections are affected by this change."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/Footer.tsx",
+          "operation": "modify",
+          "description": "Remove the first footer section (containing Quick Links, Legal, About columns, 'Built with ❤️ using caffeine.ai', and copyright) entirely from the JSX return statement. Keep only the second footer section that starts with 'Document Master Tools' branding. Do not modify any styling, class names, links, href values, external link attributes (target='_blank', rel='noopener noreferrer'), copyright text, or responsive behavior of the retained footer section. The final component must render exactly one footer section with no visual or functional changes to that section."
+        }
+      ]
+    }
+  ]
+}

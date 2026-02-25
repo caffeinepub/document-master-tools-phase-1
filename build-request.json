@@ -1,0 +1,49 @@
+{
+  "kind": "build_request",
+  "title": "Remove duplicate upper footer section, keep only the Document Master Tools footer",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-131",
+      "text": "Update frontend/src/components/Footer.tsx to remove the first (upper) footer section entirely, keeping only the lower footer section that begins with 'Document Master Tools'. The final footer must be a single section. Do not modify any footer styling, alignment, links, copyright text, external link settings, or mobile responsiveness. No other layout changes.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-latest"
+        ],
+        "quotes": [
+          "Remove the FIRST (upper) footer section completely.",
+          "Keep ONLY the SECOND (lower) footer section that starts with: \"Document Master Tools\"",
+          "The final website must have only ONE footer section.",
+          "Do NOT modify: Footer styling, Footer alignment, Links, Copyright text, External link settings, Mobile responsiveness"
+        ]
+      },
+      "acceptanceCriteria": [
+        "The website renders exactly one footer section site-wide.",
+        "The retained footer section starts with 'Document Master Tools' branding.",
+        "The removed section (containing Quick Links, Legal, About, copyright, and 'Built with ❤️ using caffeine.ai') is no longer rendered anywhere.",
+        "All links, copyright text (© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.), and external link attributes (target, rel) in the remaining footer section are unchanged.",
+        "Footer styling (colors, typography, spacing, padding) is identical to the pre-change state.",
+        "Footer is fully mobile responsive and displays correctly at 320px width and above.",
+        "No other components or layout sections are affected by this change."
+      ]
+    }
+  ],
+  "constraints": [
+    "Do not modify footer styling, colors, typography, or spacing.",
+    "Do not modify any links, href values, or external link attributes (target='_blank', rel='noopener noreferrer').",
+    "Do not modify the copyright text: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+    "Do not alter mobile responsiveness or layout of the retained footer section.",
+    "No changes to any component other than Footer.tsx."
+  ],
+  "nonGoals": [
+    "Adding new links or sections to the footer.",
+    "Changing footer styling or design.",
+    "Modifying the Header or any other layout component.",
+    "Altering any page routing or content outside the footer."
+  ],
+  "imageRequirements": {
+    "required": [],
+    "edits": []
+  }
+}

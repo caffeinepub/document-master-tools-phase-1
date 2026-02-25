@@ -1,0 +1,1375 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 21,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model (Free: 2 fixes/day, standard quality, watermark; Pro: unlimited, HD, A4 sheet, no watermark, multi-photo sheet) with Go Pro button, pricing modal (₹499/month, ₹3999/year), feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged.",
+  "architectural_notes": [
+    "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
+    "Each calculator gets individual SEO-friendly page",
+    "Client-side instant calculation without page reload",
+    "Mobile-first responsive design required",
+    "Phase 3: Advanced Image Tools Module - client-side only processing, no server storage, no paid APIs",
+    "Image tools use browser-based libraries for format conversion, compression, and background removal",
+    "Job form special mode for government exam/passport/signature presets with target dimensions and file size",
+    "Footer updated: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED",
+    "Phase 4: SEO & Monetization Foundation - no tool logic changes, only extend SEO structure and AdSense-ready layouts",
+    "All pages get dynamic SEO meta tags, Open Graph, Twitter cards, canonical tags, and structured data"
+  ],
+  "known_issues": [],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-create-a-calculatorspage-component-that-serves-as-the-main-landing-page-for-all-calculators-displaying-a-grid-of-calculator-cards-organized-by-category-academic-financial-health-general",
+      "title": "Create a CalculatorsPage component that serves as the main landing page for all calculators, displaying a grid of calculator cards organized by category (Academic, Financial, Health & General)",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cgpa-calculator-with-support-for-semester-wise-grade-input-credit-hours-per-course-and-instant-calculation-displaying-final-cgpa-on-a-10-0-scale",
+      "title": "Implement CGPA Calculator with support for semester-wise grade input, credit hours per course, and instant calculation displaying final CGPA on a 10.0 scale",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-sgpa-calculator-with-course-wise-grade-and-credit-input-instant-calculation-displaying-semester-gpa-on-a-10-0-scale",
+      "title": "Implement SGPA Calculator with course-wise grade and credit input, instant calculation displaying semester GPA on a 10.0 scale",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-cgpa-to-percentage-converter-supporting-both-cbse-formula-cgpa-9-5-and-engineering-formula-cgpa-10-with-instant-conversion-and-formula-selection-toggle",
+      "title": "Implement CGPA to Percentage Converter supporting both CBSE formula (CGPA × 9.5) and Engineering formula (CGPA × 10), with instant conversion and formula selection toggle",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-percentage-to-cgpa-converter-with-formula-selection-divide-by-9-5-for-cbse-divide-by-10-for-engineering-instant-conversion-as-user-types",
+      "title": "Implement Percentage to CGPA Converter with formula selection (divide by 9.5 for CBSE, divide by 10 for Engineering), instant conversion as user types",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-grade-calculator-that-converts-letter-grades-a-a-b-b-c-c-d-e-f-to-grade-points-with-customizable-grading-scale-and-instant-results",
+      "title": "Implement Grade Calculator that converts letter grades (A+, A, B+, B, C+, C, D, E, F) to grade points with customizable grading scale and instant results",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-gpa-calculator-supporting-both-4-0-scale-and-10-0-scale-with-scale-toggle-course-wise-input-and-instant-gpa-calculation",
+      "title": "Implement GPA Calculator supporting both 4.0 scale and 10.0 scale with scale toggle, course-wise input, and instant GPA calculation",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-marks-percentage-calculator-that-accepts-obtained-marks-and-total-marks-calculates-percentage-instantly-and-displays-result-with-pass-fail-indication",
+      "title": "Implement Marks Percentage Calculator that accepts obtained marks and total marks, calculates percentage instantly, and displays result with pass/fail indication",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-division-calculator-that-determines-academic-division-1st-2nd-3rd-division-or-fail-based-on-percentage-input-with-instant-classification",
+      "title": "Implement Division Calculator that determines academic division (1st/2nd/3rd division or fail) based on percentage input with instant classification",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-gst-calculator-with-two-modes-add-gst-calculate-gst-amount-to-add-to-base-price-and-remove-gst-extract-gst-from-total-amount-supporting-multiple-gst-rates-5-12-18-28-with-instant-calculation",
+      "title": "Implement GST Calculator with two modes: Add GST (calculate GST amount to add to base price) and Remove GST (extract GST from total amount), supporting multiple GST rates (5%, 12%, 18%, 28%) with instant calculation",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-emi-calculator-that-accepts-loan-amount-interest-rate-and-tenure-months-years-calculates-monthly-emi-total-interest-and-total-payment-with-instant-results-and-amortization-summary",
+      "title": "Implement EMI Calculator that accepts loan amount, interest rate, and tenure (months/years), calculates monthly EMI, total interest, and total payment with instant results and amortization summary",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-loan-calculator-with-inputs-for-loan-amount-interest-rate-monthly-payment-calculates-total-interest-and-loan-tenure-with-instant-results",
+      "title": "Implement Loan Calculator with inputs for loan amount, interest rate, monthly payment, calculates total interest and loan tenure with instant results",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-compound-interest-calculator-with-inputs-for-principal-rate-time-and-compounding-frequency-yearly-half-yearly-quarterly-monthly-calculates-final-amount-and-interest-earned-with-instant-results",
+      "title": "Implement Compound Interest Calculator with inputs for principal, rate, time, and compounding frequency (yearly, half-yearly, quarterly, monthly), calculates final amount and interest earned with instant results",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-simple-interest-calculator-with-inputs-for-principal-rate-and-time-calculates-interest-and-total-amount-with-instant-results",
+      "title": "Implement Simple Interest Calculator with inputs for principal, rate, and time, calculates interest and total amount with instant results",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-discount-calculator-that-accepts-original-price-and-discount-percentage-calculates-discount-amount-final-price-and-savings-with-instant-results",
+      "title": "Implement Discount Calculator that accepts original price and discount percentage, calculates discount amount, final price, and savings with instant results",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-profit-loss-percentage-calculator-that-accepts-cost-price-and-selling-price-calculates-profit-or-loss-amount-and-percentage-with-instant-results-and-clear-indication-of-profit-or-loss",
+      "title": "Implement Profit/Loss Percentage Calculator that accepts cost price and selling price, calculates profit or loss amount and percentage with instant results and clear indication of profit or loss",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-salary-hike-calculator-that-accepts-current-salary-and-hike-percentage-calculates-new-salary-increment-amount-and-annual-increment-with-instant-results",
+      "title": "Implement Salary Hike Calculator that accepts current salary and hike percentage, calculates new salary, increment amount, and annual increment with instant results",
+      "reqIds": [
+        "REQ-17"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-bmi-calculator-that-accepts-weight-kg-lbs-and-height-cm-feet-inches-calculates-bmi-with-instant-result-displays-bmi-category-underweight-normal-overweight-obese-and-shows-healthy-weight-range",
+      "title": "Implement BMI Calculator that accepts weight (kg/lbs) and height (cm/feet-inches), calculates BMI with instant result, displays BMI category (underweight, normal, overweight, obese), and shows healthy weight range",
+      "reqIds": [
+        "REQ-18"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-age-calculator-that-accepts-date-of-birth-calculates-exact-age-in-years-months-and-days-displays-next-birthday-date-and-shows-countdown-to-next-birthday-with-instant-results",
+      "title": "Implement Age Calculator that accepts date of birth, calculates exact age in years, months, and days, displays next birthday date, and shows countdown to next birthday with instant results",
+      "reqIds": [
+        "REQ-19"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-date-difference-calculator-that-accepts-two-dates-calculates-difference-in-years-months-days-weeks-and-total-days-with-instant-results",
+      "title": "Implement Date Difference Calculator that accepts two dates, calculates difference in years, months, days, weeks, and total days with instant results",
+      "reqIds": [
+        "REQ-20"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-time-duration-calculator-that-accepts-start-time-and-end-time-calculates-duration-in-hours-minutes-and-seconds-with-instant-results-and-option-to-add-subtract-time-periods",
+      "title": "Implement Time Duration Calculator that accepts start time and end time, calculates duration in hours, minutes, and seconds with instant results and option to add/subtract time periods",
+      "reqIds": [
+        "REQ-21"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-individual-seo-friendly-calculator-pages-with-unique-urls-following-pattern-calculators-calculator-name-each-with-proper-meta-titles-descriptions-structured-data-and-open-graph-tags",
+      "title": "Create individual SEO-friendly calculator pages with unique URLs following pattern /calculators/[calculator-name], each with proper meta titles, descriptions, structured data, and Open Graph tags",
+      "reqIds": [
+        "REQ-22"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-a-calculators-route-that-displays-the-calculatorspage-and-individual-routes-for-each-calculator-component",
+      "title": "Update App.tsx routing to include a calculators route that displays the CalculatorsPage and individual routes for each calculator component",
+      "reqIds": [
+        "REQ-23"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-header-component-to-include-a-calculators-navigation-link-that-directs-users-to-the-main-calculators-page",
+      "title": "Update Header component to include a Calculators navigation link that directs users to the main calculators page",
+      "reqIds": [
+        "REQ-24"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-include-a-calculator-hub-section-alongside-existing-pdf-tools-image-tools-and-resume-builder-sections-displaying-calculator-categories-with-card-previews",
+      "title": "Update HomePage to include a Calculator Hub section alongside existing PDF Tools, Image Tools, and Resume Builder sections, displaying calculator categories with card previews",
+      "reqIds": [
+        "REQ-25"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-calculator-components-are-mobile-responsive-display-properly-on-screens-from-320px-width-upward-and-maintain-usability-on-touch-devices",
+      "title": "Ensure all calculator components are mobile responsive, display properly on screens from 320px width upward, and maintain usability on touch devices",
+      "reqIds": [
+        "REQ-26"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-all-calculator-pages-with-clean-modern-ui-using-tailwind-css-and-existing-design-system-ensuring-consistent-appearance-with-the-rest-of-the-application",
+      "title": "Style all calculator pages with clean, modern UI using Tailwind CSS and existing design system, ensuring consistent appearance with the rest of the application",
+      "reqIds": [
+        "REQ-27"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-structure-all-calculator-pages-with-semantic-html-and-appropriate-heading-hierarchy-to-support-adsense-integration-and-improve-accessibility",
+      "title": "Structure all calculator pages with semantic HTML and appropriate heading hierarchy to support AdSense integration and improve accessibility",
+      "reqIds": [
+        "REQ-28"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagetoolspage-component-at-image-tools-route-that-displays-a-comprehensive-grid-of-16-image-tools-organized-by-category-government-document-photos-passport-aadhaar-pan-ssc-railway-police-army-visa-signature-image-processing-compressor-cropper-dpi-changer-custom-resize-and-format-conversion-jpg-to-png-png-to-jpg-webp-converter-background-remover",
+      "title": "Create ImageToolsPage component at /image-tools route that displays a comprehensive grid of 16 image tools organized by category: Government Document Photos (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature), Image Processing (Compressor, Cropper, DPI Changer, Custom Resize), and Format Conversion (JPG to PNG, PNG to JPG, WEBP Converter, Background Remover)",
+      "reqIds": [
+        "REQ-29"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-passportphotomaker-component-at-passport-photo-maker-with-preset-passport-photo-dimensions-drag-drop-upload-live-preview-target-size-selector-20kb-200kb-maintain-aspect-ratio-toggle-and-secure-blob-download-showing-original-vs-new-size",
+      "title": "Create PassportPhotoMaker component at /passport-photo-maker with preset passport photo dimensions, drag & drop upload, live preview, target size selector (20KB-200KB), maintain aspect ratio toggle, and secure blob download showing original vs new size",
+      "reqIds": [
+        "REQ-30"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-aadhaarphotoresize-component-at-aadhaar-photo-resize-with-aadhaar-card-photo-specifications-target-size-selector-custom-dimensions-input-maintain-aspect-ratio-toggle-live-preview-and-blob-based-secure-download",
+      "title": "Create AadhaarPhotoResize component at /aadhaar-photo-resize with Aadhaar card photo specifications, target size selector, custom dimensions input, maintain aspect ratio toggle, live preview, and blob-based secure download",
+      "reqIds": [
+        "REQ-31"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-panphotoresize-component-at-pan-photo-resize-with-pan-card-photo-specifications-target-size-control-dimension-customization-ratio-maintenance-toggle-live-preview-and-secure-download",
+      "title": "Create PANPhotoResize component at /pan-photo-resize with PAN card photo specifications, target size control, dimension customization, ratio maintenance toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-32"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-sscphotoresize-component-at-ssc-photo-resize-with-ssc-exam-photo-specifications-from-government-exam-presets-target-size-selector-20kb-200kb-custom-dimensions-maintain-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create SSCPhotoResize component at /ssc-photo-resize with SSC exam photo specifications from government exam presets, target size selector (20KB-200KB), custom dimensions, maintain ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-33"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-railwayphotoresize-component-at-railway-photo-resize-with-indian-railway-exam-photo-specifications-target-size-selector-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create RailwayPhotoResize component at /railway-photo-resize with Indian Railway exam photo specifications, target size selector, custom dimensions, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-34"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-policearmyphoto-component-at-police-army-photo-with-police-and-army-recruitment-photo-specifications-target-size-control-20kb-200kb-dimension-customization-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create PoliceArmyPhoto component at /police-army-photo with Police and Army recruitment photo specifications, target size control (20KB-200KB), dimension customization, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-35"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-visaphotoresize-component-at-visa-photo-resize-with-international-visa-photo-specifications-from-passport-presets-target-size-selector-custom-dimensions-ratio-maintenance-live-preview-and-secure-download",
+      "title": "Create VisaPhotoResize component at /visa-photo-resize with international visa photo specifications from passport presets, target size selector, custom dimensions, ratio maintenance, live preview, and secure download",
+      "reqIds": [
+        "REQ-36"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-signatureresize-component-at-signature-resize-with-government-exam-and-application-signature-presets-target-size-selector-20kb-200kb-custom-dimensions-ratio-toggle-live-preview-and-secure-download",
+      "title": "Create SignatureResize component at /signature-resize with government exam and application signature presets, target size selector (20KB-200KB), custom dimensions, ratio toggle, live preview, and secure download",
+      "reqIds": [
+        "REQ-37"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagecompressor-component-at-image-compressor-with-compression-level-selector-target-size-control-20kb-200kb-live-preview-original-vs-compressed-size-comparison-reset-button-and-secure-blob-download-using-browser-based-compression-libraries",
+      "title": "Create ImageCompressor component at /image-compressor with compression level selector, target size control (20KB-200KB), live preview, original vs compressed size comparison, reset button, and secure blob download using browser-based compression libraries",
+      "reqIds": [
+        "REQ-38"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-imagecropper-component-at-image-cropper-with-drag-based-crop-area-selection-aspect-ratio-presets-1-1-4-3-16-9-free-maintain-aspect-ratio-toggle-pixel-resize-after-crop-live-preview-and-secure-blob-download",
+      "title": "Create ImageCropper component at /image-cropper with drag-based crop area selection, aspect ratio presets (1:1, 4:3, 16:9, free), maintain aspect ratio toggle, pixel resize after crop, live preview, and secure blob download",
+      "reqIds": [
+        "REQ-39"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-dpichanger-component-at-dpi-changer-with-dpi-preset-selector-100-200-300-dpi-custom-dpi-input-live-preview-original-vs-new-dpi-display-and-secure-blob-download",
+      "title": "Create DPIChanger component at /dpi-changer with DPI preset selector (100, 200, 300 DPI), custom DPI input, live preview, original vs new DPI display, and secure blob download",
+      "reqIds": [
+        "REQ-40"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-customimageresize-component-at-custom-image-resize-with-width-and-height-input-fields-maintain-aspect-ratio-toggle-pixel-and-percentage-resize-modes-live-preview-original-vs-new-size-display-and-secure-blob-download",
+      "title": "Create CustomImageResize component at /custom-image-resize with width and height input fields, maintain aspect ratio toggle, pixel and percentage resize modes, live preview, original vs new size display, and secure blob download",
+      "reqIds": [
+        "REQ-41"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-jpgtopng-component-at-jpg-to-png-with-jpg-image-upload-instant-format-conversion-to-png-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create JPGToPNG component at /jpg-to-png with JPG image upload, instant format conversion to PNG, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-42"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-pngtojpg-component-at-png-to-jpg-with-png-image-upload-instant-format-conversion-to-jpg-with-quality-selection-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create PNGToJPG component at /png-to-jpg with PNG image upload, instant format conversion to JPG with quality selection, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-43"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-webpconverter-component-at-webp-converter-with-bidirectional-conversion-any-format-to-webp-webp-to-any-format-quality-selector-live-preview-file-size-comparison-and-secure-blob-download-using-browser-based-conversion",
+      "title": "Create WEBPConverter component at /webp-converter with bidirectional conversion (any format to WEBP, WEBP to any format), quality selector, live preview, file size comparison, and secure blob download using browser-based conversion",
+      "reqIds": [
+        "REQ-44"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-backgroundremover-component-at-background-remover-with-client-side-background-removal-using-browser-based-libraries-no-external-apis-drag-drop-upload-processing-animation-live-preview-with-transparent-background-and-secure-png-blob-download",
+      "title": "Create BackgroundRemover component at /background-remover with client-side background removal using browser-based libraries (no external APIs), drag & drop upload, processing animation, live preview with transparent background, and secure PNG blob download",
+      "reqIds": [
+        "REQ-45"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-image-tools-main-route-and-individual-routes-for-all-16-image-tools-passport-photo-maker-aadhaar-photo-resize-pan-photo-resize-ssc-photo-resize-railway-photo-resize-police-army-photo-visa-photo-resize-signature-resize-image-compressor-image-cropper-dpi-changer-custom-image-resize-jpg-to-png-png-to-jpg-webp-converter-background-remover",
+      "title": "Update App.tsx routing to include /image-tools main route and individual routes for all 16 image tools: /passport-photo-maker, /aadhaar-photo-resize, /pan-photo-resize, /ssc-photo-resize, /railway-photo-resize, /police-army-photo, /visa-photo-resize, /signature-resize, /image-compressor, /image-cropper, /dpi-changer, /custom-image-resize, /jpg-to-png, /png-to-jpg, /webp-converter, /background-remover",
+      "reqIds": [
+        "REQ-47"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-16-image-tool-components-are-fully-mobile-responsive-display-correctly-on-screens-from-320px-width-upward-support-touch-gestures-for-drag-drop-maintain-usability-on-mobile-devices-and-adapt-layouts-for-tablet-and-desktop-viewports",
+      "title": "Ensure all 16 image tool components are fully mobile responsive, display correctly on screens from 320px width upward, support touch gestures for drag & drop, maintain usability on mobile devices, and adapt layouts for tablet and desktop viewports",
+      "reqIds": [
+        "REQ-50"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-expand-the-existing-image-tools-section-to-showcase-the-new-comprehensive-image-tools-displaying-government-document-photos-category-8-tools-image-processing-category-4-tools-and-format-conversion-category-4-tools-with-total-count-of-16-image-tools",
+      "title": "Update HomePage to expand the existing Image Tools section to showcase the new comprehensive image tools, displaying Government Document Photos category (8 tools), Image Processing category (4 tools), and Format Conversion category (4 tools) with total count of 16 image tools",
+      "reqIds": [
+        "REQ-51"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-footer-component-to-display-the-copyright-notice-2026-rjy-total-manpowers-services-private-limited-all-rights-reserved",
+      "title": "Update Footer component to display the copyright notice: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
+      "reqIds": [
+        "REQ-52"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-reusable-seo-component-frontend-src-components-seo-tsx-that-dynamically-sets-document-title-meta-descriptions-open-graph-tags-og-title-og-description-og-image-og-url-og-type-twitter-card-meta-tags-twitter-card-twitter-title-twitter-description-twitter-image-and-canonical-link-tag-based-on-props-title-description-canonicalurl-ogimage-ogtype",
+      "title": "Create a reusable SEO component (frontend/src/components/SEO.tsx) that dynamically sets document title, meta descriptions, Open Graph tags (og:title, og:description, og:image, og:url, og:type), Twitter Card meta tags (twitter:card, twitter:title, twitter:description, twitter:image), and canonical link tag based on props (title, description, canonicalUrl, ogImage, ogType)",
+      "reqIds": [
+        "REQ-53"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-the-seo-component-into-all-calculator-pages-20-pages-pdf-tool-pages-16-pages-image-tool-pages-16-pages-and-main-hub-pages-calculatorspage-pdftoolspage-imagetoolspage-homepage-with-unique-tool-specific-titles-and-descriptions-following-pattern-tool-name-free-online-tool-type-document-master-tools",
+      "title": "Integrate the SEO component into all calculator pages (20 pages), PDF tool pages (16 pages), image tool pages (16 pages), and main hub pages (CalculatorsPage, PDFToolsPage, ImageToolsPage, HomePage) with unique, tool-specific titles and descriptions following pattern '[Tool Name] - Free Online [Tool Type] | Document Master Tools'",
+      "reqIds": [
+        "REQ-54"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-breadcrumbnavigation-component-frontend-src-components-breadcrumbnavigation-tsx-that-displays-hierarchical-navigation-paths-home-calculators-cgpa-calculator-with-proper-schema-org-breadcrumblist-structured-data-markup-and-integrate-it-into-all-tool-pages-below-the-header",
+      "title": "Create a BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx) that displays hierarchical navigation paths (Home > Calculators > CGPA Calculator) with proper schema.org/BreadcrumbList structured data markup, and integrate it into all tool pages below the header",
+      "reqIds": [
+        "REQ-55"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-faq-schema-markup-schema-org-faqpage-to-all-calculator-pages-pdf-tool-pages-and-image-tool-pages-by-creating-a-reusable-faqschema-component-frontend-src-components-faqschema-tsx-that-accepts-faq-items-and-renders-json-ld-structured-data-then-integrate-it-into-existing-faq-sections",
+      "title": "Add FAQ schema markup (schema.org/FAQPage) to all calculator pages, PDF tool pages, and image tool pages by creating a reusable FAQSchema component (frontend/src/components/FAQSchema.tsx) that accepts FAQ items and renders JSON-LD structured data, then integrate it into existing FAQ sections",
+      "reqIds": [
+        "REQ-56"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-webapplication-structured-data-schema-org-webapplication-to-the-homepage-component-with-json-ld-markup-including-applicationcategory-utilityapplication-operatingsystem-any-offers-free-browserrequirements-and-aggregaterating",
+      "title": "Add WebApplication structured data (schema.org/WebApplication) to the HomePage component with JSON-LD markup including applicationCategory ('UtilityApplication'), operatingSystem ('Any'), offers (free), browserRequirements, and aggregateRating",
+      "reqIds": [
+        "REQ-57"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-sitemap-generation-utility-frontend-src-utils-generatesitemap-ts-that-programmatically-generates-an-xml-sitemap-including-all-routes-calculators-pdf-tools-image-tools-static-pages-with-lastmod-changefreq-and-priority-values-and-create-a-public-sitemap-xml-file-that-can-be-updated-during-build",
+      "title": "Create a sitemap generation utility (frontend/src/utils/generateSitemap.ts) that programmatically generates an XML sitemap including all routes (calculators, PDF tools, image tools, static pages) with lastmod, changefreq, and priority values, and create a public/sitemap.xml file that can be updated during build",
+      "reqIds": [
+        "REQ-58"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-public-robots-txt-file-that-allows-all-user-agents-references-the-sitemap-location-sitemap-https-domain-sitemap-xml-and-includes-appropriate-crawl-delay-if-needed",
+      "title": "Create a public/robots.txt file that allows all user agents, references the sitemap location (Sitemap: https://[domain]/sitemap.xml), and includes appropriate crawl-delay if needed",
+      "reqIds": [
+        "REQ-59"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-adplaceholder-component-frontend-src-components-adplaceholder-tsx-that-renders-a-styled-container-for-adsense-ads-with-props-for-ad-type-banner-in-content-sidebar-displays-advertisement-label-and-uses-aspect-ratio-boxes-to-prevent-cumulative-layout-shift-cls",
+      "title": "Create an AdPlaceholder component (frontend/src/components/AdPlaceholder.tsx) that renders a styled container for AdSense ads with props for ad type (banner, in-content, sidebar), displays 'Advertisement' label, and uses aspect ratio boxes to prevent Cumulative Layout Shift (CLS)",
+      "reqIds": [
+        "REQ-60"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-adplaceholder-components-into-all-calculator-pages-with-top-banner-ad-after-h1-heading-and-in-content-ad-after-the-calculator-result-section-ensuring-ads-do-not-interfere-with-tool-functionality",
+      "title": "Integrate AdPlaceholder components into all calculator pages with top banner ad after H1 heading and in-content ad after the calculator result section, ensuring ads do not interfere with tool functionality",
+      "reqIds": [
+        "REQ-61"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-relatedtools-component-frontend-src-components-relatedtools-tsx-that-displays-3-4-related-tool-cards-with-tool-name-icon-description-and-link-and-integrate-it-at-the-bottom-of-all-calculator-pages-suggesting-related-calculators-from-the-same-category",
+      "title": "Create a RelatedTools component (frontend/src/components/RelatedTools.tsx) that displays 3-4 related tool cards with tool name, icon, description, and link, and integrate it at the bottom of all calculator pages suggesting related calculators from the same category",
+      "reqIds": [
+        "REQ-66"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-cross-category-navigation-links-by-creating-a-toolcategories-component-frontend-src-components-toolcategories-tsx-that-displays-quick-links-to-calculator-hub-pdf-tools-and-image-tools-hub-pages-and-integrate-it-into-all-tool-pages-in-the-sidebar-or-below-related-tools-section",
+      "title": "Add cross-category navigation links by creating a ToolCategories component (frontend/src/components/ToolCategories.tsx) that displays quick links to Calculator Hub, PDF Tools, and Image Tools hub pages, and integrate it into all tool pages in the sidebar or below related tools section",
+      "reqIds": [
+        "REQ-68"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-homepage-to-include-cross-linking-between-tool-categories-by-adding-explore-more-tools-sections-within-each-category-card-that-link-to-related-categories-e-g-calculator-section-links-to-pdf-tools-and-image-tools",
+      "title": "Update HomePage to include cross-linking between tool categories by adding 'Explore More Tools' sections within each category card that link to related categories (e.g., Calculator section links to PDF Tools and Image Tools)",
+      "reqIds": [
+        "REQ-69"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-resumebuilderpage-component-at-resume-builder-route-displaying-14-resume-templates-organized-in-two-categories-indian-format-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-and-international-format-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "title": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates organized in two categories: Indian Format (Fresher Resume, Government Job Resume, Private Job Resume, Hindi Resume, Biodata for Marriage, Teacher Resume, Police/Army Resume) and International Format (ATS Friendly Resume, US Resume, UK CV Format, Canada Resume, Europass CV, Creative Resume, Corporate Resume)",
+      "reqIds": [
+        "REQ-72"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-multi-step-form-wizard-with-progressive-sections-including-personal-info-name-email-phone-address-linkedin-portfolio-education-degree-institution-year-grade-experience-company-role-duration-responsibilities-skills-technical-soft-skills-projects-certifications-languages-achievements-and-references-with-ability-to-add-remove-individual-entries-within-each-section",
+      "title": "Implement multi-step form wizard with progressive sections including Personal Info (name, email, phone, address, LinkedIn, portfolio), Education (degree, institution, year, grade), Experience (company, role, duration, responsibilities), Skills (technical, soft skills), Projects, Certifications, Languages, Achievements, and References with ability to add/remove individual entries within each section",
+      "reqIds": [
+        "REQ-73"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-live-preview-component-that-renders-resume-in-real-time-as-user-fills-form-fields-updating-instantly-without-page-reload-and-displaying-exactly-how-the-final-pdf-will-appear-with-proper-formatting-spacing-and-typography-matching-the-selected-template",
+      "title": "Create live preview component that renders resume in real-time as user fills form fields, updating instantly without page reload and displaying exactly how the final PDF will appear with proper formatting, spacing, and typography matching the selected template",
+      "reqIds": [
+        "REQ-74"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-custom-color-theme-selector-with-at-least-6-predefined-color-palettes-professional-blue-corporate-black-creative-purple-modern-teal-classic-gray-elegant-maroon-that-dynamically-apply-to-resume-headers-section-borders-accent-lines-and-text-highlights-without-affecting-readability",
+      "title": "Implement custom color theme selector with at least 6 predefined color palettes (Professional Blue, Corporate Black, Creative Purple, Modern Teal, Classic Gray, Elegant Maroon) that dynamically apply to resume headers, section borders, accent lines, and text highlights without affecting readability",
+      "reqIds": [
+        "REQ-76"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-auto-formatting-logic-that-converts-skills-section-entries-into-bullet-points-auto-formats-dates-to-mm-yyyy-format-formats-phone-numbers-to-indian-91-or-international-format-based-on-selected-template-category-capitalizes-proper-nouns-and-ensures-consistent-spacing-throughout-the-resume",
+      "title": "Create auto-formatting logic that converts Skills section entries into bullet points, auto-formats dates to MM/YYYY format, formats phone numbers to Indian (+91) or International format based on selected template category, capitalizes proper nouns, and ensures consistent spacing throughout the resume",
+      "reqIds": [
+        "REQ-77"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-basic-ai-summary-generator-using-local-logic-no-external-api-calls-that-analyzes-user-s-experience-entries-and-skills-to-generate-2-3-sentence-professional-summary-focusing-on-years-of-experience-key-skills-notable-achievements-and-career-objectives-using-action-oriented-language-and-industry-standard-phrasing",
+      "title": "Add basic AI summary generator using local logic (no external API calls) that analyzes user's experience entries and skills to generate 2-3 sentence professional summary focusing on years of experience, key skills, notable achievements, and career objectives using action-oriented language and industry-standard phrasing",
+      "reqIds": [
+        "REQ-79"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-individual-seo-friendly-pages-for-each-of-the-14-resume-templates-at-routes-resume-builder-template-slug-with-unique-meta-titles-following-pattern-template-name-resume-builder-free-online-tool-document-master-tools-descriptions-highlighting-template-specific-benefits-open-graph-tags-faq-sections-answering-common-questions-about-each-template-format-and-internal-links-to-calculator-hub-pdf-tools-and-image-tools",
+      "title": "Create individual SEO-friendly pages for each of the 14 resume templates at routes /resume-builder/[template-slug] with unique meta titles following pattern '[Template Name] Resume Builder - Free Online Tool | Document Master Tools', descriptions highlighting template-specific benefits, Open Graph tags, FAQ sections answering common questions about each template format, and internal links to Calculator Hub, PDF Tools, and Image Tools",
+      "reqIds": [
+        "REQ-80"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-resume-builder-components-including-main-hub-page-template-selection-form-wizard-live-preview-and-individual-template-pages-are-fully-mobile-responsive-with-vertical-form-layout-on-screens-below-768px-collapsible-sections-on-mobile-touch-friendly-input-controls-preview-positioned-below-form-on-mobile-and-proper-scaling-from-320px-width-upward",
+      "title": "Ensure all Resume Builder components including main hub page, template selection, form wizard, live preview, and individual template pages are fully mobile responsive with vertical form layout on screens below 768px, collapsible sections on mobile, touch-friendly input controls, preview positioned below form on mobile, and proper scaling from 320px width upward",
+      "reqIds": [
+        "REQ-81"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-style-resume-builder-with-modern-clean-ui-matching-existing-tailwind-design-system-using-card-based-layout-for-form-sections-smooth-transitions-for-step-navigation-progress-indicator-showing-completion-percentage-optional-save-draft-functionality-storing-data-in-localstorage-clear-primary-call-to-action-buttons-next-download-pdf-and-consistent-spacing-aligned-with-calculator-pdf-and-image-tools-styling",
+      "title": "Style Resume Builder with modern clean UI matching existing Tailwind design system using card-based layout for form sections, smooth transitions for step navigation, progress indicator showing completion percentage, optional save draft functionality storing data in localStorage, clear primary call-to-action buttons (Next, Download PDF), and consistent spacing aligned with Calculator, PDF, and Image Tools styling",
+      "reqIds": [
+        "REQ-82"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-adplaceholder-components-into-resume-builder-pages-with-top-banner-ad-728-90-after-h1-heading-in-content-ad-300-250-positioned-between-form-wizard-and-preview-sections-on-desktop-and-sidebar-ad-160-600-in-right-sidebar-layout-when-viewport-width-exceeds-1024px-ensuring-ads-do-not-interfere-with-form-functionality-or-preview-visibility",
+      "title": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad (728×90) after H1 heading, in-content ad (300×250) positioned between form wizard and preview sections on desktop, and sidebar ad (160×600) in right sidebar layout when viewport width exceeds 1024px, ensuring ads do not interfere with form functionality or preview visibility",
+      "reqIds": [
+        "REQ-85"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-include-resume-builder-main-route-displaying-resumebuilderpage-and-individual-routes-for-all-14-resume-templates-following-pattern-resume-builder-template-slug-where-slugs-are-fresher-resume-government-job-resume-private-job-resume-hindi-resume-biodata-for-marriage-teacher-resume-police-army-resume-ats-friendly-resume-us-resume-uk-cv-format-canada-resume-europass-cv-creative-resume-corporate-resume",
+      "title": "Update App.tsx routing to include /resume-builder main route displaying ResumeBuilderPage and individual routes for all 14 resume templates following pattern /resume-builder/[template-slug] where slugs are: fresher-resume, government-job-resume, private-job-resume, hindi-resume, biodata-for-marriage, teacher-resume, police-army-resume, ats-friendly-resume, us-resume, uk-cv-format, canada-resume, europass-cv, creative-resume, corporate-resume",
+      "reqIds": [
+        "REQ-86"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-languageselector-component-frontend-src-components-languageselector-tsx-that-renders-a-dropdown-in-the-header-displaying-9-supported-languages-english-en-default-hindi-hi-bengali-bn-tamil-ta-telugu-te-marathi-mr-gujarati-gu-kannada-kn-malayalam-ml-urdu-ur-with-flag-icons-or-language-codes-current-selected-language-indicator-and-smooth-dropdown-animation",
+      "title": "Create LanguageSelector component (frontend/src/components/LanguageSelector.tsx) that renders a dropdown in the header displaying 9 supported languages: English (en, default), Hindi (hi), Bengali (bn), Tamil (ta), Telugu (te), Marathi (mr), Gujarati (gu), Kannada (kn), Malayalam (ml), Urdu (ur) with flag icons or language codes, current selected language indicator, and smooth dropdown animation",
+      "reqIds": [
+        "REQ-87"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-i18n-infrastructure-with-context-provider-frontend-src-contexts-languagecontext-tsx-that-manages-current-language-state-provides-language-switching-functionality-persists-language-preference-to-localstorage-and-exposes-uselanguage-hook-for-components-to-access-translation-functions-and-current-language",
+      "title": "Create i18n infrastructure with context provider (frontend/src/contexts/LanguageContext.tsx) that manages current language state, provides language switching functionality, persists language preference to localStorage, and exposes useLanguage hook for components to access translation functions and current language",
+      "reqIds": [
+        "REQ-88"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-translation-json-files-frontend-src-locales-en-json-hi-json-bn-json-ta-json-te-json-mr-json-gu-json-kn-json-ml-json-ur-json-containing-translations-for-all-ui-text-including-navigation-labels-page-headings-descriptions-button-labels-form-labels-error-messages-and-seo-meta-titles-descriptions-do-not-translate-calculation-logic-formulas-or-numerical-operations",
+      "title": "Create translation JSON files (frontend/src/locales/en.json, hi.json, bn.json, ta.json, te.json, mr.json, gu.json, kn.json, ml.json, ur.json) containing translations for all UI text including navigation labels, page headings, descriptions, button labels, form labels, error messages, and SEO meta titles/descriptions. Do NOT translate calculation logic, formulas, or numerical operations",
+      "reqIds": [
+        "REQ-89"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-app-tsx-routing-to-support-language-prefixed-urls-following-pattern-lang-calculators-lang-pdf-tools-lang-image-tools-lang-resume-builder-with-default-english-routes-preserved-at-existing-paths-calculators-pdf-tools-etc-and-language-parameter-extracted-from-url-to-set-active-language",
+      "title": "Update App.tsx routing to support language-prefixed URLs following pattern /:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder with default English routes preserved at existing paths (/calculators, /pdf-tools, etc.) and language parameter extracted from URL to set active language",
+      "reqIds": [
+        "REQ-90"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-lazy-loading-for-translation-files-using-dynamic-imports-so-language-json-files-are-only-loaded-when-user-switches-to-that-language-with-loading-state-indicator-during-language-switch-and-error-handling-for-failed-translation-file-loads",
+      "title": "Implement lazy loading for translation files using dynamic imports so language JSON files are only loaded when user switches to that language, with loading state indicator during language switch and error handling for failed translation file loads",
+      "reqIds": [
+        "REQ-93"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-optional-browser-language-auto-detection-on-initial-page-load-that-reads-navigator-language-or-navigator-languages-matches-to-one-of-the-9-supported-languages-with-fallback-to-english-and-optionally-redirects-user-to-detected-language-url-if-different-from-current-url-language",
+      "title": "Implement optional browser language auto-detection on initial page load that reads navigator.language or navigator.languages, matches to one of the 9 supported languages (with fallback to English), and optionally redirects user to detected language URL if different from current URL language",
+      "reqIds": [
+        "REQ-95"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-integrate-languageselector-into-header-component-positioned-after-existing-navigation-links-with-proper-spacing-ensure-mobile-responsive-design-with-dropdown-overlay-on-small-screens-and-verify-language-switching-works-across-all-pages-without-breaking-layouts-or-functionality",
+      "title": "Integrate LanguageSelector into Header component positioned after existing navigation links with proper spacing, ensure mobile responsive design with dropdown overlay on small screens, and verify language switching works across all pages without breaking layouts or functionality",
+      "reqIds": [
+        "REQ-96"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-react-code-splitting-using-react-lazy-and-suspense-for-heavy-module-groups-resume-builder-pages-resumebuilderpage-resumetemplatebuilderpage-pdf-tool-components-all-16-pdf-tools-image-tool-components-all-16-image-tools-and-calculator-components-all-20-calculators-to-reduce-initial-bundle-size-and-improve-first-contentful-paint",
+      "title": "Implement React code splitting using React.lazy() and Suspense for heavy module groups: Resume Builder pages (ResumeBuilderPage, ResumeTemplateBuilderPage), PDF tool components (all 16 PDF tools), Image tool components (all 16 image tools), and Calculator components (all 20 calculators) to reduce initial bundle size and improve first contentful paint",
+      "reqIds": [
+        "REQ-98"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-resource-hints-to-frontend-index-html-preconnect-links-for-any-external-domains-used-dns-prefetch-for-external-resources-and-preload-directives-for-critical-assets-main-css-core-fonts-if-any-to-improve-perceived-performance-and-reduce-latency",
+      "title": "Add resource hints to frontend/index.html: preconnect links for any external domains used, dns-prefetch for external resources, and preload directives for critical assets (main CSS, core fonts if any) to improve perceived performance and reduce latency",
+      "reqIds": [
+        "REQ-101"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-refine-global-spacing-consistency-across-all-pages-by-standardizing-gap-values-using-tailwind-s-spacing-scale-gap-4-gap-6-gap-8-ensure-consistent-padding-on-cards-p-6-for-desktop-p-4-for-mobile-and-normalize-section-margins-mb-8-for-section-breaks-mb-12-for-major-sections",
+      "title": "Refine global spacing consistency across all pages by standardizing gap values using Tailwind's spacing scale (gap-4, gap-6, gap-8), ensure consistent padding on cards (p-6 for desktop, p-4 for mobile), and normalize section margins (mb-8 for section breaks, mb-12 for major sections)",
+      "reqIds": [
+        "REQ-104"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-mobile-header-layout-in-frontend-src-components-header-tsx-by-reducing-logo-size-on-screens-below-640px-implementing-collapsible-hamburger-menu-for-navigation-links-positioning-languageselector-in-mobile-menu-overlay-and-ensuring-touch-friendly-tap-targets-of-at-least-44x44px",
+      "title": "Improve mobile Header layout in frontend/src/components/Header.tsx by reducing logo size on screens below 640px, implementing collapsible hamburger menu for navigation links, positioning LanguageSelector in mobile menu overlay, and ensuring touch-friendly tap targets of at least 44x44px",
+      "reqIds": [
+        "REQ-105"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-card-hover-effects-across-all-tool-cards-calculators-pdf-tools-image-tools-resume-templates-by-adding-smooth-scale-transform-scale-105-shadow-elevation-increase-shadow-md-to-shadow-xl-transition-subtle-border-color-change-and-200ms-ease-in-out-transition-duration",
+      "title": "Enhance card hover effects across all tool cards (calculators, PDF tools, image tools, resume templates) by adding smooth scale transform (scale-105), shadow elevation increase (shadow-md to shadow-xl transition), subtle border color change, and 200ms ease-in-out transition duration",
+      "reqIds": [
+        "REQ-106"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-cta-button-visibility-across-all-pages-by-increasing-primary-button-size-min-height-of-48px-enhancing-color-contrast-ratio-to-meet-wcag-aa-standards-4-5-1-minimum-adding-prominent-hover-states-with-color-darkening-and-shadow-and-ensuring-consistent-button-styling-using-tailwind-s-btn-primary-pattern",
+      "title": "Improve CTA button visibility across all pages by increasing primary button size (min-height of 48px), enhancing color contrast ratio to meet WCAG AA standards (4.5:1 minimum), adding prominent hover states with color darkening and shadow, and ensuring consistent button styling using Tailwind's btn-primary pattern",
+      "reqIds": [
+        "REQ-107"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-redesign-languageselector-component-in-frontend-src-components-languageselector-tsx-to-have-premium-appearance-with-refined-dropdown-styling-add-subtle-background-blur-effect-smooth-dropdown-slide-animation-transform-opacity-flag-icons-or-language-native-names-with-elegant-typography-and-improved-active-state-indicator-with-accent-color-highlight",
+      "title": "Redesign LanguageSelector component in frontend/src/components/LanguageSelector.tsx to have premium appearance with refined dropdown styling: add subtle background blur effect, smooth dropdown slide animation (transform + opacity), flag icons or language native names with elegant typography, and improved active state indicator with accent color highlight",
+      "reqIds": [
+        "REQ-108"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-improve-dark-mode-contrast-across-all-components-by-increasing-text-contrast-ratios-use-text-gray-100-instead-of-text-gray-300-for-primary-text-enhancing-card-background-differentiation-bg-gray-800-for-cards-on-bg-gray-900-background-and-ensuring-all-interactive-elements-have-sufficient-contrast-in-dark-mode-to-meet-wcag-aa-standards",
+      "title": "Improve dark mode contrast across all components by increasing text contrast ratios (use text-gray-100 instead of text-gray-300 for primary text), enhancing card background differentiation (bg-gray-800 for cards on bg-gray-900 background), and ensuring all interactive elements have sufficient contrast in dark mode to meet WCAG AA standards",
+      "reqIds": [
+        "REQ-109"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-adplaceholder-component-layout-positioning-across-all-tool-pages-to-ensure-top-banner-ad-728x90-appears-immediately-after-h1-with-mb-6-spacing-in-content-ad-300x250-positioned-between-main-content-sections-with-my-8-spacing-sidebar-ad-160x600-in-fixed-right-sidebar-on-desktop-min-width-1024px-with-sticky-positioning-and-ensure-no-cumulative-layout-shift-by-reserving-exact-ad-dimensions",
+      "title": "Optimize AdPlaceholder component layout positioning across all tool pages to ensure top banner ad (728x90) appears immediately after H1 with mb-6 spacing, in-content ad (300x250) positioned between main content sections with my-8 spacing, sidebar ad (160x600) in fixed right sidebar on desktop (min-width: 1024px) with sticky positioning, and ensure no cumulative layout shift by reserving exact ad dimensions",
+      "reqIds": [
+        "REQ-110"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-between-tool-cards-ad-slot-on-hub-pages-calculatorspage-pdftoolspage-imagetoolspage-by-inserting-adplaceholder-with-300x250-dimensions-after-every-6-8-tool-cards-in-the-grid-ensuring-responsive-placement-that-centers-on-mobile-aligns-with-grid-on-desktop-and-uses-aspect-ratio-box-to-prevent-layout-shift",
+      "title": "Add between tool cards ad slot on hub pages (CalculatorsPage, PDFToolsPage, ImageToolsPage) by inserting AdPlaceholder with 300x250 dimensions after every 6-8 tool cards in the grid, ensuring responsive placement that centers on mobile, aligns with grid on desktop, and uses aspect ratio box to prevent layout shift",
+      "reqIds": [
+        "REQ-111"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-relatedtools-component-to-display-at-bottom-of-every-calculator-page-showing-3-4-related-calculators-from-same-category-at-bottom-of-every-pdf-tool-page-showing-3-4-related-pdf-tools-and-at-bottom-of-every-image-tool-page-showing-3-4-related-image-tools-with-proper-category-filtering-logic",
+      "title": "Enhance RelatedTools component to display at bottom of every calculator page showing 3-4 related calculators from same category, at bottom of every PDF tool page showing 3-4 related PDF tools, and at bottom of every image tool page showing 3-4 related image tools with proper category filtering logic",
+      "reqIds": [
+        "REQ-112"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-you-may-also-like-cross-category-suggestion-block-on-each-tool-page-below-relatedtools-section-on-calculator-pages-suggest-2-pdf-tools-2-image-tools-on-pdf-tool-pages-suggest-2-calculators-2-image-tools-on-image-tool-pages-suggest-2-calculators-2-pdf-tools-with-clear-category-labels-and-navigation-links",
+      "title": "Create 'You may also like' cross-category suggestion block on each tool page below RelatedTools section: on calculator pages suggest 2 PDF tools + 2 image tools, on PDF tool pages suggest 2 calculators + 2 image tools, on image tool pages suggest 2 calculators + 2 PDF tools with clear category labels and navigation links",
+      "reqIds": [
+        "REQ-113"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-toolcategories-component-to-appear-on-all-individual-tool-pages-not-just-hub-pages-displaying-quick-navigation-cards-to-calculator-hub-pdf-tools-and-image-tools-with-current-category-visually-indicated-positioned-in-sidebar-on-desktop-min-width-1024px-or-below-main-content-on-mobile",
+      "title": "Update ToolCategories component to appear on all individual tool pages (not just hub pages) displaying quick navigation cards to Calculator Hub, PDF Tools, and Image Tools with current category visually indicated, positioned in sidebar on desktop (min-width: 1024px) or below main content on mobile",
+      "reqIds": [
+        "REQ-114"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-meta-title-length-across-all-tool-pages-to-50-60-characters-optimal-for-search-result-display-by-shortening-verbose-titles-while-preserving-key-information-tool-name-primary-function-and-document-master-tools-brand-ensuring-title-doesn-t-truncate-in-search-results",
+      "title": "Optimize meta title length across all tool pages to 50-60 characters (optimal for search result display) by shortening verbose titles while preserving key information: tool name, primary function, and 'Document Master Tools' brand, ensuring title doesn't truncate in search results",
+      "reqIds": [
+        "REQ-115"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-tool-specific-schema-markup-to-all-tool-pages-using-schema-org-softwareapplication-type-with-json-ld-including-applicationcategory-specific-to-tool-type-operatingsystem-any-applicationsubcategory-calculator-pdf-editor-image-editor-offers-free-featurelist-tool-capabilities-and-screenshot-property-if-applicable",
+      "title": "Add tool-specific schema markup to all tool pages using schema.org/SoftwareApplication type with JSON-LD including applicationCategory (specific to tool type), operatingSystem ('Any'), applicationSubCategory (Calculator/PDF Editor/Image Editor), offers (free), featureList (tool capabilities), and screenshot property if applicable",
+      "reqIds": [
+        "REQ-116"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-enhance-existing-structured-data-across-all-pages-by-adding-more-detailed-properties-for-breadcrumblist-add-position-property-to-each-item-for-faqpage-ensure-acceptedanswer-has-proper-text-type-for-webapplication-add-aggregaterating-with-realistic-values-4-5-4-8-rating-1000-review-count-and-review-property-with-sample-positive-reviews",
+      "title": "Enhance existing structured data across all pages by adding more detailed properties: for BreadcrumbList add position property to each item, for FAQPage ensure acceptedAnswer has proper Text type, for WebApplication add aggregateRating with realistic values (4.5-4.8 rating, 1000+ review count) and review property with sample positive reviews",
+      "reqIds": [
+        "REQ-117"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-optimize-heading-hierarchy-across-all-tool-pages-to-follow-strict-h1-h2-h3-structure-ensure-single-h1-per-page-tool-name-h2-for-major-sections-how-to-use-features-faq-h3-for-subsections-within-h2-blocks-and-never-skip-heading-levels-to-improve-accessibility-and-seo",
+      "title": "Optimize heading hierarchy across all tool pages to follow strict H1 > H2 > H3 structure: ensure single H1 per page (tool name), H2 for major sections (How to Use, Features, FAQ), H3 for subsections within H2 blocks, and never skip heading levels to improve accessibility and SEO",
+      "reqIds": [
+        "REQ-118"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-new-smartdocumentfixer-page-component-at-frontend-src-pages-image-tools-smartdocumentfixerpage-tsx-that-serves-as-the-main-entry-point-for-the-smart-document-fixer-module-the-page-must-include-seo-metadata-with-title-smart-document-fixer-free-online-photo-fix-resize-tool-document-master-tools-a-breadcrumbnavigation-home-image-tools-smart-document-fixer-an-h1-heading-and-a-100-150-word-description-register-the-route-smart-document-fixer-in-app-tsx-using-react-lazy-and-suspense-for-code-splitting-add-a-smart-document-fixer-card-to-the-imagetoolspage-grid-and-link-it-from-the-image-tools-nav-do-not-modify-any-existing-image-tool-components",
+      "title": "Create a new SmartDocumentFixer page component at frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx that serves as the main entry point for the Smart Document Fixer module. The page must include SEO metadata with title 'Smart Document Fixer - Free Online Photo Fix & Resize Tool | Document Master Tools', a BreadcrumbNavigation (Home > Image Tools > Smart Document Fixer), an H1 heading, and a 100–150 word description. Register the route /smart-document-fixer in App.tsx using React.lazy() and Suspense for code splitting. Add a 'Smart Document Fixer' card to the ImageToolsPage grid and link it from the image tools nav. Do not modify any existing image tool components.",
+      "reqIds": [
+        "REQ-119"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-beforeafterpreviewpanel-component-at-frontend-src-components-image-tools-beforeafterpreviewpanel-tsx-that-displays-side-by-side-before-after-image-views-the-component-must-accept-originalimageurl-and-processedimageurl-props-and-support-1-side-by-side-split-view-showing-original-on-the-left-and-enhanced-on-the-right-with-labels-2-a-toggle-button-to-switch-between-original-and-enhanced-in-a-single-image-view-3-a-zoom-slider-0-5x-to-3x-that-scales-the-preview-images-using-css-transform-4-a-rotate-preview-button-cycling-through-0-90-180-270-applied-via-canvas-or-css-transform-5-a-crop-preview-mode-that-shows-a-centered-guide-overlay-rule-of-thirds-grid-on-the-processed-image-6-smooth-css-transitions-on-all-view-changes-implement-fully-client-side-with-no-backend-calls",
+      "title": "Create a BeforeAfterPreviewPanel component at frontend/src/components/image-tools/BeforeAfterPreviewPanel.tsx that displays side-by-side Before/After image views. The component must accept originalImageUrl and processedImageUrl props and support: (1) side-by-side split view showing original on the left and enhanced on the right with labels; (2) a toggle button to switch between original and enhanced in a single-image view; (3) a zoom slider (0.5x to 3x) that scales the preview images using CSS transform; (4) a rotate preview button cycling through 0°/90°/180°/270° applied via canvas or CSS transform; (5) a crop preview mode that shows a centered guide overlay (rule-of-thirds grid) on the processed image; (6) smooth CSS transitions on all view changes. Implement fully client-side with no backend calls.",
+      "reqIds": [
+        "REQ-120"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-autophotosizegenerator-component-at-frontend-src-components-image-tools-autophotosizegenerator-tsx-that-resizes-and-compresses-an-uploaded-image-to-government-standard-dimensions-using-the-existing-imageprocessing-utility-frontend-src-lib-imageprocessing-ts-the-component-must-provide-1-a-preset-selector-with-the-following-government-presets-passport-413-531-px-35-45-mm-at-300-dpi-aadhaar-200-200-px-50-kb-max-pan-200-230-px-50-kb-max-ssc-300-400-px-100-kb-max-railway-300-400-px-100-kb-max-police-army-300-400-px-100-kb-max-us-visa-600-600-px-240-kb-max-uk-visa-354-472-px-50-kb-max-canada-visa-420-540-px-200-kb-max-signature-resize-government-exam-standard-140-60-px-30-kb-max-2-a-custom-mode-with-inputs-for-target-kb-target-width-px-target-height-px-dpi-selector-100-200-300-and-a-maintain-aspect-ratio-toggle-3-live-preview-showing-input-image-dimensions-size-versus-output-dimensions-size-4-all-processing-done-client-side-using-html5-canvas-5-download-button-outputting-the-resized-image-as-a-blob-url",
+      "title": "Create an AutoPhotoSizeGenerator component at frontend/src/components/image-tools/AutoPhotoSizeGenerator.tsx that resizes and compresses an uploaded image to government-standard dimensions using the existing imageProcessing utility (frontend/src/lib/imageProcessing.ts). The component must provide: (1) a preset selector with the following government presets — Passport (413×531 px / 35×45 mm at 300 DPI), Aadhaar (200×200 px, 50 KB max), PAN (200×230 px, 50 KB max), SSC (300×400 px, 100 KB max), Railway (300×400 px, 100 KB max), Police/Army (300×400 px, 100 KB max), US Visa (600×600 px, 240 KB max), UK Visa (354×472 px, 50 KB max), Canada Visa (420×540 px, 200 KB max), Signature Resize (government exam standard 140×60 px, 30 KB max); (2) a Custom Mode with inputs for target KB, target width (px), target height (px), DPI selector (100/200/300), and a maintain aspect ratio toggle; (3) live preview showing input image dimensions/size versus output dimensions/size; (4) all processing done client-side using HTML5 Canvas; (5) download button outputting the resized image as a Blob URL.",
+      "reqIds": [
+        "REQ-121"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-autofeaturespanel-component-at-frontend-src-components-image-tools-autofeaturespanel-tsx-that-applies-automatic-image-enhancements-to-an-uploaded-image-entirely-client-side-using-html5-canvas-the-panel-must-expose-four-toggleable-features-each-applied-via-canvas-pixel-manipulation-or-2d-context-drawing-1-auto-white-background-detect-non-white-areas-and-fill-surrounding-transparent-or-near-white-pixels-with-solid-white-ffffff-using-flood-fill-or-alpha-compositing-2-auto-center-crop-guide-overlay-a-visual-center-crop-grid-guide-on-the-preview-does-not-alter-the-output-pixels-only-the-preview-overlay-3-auto-compress-to-selected-kb-use-the-existing-compressimagetotargetsize-utility-to-iteratively-reduce-quality-until-the-file-is-at-or-below-the-user-selected-kb-value-presets-20-kb-50-kb-100-kb-200-kb-or-custom-input-4-multi-copy-layout-arrange-4-copies-of-the-processed-photo-on-a-single-canvas-in-a-2-2-grid-with-5-px-gutters-sized-to-fit-on-a4-dimensions-2480-3508-px-at-300-dpi-all-four-features-must-be-independently-toggleable-via-checkboxes-and-applied-in-sequence-when-the-user-clicks-apply-preview",
+      "title": "Create an AutoFeaturesPanel component at frontend/src/components/image-tools/AutoFeaturesPanel.tsx that applies automatic image enhancements to an uploaded image entirely client-side using HTML5 Canvas. The panel must expose four toggleable features, each applied via canvas pixel manipulation or 2D context drawing: (1) Auto White Background — detect non-white areas and fill surrounding transparent or near-white pixels with solid white (#FFFFFF) using flood-fill or alpha-compositing; (2) Auto Center Crop Guide — overlay a visual center-crop grid guide on the preview (does not alter the output pixels, only the preview overlay); (3) Auto Compress to Selected KB — use the existing compressImageToTargetSize utility to iteratively reduce quality until the file is at or below the user-selected KB value (presets: 20 KB, 50 KB, 100 KB, 200 KB, or custom input); (4) Multi-Copy Layout — arrange 4 copies of the processed photo on a single canvas in a 2×2 grid with 5 px gutters, sized to fit on A4 dimensions (2480×3508 px at 300 DPI). All four features must be independently toggleable via checkboxes and applied in sequence when the user clicks 'Apply & Preview'.",
+      "reqIds": [
+        "REQ-122"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-an-exportoptionspanel-component-at-frontend-src-components-image-tools-exportoptionspanel-tsx-that-provides-four-export-download-actions-for-the-processed-canvas-image-the-panel-must-include-1-hd-jpg-download-export-the-canvas-at-quality-0-95-as-image-jpeg-blob-and-trigger-download-with-filename-original-name-hd-jpg-2-png-download-export-the-canvas-as-image-png-blob-and-trigger-download-with-filename-original-name-png-3-a4-pdf-printable-use-jspdf-or-equivalent-already-in-the-project-to-embed-the-processed-image-centered-on-an-a4-page-210-297-mm-and-trigger-pdf-download-with-filename-original-name-a4-pdf-4-multi-photo-sheet-generate-a-2-2-grid-of-the-photo-on-a4-canvas-as-produced-by-the-multi-copy-layout-feature-and-embed-it-in-a-pdf-page-triggering-download-as-original-name-sheet-pdf-all-downloads-must-use-secure-blob-urls-url-createobjecturl-and-revoke-them-after-download-no-server-calls-permitted",
+      "title": "Create an ExportOptionsPanel component at frontend/src/components/image-tools/ExportOptionsPanel.tsx that provides four export/download actions for the processed canvas image. The panel must include: (1) HD JPG download — export the canvas at quality 0.95 as image/jpeg Blob and trigger download with filename [original-name]-hd.jpg; (2) PNG download — export the canvas as image/png Blob and trigger download with filename [original-name].png; (3) A4 PDF Printable — use jsPDF (or equivalent already in the project) to embed the processed image centered on an A4 page (210×297 mm) and trigger PDF download with filename [original-name]-a4.pdf; (4) Multi-Photo Sheet — generate a 2×2 grid of the photo on A4 canvas (as produced by the Multi-Copy Layout feature) and embed it in a PDF page, triggering download as [original-name]-sheet.pdf. All downloads must use secure Blob URLs (URL.createObjectURL) and revoke them after download. No server calls permitted.",
+      "reqIds": [
+        "REQ-123"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-assemble-all-phase-9-sub-components-beforeafterpreviewpanel-autophotosizegenerator-autofeaturespanel-exportoptionspanel-into-the-smartdocumentfixerpage-the-page-layout-must-1-start-with-a-drag-and-drop-click-to-upload-zone-using-the-existing-fileuploadzone-component-accepting-image-files-2-after-upload-display-the-beforeafterpreviewpanel-using-the-original-uploaded-image-as-before-and-the-latest-processed-canvas-output-as-after-3-below-the-preview-render-autophotosizegenerator-in-a-card-section-with-heading-auto-photo-size-generator-4-below-that-render-autofeaturespanel-in-a-card-section-with-heading-auto-enhancements-5-below-that-render-exportoptionspanel-in-a-card-section-with-heading-export-download-6-apply-a-sticky-processing-state-indicator-using-the-existing-processingstate-component-while-any-canvas-operation-is-running-7-include-adplaceholder-top-banner-after-h1-and-in-content-ad-between-preview-and-generator-sections-8-include-relatedtools-at-the-bottom-suggesting-passport-photo-maker-image-compressor-and-custom-image-resize-9-ensure-the-full-page-is-mobile-responsive-with-single-column-stacking-on-screens-below-768px-and-two-column-layout-preview-controls-side-by-side-on-screens-768px-and-above",
+      "title": "Assemble all Phase 9 sub-components (BeforeAfterPreviewPanel, AutoPhotoSizeGenerator, AutoFeaturesPanel, ExportOptionsPanel) into the SmartDocumentFixerPage. The page layout must: (1) start with a drag-and-drop / click-to-upload zone using the existing FileUploadZone component accepting image/* files; (2) after upload, display the BeforeAfterPreviewPanel using the original uploaded image as 'before' and the latest processed canvas output as 'after'; (3) below the preview, render AutoPhotoSizeGenerator in a card section with heading 'Auto Photo Size Generator'; (4) below that, render AutoFeaturesPanel in a card section with heading 'Auto Enhancements'; (5) below that, render ExportOptionsPanel in a card section with heading 'Export & Download'; (6) apply a sticky processing state indicator (using the existing ProcessingState component) while any canvas operation is running; (7) include AdPlaceholder top banner after H1 and in-content ad between preview and generator sections; (8) include RelatedTools at the bottom suggesting Passport Photo Maker, Image Compressor, and Custom Image Resize; (9) ensure the full page is mobile responsive with single-column stacking on screens below 768px and two-column layout (preview + controls side-by-side) on screens 768px and above.",
+      "reqIds": [
+        "REQ-124"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-useproaccess-hook-at-frontend-src-hooks-useproaccess-ts-that-reads-and-writes-a-simulated-subscription-state-from-localstorage-key-sdf-pro-status-default-state-is-free-expose-ispro-boolean-activatepro-that-sets-state-to-pro-deactivatepro-that-sets-state-to-free-and-a-devtoggle-that-flips-between-free-and-pro-for-ui-testing-the-hook-must-be-self-contained-with-no-global-state-changes-no-backend-calls-and-no-authentication-dependency",
+      "title": "Create a useProAccess hook at frontend/src/hooks/useProAccess.ts that reads and writes a simulated subscription state from localStorage (key: 'sdf_pro_status'). Default state is 'free'. Expose: isPro (boolean), activatePro() that sets state to 'pro', deactivatePro() that sets state to 'free', and a devToggle() that flips between free and pro for UI testing. The hook must be self-contained with no global state changes, no backend calls, and no authentication dependency.",
+      "reqIds": [
+        "REQ-125"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-propricingmodal-component-at-frontend-src-components-image-tools-propricingmodal-tsx-the-modal-must-display-1-a-heading-unlock-smart-document-fixer-pro-2-a-feature-comparison-table-with-two-columns-free-and-pro-listing-rows-fixes-per-day-2-unlimited-export-quality-standard-hd-watermark-on-export-yes-no-a4-printable-sheet-no-yes-advanced-enhancements-no-yes-multi-photo-sheet-export-no-yes-3-two-plan-cards-monthly-plan-at-499-month-and-yearly-plan-at-3-999-year-save-33-4-an-activate-pro-demo-button-on-each-plan-card-that-calls-activatepro-from-useproaccess-and-closes-the-modal-5-a-close-dismiss-button-6-a-small-disclaimer-stating-demo-only-no-real-payment-processed-the-modal-must-be-fully-mobile-responsive-overlay-the-full-viewport-with-a-semi-transparent-backdrop-and-animate-in-smoothly-fade-scale",
+      "title": "Create a ProPricingModal component at frontend/src/components/image-tools/ProPricingModal.tsx. The modal must display: (1) a heading 'Unlock Smart Document Fixer Pro'; (2) a feature comparison table with two columns — Free and Pro — listing rows: Fixes per day (2 / Unlimited), Export quality (Standard / HD), Watermark on export (Yes / No), A4 printable sheet (No / Yes), Advanced enhancements (No / Yes), Multi-photo sheet export (No / Yes); (3) two plan cards — Monthly Plan at ₹499/month and Yearly Plan at ₹3,999/year (save ~33%); (4) an 'Activate Pro (Demo)' button on each plan card that calls activatePro() from useProAccess and closes the modal; (5) a close/dismiss button; (6) a small disclaimer stating 'Demo only — no real payment processed'. The modal must be fully mobile responsive, overlay the full viewport with a semi-transparent backdrop, and animate in smoothly (fade + scale).",
+      "reqIds": [
+        "REQ-126"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-pages-image-tools-smartdocumentfixerpage-tsx-to-integrate-the-freemium-gating-logic-use-the-useproaccess-hook-to-determine-user-tier-add-a-go-pro-button-in-the-page-header-area-near-the-h1-that-opens-propricingmodal-for-free-users-1-enforce-a-daily-fix-limit-of-2-using-localstorage-key-sdf-fix-count-yyyy-mm-dd-reset-daily-2-show-remaining-fixes-indicator-e-g-2-2-fixes-remaining-today-3-display-a-watermark-overlay-document-master-tools-free-on-the-beforeafterpreviewpanel-processed-output-4-disable-and-blur-the-a4-pdf-printable-download-button-in-exportoptionspanel-with-a-lock-icon-and-tooltip-available-in-pro-5-disable-and-blur-the-multi-photo-sheet-export-button-with-a-lock-icon-6-disable-and-blur-the-multi-copy-layout-toggle-in-autofeaturespanel-with-a-lock-icon-for-pro-users-all-features-are-fully-accessible-with-no-watermark-no-fix-limit-and-no-blurred-elements-include-a-small-dev-mode-toggle-visible-only-in-development-builds-or-behind-a-hidden-keyboard-shortcut-that-calls-devtoggle-to-flip-between-free-and-pro-for-ui-testing",
+      "title": "Update frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx to integrate the freemium gating logic. Use the useProAccess hook to determine user tier. Add a 'Go Pro' button in the page header area (near the H1) that opens ProPricingModal. For free users: (1) enforce a daily fix limit of 2 using localStorage key 'sdf_fix_count_YYYY-MM-DD' (reset daily); (2) show remaining fixes indicator (e.g., '2/2 fixes remaining today'); (3) display a watermark overlay ('Document Master Tools – Free') on the BeforeAfterPreviewPanel processed output; (4) disable and blur the A4 PDF Printable download button in ExportOptionsPanel with a lock icon and tooltip 'Available in Pro'; (5) disable and blur the Multi-Photo Sheet export button with a lock icon; (6) disable and blur the Multi-Copy Layout toggle in AutoFeaturesPanel with a lock icon. For pro users: all features are fully accessible with no watermark, no fix limit, and no blurred elements. Include a small dev-mode toggle (visible only in development builds or behind a hidden keyboard shortcut) that calls devToggle() to flip between free and pro for UI testing.",
+      "reqIds": [
+        "REQ-127"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-smart-document-fixer-card-in-frontend-src-pages-imagetoolspage-tsx-to-display-a-small-pro-badge-the-badge-must-be-a-visually-distinct-pill-tag-e-g-amber-or-gold-background-with-dark-text-reading-pro-positioned-in-the-top-right-corner-of-the-card-or-inline-with-the-card-title-no-other-image-tool-cards-should-be-modified",
+      "title": "Update the Smart Document Fixer card in frontend/src/pages/ImageToolsPage.tsx to display a small 'PRO' badge. The badge must be a visually distinct pill/tag (e.g., amber or gold background with dark text reading 'PRO') positioned in the top-right corner of the card or inline with the card title. No other image tool cards should be modified.",
+      "reqIds": [
+        "REQ-128"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-header-component-frontend-src-components-header-tsx-navigation-links-to-display-exactly-the-following-items-in-order-1-calculator-hub-calculators-internal-2-pdf-tools-pdf-tools-internal-3-image-tools-image-tools-internal-4-resume-builder-resume-builder-internal-5-jobsindiaa-com-https-jobsindiaa-com-external-opens-in-new-tab-with-rel-noopener-noreferrer-6-rjy-total-manpowers-com-https-rjytotalmanpowers-com-external-opens-in-new-tab-with-rel-noopener-noreferrer-remove-smart-document-fixer-from-the-main-header-navigation-entirely-all-existing-hamburger-menu-mobile-overlay-languageselector-positioning-touch-targets-and-responsive-behavior-must-remain-unchanged",
+      "title": "Update the Header component (frontend/src/components/Header.tsx) navigation links to display exactly the following items in order: (1) Calculator Hub → /calculators (internal); (2) PDF Tools → /pdf-tools (internal); (3) Image Tools → /image-tools (internal); (4) Resume Builder → /resume-builder (internal); (5) JobsIndiaa.com → https://jobsindiaa.com (external, opens in new tab with rel='noopener noreferrer'); (6) RJY Total Manpowers.com → https://rjytotalmanpowers.com (external, opens in new tab with rel='noopener noreferrer'). Remove 'Smart Document Fixer' from the main header navigation entirely. All existing hamburger menu, mobile overlay, LanguageSelector positioning, touch targets, and responsive behavior must remain unchanged.",
+      "reqIds": [
+        "REQ-129"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-footer-component-frontend-src-components-footer-tsx-quick-links-section-to-include-the-following-items-internal-links-1-calculator-hub-calculators-2-pdf-tools-pdf-tools-3-image-tools-image-tools-4-resume-builder-resume-builder-5-smart-document-fixer-smart-document-fixer-external-links-open-in-new-tab-with-rel-noopener-noreferrer-6-jobsindiaa-com-https-jobsindiaa-com-7-rjy-total-manpowers-com-https-rjytotalmanpowers-com-external-links-must-be-visually-distinguishable-e-g-with-an-external-link-icon-or-subtle-indicator-the-footer-copyright-notice-2026-rjy-total-manpowers-services-private-limited-all-rights-reserved-must-remain-completely-unchanged-all-other-footer-sections-and-layout-must-remain-unchanged",
+      "title": "Update the Footer component (frontend/src/components/Footer.tsx) Quick Links section to include the following items: Internal links: (1) Calculator Hub → /calculators; (2) PDF Tools → /pdf-tools; (3) Image Tools → /image-tools; (4) Resume Builder → /resume-builder; (5) Smart Document Fixer → /smart-document-fixer. External links (open in new tab with rel='noopener noreferrer'): (6) JobsIndiaa.com → https://jobsindiaa.com; (7) RJY Total Manpowers.com → https://rjytotalmanpowers.com. External links must be visually distinguishable (e.g., with an external link icon or subtle indicator). The footer copyright notice '© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.' must remain completely unchanged. All other footer sections and layout must remain unchanged.",
+      "reqIds": [
+        "REQ-130"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-components-footer-tsx-to-remove-the-first-upper-footer-section-entirely-keeping-only-the-lower-footer-section-that-begins-with-document-master-tools-the-final-footer-must-be-a-single-section-do-not-modify-any-footer-styling-alignment-links-copyright-text-external-link-settings-or-mobile-responsiveness-no-other-layout-changes",
+      "title": "Update frontend/src/components/Footer.tsx to remove the first (upper) footer section entirely, keeping only the lower footer section that begins with 'Document Master Tools'. The final footer must be a single section. Do not modify any footer styling, alignment, links, copyright text, external link settings, or mobile responsiveness. No other layout changes.",
+      "reqIds": [
+        "REQ-131"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Academic calculators: CGPA, SGPA, CGPA to Percentage, Percentage to CGPA, Grade Calculator, GPA Calculator (4.0 & 10.0), Marks Percentage, Division Calculator",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Financial calculators: GST (Add/Remove), EMI, Loan, Compound Interest, Simple Interest, Discount, Profit/Loss %, Salary Hike",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Health & General calculators: BMI, Age (with birthday countdown), Date Difference, Time Duration",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "All calculators must have instant results (no page reload), SEO optimized individual pages, mobile responsive, clean UI, AdSense ready",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Image Tools main landing page at /image-tools displaying all image tool categories",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Government document photo tools: Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa photo makers with preset dimensions",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Signature resize tool with government exam presets",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Image compressor with target size selector (20KB-200KB) and compression level control",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Image cropper with aspect ratio toggle and live preview",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "DPI changer supporting 100/200/300 DPI options",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-11",
+      "summary": "Custom image resize with width/height input and maintain aspect ratio toggle",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-12",
+      "summary": "Format converters: JPG to PNG, PNG to JPG, WEBP converter (bidirectional)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-13",
+      "summary": "Client-side background remover with no external APIs",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-14",
+      "summary": "All image tools must have drag & drop upload, live preview, original vs new size display, secure blob download, mobile responsive, SEO optimized with H1/description/FAQ, internal linking to Calculator & PDF modules",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-32",
+      "summary": "Implement Job Form Special Mode across all government document photo tools (Passport, Aadhaar, PAN, SSC, Railway, Police/Army, Visa, Signature) with target file size selector, target dimensions input, auto maintain ratio toggle, and category-specific presets",
+      "reqIds": [
+        "REQ-46"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-34",
+      "summary": "Create SEO-optimized page wrappers for all 16 image tool components with unique H1 headings, 100-150 word descriptions, FAQ sections, proper meta titles and descriptions, structured data markup, Open Graph tags, and internal links to Calculator Hub and PDF Tools",
+      "reqIds": [
+        "REQ-48"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-35",
+      "summary": "Style all image tool components with modern clean card layout, dark/light mode compatibility using existing Tailwind theme variables, smooth processing animations, AdSense-ready semantic structure with proper heading hierarchy, and fast loading performance",
+      "reqIds": [
+        "REQ-49"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-36",
+      "summary": "Global SEO structure: Dynamic page titles, unique meta descriptions per tool, Open Graph tags, Twitter meta tags, canonical tags, XML sitemap auto-generation, robots.txt file",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-37",
+      "summary": "Structured data & navigation: Breadcrumb navigation, FAQ schema markup, WebApplication structured data for all tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-38",
+      "summary": "AdSense-ready layout: Top banner ad placeholder, in-content ad section, sidebar ad (desktop only), responsive ad containers with no CLS layout shift",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-39",
+      "summary": "Performance optimization: Lazy loading, code minification, Lighthouse optimization, improved page speed score",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-40",
+      "summary": "Internal linking: Cross-module linking between Calculator, PDF, and Image Tools; improved crawlability; related tools section on each tool page",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-50",
+      "summary": "Integrate AdPlaceholder components into all PDF tool pages with top banner ad after H1 heading, in-content ad after file upload zone, and sidebar ad (desktop only) in a right sidebar layout when viewport width exceeds 1024px",
+      "reqIds": [
+        "REQ-62"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-51",
+      "summary": "Integrate AdPlaceholder components into all image tool pages with top banner ad after H1 heading, in-content ad between upload and preview sections, and sidebar ad (desktop only) for viewport widths above 1024px",
+      "reqIds": [
+        "REQ-63"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-52",
+      "summary": "Implement lazy loading for all heavy components (calculator tools, PDF tools, image tools) using React.lazy() and Suspense to improve initial page load performance and Lighthouse scores",
+      "reqIds": [
+        "REQ-64"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-53",
+      "summary": "Optimize image assets by ensuring all images in frontend/public/assets use appropriate formats (WebP with fallbacks), are properly sized for their display dimensions, and implement lazy loading with loading='lazy' attribute on img tags",
+      "reqIds": [
+        "REQ-65"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-55",
+      "summary": "Integrate RelatedTools component into all PDF tool pages showing 3-4 related PDF tools, and into all image tool pages showing 3-4 related image tools, creating internal linking network within each tool category",
+      "reqIds": [
+        "REQ-67"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-58",
+      "summary": "Optimize Tailwind CSS bundle by configuring PurgeCSS/content paths in tailwind.config.js to remove unused styles, and ensure production builds use minified CSS to reduce bundle size and improve page load speed",
+      "reqIds": [
+        "REQ-70"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-59",
+      "summary": "Configure production build optimization in frontend build configuration (vite.config.ts or equivalent) to enable code minification, tree shaking, and chunk splitting for optimal bundle sizes and faster load times",
+      "reqIds": [
+        "REQ-71"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-60",
+      "summary": "Create ResumeBuilderPage component at /resume-builder route displaying 14 resume templates in two categories: Indian Format (Fresher, Government Job, Private Job, Hindi, Biodata for Marriage, Teacher, Police/Army) and International Format (ATS Friendly, US, UK CV, Canada, Europass CV, Creative, Corporate)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-61",
+      "summary": "Implement multi-step form wizard with sections: Personal Info, Education, Experience, Skills, Projects, Certifications, Languages, Achievements, References with Add/Remove section capability",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-62",
+      "summary": "Create live preview component that updates in real-time as user fills form, showing exactly how resume will look in selected template with proper formatting",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-63",
+      "summary": "Add optional photo upload with drag & drop, crop preview, and proper placement based on template (Indian formats show photo, International formats hide by default)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-64",
+      "summary": "Implement custom color theme selector with predefined color palettes (Professional Blue, Corporate Black, Creative Purple, etc.) that apply to headers, borders, and accents",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-65",
+      "summary": "Create auto formatting logic: Skills section auto-converts to bullet points, dates auto-format to MM/YYYY, phone numbers format to Indian/International standards based on template",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-66",
+      "summary": "Implement PDF download with proper A4 page sizing, page breaks, font embedding, and template-specific styling using client-side PDF generation library",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-67",
+      "summary": "Add basic AI summary generator using local logic (no paid APIs): analyze experience/skills input and generate professional summary with action words and achievements focus",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-68",
+      "summary": "Create individual SEO-friendly pages for each of 14 resume templates with unique meta titles, descriptions, Open Graph tags, FAQ sections, and internal links to Calculator, PDF, and Image Tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-69",
+      "summary": "Ensure all resume builder components are fully mobile responsive with collapsible form sections, vertical layout on mobile, horizontal layout on desktop, touch-friendly controls, and proper preview scaling",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-70",
+      "summary": "Style Resume Builder with modern clean UI matching existing design system: card-based form sections, smooth transitions, progress indicator, save draft functionality, clear call-to-action buttons",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-71",
+      "summary": "Update HomePage to add Resume Builder section alongside Calculator Hub, PDF Tools, and Image Tools, displaying template categories and quick access to popular templates",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-72",
+      "summary": "Update Header navigation to include Resume Builder link",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-73",
+      "summary": "Integrate AdPlaceholder components into Resume Builder pages with top banner ad after H1, in-content ad between form and preview sections, and sidebar ad on desktop viewport",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-77",
+      "summary": "Add optional photo upload feature with drag-and-drop support, image crop/resize preview, and template-aware placement logic where Indian format templates (Fresher, Government Job, Private Job, Hindi, Biodata, Teacher, Police/Army) show photo prominently while International format templates (ATS, US, UK, Canada, Europass, Creative, Corporate) hide photo by default or place it minimally",
+      "reqIds": [
+        "REQ-75"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-80",
+      "summary": "Implement PDF download functionality with proper A4 page sizing (210mm x 297mm), intelligent page breaks that avoid splitting sections mid-content, embedded fonts to ensure consistent rendering across devices, and template-specific styling preserved using client-side PDF generation library (jsPDF or similar)",
+      "reqIds": [
+        "REQ-78"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-85",
+      "summary": "Update HomePage to add Resume Builder section alongside existing Calculator Hub, PDF Tools, and Image Tools sections, displaying both template categories (Indian Format: 7 templates, International Format: 7 templates) with representative preview cards showing template names, brief descriptions, and call-to-action buttons linking to /resume-builder",
+      "reqIds": [
+        "REQ-83"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-86",
+      "summary": "Update Header component navigation to include Resume Builder link that directs users to /resume-builder, positioned after Calculator Hub link and maintaining consistent navigation styling with other header links",
+      "reqIds": [
+        "REQ-84"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-87",
+      "summary": "Add language dropdown in header supporting 9 languages: English (default), Hindi, Bengali, Tamil, Telugu, Marathi, Gujarati, Kannada, Malayalam, Urdu",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-88",
+      "summary": "Implement scalable i18n structure with separate translation JSON files per language, dynamic content switching without page reload, preserve existing routes, maintain SEO structure",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-89",
+      "summary": "Implement language-based URL structure: example.com/en/, example.com/hi/, example.com/bn/, etc. with proper routing and navigation preservation",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-90",
+      "summary": "Add language-specific SEO: hreflang tags for each language, canonical tags per language, language-based meta titles and descriptions, optional browser language auto-detection with redirect",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-91",
+      "summary": "Implement performance optimization: lazy load language files, no heavy page reload on language switch, mobile responsive language selector",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-92",
+      "summary": "Translate only UI text, headings, descriptions, and SEO content - do NOT translate tool calculation logic, formulas, or numerical operations. Footer copyright text remains unchanged.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-97",
+      "summary": "Update SEO component to render hreflang link tags for all 9 supported languages on every page, pointing to language-specific URL variants, with x-default hreflang pointing to English version, and language-specific canonical tags pointing to current language URL",
+      "reqIds": [
+        "REQ-91"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-98",
+      "summary": "Update all page components (calculators, PDF tools, image tools, resume builder, hub pages) to use translation keys from language context instead of hardcoded English strings for page titles, headings, descriptions, button labels, and form fields while preserving calculation logic, formulas, and numerical displays in their original form",
+      "reqIds": [
+        "REQ-92"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-100",
+      "summary": "Update SEO component to accept language parameter and render language-specific meta titles and descriptions using translated strings from active language file, maintaining existing SEO structure with Open Graph tags and Twitter Card tags in the selected language",
+      "reqIds": [
+        "REQ-94"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-103",
+      "summary": "Update sitemap.xml generation utility to include language-specific URLs for all pages across all 9 languages following pattern example.com/en/calculators/cgpa-calculator, example.com/hi/calculators/cgpa-calculator, etc. with proper lastmod, changefreq, and priority values maintained for each language variant",
+      "reqIds": [
+        "REQ-97"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-104",
+      "summary": "Performance optimization: Enable code splitting, lazy load heavy modules (Resume Builder, PDF tools), image optimization, reduce JS bundle size, improve Lighthouse score, minify CSS/JS, preload critical assets, remove unused libraries",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-105",
+      "summary": "UI refinement: Improve spacing consistency, better mobile header layout, cleaner card hover effects, smooth transitions, improve CTA button visibility, make language dropdown more premium, improve dark mode contrast",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-106",
+      "summary": "AdSense optimization layout: Top banner placeholder, in-content ad section, sidebar ad (desktop only), between tool cards ad slot, no CLS layout shift",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-107",
+      "summary": "Improve internal linking: Related tools section on each tool page, 'You may also like' block, cross link between Calculator, PDF, Image tools",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-108",
+      "summary": "SEO enhancements: Improve meta titles length, add tool-based schema, improve structured data, optimize headings hierarchy",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-110",
+      "summary": "Optimize frontend build configuration (vite.config.ts) to enable aggressive code minification, tree-shaking, chunk splitting with manual chunks for react, react-dom, and @tanstack/react-query, set chunkSizeWarningLimit to 500KB, and configure rollup options for optimal bundle splitting",
+      "reqIds": [
+        "REQ-99"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-111",
+      "summary": "Configure Tailwind CSS purge/content paths in tailwind.config.js to scan all component files and remove unused styles, enable JIT mode if not already active, and verify production CSS bundle is under 50KB after purging",
+      "reqIds": [
+        "REQ-100"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-113",
+      "summary": "Audit and remove unused npm dependencies from frontend/package.json by checking imports across all components, remove any libraries not actively used, and ensure all remaining dependencies are up-to-date with compatible versions",
+      "reqIds": [
+        "REQ-102"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-114",
+      "summary": "Optimize all static images in frontend/public/assets by converting to WebP format with JPEG/PNG fallbacks, compress images to appropriate quality levels (80-85% for photos, 90-95% for UI elements), and implement appropriate dimensions matching their display sizes to reduce asset payload",
+      "reqIds": [
+        "REQ-103"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-115",
+      "summary": "Phase 9: Smart Document Fixer - Side-by-side Before/After preview with zoom option, toggle original/enhanced, crop preview, and rotate preview",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-116",
+      "summary": "Phase 9: Auto Photo Size Generator with government presets (Passport 35x45mm, Aadhaar, PAN, SSC, Railway, Police/Army, US Visa, UK Visa, Canada Visa, Signature resize) and custom mode (target KB, width/height, DPI 100/200/300, maintain aspect ratio toggle)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-117",
+      "summary": "Phase 9: Auto features - auto background white, auto center crop guide, auto compress to selected KB, multi-copy layout (4 photos on A4), printable A4 PDF option",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-118",
+      "summary": "Phase 9: Export options - HD JPG, PNG, A4 PDF printable, multi-photo sheet — all client-side using canvas filters, no backend changes",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-119",
+      "summary": "Smart Document Fixer freemium model: Free (2 fixes/day, standard quality, watermark, no A4 sheet) vs Pro (unlimited, HD export, A4 printable sheet, no watermark, advanced enhancement, multi-photo sheet). Go Pro button, pricing modal with ₹499/month and ₹3999/year plans, feature comparison table. Simulated via localStorage. PRO badge on card, lock icons and blur on premium features for free users. No login, no backend, no payment gateway. All other tools remain free and unchanged.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-120",
+      "summary": "Update Header navigation: show Calculator Hub, PDF Tools, Image Tools, Resume Builder as internal links; add JobsIndiaa.com and RJY Total Manpowers.com as external links (new tab); remove Smart Document Fixer from main nav. Update Footer Quick Links: include Calculator Hub, PDF Tools, Image Tools, Resume Builder, Smart Document Fixer (internal) + JobsIndiaa.com and RJY Total Manpowers.com (external, new tab). Mobile responsive, no layout breaking.",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Document Master Tools",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

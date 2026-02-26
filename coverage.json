@@ -1,338 +1,313 @@
 {
   "kind": "coverage_report",
   "version": "1.0",
-  "generatedAt": "2026-02-26T05:33:30.913Z",
+  "generatedAt": "2026-02-26T08:09:24.812Z",
   "sources": {
     "buildRequest": true,
     "implementationPlan": true
   },
   "requirements": {
     "total": 15,
-    "implemented": 12,
+    "implemented": 0,
     "items": [
       {
-        "id": "REQ-151",
-        "summary": "Add a 'Back to Home' navigation button on every non-calculator tool page (all image tool pages, all PDF tool pages, all converter/compressor pages, and the Resume Builder pages). Place it in the top-left corner of the page content area, above the H1 heading. It must display a left-arrow icon followed by the label 'Home'. It must be visible in both light and dark modes, have a minimum tap target of 44x44 px for mobile, and navigate the user to the homepage (/). Do NOT modify any calculator page components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/BackToHomeButton.tsx",
-          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
-          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
-          "frontend/src/pages/PDFToolsPage.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/BackToHomeButton.tsx"
-        ]
-      },
-      {
-        "id": "REQ-152",
-        "summary": "Ensure BreadcrumbNavigation is integrated on every non-calculator tool page that does not already have it, using the existing BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx). Each tool page must render the correct hierarchical path (e.g., Home > Image Tools > Image Resizer, Home > PDF Tools > Merge PDF, Home > Resume Builder > Fresher Resume). Breadcrumbs must be placed directly below the Back to Home button and above the H1 heading. Do NOT modify any calculator page components.",
+        "id": "REQ-166",
+        "summary": "Audit and fix all 16 PDF tool components in frontend/src/components/pdf-tools/ to ensure each uses the AdvancedToolShell workflow correctly: settings panel renders before processing, 'Apply & Preview' triggers client-side processing and shows a preview or output summary, and the Download button remains disabled until preview is confirmed. Fix any broken props, missing imports, or non-functional processing logic in BasePDFTool, PDFMergeTool, PDFSplitTool, PDFCompressTool, PDFToImageTool, ImageToPDFTool, PDFPasswordProtectTool, PDFPasswordUnlockTool, PDFAddWatermarkTool, PDFAddPageNumbersTool, PDFOCRTool, PDFPageCounterTool, PDFRemoveBlankPagesTool, PDFReorderTool, PDFSignTool, and PDFToWordTool. Do NOT modify any calculator components.",
         "status": "missing",
         "plannedFiles": [
-          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
-          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
-          "frontend/src/pages/PDFToolsPage.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-153",
-        "summary": "After a download completes on any non-calculator tool page, display two post-download navigation buttons below the download area: (1) 'Back to Home' that navigates to /; (2) 'Use Another Tool' that navigates to the parent hub page for the current tool category (/image-tools for image tools, /pdf-tools for PDF tools, /resume-builder for resume tools). These buttons must appear only after a successful download action and must be mobile-responsive with full-width layout on screens below 768 px. Do NOT modify any calculator components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/PostDownloadNavigation.tsx",
-          "frontend/src/components/DownloadSection.tsx",
-          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
-          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
           "frontend/src/components/pdf-tools/BasePDFTool.tsx",
-          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
-          "frontend/src/components/resume/ResumePreview.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/PostDownloadNavigation.tsx"
-        ]
-      },
-      {
-        "id": "REQ-154",
-        "summary": "Add A4 (210x297 mm), Legal (215.9x355.6 mm), and Letter (215.9x279.4 mm) page size presets across all relevant image tools (CustomImageResizePage, DPIChangerPage, ExportOptionsPanel) and PDF tools (ImageToPDFTool, PDFToImageTool) settings panels. Each preset must automatically populate the corresponding pixel dimensions based on the selected DPI (default 300 DPI if no DPI selector is present). Label these presets clearly as 'Office Print Ready' in the preset selector UI. Do NOT modify any calculator components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/lib/pageSizePresets.ts",
-          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "frontend/src/components/image-tools/ExportOptionsPanel.tsx",
-          "frontend/src/components/pdf-tools/ImageToPDFTool.tsx",
-          "frontend/src/components/pdf-tools/PDFToImageTool.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/lib/pageSizePresets.ts"
-        ]
-      },
-      {
-        "id": "REQ-155",
-        "summary": "Implement batch file processing support for non-calculator tools. Users must be able to upload multiple files at once in: ImageCompressorPage, CustomImageResizePage, DPIChangerPage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage, PDFCompressTool, and ImageToPDFTool. The batch mode must: (1) display a list of queued files with individual file names and sizes; (2) process all files using the existing client-side processing logic; (3) allow downloading all processed files individually or as a ZIP archive using JSZip or an equivalent already in the project; (4) show per-file processing status (pending, processing, done, error). Do NOT modify any calculator components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/hooks/useBatchProcessor.ts",
-          "frontend/src/components/BatchFileQueue.tsx",
-          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
-          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-          "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
-          "frontend/src/components/pdf-tools/ImageToPDFTool.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/hooks/useBatchProcessor.ts",
-          "frontend/src/components/BatchFileQueue.tsx"
-        ]
-      },
-      {
-        "id": "REQ-156",
-        "summary": "Enhance PDFAddWatermarkTool (frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx) to expose a full PDF Stamp/Watermark settings panel including: (1) text input for stamp content (e.g., CONFIDENTIAL, DRAFT, APPROVED, or custom); (2) font size selector (small/medium/large/custom pt); (3) opacity slider (10-100%); (4) position selector (center diagonal, top-left, top-right, bottom-left, bottom-right); (5) color picker for stamp text; (6) rotation angle input (0-360 degrees). Processing must follow the advanced user-controlled mode: settings then Apply & Preview then download enabled. Do NOT modify any calculator components.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx"
-        ],
-        "matchedFiles": []
-      },
-      {
-        "id": "REQ-157",
-        "summary": "Expand multi-language support beyond the current 9 Indian languages. Add the following languages to LanguageContext (frontend/src/contexts/LanguageContext.tsx) and LanguageSelector (frontend/src/components/LanguageSelector.tsx): Arabic (ar), French (fr), Spanish (es), German (de), Chinese Simplified (zh), Portuguese (pt), Russian (ru), Japanese (ja), Indonesian (id). Create corresponding locale JSON files at frontend/src/locales/ar.json, fr.json, es.json, de.json, zh.json, pt.json, ru.json, ja.json, id.json with translations for all UI text keys already present in the existing en.json file. Use lazy loading (dynamic imports) for all new locale files. Do NOT translate calculation logic, formulas, or numerical operations.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/components/LanguageSelector.tsx",
-          "frontend/src/locales/ar.json",
-          "frontend/src/locales/fr.json",
-          "frontend/src/locales/es.json",
-          "frontend/src/locales/de.json",
-          "frontend/src/locales/zh.json",
-          "frontend/src/locales/pt.json",
-          "frontend/src/locales/ru.json",
-          "frontend/src/locales/ja.json",
-          "frontend/src/locales/id.json"
-        ],
-        "matchedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/components/LanguageSelector.tsx",
-          "frontend/src/locales/ar.json",
-          "frontend/src/locales/fr.json",
-          "frontend/src/locales/es.json",
-          "frontend/src/locales/de.json",
-          "frontend/src/locales/zh.json",
-          "frontend/src/locales/pt.json",
-          "frontend/src/locales/ru.json",
-          "frontend/src/locales/ja.json",
-          "frontend/src/locales/id.json"
-        ]
-      },
-      {
-        "id": "REQ-158",
-        "summary": "Implement RTL (right-to-left) layout support for Arabic (ar). When the active language is Arabic, set dir='rtl' and lang='ar' on the document root element, apply Tailwind RTL utilities where flex/grid layouts need mirroring, switch text alignment to right-aligned, and render BreadcrumbNavigation in RTL order. All other languages must remain LTR. Ensure Header, Footer, tool cards, form wizards, and breadcrumbs display correctly in RTL mode. No calculator component should be modified.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/index.css",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/components/Footer.tsx",
-          "frontend/src/components/BreadcrumbNavigation.tsx",
-          "frontend/src/components/ToolsGrid.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/index.css",
-          "frontend/src/components/Header.tsx",
-          "frontend/src/components/BreadcrumbNavigation.tsx"
-        ]
-      },
-      {
-        "id": "REQ-159",
-        "summary": "Implement multi-language SEO support for all newly added languages. Update the SEO component (frontend/src/components/SEO.tsx) to render hreflang link tags for all supported languages (existing 9 Indian languages plus 9 new global languages plus x-default pointing to English). Update the sitemap generation utility (frontend/src/utils/generateSitemap.ts) and public/sitemap.xml to include language-specific URL variants for all new languages following the pattern /[lang]/[route]. Update App.tsx routing to add language-prefixed routes for the new languages following the same pattern already established for the existing 9 languages.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/SEO.tsx",
-          "frontend/src/utils/generateSitemap.ts",
-          "frontend/public/sitemap.xml",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-160",
-        "summary": "Implement country-based language auto-detection on initial page load. Use navigator.language and navigator.languages to detect the user's locale. If the detected locale matches one of the 19 supported languages, auto-switch to that language and update the URL to the language-prefixed variant. If no match is found, fall back to English. Persist the detected or selected language to localStorage. Do not redirect if the user has already manually selected a language (check localStorage for an existing preference key).",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/App.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/contexts/LanguageContext.tsx",
-          "frontend/src/App.tsx"
-        ]
-      },
-      {
-        "id": "REQ-161",
-        "summary": "Update frontend/src/pages/HomePage.tsx to ensure all FREE tools are visible with clear icons and that the single Pro tool is in its own separate section. Specifically: (1) all FREE tool cards (PDF Tools, Image Tools excluding AI Document Enhancer, Calculator Hub, Resume Builder) must display a clear recognizable SVG icon per card that immediately communicates the tool purpose; (2) the AI Document Enhancer (the only Pro tool) must be placed in a clearly labeled separate section titled 'Pro Tools' positioned below all free tool sections using the same card design as free tools but with the amber/gold PRO badge; (3) free tool cards must NOT display any PRO badge; (4) the existing layout, dark theme, card shadows, border radius, padding, gap values, and all other visual properties must remain completely unchanged. Do NOT modify any calculator components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/HomePage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/HomePage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-162",
-        "summary": "Create the new Pro tool 'AI Document Enhancer'. Create a new page component at frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx with SEO metadata (title: 'AI Document Enhancer - Pro Tool | Document Master Tools'), BreadcrumbNavigation (Home > Image Tools > AI Document Enhancer), H1 heading, and a 100-150 word description. The page must display a login/subscription gate: show a prominent 'Login Required' and 'Subscribe to Pro' message with pricing (399 rupees per month or 3000 rupees per year). Use the existing useProAccess hook and useInternetIdentity hook: when isPro is true AND the user is authenticated, unlock the tool; otherwise show the gate. Display a 'Pro Active' badge in the page header when the user has active Pro access. Register the route /ai-document-enhancer in App.tsx using React.lazy() and Suspense. Update ProPricingModal to replace Smart Document Fixer Pro pricing with AI Document Enhancer pricing: 399 rupees per month and 3000 rupees per year. Add an AI Document Enhancer card with the amber/gold PRO badge to ImageToolsPage in its own Pro Tools sub-section. Do NOT modify any calculator components.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/components/image-tools/ProPricingModal.tsx",
-          "frontend/src/pages/ImageToolsPage.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
-          "frontend/src/App.tsx",
-          "frontend/src/components/image-tools/ProPricingModal.tsx",
-          "frontend/src/pages/ImageToolsPage.tsx"
-        ]
-      },
-      {
-        "id": "REQ-163",
-        "summary": "Update the Header component (frontend/src/components/Header.tsx) LanguageSelector to include all 19 supported languages (9 existing Indian languages plus 9 new global languages with English as default). The navigation link order must remain: (1) Calculator Hub to /calculators; (2) PDF Tools to /pdf-tools; (3) Image Tools to /image-tools; (4) Resume Builder to /resume-builder; (5) JobsIndiaa.com external new tab; (6) RJY Total Manpowers.com external new tab. All existing hamburger menu, mobile overlay, touch targets, and responsive behavior must remain unchanged.",
-        "status": "implemented",
-        "plannedFiles": [
-          "frontend/src/components/Header.tsx"
-        ],
-        "matchedFiles": [
-          "frontend/src/components/Header.tsx"
-        ]
-      },
-      {
-        "id": "REQ-164",
-        "summary": "Upgrade all 16 PDF tool components in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode via the existing AdvancedToolShell component (frontend/src/components/AdvancedToolShell.tsx). Each PDF tool must follow the strict sequence: settings selection then Apply and Preview then download enabled only after preview. Required settings panels: (a) PDFCompressTool: compression level selector (Low/Medium/High/Maximum) and target size input with KB/MB unit selector; (b) PDFMergeTool: page order drag-reorder list and output quality selector; (c) PDFSplitTool: split mode selector (by page range/every N pages/individual pages) and page range input; (d) PDFToImageTool: output format selector (PNG/JPEG/WebP), DPI selector (72/150/200/300), quality slider; (e) ImageToPDFTool: page size selector (A4/Letter/Legal/custom), orientation (portrait/landscape), image fit mode (fit/fill/center); (f) PDFPasswordProtectTool: password input and encryption level selector (128-bit/256-bit); (g) PDFAddWatermarkTool: settings as specified in REQ-156; (h) all remaining PDF tools: expose options relevant to their specific function. Processing must not begin until Apply and Preview is clicked. Show a preview panel before enabling download. Do NOT modify any calculator components.",
-        "status": "missing",
-        "plannedFiles": [
-          "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
           "frontend/src/components/pdf-tools/PDFMergeTool.tsx",
           "frontend/src/components/pdf-tools/PDFSplitTool.tsx",
+          "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
           "frontend/src/components/pdf-tools/PDFToImageTool.tsx",
           "frontend/src/components/pdf-tools/ImageToPDFTool.tsx",
           "frontend/src/components/pdf-tools/PDFPasswordProtectTool.tsx",
           "frontend/src/components/pdf-tools/PDFPasswordUnlockTool.tsx",
+          "frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx",
+          "frontend/src/components/pdf-tools/PDFAddPageNumbersTool.tsx",
+          "frontend/src/components/pdf-tools/PDFOCRTool.tsx",
+          "frontend/src/components/pdf-tools/PDFPageCounterTool.tsx",
           "frontend/src/components/pdf-tools/PDFRemoveBlankPagesTool.tsx",
           "frontend/src/components/pdf-tools/PDFReorderTool.tsx",
           "frontend/src/components/pdf-tools/PDFSignTool.tsx",
-          "frontend/src/components/pdf-tools/PDFOCRTool.tsx",
-          "frontend/src/components/pdf-tools/PDFPageCounterTool.tsx",
-          "frontend/src/components/pdf-tools/PDFAddPageNumbersTool.tsx",
-          "frontend/src/components/pdf-tools/PDFToWordTool.tsx",
-          "frontend/src/components/pdf-tools/WordToPDFTool.tsx"
+          "frontend/src/components/pdf-tools/PDFToWordTool.tsx"
         ],
         "matchedFiles": []
       },
       {
-        "id": "REQ-165",
-        "summary": "Ensure all non-calculator tool pages with the new navigation elements (Back to Home button, breadcrumbs, post-download buttons) and batch processing UI are fully mobile-responsive. The Back to Home button must be full-width on screens below 480 px. Breadcrumbs must truncate gracefully on small screens using ellipsis or horizontal scrolling. Post-download navigation buttons must be full-width with min-height 48 px on mobile. The batch file queue list must stack vertically on screens below 768 px with scrollable overflow if needed. Do NOT modify any calculator components.",
-        "status": "implemented",
+        "id": "REQ-167",
+        "summary": "Audit and fix all image tool pages (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage, ImageCompressorPage, ImageCropperPage, DPIChangerPage, CustomImageResizePage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage) to ensure the AdvancedToolShell workflow is fully operational: file upload works, settings panel renders all specified controls without errors, 'Apply & Preview' processes the image client-side and shows before/after comparison, and Download is enabled only after preview. Fix any broken canvas operations, missing utility imports from frontend/src/lib/imageProcessing.ts, or non-functional UI controls. Do NOT modify any calculator components.",
+        "status": "missing",
         "plannedFiles": [
-          "frontend/src/components/BackToHomeButton.tsx",
-          "frontend/src/components/BreadcrumbNavigation.tsx",
-          "frontend/src/components/PostDownloadNavigation.tsx",
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "frontend/src/components/image-tools/PhotoResizeTool.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-168",
+        "summary": "Audit and fix the SmartDocumentFixerPage (frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx) and all its sub-components (BeforeAfterPreviewPanel, AutoPhotoSizeGenerator, AutoFeaturesPanel, ExportOptionsPanel, ProPricingModal) to ensure: drag-and-drop upload works, before/after preview renders correctly, all Auto Enhancements checkboxes apply via canvas, export downloads produce valid files, freemium gating logic (daily fix counter, watermark for free users, locked Pro features) functions correctly using localStorage, and the 'Go Pro' / ProPricingModal flow opens and closes without errors. Fix any broken canvas operations, missing imports, or state management issues. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
+          "frontend/src/components/image-tools/BeforeAfterPreviewPanel.tsx",
+          "frontend/src/components/image-tools/AutoFeaturesPanel.tsx",
+          "frontend/src/components/image-tools/ExportOptionsPanel.tsx",
+          "frontend/src/components/image-tools/AutoPhotoSizeGenerator.tsx",
+          "frontend/src/components/image-tools/ProPricingModal.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-169",
+        "summary": "Audit and fix the AIDocumentEnhancerPage (frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx) to ensure: the page renders without errors, the login/subscription gate displays correctly for unauthenticated or non-Pro users, the 'Pro Active' badge appears for authenticated Pro users, the ProPricingModal integration shows correct pricing (₹399/month, ₹3000/year), and the route /ai-document-enhancer is correctly registered in App.tsx with React.lazy and Suspense. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-170",
+        "summary": "Audit and fix the Resume Builder pages (ResumeBuilderPage at /resume-builder and ResumeTemplateBuilderPage at /resume-builder/[template-slug]) to ensure: the template selection grid renders all 14 templates, the multi-step form wizard navigates through all sections without errors, the live preview updates in real-time, color theme selection applies correctly, PDF download produces a valid A4-sized PDF, and auto-save to localStorage works. Fix any broken imports, missing component references, or non-functional form controls. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/ResumeBuilderPage.tsx",
+          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx",
+          "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "frontend/src/components/resume/ResumePreview.tsx",
+          "frontend/src/components/resume/forms/PersonalInfoForm.tsx",
+          "frontend/src/components/resume/forms/EducationForm.tsx",
+          "frontend/src/components/resume/forms/ExperienceForm.tsx",
+          "frontend/src/components/resume/forms/SkillsForm.tsx",
+          "frontend/src/components/resume/forms/ProjectsForm.tsx",
+          "frontend/src/components/resume/forms/CertificationsForm.tsx",
+          "frontend/src/components/resume/forms/LanguagesForm.tsx",
+          "frontend/src/components/resume/forms/AchievementsForm.tsx",
+          "frontend/src/components/resume/forms/ReferencesForm.tsx",
+          "frontend/src/components/resume/ColorThemeSelector.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-171",
+        "summary": "Audit and fix the App.tsx routing to ensure all routes are correctly registered and functional: /calculators and all /calculators/[slug] routes, /pdf-tools, /image-tools and all individual image tool routes, /resume-builder and all /resume-builder/[slug] routes, /smart-document-fixer, /ai-document-enhancer, and all language-prefixed variants (/:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder). Fix any missing lazy imports, broken Suspense boundaries, or incorrect path mappings. Do NOT modify any calculator page components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-172",
+        "summary": "Audit and fix the Header component (frontend/src/components/Header.tsx) and LanguageSelector component (frontend/src/components/LanguageSelector.tsx) to ensure: all 6 navigation links render correctly (Calculator Hub, PDF Tools, Image Tools, Resume Builder, JobsIndiaa.com external, RJY Total Manpowers.com external), the hamburger mobile menu opens and closes correctly, all 19 languages appear in the LanguageSelector dropdown, language switching updates displayed UI text without page reload, and RTL layout is applied correctly when Arabic is selected. Fix any broken event handlers, missing language codes, or faulty RTL toggling. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/Header.tsx",
+          "frontend/src/components/LanguageSelector.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-173",
+        "summary": "Audit and fix the BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx) integration across all non-calculator tool pages to ensure: breadcrumbs render the correct hierarchical path for every image tool page (Home > Image Tools > [Tool Name]), every PDF tool page (Home > PDF Tools > [Tool Name]), and every resume builder page (Home > Resume Builder > [Template Name]). Fix any missing BreadcrumbNavigation imports, incorrect path arrays, or broken onNavigate prop wiring on any tool page. Do NOT modify any calculator page components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
+          "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
+          "frontend/src/pages/PDFToolsPage.tsx",
+          "frontend/src/pages/ResumeBuilderPage.tsx",
+          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-174",
+        "summary": "Audit and fix the BackToHomeButton component (frontend/src/components/BackToHomeButton.tsx) integration across all non-calculator tool pages to ensure the button renders in the top-left corner above the H1 heading on every image tool page, PDF tool page, and resume builder page. Fix any pages where the button is missing, misplaced, or non-functional. Ensure the button navigates to / and meets the 44x44px minimum tap target. Do NOT modify any calculator page components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
+          "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
+          "frontend/src/pages/PDFToolsPage.tsx",
+          "frontend/src/pages/ResumeBuilderPage.tsx",
+          "frontend/src/pages/resume-builder/ResumeTemplateBuilderPage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-175",
+        "summary": "Audit and fix the PostDownloadNavigation component (frontend/src/components/PostDownloadNavigation.tsx) integration across all non-calculator tool pages to ensure post-download buttons ('Back to Home' and 'Use Another Tool') appear correctly after a successful download on every image tool page and PDF tool page. Fix any pages where the buttons do not appear after download or navigate to incorrect hub URLs (/image-tools for image tools, /pdf-tools for PDF tools, /resume-builder for resume tools). Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
+          "frontend/src/components/pdf-tools/BasePDFTool.tsx",
+          "frontend/src/components/pdf-tools/PDFMergeTool.tsx",
+          "frontend/src/components/pdf-tools/PDFSplitTool.tsx",
+          "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
+          "frontend/src/components/pdf-tools/PDFToImageTool.tsx",
+          "frontend/src/components/pdf-tools/ImageToPDFTool.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-176",
+        "summary": "Audit and fix the batch file processing integration in ImageCompressorPage, CustomImageResizePage, DPIChangerPage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage, PDFCompressTool, and ImageToPDFTool. Ensure the BatchFileQueue component (frontend/src/components/BatchFileQueue.tsx) renders correctly, per-file status (pending, processing, done, error) updates during processing, individual file download buttons work, and ZIP archive download using JSZip produces a valid archive. Fix any broken useBatchProcessor hook (frontend/src/hooks/useBatchProcessor.ts) logic or missing JSZip imports. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
+          "frontend/src/components/pdf-tools/ImageToPDFTool.tsx",
+          "frontend/src/hooks/useBatchProcessor.ts",
           "frontend/src/components/BatchFileQueue.tsx"
         ],
-        "matchedFiles": [
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-177",
+        "summary": "Audit and fix the CalculatorsPage (frontend/src/pages/CalculatorsPage.tsx) and all 20 individual calculator page components to ensure they render without errors, calculate correct results, display SEO metadata, and navigate correctly from the hub page grid. Fix any broken onNavigate prop wiring, missing imports, or non-functional calculator logic. All calculator computation logic must remain completely unchanged.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/CalculatorsPage.tsx",
+          "frontend/src/pages/calculators/AgeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/BMICalculatorPage.tsx",
+          "frontend/src/pages/calculators/CGPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/CGPAToPercentageConverterPage.tsx",
+          "frontend/src/pages/calculators/CompoundInterestCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DateDifferenceCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DiscountCalculatorPage.tsx",
+          "frontend/src/pages/calculators/DivisionCalculatorPage.tsx",
+          "frontend/src/pages/calculators/EMICalculatorPage.tsx",
+          "frontend/src/pages/calculators/GPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/GradeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/GSTCalculatorPage.tsx",
+          "frontend/src/pages/calculators/LoanCalculatorPage.tsx",
+          "frontend/src/pages/calculators/MarksPercentageCalculatorPage.tsx",
+          "frontend/src/pages/calculators/PercentageToCGPAConverterPage.tsx",
+          "frontend/src/pages/calculators/ProfitLossCalculatorPage.tsx",
+          "frontend/src/pages/calculators/SalaryHikeCalculatorPage.tsx",
+          "frontend/src/pages/calculators/SGPACalculatorPage.tsx",
+          "frontend/src/pages/calculators/SimpleInterestCalculatorPage.tsx",
+          "frontend/src/pages/calculators/TimeDurationCalculatorPage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-178",
+        "summary": "Audit and fix the ImageToolsPage (frontend/src/pages/ImageToolsPage.tsx) and PDFToolsPage (frontend/src/pages/PDFToolsPage.tsx) hub pages to ensure: all tool cards render with correct icons and labels, the Smart Document Fixer card displays the amber/gold PRO badge, the AI Document Enhancer card appears in a separate 'Pro Tools' sub-section with the amber/gold PRO badge, navigation to each individual tool page works correctly, and AdPlaceholder components render in the correct positions without layout shift. Fix any broken navigation callbacks or missing card entries. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/ImageToolsPage.tsx",
+          "frontend/src/pages/PDFToolsPage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-179",
+        "summary": "Audit and fix the HomePage (frontend/src/pages/HomePage.tsx) to ensure: the hero section, trust badges, Calculator Hub section with category cards, PDF Tools section, Image Tools section (with Smart Document Fixer card carrying PRO badge), Resume Builder section, and separate 'Pro Tools' section (containing AI Document Enhancer) all render correctly with the dark theme. Fix any broken navigation callbacks, missing imports, or visual regressions. The Footer must remain unchanged. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/pages/HomePage.tsx"
+        ],
+        "matchedFiles": []
+      },
+      {
+        "id": "REQ-180",
+        "summary": "Perform a global mobile responsiveness fix across all non-calculator tool pages to ensure: settings panels stack vertically on screens below 768px, before/after comparison panels switch from side-by-side to stacked on screens below 768px, 'Apply & Preview' and 'Download' buttons are full-width with minimum height 48px on mobile, Back to Home button is full-width on screens below 480px, breadcrumbs truncate gracefully with ellipsis or horizontal scroll on small screens, and the batch file queue stacks vertically below 768px. Fix any overflow, clipping, or layout-breaking issues on mobile viewports. Do NOT modify any calculator components.",
+        "status": "missing",
+        "plannedFiles": [
+          "frontend/src/components/AdvancedToolShell.tsx",
+          "frontend/src/components/image-tools/BeforeAfterPreviewPanel.tsx",
+          "frontend/src/components/image-tools/PhotoResizeTool.tsx",
           "frontend/src/components/BackToHomeButton.tsx",
           "frontend/src/components/BreadcrumbNavigation.tsx",
+          "frontend/src/components/BatchFileQueue.tsx",
           "frontend/src/components/PostDownloadNavigation.tsx",
-          "frontend/src/components/BatchFileQueue.tsx"
-        ]
+          "frontend/src/components/resume/ResumeFormWizard.tsx",
+          "frontend/src/components/resume/ResumePreview.tsx",
+          "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx",
+          "frontend/src/pages/PDFToolsPage.tsx",
+          "frontend/src/pages/ResumeBuilderPage.tsx"
+        ],
+        "matchedFiles": []
       }
     ]
   },
   "changedFiles": [
     "build-request.json",
     "feature_evidence.json",
-    "frontend-file-summaries.txt",
     "frontend-implementation-plan.json",
-    "frontend/src/App.tsx",
-    "frontend/src/components/BackToHomeButton.tsx",
-    "frontend/src/components/BatchFileQueue.tsx",
-    "frontend/src/components/BreadcrumbNavigation.tsx",
-    "frontend/src/components/Header.tsx",
-    "frontend/src/components/LanguageSelector.tsx",
-    "frontend/src/components/PostDownloadNavigation.tsx",
-    "frontend/src/components/image-tools/ProPricingModal.tsx",
-    "frontend/src/contexts/LanguageContext.tsx",
-    "frontend/src/hooks/useBatchProcessor.ts",
-    "frontend/src/index.css",
-    "frontend/src/lib/pageSizePresets.ts",
-    "frontend/src/locales/ar.json",
-    "frontend/src/locales/de.json",
-    "frontend/src/locales/es.json",
-    "frontend/src/locales/fr.json",
-    "frontend/src/locales/id.json",
-    "frontend/src/locales/ja.json",
-    "frontend/src/locales/pt.json",
-    "frontend/src/locales/ru.json",
-    "frontend/src/locales/zh.json",
-    "frontend/src/pages/HomePage.tsx",
-    "frontend/src/pages/ImageToolsPage.tsx",
-    "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
     "project_state.json",
     "scratch/component-selection.json",
     "spec.md",

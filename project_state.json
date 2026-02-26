@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 33,
+  "projectStateVersion": 35,
   "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model with Go Pro button, pricing modal, feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged. Phase 10 - Advanced User-Controlled Mode for all non-calculator tools. Phase 11 - International Office Platform Upgrade: Back to Home button on every tool page (top-left, arrow + label), breadcrumb navigation, post-download navigation buttons (Back to Home + Use Another Tool), mobile-friendly navigation, A4/Legal/Letter presets for office print-ready export, batch file processing, PDF stamp option, country auto-detect with language auto-switch, RTL support for Arabic, multi-language SEO. Pro plan: single Pro tool 'AI Document Enhancer' at ₹399/month or ₹3000/year, login + subscription required, Pro Active badge. Homepage: all FREE tools visible with icons, Pro tools in separate section. Calculators 100% untouched.",
   "architectural_notes": [
     "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
@@ -15,7 +15,7 @@
     "All pages get dynamic SEO meta tags, Open Graph, Twitter cards, canonical tags, and structured data"
   ],
   "known_issues": [],
-  "isFixRequest": false,
+  "isFixRequest": true,
   "existing_features": [
     {
       "id": "feature-create-a-calculatorspage-component-that-serves-as-the-main-landing-page-for-all-calculators-displaying-a-grid-of-calculator-cards-organized-by-category-academic-financial-health-general",
@@ -1708,6 +1708,126 @@
       "summary": "Upgrade all 16 PDF tool components in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode via the existing AdvancedToolShell component (frontend/src/components/AdvancedToolShell.tsx). Each PDF tool must follow the strict sequence: settings selection then Apply and Preview then download enabled only after preview. Required settings panels: (a) PDFCompressTool: compression level selector (Low/Medium/High/Maximum) and target size input with KB/MB unit selector; (b) PDFMergeTool: page order drag-reorder list and output quality selector; (c) PDFSplitTool: split mode selector (by page range/every N pages/individual pages) and page range input; (d) PDFToImageTool: output format selector (PNG/JPEG/WebP), DPI selector (72/150/200/300), quality slider; (e) ImageToPDFTool: page size selector (A4/Letter/Legal/custom), orientation (portrait/landscape), image fit mode (fit/fill/center); (f) PDFPasswordProtectTool: password input and encryption level selector (128-bit/256-bit); (g) PDFAddWatermarkTool: settings as specified in REQ-156; (h) all remaining PDF tools: expose options relevant to their specific function. Processing must not begin until Apply and Preview is clicked. Show a preview panel before enabling download. Do NOT modify any calculator components.",
       "reqIds": [
         "REQ-164"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-163",
+      "summary": "Audit and fix all 16 PDF tool components in frontend/src/components/pdf-tools/ to ensure each uses the AdvancedToolShell workflow correctly: settings panel renders before processing, 'Apply & Preview' triggers client-side processing and shows a preview or output summary, and the Download button remains disabled until preview is confirmed. Fix any broken props, missing imports, or non-functional processing logic in BasePDFTool, PDFMergeTool, PDFSplitTool, PDFCompressTool, PDFToImageTool, ImageToPDFTool, PDFPasswordProtectTool, PDFPasswordUnlockTool, PDFAddWatermarkTool, PDFAddPageNumbersTool, PDFOCRTool, PDFPageCounterTool, PDFRemoveBlankPagesTool, PDFReorderTool, PDFSignTool, and PDFToWordTool. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-166"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-164",
+      "summary": "Audit and fix all image tool pages (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage, ImageCompressorPage, ImageCropperPage, DPIChangerPage, CustomImageResizePage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage) to ensure the AdvancedToolShell workflow is fully operational: file upload works, settings panel renders all specified controls without errors, 'Apply & Preview' processes the image client-side and shows before/after comparison, and Download is enabled only after preview. Fix any broken canvas operations, missing utility imports from frontend/src/lib/imageProcessing.ts, or non-functional UI controls. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-167"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-165",
+      "summary": "Audit and fix the SmartDocumentFixerPage (frontend/src/pages/image-tools/SmartDocumentFixerPage.tsx) and all its sub-components (BeforeAfterPreviewPanel, AutoPhotoSizeGenerator, AutoFeaturesPanel, ExportOptionsPanel, ProPricingModal) to ensure: drag-and-drop upload works, before/after preview renders correctly, all Auto Enhancements checkboxes apply via canvas, export downloads produce valid files, freemium gating logic (daily fix counter, watermark for free users, locked Pro features) functions correctly using localStorage, and the 'Go Pro' / ProPricingModal flow opens and closes without errors. Fix any broken canvas operations, missing imports, or state management issues. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-168"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-166",
+      "summary": "Audit and fix the AIDocumentEnhancerPage (frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx) to ensure: the page renders without errors, the login/subscription gate displays correctly for unauthenticated or non-Pro users, the 'Pro Active' badge appears for authenticated Pro users, the ProPricingModal integration shows correct pricing (₹399/month, ₹3000/year), and the route /ai-document-enhancer is correctly registered in App.tsx with React.lazy and Suspense. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-169"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-167",
+      "summary": "Audit and fix the Resume Builder pages (ResumeBuilderPage at /resume-builder and ResumeTemplateBuilderPage at /resume-builder/[template-slug]) to ensure: the template selection grid renders all 14 templates, the multi-step form wizard navigates through all sections without errors, the live preview updates in real-time, color theme selection applies correctly, PDF download produces a valid A4-sized PDF, and auto-save to localStorage works. Fix any broken imports, missing component references, or non-functional form controls. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-170"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-168",
+      "summary": "Audit and fix the App.tsx routing to ensure all routes are correctly registered and functional: /calculators and all /calculators/[slug] routes, /pdf-tools, /image-tools and all individual image tool routes, /resume-builder and all /resume-builder/[slug] routes, /smart-document-fixer, /ai-document-enhancer, and all language-prefixed variants (/:lang/calculators, /:lang/pdf-tools, /:lang/image-tools, /:lang/resume-builder). Fix any missing lazy imports, broken Suspense boundaries, or incorrect path mappings. Do NOT modify any calculator page components.",
+      "reqIds": [
+        "REQ-171"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-169",
+      "summary": "Audit and fix the Header component (frontend/src/components/Header.tsx) and LanguageSelector component (frontend/src/components/LanguageSelector.tsx) to ensure: all 6 navigation links render correctly (Calculator Hub, PDF Tools, Image Tools, Resume Builder, JobsIndiaa.com external, RJY Total Manpowers.com external), the hamburger mobile menu opens and closes correctly, all 19 languages appear in the LanguageSelector dropdown, language switching updates displayed UI text without page reload, and RTL layout is applied correctly when Arabic is selected. Fix any broken event handlers, missing language codes, or faulty RTL toggling. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-172"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-170",
+      "summary": "Audit and fix the BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx) integration across all non-calculator tool pages to ensure: breadcrumbs render the correct hierarchical path for every image tool page (Home > Image Tools > [Tool Name]), every PDF tool page (Home > PDF Tools > [Tool Name]), and every resume builder page (Home > Resume Builder > [Template Name]). Fix any missing BreadcrumbNavigation imports, incorrect path arrays, or broken onNavigate prop wiring on any tool page. Do NOT modify any calculator page components.",
+      "reqIds": [
+        "REQ-173"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-171",
+      "summary": "Audit and fix the BackToHomeButton component (frontend/src/components/BackToHomeButton.tsx) integration across all non-calculator tool pages to ensure the button renders in the top-left corner above the H1 heading on every image tool page, PDF tool page, and resume builder page. Fix any pages where the button is missing, misplaced, or non-functional. Ensure the button navigates to / and meets the 44x44px minimum tap target. Do NOT modify any calculator page components.",
+      "reqIds": [
+        "REQ-174"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-172",
+      "summary": "Audit and fix the PostDownloadNavigation component (frontend/src/components/PostDownloadNavigation.tsx) integration across all non-calculator tool pages to ensure post-download buttons ('Back to Home' and 'Use Another Tool') appear correctly after a successful download on every image tool page and PDF tool page. Fix any pages where the buttons do not appear after download or navigate to incorrect hub URLs (/image-tools for image tools, /pdf-tools for PDF tools, /resume-builder for resume tools). Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-175"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-173",
+      "summary": "Audit and fix the batch file processing integration in ImageCompressorPage, CustomImageResizePage, DPIChangerPage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage, PDFCompressTool, and ImageToPDFTool. Ensure the BatchFileQueue component (frontend/src/components/BatchFileQueue.tsx) renders correctly, per-file status (pending, processing, done, error) updates during processing, individual file download buttons work, and ZIP archive download using JSZip produces a valid archive. Fix any broken useBatchProcessor hook (frontend/src/hooks/useBatchProcessor.ts) logic or missing JSZip imports. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-176"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-174",
+      "summary": "Audit and fix the CalculatorsPage (frontend/src/pages/CalculatorsPage.tsx) and all 20 individual calculator page components to ensure they render without errors, calculate correct results, display SEO metadata, and navigate correctly from the hub page grid. Fix any broken onNavigate prop wiring, missing imports, or non-functional calculator logic. All calculator computation logic must remain completely unchanged.",
+      "reqIds": [
+        "REQ-177"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-175",
+      "summary": "Audit and fix the ImageToolsPage (frontend/src/pages/ImageToolsPage.tsx) and PDFToolsPage (frontend/src/pages/PDFToolsPage.tsx) hub pages to ensure: all tool cards render with correct icons and labels, the Smart Document Fixer card displays the amber/gold PRO badge, the AI Document Enhancer card appears in a separate 'Pro Tools' sub-section with the amber/gold PRO badge, navigation to each individual tool page works correctly, and AdPlaceholder components render in the correct positions without layout shift. Fix any broken navigation callbacks or missing card entries. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-178"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-176",
+      "summary": "Audit and fix the HomePage (frontend/src/pages/HomePage.tsx) to ensure: the hero section, trust badges, Calculator Hub section with category cards, PDF Tools section, Image Tools section (with Smart Document Fixer card carrying PRO badge), Resume Builder section, and separate 'Pro Tools' section (containing AI Document Enhancer) all render correctly with the dark theme. Fix any broken navigation callbacks, missing imports, or visual regressions. The Footer must remain unchanged. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-179"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-177",
+      "summary": "Perform a global mobile responsiveness fix across all non-calculator tool pages to ensure: settings panels stack vertically on screens below 768px, before/after comparison panels switch from side-by-side to stacked on screens below 768px, 'Apply & Preview' and 'Download' buttons are full-width with minimum height 48px on mobile, Back to Home button is full-width on screens below 480px, breadcrumbs truncate gracefully with ellipsis or horizontal scroll on small screens, and the batch file queue stacks vertically below 768px. Fix any overflow, clipping, or layout-breaking issues on mobile viewports. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-180"
       ],
       "status": "pending"
     }

@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-a-reusable-advancedtoolshell-component-at-frontend-src-components-advancedtoolshell-tsx-that-provides-the-standardized-advanced-user-controlled-workflow-for-all-non-calculator-tools-the-shell-must-enforce-this-strict-step-sequence-1-file-upload-zone-2-settings-panel-all-user-settings-must-be-selected-confirmed-before-any-processing-begins-3-apply-preview-button-that-triggers-client-side-processing-and-renders-a-before-after-comparison-panel-4-download-button-that-is-disabled-and-visually-grayed-out-until-a-preview-has-been-successfully-generated-the-shell-must-accept-props-for-tool-title-accepted-file-types-settings-slot-reactnode-processing-function-and-output-file-name-implement-fully-client-side-with-no-backend-calls",
-      "featureTitle": "Create a reusable AdvancedToolShell component at frontend/src/components/AdvancedToolShell.tsx that provides the standardized advanced user-controlled workflow for all non-calculator tools. The shell must enforce this strict step sequence: (1) File upload zone; (2) Settings panel — all user settings must be selected/confirmed before any processing begins; (3) 'Apply & Preview' button that triggers client-side processing and renders a before/after comparison panel; (4) Download button that is disabled and visually grayed out until a preview has been successfully generated. The shell must accept props for: tool title, accepted file types, settings slot (ReactNode), processing function, and output file name. Implement fully client-side with no backend calls.",
+      "featureId": "feature-add-a-back-to-home-navigation-button-on-every-non-calculator-tool-page-all-image-tool-pages-all-pdf-tool-pages-all-converter-compressor-pages-and-the-resume-builder-pages-place-it-in-the-top-left-corner-of-the-page-content-area-above-the-h1-heading-it-must-display-a-left-arrow-icon-followed-by-the-label-home-it-must-be-visible-in-both-light-and-dark-modes-have-a-minimum-tap-target-of-44x44-px-for-mobile-and-navigate-the-user-to-the-homepage-do-not-modify-any-calculator-page-components",
+      "featureTitle": "Add a 'Back to Home' navigation button on every non-calculator tool page (all image tool pages, all PDF tool pages, all converter/compressor pages, and the Resume Builder pages). Place it in the top-left corner of the page content area, above the H1 heading. It must display a left-arrow icon followed by the label 'Home'. It must be visible in both light and dark modes, have a minimum tap target of 44x44 px for mobile, and navigate the user to the homepage (/). Do NOT modify any calculator page components.",
       "files": [
-        "frontend/src/components/AdvancedToolShell.tsx"
+        "frontend/src/components/BackToHomeButton.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -16,15 +16,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-136"
+        "REQ-151"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-imagecompressor-tool-frontend-src-components-image-tools-imagecompressortool-tsx-and-frontend-src-pages-image-tools-imagecompressorpage-tsx-to-use-the-advanced-user-controlled-mode-the-settings-panel-must-include-1-target-size-input-with-unit-selector-toggling-between-kb-and-mb-2-quality-slider-1-100-3-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-the-user-clicks-apply-preview-show-before-after-comparison-with-original-vs-compressed-file-dimensions-and-sizes-enable-the-download-button-only-after-preview-is-shown-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the ImageCompressor tool (frontend/src/components/image-tools/ImageCompressorTool.tsx and frontend/src/pages/image-tools/ImageCompressorPage.tsx) to use the advanced user-controlled mode. The settings panel must include: (1) Target size input with unit selector toggling between KB and MB; (2) Quality slider (1–100%); (3) Output format selector (JPEG, PNG, WebP). Processing must not begin until the user clicks 'Apply & Preview'. Show before/after comparison with original vs compressed file dimensions and sizes. Enable the download button only after preview is shown. Do NOT modify any calculator components.",
+      "featureId": "feature-after-a-download-completes-on-any-non-calculator-tool-page-display-two-post-download-navigation-buttons-below-the-download-area-1-back-to-home-that-navigates-to-2-use-another-tool-that-navigates-to-the-parent-hub-page-for-the-current-tool-category-image-tools-for-image-tools-pdf-tools-for-pdf-tools-resume-builder-for-resume-tools-these-buttons-must-appear-only-after-a-successful-download-action-and-must-be-mobile-responsive-with-full-width-layout-on-screens-below-768-px-do-not-modify-any-calculator-components",
+      "featureTitle": "After a download completes on any non-calculator tool page, display two post-download navigation buttons below the download area: (1) 'Back to Home' that navigates to /; (2) 'Use Another Tool' that navigates to the parent hub page for the current tool category (/image-tools for image tools, /pdf-tools for PDF tools, /resume-builder for resume tools). These buttons must appear only after a successful download action and must be mobile-responsive with full-width layout on screens below 768 px. Do NOT modify any calculator components.",
       "files": [
-        "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+        "frontend/src/components/PostDownloadNavigation.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -35,23 +35,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-137"
+        "REQ-153"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-all-government-document-photo-resize-tools-passportphotomakerpage-aadhaarphotoresizepage-panphotoresizepage-sscphotoresizepage-railwayphotoresizepage-policearmyphotopage-visaphotoresizepage-signatureresizepage-to-use-the-advanced-user-controlled-mode-via-the-advancedtoolshell-each-settings-panel-must-include-1-preset-dimension-selector-with-government-standard-presets-2-custom-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-3-maintain-aspect-ratio-toggle-4-target-file-size-input-with-unit-selector-kb-mb-5-output-quality-slider-1-100-6-output-format-selector-jpeg-png-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-with-original-vs-output-dimensions-and-file-size-enable-download-only-after-preview-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade all government document photo resize tools (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage) to use the advanced user-controlled mode via the AdvancedToolShell. Each settings panel must include: (1) Preset dimension selector with government-standard presets; (2) Custom width and height inputs with unit selector (px, cm, mm, inches); (3) Maintain aspect ratio toggle; (4) Target file size input with unit selector (KB, MB); (5) Output quality slider (1–100%); (6) Output format selector (JPEG, PNG). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel with original vs output dimensions and file size. Enable download only after preview. Do NOT modify any calculator components.",
+      "featureId": "feature-add-a4-210x297-mm-legal-215-9x355-6-mm-and-letter-215-9x279-4-mm-page-size-presets-across-all-relevant-image-tools-customimageresizepage-dpichangerpage-exportoptionspanel-and-pdf-tools-imagetopdftool-pdftoimagetool-settings-panels-each-preset-must-automatically-populate-the-corresponding-pixel-dimensions-based-on-the-selected-dpi-default-300-dpi-if-no-dpi-selector-is-present-label-these-presets-clearly-as-office-print-ready-in-the-preset-selector-ui-do-not-modify-any-calculator-components",
+      "featureTitle": "Add A4 (210x297 mm), Legal (215.9x355.6 mm), and Letter (215.9x279.4 mm) page size presets across all relevant image tools (CustomImageResizePage, DPIChangerPage, ExportOptionsPanel) and PDF tools (ImageToPDFTool, PDFToImageTool) settings panels. Each preset must automatically populate the corresponding pixel dimensions based on the selected DPI (default 300 DPI if no DPI selector is present). Label these presets clearly as 'Office Print Ready' in the preset selector UI. Do NOT modify any calculator components.",
       "files": [
-        "frontend/src/components/image-tools/PhotoResizeTool.tsx",
-        "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-        "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-        "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-        "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-        "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-        "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-        "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-        "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx"
+        "frontend/src/lib/pageSizePresets.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -62,15 +54,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-138"
+        "REQ-154"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-customimageresize-tool-frontend-src-pages-image-tools-customimageresizepage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-per-field-2-maintain-aspect-ratio-toggle-3-resize-mode-selector-by-pixel-by-percentage-4-output-quality-slider-1-100-5-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-panel-with-original-vs-new-dimensions-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the CustomImageResize tool (frontend/src/pages/image-tools/CustomImageResizePage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Width and height inputs with unit selector (px, cm, mm, inches) per field; (2) Maintain aspect ratio toggle; (3) Resize mode selector (by pixel / by percentage); (4) Output quality slider (1–100%); (5) Output format selector (JPEG, PNG, WebP). Processing must not begin until 'Apply & Preview' is clicked. Show before/after panel with original vs new dimensions. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "featureId": "feature-implement-batch-file-processing-support-for-non-calculator-tools-users-must-be-able-to-upload-multiple-files-at-once-in-imagecompressorpage-customimageresizepage-dpichangerpage-jpgtopngpage-pngtojpgpage-webpconverterpage-backgroundremoverpage-pdfcompresstool-and-imagetopdftool-the-batch-mode-must-1-display-a-list-of-queued-files-with-individual-file-names-and-sizes-2-process-all-files-using-the-existing-client-side-processing-logic-3-allow-downloading-all-processed-files-individually-or-as-a-zip-archive-using-jszip-or-an-equivalent-already-in-the-project-4-show-per-file-processing-status-pending-processing-done-error-do-not-modify-any-calculator-components",
+      "featureTitle": "Implement batch file processing support for non-calculator tools. Users must be able to upload multiple files at once in: ImageCompressorPage, CustomImageResizePage, DPIChangerPage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage, PDFCompressTool, and ImageToPDFTool. The batch mode must: (1) display a list of queued files with individual file names and sizes; (2) process all files using the existing client-side processing logic; (3) allow downloading all processed files individually or as a ZIP archive using JSZip or an equivalent already in the project; (4) show per-file processing status (pending, processing, done, error). Do NOT modify any calculator components.",
       "files": [
-        "frontend/src/pages/image-tools/CustomImageResizePage.tsx"
+        "frontend/src/components/BatchFileQueue.tsx",
+        "frontend/src/hooks/useBatchProcessor.ts"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -81,15 +74,25 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-139"
+        "REQ-155"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-dpi-changer-tool-frontend-src-pages-image-tools-dpichangerpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-dpi-preset-selector-72-96-150-200-300-600-dpi-2-custom-dpi-number-input-3-output-format-selector-jpeg-png-tiff-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-dpi-vs-new-dpi-and-file-size-enable-download-only-after-preview-is-shown-implement-dpi-metadata-embedding-client-side-via-canvas-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the DPI Changer tool (frontend/src/pages/image-tools/DPIChangerPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) DPI preset selector (72, 96, 150, 200, 300, 600 DPI); (2) Custom DPI number input; (3) Output format selector (JPEG, PNG, TIFF). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original DPI vs new DPI and file size. Enable download only after preview is shown. Implement DPI metadata embedding client-side via canvas. Do NOT modify any calculator components.",
+      "featureId": "feature-expand-multi-language-support-beyond-the-current-9-indian-languages-add-the-following-languages-to-languagecontext-frontend-src-contexts-languagecontext-tsx-and-languageselector-frontend-src-components-languageselector-tsx-arabic-ar-french-fr-spanish-es-german-de-chinese-simplified-zh-portuguese-pt-russian-ru-japanese-ja-indonesian-id-create-corresponding-locale-json-files-at-frontend-src-locales-ar-json-fr-json-es-json-de-json-zh-json-pt-json-ru-json-ja-json-id-json-with-translations-for-all-ui-text-keys-already-present-in-the-existing-en-json-file-use-lazy-loading-dynamic-imports-for-all-new-locale-files-do-not-translate-calculation-logic-formulas-or-numerical-operations",
+      "featureTitle": "Expand multi-language support beyond the current 9 Indian languages. Add the following languages to LanguageContext (frontend/src/contexts/LanguageContext.tsx) and LanguageSelector (frontend/src/components/LanguageSelector.tsx): Arabic (ar), French (fr), Spanish (es), German (de), Chinese Simplified (zh), Portuguese (pt), Russian (ru), Japanese (ja), Indonesian (id). Create corresponding locale JSON files at frontend/src/locales/ar.json, fr.json, es.json, de.json, zh.json, pt.json, ru.json, ja.json, id.json with translations for all UI text keys already present in the existing en.json file. Use lazy loading (dynamic imports) for all new locale files. Do NOT translate calculation logic, formulas, or numerical operations.",
       "files": [
-        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+        "frontend/src/components/LanguageSelector.tsx",
+        "frontend/src/contexts/LanguageContext.tsx",
+        "frontend/src/locales/ar.json",
+        "frontend/src/locales/de.json",
+        "frontend/src/locales/es.json",
+        "frontend/src/locales/fr.json",
+        "frontend/src/locales/id.json",
+        "frontend/src/locales/ja.json",
+        "frontend/src/locales/pt.json",
+        "frontend/src/locales/ru.json",
+        "frontend/src/locales/zh.json"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -100,15 +103,18 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-140"
+        "REQ-157"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-image-cropper-tool-frontend-src-pages-image-tools-imagecropperpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-aspect-ratio-preset-selector-free-1-1-4-3-3-2-16-9-9-16-custom-2-custom-crop-dimensions-inputs-width-height-with-unit-selector-px-percentage-3-output-quality-slider-1-100-4-output-format-selector-jpeg-png-webp-user-must-define-crop-area-using-interactive-drag-handles-on-the-image-before-clicking-apply-preview-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the Image Cropper tool (frontend/src/pages/image-tools/ImageCropperPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Aspect ratio preset selector (Free, 1:1, 4:3, 3:2, 16:9, 9:16, custom); (2) Custom crop dimensions inputs (width, height) with unit selector (px, percentage); (3) Output quality slider (1–100%); (4) Output format selector (JPEG, PNG, WebP). User must define crop area using interactive drag handles on the image before clicking 'Apply & Preview'. Show before/after comparison panel. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "featureId": "feature-implement-rtl-right-to-left-layout-support-for-arabic-ar-when-the-active-language-is-arabic-set-dir-rtl-and-lang-ar-on-the-document-root-element-apply-tailwind-rtl-utilities-where-flex-grid-layouts-need-mirroring-switch-text-alignment-to-right-aligned-and-render-breadcrumbnavigation-in-rtl-order-all-other-languages-must-remain-ltr-ensure-header-footer-tool-cards-form-wizards-and-breadcrumbs-display-correctly-in-rtl-mode-no-calculator-component-should-be-modified",
+      "featureTitle": "Implement RTL (right-to-left) layout support for Arabic (ar). When the active language is Arabic, set dir='rtl' and lang='ar' on the document root element, apply Tailwind RTL utilities where flex/grid layouts need mirroring, switch text alignment to right-aligned, and render BreadcrumbNavigation in RTL order. All other languages must remain LTR. Ensure Header, Footer, tool cards, form wizards, and breadcrumbs display correctly in RTL mode. No calculator component should be modified.",
       "files": [
-        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+        "frontend/src/components/BreadcrumbNavigation.tsx",
+        "frontend/src/components/Header.tsx",
+        "frontend/src/contexts/LanguageContext.tsx",
+        "frontend/src/index.css"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -119,17 +125,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-141"
+        "REQ-158"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-format-conversion-tools-jpgtopngpage-frontend-src-pages-image-tools-jpgtopngpage-tsx-pngtojpgpage-frontend-src-pages-image-tools-pngtojpgpage-tsx-and-webpconverterpage-frontend-src-pages-image-tools-webpconverterpage-tsx-to-use-the-advanced-user-controlled-mode-each-settings-panel-must-include-1-output-format-selector-showing-all-valid-conversion-targets-for-that-tool-2-output-quality-slider-1-100-applicable-to-lossy-formats-3-target-file-size-input-with-unit-selector-kb-mb-as-an-optional-constraint-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-format-size-and-dimensions-vs-converted-format-and-size-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the format conversion tools — JPGToPNGPage (frontend/src/pages/image-tools/JPGToPNGPage.tsx), PNGToJPGPage (frontend/src/pages/image-tools/PNGToJPGPage.tsx), and WEBPConverterPage (frontend/src/pages/image-tools/WEBPConverterPage.tsx) — to use the advanced user-controlled mode. Each settings panel must include: (1) Output format selector showing all valid conversion targets for that tool; (2) Output quality slider (1–100%, applicable to lossy formats); (3) Target file size input with unit selector (KB, MB) as an optional constraint. Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original format, size, and dimensions vs converted format and size. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "featureId": "feature-implement-multi-language-seo-support-for-all-newly-added-languages-update-the-seo-component-frontend-src-components-seo-tsx-to-render-hreflang-link-tags-for-all-supported-languages-existing-9-indian-languages-plus-9-new-global-languages-plus-x-default-pointing-to-english-update-the-sitemap-generation-utility-frontend-src-utils-generatesitemap-ts-and-public-sitemap-xml-to-include-language-specific-url-variants-for-all-new-languages-following-the-pattern-lang-route-update-app-tsx-routing-to-add-language-prefixed-routes-for-the-new-languages-following-the-same-pattern-already-established-for-the-existing-9-languages",
+      "featureTitle": "Implement multi-language SEO support for all newly added languages. Update the SEO component (frontend/src/components/SEO.tsx) to render hreflang link tags for all supported languages (existing 9 Indian languages plus 9 new global languages plus x-default pointing to English). Update the sitemap generation utility (frontend/src/utils/generateSitemap.ts) and public/sitemap.xml to include language-specific URL variants for all new languages following the pattern /[lang]/[route]. Update App.tsx routing to add language-prefixed routes for the new languages following the same pattern already established for the existing 9 languages.",
       "files": [
-        "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-        "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-        "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+        "frontend/src/App.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -140,15 +144,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-142"
+        "REQ-159"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-upgrade-the-background-remover-tool-frontend-src-pages-image-tools-backgroundremoverpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-background-fill-option-selector-transparent-white-custom-color-via-color-picker-blur-2-output-format-selector-png-for-transparent-jpeg-webp-for-solid-backgrounds-3-output-quality-slider-1-100-for-non-transparent-formats-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-all-processing-must-remain-client-side-do-not-modify-any-calculator-components",
-      "featureTitle": "Upgrade the Background Remover tool (frontend/src/pages/image-tools/BackgroundRemoverPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Background fill option selector (Transparent, White, Custom Color via color picker, Blur); (2) Output format selector (PNG for transparent, JPEG/WebP for solid backgrounds); (3) Output quality slider (1–100% for non-transparent formats). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel. Enable download only after preview is shown. All processing must remain client-side. Do NOT modify any calculator components.",
+      "featureId": "feature-implement-country-based-language-auto-detection-on-initial-page-load-use-navigator-language-and-navigator-languages-to-detect-the-user-s-locale-if-the-detected-locale-matches-one-of-the-19-supported-languages-auto-switch-to-that-language-and-update-the-url-to-the-language-prefixed-variant-if-no-match-is-found-fall-back-to-english-persist-the-detected-or-selected-language-to-localstorage-do-not-redirect-if-the-user-has-already-manually-selected-a-language-check-localstorage-for-an-existing-preference-key",
+      "featureTitle": "Implement country-based language auto-detection on initial page load. Use navigator.language and navigator.languages to detect the user's locale. If the detected locale matches one of the 19 supported languages, auto-switch to that language and update the URL to the language-prefixed variant. If no match is found, fall back to English. Persist the detected or selected language to localStorage. Do not redirect if the user has already manually selected a language (check localStorage for an existing preference key).",
       "files": [
-        "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+        "frontend/src/App.tsx",
+        "frontend/src/contexts/LanguageContext.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -159,15 +164,15 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-143"
+        "REQ-160"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-ensure-all-upgraded-non-calculator-tool-pages-image-tools-and-pdf-tools-with-the-new-advanced-user-controlled-mode-are-fully-mobile-responsive-the-settings-panel-must-stack-vertically-on-screens-below-768px-unit-selectors-must-use-full-width-dropdowns-on-mobile-the-before-after-comparison-panel-must-switch-from-side-by-side-to-stacked-original-on-top-processed-below-on-screens-below-768px-the-apply-preview-and-download-buttons-must-be-full-width-on-mobile-with-a-minimum-height-of-48px-for-touch-friendliness-do-not-modify-any-calculator-components",
-      "featureTitle": "Ensure all upgraded non-calculator tool pages (image tools and PDF tools) with the new advanced user-controlled mode are fully mobile responsive. The settings panel must stack vertically on screens below 768px. Unit selectors must use full-width dropdowns on mobile. The before/after comparison panel must switch from side-by-side to stacked (original on top, processed below) on screens below 768px. The 'Apply & Preview' and 'Download' buttons must be full-width on mobile with a minimum height of 48px for touch friendliness. Do NOT modify any calculator components.",
+      "featureId": "feature-update-frontend-src-pages-homepage-tsx-to-ensure-all-free-tools-are-visible-with-clear-icons-and-that-the-single-pro-tool-is-in-its-own-separate-section-specifically-1-all-free-tool-cards-pdf-tools-image-tools-excluding-ai-document-enhancer-calculator-hub-resume-builder-must-display-a-clear-recognizable-svg-icon-per-card-that-immediately-communicates-the-tool-purpose-2-the-ai-document-enhancer-the-only-pro-tool-must-be-placed-in-a-clearly-labeled-separate-section-titled-pro-tools-positioned-below-all-free-tool-sections-using-the-same-card-design-as-free-tools-but-with-the-amber-gold-pro-badge-3-free-tool-cards-must-not-display-any-pro-badge-4-the-existing-layout-dark-theme-card-shadows-border-radius-padding-gap-values-and-all-other-visual-properties-must-remain-completely-unchanged-do-not-modify-any-calculator-components",
+      "featureTitle": "Update frontend/src/pages/HomePage.tsx to ensure all FREE tools are visible with clear icons and that the single Pro tool is in its own separate section. Specifically: (1) all FREE tool cards (PDF Tools, Image Tools excluding AI Document Enhancer, Calculator Hub, Resume Builder) must display a clear recognizable SVG icon per card that immediately communicates the tool purpose; (2) the AI Document Enhancer (the only Pro tool) must be placed in a clearly labeled separate section titled 'Pro Tools' positioned below all free tool sections using the same card design as free tools but with the amber/gold PRO badge; (3) free tool cards must NOT display any PRO badge; (4) the existing layout, dark theme, card shadows, border radius, padding, gap values, and all other visual properties must remain completely unchanged. Do NOT modify any calculator components.",
       "files": [
-        "frontend/src/components/AdvancedToolShell.tsx"
+        "frontend/src/pages/HomePage.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -178,7 +183,70 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-148"
+        "REQ-161"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-new-pro-tool-ai-document-enhancer-create-a-new-page-component-at-frontend-src-pages-image-tools-aidocumentenhancerpage-tsx-with-seo-metadata-title-ai-document-enhancer-pro-tool-document-master-tools-breadcrumbnavigation-home-image-tools-ai-document-enhancer-h1-heading-and-a-100-150-word-description-the-page-must-display-a-login-subscription-gate-show-a-prominent-login-required-and-subscribe-to-pro-message-with-pricing-399-rupees-per-month-or-3000-rupees-per-year-use-the-existing-useproaccess-hook-and-useinternetidentity-hook-when-ispro-is-true-and-the-user-is-authenticated-unlock-the-tool-otherwise-show-the-gate-display-a-pro-active-badge-in-the-page-header-when-the-user-has-active-pro-access-register-the-route-ai-document-enhancer-in-app-tsx-using-react-lazy-and-suspense-update-propricingmodal-to-replace-smart-document-fixer-pro-pricing-with-ai-document-enhancer-pricing-399-rupees-per-month-and-3000-rupees-per-year-add-an-ai-document-enhancer-card-with-the-amber-gold-pro-badge-to-imagetoolspage-in-its-own-pro-tools-sub-section-do-not-modify-any-calculator-components",
+      "featureTitle": "Create the new Pro tool 'AI Document Enhancer'. Create a new page component at frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx with SEO metadata (title: 'AI Document Enhancer - Pro Tool | Document Master Tools'), BreadcrumbNavigation (Home > Image Tools > AI Document Enhancer), H1 heading, and a 100-150 word description. The page must display a login/subscription gate: show a prominent 'Login Required' and 'Subscribe to Pro' message with pricing (399 rupees per month or 3000 rupees per year). Use the existing useProAccess hook and useInternetIdentity hook: when isPro is true AND the user is authenticated, unlock the tool; otherwise show the gate. Display a 'Pro Active' badge in the page header when the user has active Pro access. Register the route /ai-document-enhancer in App.tsx using React.lazy() and Suspense. Update ProPricingModal to replace Smart Document Fixer Pro pricing with AI Document Enhancer pricing: 399 rupees per month and 3000 rupees per year. Add an AI Document Enhancer card with the amber/gold PRO badge to ImageToolsPage in its own Pro Tools sub-section. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/image-tools/ProPricingModal.tsx",
+        "frontend/src/pages/ImageToolsPage.tsx",
+        "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-162"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-update-the-header-component-frontend-src-components-header-tsx-languageselector-to-include-all-19-supported-languages-9-existing-indian-languages-plus-9-new-global-languages-with-english-as-default-the-navigation-link-order-must-remain-1-calculator-hub-to-calculators-2-pdf-tools-to-pdf-tools-3-image-tools-to-image-tools-4-resume-builder-to-resume-builder-5-jobsindiaa-com-external-new-tab-6-rjy-total-manpowers-com-external-new-tab-all-existing-hamburger-menu-mobile-overlay-touch-targets-and-responsive-behavior-must-remain-unchanged",
+      "featureTitle": "Update the Header component (frontend/src/components/Header.tsx) LanguageSelector to include all 19 supported languages (9 existing Indian languages plus 9 new global languages with English as default). The navigation link order must remain: (1) Calculator Hub to /calculators; (2) PDF Tools to /pdf-tools; (3) Image Tools to /image-tools; (4) Resume Builder to /resume-builder; (5) JobsIndiaa.com external new tab; (6) RJY Total Manpowers.com external new tab. All existing hamburger menu, mobile overlay, touch targets, and responsive behavior must remain unchanged.",
+      "files": [
+        "frontend/src/components/Header.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-163"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-all-non-calculator-tool-pages-with-the-new-navigation-elements-back-to-home-button-breadcrumbs-post-download-buttons-and-batch-processing-ui-are-fully-mobile-responsive-the-back-to-home-button-must-be-full-width-on-screens-below-480-px-breadcrumbs-must-truncate-gracefully-on-small-screens-using-ellipsis-or-horizontal-scrolling-post-download-navigation-buttons-must-be-full-width-with-min-height-48-px-on-mobile-the-batch-file-queue-list-must-stack-vertically-on-screens-below-768-px-with-scrollable-overflow-if-needed-do-not-modify-any-calculator-components",
+      "featureTitle": "Ensure all non-calculator tool pages with the new navigation elements (Back to Home button, breadcrumbs, post-download buttons) and batch processing UI are fully mobile-responsive. The Back to Home button must be full-width on screens below 480 px. Breadcrumbs must truncate gracefully on small screens using ellipsis or horizontal scrolling. Post-download navigation buttons must be full-width with min-height 48 px on mobile. The batch file queue list must stack vertically on screens below 768 px with scrollable overflow if needed. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/components/BackToHomeButton.tsx",
+        "frontend/src/components/BatchFileQueue.tsx",
+        "frontend/src/components/BreadcrumbNavigation.tsx",
+        "frontend/src/components/PostDownloadNavigation.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-165"
       ],
       "confidence": "high"
     }

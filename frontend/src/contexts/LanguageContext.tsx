@@ -1,137 +1,188 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { toast } from 'sonner';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
-type Language = 'en' | 'hi' | 'bn' | 'ta' | 'te' | 'mr' | 'gu' | 'kn' | 'ml' | 'ur';
+export type LanguageCode =
+  | 'en'
+  | 'hi'
+  | 'te'
+  | 'ta'
+  | 'bn'
+  | 'mr'
+  | 'gu'
+  | 'kn'
+  | 'ml'
+  | 'pa'
+  | 'ar'
+  | 'fr'
+  | 'es'
+  | 'de'
+  | 'zh'
+  | 'pt'
+  | 'ru'
+  | 'ja'
+  | 'id';
 
-interface LanguageContextType {
-  currentLanguage: Language;
-  setLanguage: (lang: Language) => void;
+export interface Language {
+  code: LanguageCode;
+  name: string;
+  nativeName: string;
+  rtl?: boolean;
+}
+
+export const SUPPORTED_LANGUAGES: Language[] = [
+  { code: 'en', name: 'English', nativeName: 'English' },
+  { code: 'hi', name: 'Hindi', nativeName: 'हिन्दी' },
+  { code: 'te', name: 'Telugu', nativeName: 'తెలుగు' },
+  { code: 'ta', name: 'Tamil', nativeName: 'தமிழ்' },
+  { code: 'bn', name: 'Bengali', nativeName: 'বাংলা' },
+  { code: 'mr', name: 'Marathi', nativeName: 'मराठी' },
+  { code: 'gu', name: 'Gujarati', nativeName: 'ગુજરાતી' },
+  { code: 'kn', name: 'Kannada', nativeName: 'ಕನ್ನಡ' },
+  { code: 'ml', name: 'Malayalam', nativeName: 'മലയാളം' },
+  { code: 'pa', name: 'Punjabi', nativeName: 'ਪੰਜਾਬੀ' },
+  { code: 'ar', name: 'Arabic', nativeName: 'العربية', rtl: true },
+  { code: 'fr', name: 'French', nativeName: 'Français' },
+  { code: 'es', name: 'Spanish', nativeName: 'Español' },
+  { code: 'de', name: 'German', nativeName: 'Deutsch' },
+  { code: 'zh', name: 'Chinese', nativeName: '中文' },
+  { code: 'pt', name: 'Portuguese', nativeName: 'Português' },
+  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
+  { code: 'ja', name: 'Japanese', nativeName: '日本語' },
+  { code: 'id', name: 'Indonesian', nativeName: 'Bahasa Indonesia' },
+];
+
+const RTL_LANGUAGES: LanguageCode[] = ['ar'];
+
+interface LanguageContextValue {
+  language: LanguageCode;
+  // Keep backward-compat alias
+  currentLanguage: LanguageCode;
+  setLanguage: (code: LanguageCode) => void;
   t: (key: string) => string;
+  isRTL: boolean;
+  supportedLanguages: Language[];
   isLoading: boolean;
   isInitializing: boolean;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextValue>({
+  language: 'en',
+  currentLanguage: 'en',
+  setLanguage: () => {},
+  t: (key) => key,
+  isRTL: false,
+  supportedLanguages: SUPPORTED_LANGUAGES,
+  isLoading: false,
+  isInitializing: false,
+});
 
-const STORAGE_KEY = 'documentmaster_language';
-const SESSION_KEY = 'documentmaster_language_detected';
+const STORAGE_KEY = 'docmaster_language';
+const MANUAL_KEY = 'docmaster_language_manual';
 
-// Cache for loaded translations
-const translationsCache: Record<Language, any> = {} as Record<Language, any>;
+type Translations = Record<string, string>;
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [currentLanguage, setCurrentLanguage] = useState<Language>('en');
-  const [translations, setTranslations] = useState<any>({});
+const translationCache: Partial<Record<LanguageCode, Translations>> = {};
+
+async function loadTranslations(code: LanguageCode): Promise<Translations> {
+  if (translationCache[code]) return translationCache[code]!;
+  if (code === 'en') {
+    translationCache['en'] = {};
+    return {};
+  }
+  try {
+    const module = await import(`../locales/${code}.json`);
+    translationCache[code] = module.default as Translations;
+    return translationCache[code]!;
+  } catch {
+    return {};
+  }
+}
+
+function detectLanguageFromBrowser(): LanguageCode {
+  const nav = navigator as Navigator & { languages?: readonly string[] };
+  const browserLang = navigator.language || nav.languages?.[0] || 'en';
+  const langCode = browserLang.split('-')[0].toLowerCase();
+  const supported = SUPPORTED_LANGUAGES.find((l) => l.code === langCode);
+  return supported ? supported.code : 'en';
+}
+
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [language, setLanguageState] = useState<LanguageCode>('en');
+  const [translations, setTranslations] = useState<Translations>({});
   const [isLoading, setIsLoading] = useState(false);
   const [isInitializing, setIsInitializing] = useState(true);
+  const isRTL = RTL_LANGUAGES.includes(language);
 
-  // Load translation file
-  const loadTranslations = async (lang: Language) => {
-    // Check cache first
-    if (translationsCache[lang]) {
-      setTranslations(translationsCache[lang]);
-      return;
-    }
-
+  const applyLanguage = useCallback(async (code: LanguageCode) => {
     setIsLoading(true);
     try {
-      const module = await import(`../locales/${lang}.json`);
-      const loadedTranslations = module.default;
-      translationsCache[lang] = loadedTranslations;
-      setTranslations(loadedTranslations);
-    } catch (error) {
-      console.error(`Failed to load translations for ${lang}:`, error);
-      toast.error('Failed to load language. Falling back to English.');
-      
-      // Fallback to English
-      if (lang !== 'en') {
-        try {
-          const fallbackModule = await import('../locales/en.json');
-          const fallbackTranslations = fallbackModule.default;
-          translationsCache['en'] = fallbackTranslations;
-          setTranslations(fallbackTranslations);
-          setCurrentLanguage('en');
-        } catch (fallbackError) {
-          console.error('Failed to load English fallback:', fallbackError);
-        }
-      }
+      const trans = await loadTranslations(code);
+      setTranslations(trans);
+      setLanguageState(code);
+
+      // Apply RTL/LTR
+      const isRtl = RTL_LANGUAGES.includes(code);
+      document.documentElement.dir = isRtl ? 'rtl' : 'ltr';
+      document.documentElement.lang = code;
     } finally {
       setIsLoading(false);
     }
-  };
+  }, []);
 
   // Initialize language on mount
   useEffect(() => {
-    const initializeLanguage = async () => {
-      // Check if we already detected language in this session
-      const sessionDetected = sessionStorage.getItem(SESSION_KEY);
-      
-      // Check localStorage first
-      const storedLang = localStorage.getItem(STORAGE_KEY) as Language | null;
-      
-      if (storedLang && ['en', 'hi', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'ur'].includes(storedLang)) {
-        setCurrentLanguage(storedLang);
-        await loadTranslations(storedLang);
-      } else if (!sessionDetected) {
-        // Auto-detect browser language only once per session
-        const browserLang = navigator.language || (navigator as any).languages?.[0] || 'en';
-        const langCode = browserLang.substring(0, 2).toLowerCase();
-        
-        const supportedLanguages: Language[] = ['en', 'hi', 'bn', 'ta', 'te', 'mr', 'gu', 'kn', 'ml', 'ur'];
-        const detectedLang: Language = supportedLanguages.includes(langCode as Language) 
-          ? (langCode as Language) 
-          : 'en';
-        
-        setCurrentLanguage(detectedLang);
-        await loadTranslations(detectedLang);
-        localStorage.setItem(STORAGE_KEY, detectedLang);
-        sessionStorage.setItem(SESSION_KEY, 'true');
+    const init = async () => {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      const isManual = localStorage.getItem(MANUAL_KEY) === 'true';
+
+      if (stored && SUPPORTED_LANGUAGES.find((l) => l.code === stored)) {
+        await applyLanguage(stored as LanguageCode);
+      } else if (!isManual) {
+        const detected = detectLanguageFromBrowser();
+        await applyLanguage(detected);
+        localStorage.setItem(STORAGE_KEY, detected);
       } else {
-        // Default to English
-        await loadTranslations('en');
+        await applyLanguage('en');
       }
-      
       setIsInitializing(false);
     };
+    init();
+  }, [applyLanguage]);
 
-    initializeLanguage();
-  }, []);
+  const setLanguage = useCallback(
+    (code: LanguageCode) => {
+      localStorage.setItem(STORAGE_KEY, code);
+      localStorage.setItem(MANUAL_KEY, 'true');
+      applyLanguage(code);
+    },
+    [applyLanguage]
+  );
 
-  // Change language function
-  const changeLanguage = async (lang: Language) => {
-    if (lang === currentLanguage) return;
-    
-    setCurrentLanguage(lang);
-    localStorage.setItem(STORAGE_KEY, lang);
-    await loadTranslations(lang);
-  };
-
-  // Translation function with nested key support
-  const t = (key: string): string => {
-    if (!translations || Object.keys(translations).length === 0) {
-      return key;
-    }
-
-    const keys = key.split('.');
-    let value: any = translations;
-
-    for (const k of keys) {
-      if (value && typeof value === 'object' && k in value) {
-        value = value[k];
-      } else {
-        return key; // Return key if translation not found
+  const t = useCallback(
+    (key: string): string => {
+      // Support nested dot-notation keys
+      const keys = key.split('.');
+      let value: unknown = translations;
+      for (const k of keys) {
+        if (value && typeof value === 'object') {
+          value = (value as Record<string, unknown>)[k];
+        } else {
+          return key;
+        }
       }
-    }
-
-    return typeof value === 'string' ? value : key;
-  };
+      return typeof value === 'string' ? value : key;
+    },
+    [translations]
+  );
 
   return (
     <LanguageContext.Provider
       value={{
-        currentLanguage,
-        setLanguage: changeLanguage,
+        language,
+        currentLanguage: language,
+        setLanguage,
         t,
+        isRTL,
+        supportedLanguages: SUPPORTED_LANGUAGES,
         isLoading,
         isInitializing,
       }}
@@ -142,9 +193,5 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 }
 
 export function useLanguage() {
-  const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
-  }
-  return context;
+  return useContext(LanguageContext);
 }

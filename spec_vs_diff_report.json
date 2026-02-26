@@ -1,108 +1,143 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T15:21:42.749Z",
-  "summary": "The diff implements REQ-136 (AdvancedToolShell), REQ-137 (ImageCompressor), REQ-138 (8 government photo tools via PhotoResizeTool), REQ-139 (CustomImageResize), REQ-140 (DPIChanger), REQ-141 (ImageCropper), REQ-142 (format converters), REQ-143 (BackgroundRemover), and partially REQ-145/146/147 per the file summaries. However, REQ-144 (16 PDF tools upgrade) shows no PDF tool component files modified in the diff. REQ-140 is missing TIFF format support. REQ-141 is missing interactive drag-handle crop UI. REQ-148 mobile responsiveness is partially unconfirmed. REQ-145, REQ-146, REQ-147 page files are not in the modified files list.",
+  "generatedAt": "2026-02-26T05:33:30.894Z",
+  "summary": "The diff implements several of the 15 requirements but leaves many partially or entirely unimplemented. Core infrastructure pieces (BackToHomeButton, PostDownloadNavigation, BatchFileQueue, useBatchProcessor, pageSizePresets, locale files, LanguageContext/Selector updates, BreadcrumbNavigation with JSON-LD, AIDocumentEnhancerPage, ProPricingModal update, HomePage Pro section, ImageToolsPage Pro section, App.tsx route) are present. However, most of the actual tool-page integrations are absent. REQ-154, REQ-155, REQ-156, REQ-159, REQ-160, REQ-164, and REQ-165 are either missing entirely or only partially covered.",
   "missing_requirements": [
     {
-      "id": "REQ-144",
-      "requirement": "Upgrade all 16 PDF tools in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode with tool-specific settings panels, Apply & Preview gating, and disabled download until preview.",
-      "reason": "No PDF tool component files (PDFCompressTool.tsx, PDFMergeTool.tsx, PDFToImageTool.tsx, ImageToPDFTool.tsx, PDFPasswordProtectTool.tsx, PDFAddWatermarkTool.tsx, etc.) appear in the modified files list. The only PDF tool mentioned in the diff summary is PDFSplitTool.tsx, which only describes split download behavior with no mention of settings panels, Apply & Preview gating, or disabled download until preview.",
+      "id": "REQ-151",
+      "requirement": "Add a 'Back to Home' button on every non-calculator tool page with left-arrow icon + 'Home' label, 44x44 px tap target, top-left above H1.",
+      "reason": "The BackToHomeButton component is created but the diff shows no evidence it is integrated into any individual existing tool page. Only AIDocumentEnhancerPage is confirmed to use it.",
       "evidence": [
-        "frontend/src/components/pdf-tools/PDFSplitTool.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/components/BackToHomeButton.tsx",
+        "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx"
       ]
     },
     {
-      "id": "REQ-140",
-      "requirement": "Output format selector must include TIFF as one of the options (JPEG, PNG, TIFF) for the DPI Changer tool.",
-      "reason": "DPIChangerPage.tsx only declares format state as 'jpeg' | 'png' and the settings slot only offers JPEG and PNG options. TIFF format is entirely absent.",
+      "id": "REQ-152",
+      "requirement": "BreadcrumbNavigation integrated on every non-calculator tool page with correct hierarchical path, positioned below Back to Home and above H1, with Schema.org JSON-LD.",
+      "reason": "BreadcrumbNavigation is updated with JSON-LD and used in AIDocumentEnhancerPage, but no evidence it was added to existing image tool, PDF tool, converter, or Resume Builder pages.",
       "evidence": [
-        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+        "frontend/src/components/BreadcrumbNavigation.tsx",
+        "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx"
       ]
     },
     {
-      "id": "REQ-141",
-      "requirement": "User must define crop area using interactive drag handles on the image before clicking Apply & Preview.",
-      "reason": "ImageCropperPage.tsx implements cropping only via numeric inputs for cropX, cropY, cropW, cropH. There is no interactive drag-handle overlay on the uploaded image, which is an explicit AC requirement.",
+      "id": "REQ-153",
+      "requirement": "Post-download navigation buttons appear after successful download on all non-calculator tool pages.",
+      "reason": "PostDownloadNavigation component is created but there is no evidence it was integrated into any existing tool page download flow.",
       "evidence": [
-        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+        "frontend/src/components/PostDownloadNavigation.tsx"
       ]
     },
     {
-      "id": "REQ-145",
-      "requirement": "Update HomePage.tsx to add icons to all free tool cards and move Smart Document Fixer to a separate labeled Pro Tools section while keeping layout unchanged.",
-      "reason": "frontend/src/pages/HomePage.tsx does not appear in the diff's modified files list. Only the file-summaries.txt references these changes indirectly.",
+      "id": "REQ-154",
+      "requirement": "A4, Legal, and Letter page size presets labeled 'Office Print Ready' added to CustomImageResizePage, DPIChangerPage, ExportOptionsPanel, ImageToPDFTool, and PDFToImageTool with automatic DPI-based pixel dimension population.",
+      "reason": "The pageSizePresets library is created but there is no evidence the presets were integrated into any of the five specified tool components.",
       "evidence": [
-        "frontend/src/pages/HomePage.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/lib/pageSizePresets.ts"
       ]
     },
     {
-      "id": "REQ-146",
-      "requirement": "Update ImageToolsPage.tsx to add recognizable icons to every image tool card and keep Smart Document Fixer in a separate labeled Pro Tools sub-section.",
-      "reason": "frontend/src/pages/ImageToolsPage.tsx does not appear in the modified files list in the diff summary.",
+      "id": "REQ-155",
+      "requirement": "Batch file processing for nine specified tool pages with queue list, per-file status indicators, and ZIP archive download.",
+      "reason": "useBatchProcessor and BatchFileQueue are created but not integrated into any of the nine specified tool pages. Additionally, the ZIP download is not truly implemented; the hook sequentially downloads files individually instead of creating a real ZIP archive.",
       "evidence": [
-        "frontend/src/pages/ImageToolsPage.tsx"
+        "frontend/src/hooks/useBatchProcessor.ts",
+        "frontend/src/components/BatchFileQueue.tsx"
       ]
     },
     {
-      "id": "REQ-147",
-      "requirement": "Update PDFToolsPage.tsx to add a clear, recognizable icon to every PDF tool card.",
-      "reason": "frontend/src/pages/PDFToolsPage.tsx does not appear in the modified files list in the diff summary.",
-      "evidence": [
-        "frontend/src/pages/PDFToolsPage.tsx"
-      ]
+      "id": "REQ-156",
+      "requirement": "Enhance PDFAddWatermarkTool with six stamp settings fields, Apply and Preview flow, client-side processing.",
+      "reason": "No modification to frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx is present in the diff.",
+      "evidence": []
     },
     {
-      "id": "REQ-148",
-      "requirement": "All upgraded tools must be fully mobile responsive: settings panel stacks vertically below 768px, unit selectors full-width on mobile, before/after comparison stacks vertically on mobile, action buttons full-width with min-height 48px on mobile.",
-      "reason": "The AdvancedToolShell.tsx content is truncated and no explicit responsive Tailwind breakpoint classes for the before/after panel switching from side-by-side to stacked, full-width unit selectors, or full-width action buttons on mobile are confirmed in the visible diff content.",
+      "id": "REQ-158",
+      "requirement": "Full RTL layout support: Header, Footer, tool cards, form wizards, and breadcrumbs display correctly in Arabic RTL with Tailwind RTL utilities applied to flex/grid layouts.",
+      "reason": "LanguageContext sets dir='rtl' and index.css has basic CSS rules, but there is no evidence of Tailwind RTL utility classes applied to Header, Footer, tool cards, or form wizards. RTL support is partial.",
       "evidence": [
-        "frontend/src/components/AdvancedToolShell.tsx",
+        "frontend/src/contexts/LanguageContext.tsx",
         "frontend/src/index.css"
+      ]
+    },
+    {
+      "id": "REQ-159",
+      "requirement": "hreflang tags for all 19 languages in SEO component, x-default pointing to English, sitemap.xml with language URL variants, language-prefixed routes in App.tsx for 9 new languages.",
+      "reason": "No modification to SEO.tsx, generateSitemap.ts, or public/sitemap.xml is present. App.tsx does not show language-prefixed routes for the 9 new languages.",
+      "evidence": [
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-160",
+      "requirement": "Language auto-detection updates the URL to a language-prefixed variant; localStorage persists preference; no redirect if manual preference already stored.",
+      "reason": "LanguageContext has browser detection and localStorage logic but does not update the URL to a language-prefixed path. App.tsx does not implement language-prefixed routing required for URL updates.",
+      "evidence": [
+        "frontend/src/contexts/LanguageContext.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "id": "REQ-164",
+      "requirement": "All 16 PDF tool components upgraded to use AdvancedToolShell with settings then Apply and Preview then download-enabled sequence and specific per-tool settings panels.",
+      "reason": "No modifications to any of the 16 PDF tool components in frontend/src/components/pdf-tools/ are present in the diff.",
+      "evidence": []
+    },
+    {
+      "id": "REQ-165",
+      "requirement": "Back to Home button full-width below 480px, breadcrumbs truncate on small screens, post-download buttons full-width min-height 48px on mobile, batch queue stacks vertically below 768px.",
+      "reason": "BackToHomeButton uses sm breakpoint (640px) instead of the required 480px for full-width. Components are not integrated into tool pages so mobile responsiveness cannot be verified in context.",
+      "evidence": [
+        "frontend/src/components/BackToHomeButton.tsx",
+        "frontend/src/components/PostDownloadNavigation.tsx"
       ]
     }
   ],
   "hallucinated_features": [
     {
-      "description": "AdvancedToolShell supports multiple file uploads via multipleFiles prop and onMultipleFilesChange callback.",
-      "reason": "The build request does not specify multiple file upload capability for AdvancedToolShell. The props interface includes multipleFiles and onMultipleFilesChange which were not requested.",
+      "description": "BackToHomeButton renders both an ArrowLeft icon AND a Home icon before the 'Home' label, showing two icons.",
+      "reason": "REQ-151 specifies only a left-arrow icon followed by the label 'Home'. A separate Home icon was not requested.",
       "evidence": [
-        "frontend/src/components/AdvancedToolShell.tsx"
+        "frontend/src/components/BackToHomeButton.tsx"
       ]
     },
     {
-      "description": "A separate DownloadSection component was created supporting multiple file downloads with individual download buttons and no ZIP bundling.",
-      "reason": "The build request does not request a separate DownloadSection component or multiple-file individual download UI. The requirement is a single download button disabled until preview is generated.",
+      "description": "useBatchProcessor's downloadAllAsZip sequentially downloads individual files instead of creating a real ZIP archive.",
+      "reason": "REQ-155 explicitly requires downloading all processed files as a ZIP archive using JSZip or an equivalent. No real ZIP is created.",
       "evidence": [
-        "frontend/src/components/DownloadSection.tsx",
-        "frontend-file-summaries.txt"
+        "frontend/src/hooks/useBatchProcessor.ts"
       ]
     }
   ],
-  "confidence": 0.72,
+  "confidence": 0.74,
   "changed_files": [
     "frontend-file-summaries.txt",
     "frontend/src/App.tsx",
-    "frontend/src/components/AdvancedToolShell.tsx",
-    "frontend/src/components/image-tools/PhotoResizeTool.tsx",
-    "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
-    "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
-    "frontend/src/pages/image-tools/DPIChangerPage.tsx",
-    "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
-    "frontend/src/pages/image-tools/ImageCropperPage.tsx",
-    "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
-    "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
-    "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
-    "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
-    "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/SignatureResizePage.tsx",
-    "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
-    "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+    "frontend/src/components/BackToHomeButton.tsx",
+    "frontend/src/components/BatchFileQueue.tsx",
+    "frontend/src/components/BreadcrumbNavigation.tsx",
+    "frontend/src/components/Header.tsx",
+    "frontend/src/components/LanguageSelector.tsx",
+    "frontend/src/components/PostDownloadNavigation.tsx",
+    "frontend/src/components/image-tools/ProPricingModal.tsx",
+    "frontend/src/contexts/LanguageContext.tsx",
+    "frontend/src/hooks/useBatchProcessor.ts",
+    "frontend/src/index.css",
+    "frontend/src/lib/pageSizePresets.ts",
+    "frontend/src/locales/ar.json",
+    "frontend/src/locales/de.json",
+    "frontend/src/locales/es.json",
+    "frontend/src/locales/fr.json",
+    "frontend/src/locales/id.json",
+    "frontend/src/locales/ja.json",
+    "frontend/src/locales/pt.json",
+    "frontend/src/locales/ru.json",
+    "frontend/src/locales/zh.json",
+    "frontend/src/pages/HomePage.tsx",
+    "frontend/src/pages/ImageToolsPage.tsx",
+    "frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx",
     "project_state.json"
   ]
 }

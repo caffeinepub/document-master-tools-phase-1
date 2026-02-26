@@ -1,63 +1,70 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ThemeProvider } from 'next-themes';
-import { Toaster } from '@/components/ui/sonner';
-import { LanguageProvider } from './contexts/LanguageContext';
-import { lazy, Suspense, useState } from 'react';
+import React, { Suspense, useState, useEffect } from 'react';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsOfUsePage from './pages/TermsOfUsePage';
-import DisclaimerPage from './pages/DisclaimerPage';
-import { Loader2 } from 'lucide-react';
+import { LanguageProvider } from './contexts/LanguageContext';
 
-// Lazy load heavy modules for code splitting
-const PDFToolsPage = lazy(() => import('./pages/PDFToolsPage'));
-const ImageToolsPage = lazy(() => import('./pages/ImageToolsPage'));
-const ResumeBuilderPage = lazy(() => import('./pages/ResumeBuilderPage'));
-const ResumeTemplateBuilderPage = lazy(() => import('./pages/resume-builder/ResumeTemplateBuilderPage'));
-const CalculatorsPage = lazy(() => import('./pages/CalculatorsPage'));
+// Lazy-loaded pages
+const HomePage = React.lazy(() => import('./pages/HomePage'));
+const CalculatorsPage = React.lazy(() => import('./pages/CalculatorsPage'));
+const PDFToolsPage = React.lazy(() => import('./pages/PDFToolsPage'));
+const ImageToolsPage = React.lazy(() => import('./pages/ImageToolsPage'));
+const ResumeBuilderPage = React.lazy(() => import('./pages/ResumeBuilderPage'));
 
-// Lazy load calculator pages
-const CGPACalculatorPage = lazy(() => import('./pages/calculators/CGPACalculatorPage'));
-const SGPACalculatorPage = lazy(() => import('./pages/calculators/SGPACalculatorPage'));
-const CGPAToPercentageConverterPage = lazy(() => import('./pages/calculators/CGPAToPercentageConverterPage'));
-const PercentageToCGPAConverterPage = lazy(() => import('./pages/calculators/PercentageToCGPAConverterPage'));
-const GradeCalculatorPage = lazy(() => import('./pages/calculators/GradeCalculatorPage'));
-const GPACalculatorPage = lazy(() => import('./pages/calculators/GPACalculatorPage'));
-const MarksPercentageCalculatorPage = lazy(() => import('./pages/calculators/MarksPercentageCalculatorPage'));
-const DivisionCalculatorPage = lazy(() => import('./pages/calculators/DivisionCalculatorPage'));
-const GSTCalculatorPage = lazy(() => import('./pages/calculators/GSTCalculatorPage'));
-const EMICalculatorPage = lazy(() => import('./pages/calculators/EMICalculatorPage'));
-const LoanCalculatorPage = lazy(() => import('./pages/calculators/LoanCalculatorPage'));
-const CompoundInterestCalculatorPage = lazy(() => import('./pages/calculators/CompoundInterestCalculatorPage'));
-const SimpleInterestCalculatorPage = lazy(() => import('./pages/calculators/SimpleInterestCalculatorPage'));
-const DiscountCalculatorPage = lazy(() => import('./pages/calculators/DiscountCalculatorPage'));
-const ProfitLossCalculatorPage = lazy(() => import('./pages/calculators/ProfitLossCalculatorPage'));
-const SalaryHikeCalculatorPage = lazy(() => import('./pages/calculators/SalaryHikeCalculatorPage'));
-const BMICalculatorPage = lazy(() => import('./pages/calculators/BMICalculatorPage'));
-const AgeCalculatorPage = lazy(() => import('./pages/calculators/AgeCalculatorPage'));
-const DateDifferenceCalculatorPage = lazy(() => import('./pages/calculators/DateDifferenceCalculatorPage'));
-const TimeDurationCalculatorPage = lazy(() => import('./pages/calculators/TimeDurationCalculatorPage'));
+// Calculator pages
+const CGPACalculatorPage = React.lazy(() => import('./pages/calculators/CGPACalculatorPage'));
+const SGPACalculatorPage = React.lazy(() => import('./pages/calculators/SGPACalculatorPage'));
+const CGPAToPercentageConverterPage = React.lazy(() => import('./pages/calculators/CGPAToPercentageConverterPage'));
+const PercentageToCGPAConverterPage = React.lazy(() => import('./pages/calculators/PercentageToCGPAConverterPage'));
+const GradeCalculatorPage = React.lazy(() => import('./pages/calculators/GradeCalculatorPage'));
+const GPACalculatorPage = React.lazy(() => import('./pages/calculators/GPACalculatorPage'));
+const MarksPercentageCalculatorPage = React.lazy(() => import('./pages/calculators/MarksPercentageCalculatorPage'));
+const DivisionCalculatorPage = React.lazy(() => import('./pages/calculators/DivisionCalculatorPage'));
+const GSTCalculatorPage = React.lazy(() => import('./pages/calculators/GSTCalculatorPage'));
+const EMICalculatorPage = React.lazy(() => import('./pages/calculators/EMICalculatorPage'));
+const LoanCalculatorPage = React.lazy(() => import('./pages/calculators/LoanCalculatorPage'));
+const CompoundInterestCalculatorPage = React.lazy(() => import('./pages/calculators/CompoundInterestCalculatorPage'));
+const SimpleInterestCalculatorPage = React.lazy(() => import('./pages/calculators/SimpleInterestCalculatorPage'));
+const DiscountCalculatorPage = React.lazy(() => import('./pages/calculators/DiscountCalculatorPage'));
+const ProfitLossCalculatorPage = React.lazy(() => import('./pages/calculators/ProfitLossCalculatorPage'));
+const SalaryHikeCalculatorPage = React.lazy(() => import('./pages/calculators/SalaryHikeCalculatorPage'));
+const BMICalculatorPage = React.lazy(() => import('./pages/calculators/BMICalculatorPage'));
+const AgeCalculatorPage = React.lazy(() => import('./pages/calculators/AgeCalculatorPage'));
+const DateDifferenceCalculatorPage = React.lazy(() => import('./pages/calculators/DateDifferenceCalculatorPage'));
+const TimeDurationCalculatorPage = React.lazy(() => import('./pages/calculators/TimeDurationCalculatorPage'));
 
-// Lazy load image tool pages
-const PassportPhotoMakerPage = lazy(() => import('./pages/image-tools/PassportPhotoMakerPage'));
-const AadhaarPhotoResizePage = lazy(() => import('./pages/image-tools/AadhaarPhotoResizePage'));
-const PANPhotoResizePage = lazy(() => import('./pages/image-tools/PANPhotoResizePage'));
-const SSCPhotoResizePage = lazy(() => import('./pages/image-tools/SSCPhotoResizePage'));
-const RailwayPhotoResizePage = lazy(() => import('./pages/image-tools/RailwayPhotoResizePage'));
-const PoliceArmyPhotoPage = lazy(() => import('./pages/image-tools/PoliceArmyPhotoPage'));
-const VisaPhotoResizePage = lazy(() => import('./pages/image-tools/VisaPhotoResizePage'));
-const SignatureResizePage = lazy(() => import('./pages/image-tools/SignatureResizePage'));
-const ImageCompressorPage = lazy(() => import('./pages/image-tools/ImageCompressorPage'));
-const ImageCropperPage = lazy(() => import('./pages/image-tools/ImageCropperPage'));
-const DPIChangerPage = lazy(() => import('./pages/image-tools/DPIChangerPage'));
-const CustomImageResizePage = lazy(() => import('./pages/image-tools/CustomImageResizePage'));
-const JPGToPNGPage = lazy(() => import('./pages/image-tools/JPGToPNGPage'));
-const PNGToJPGPage = lazy(() => import('./pages/image-tools/PNGToJPGPage'));
-const WEBPConverterPage = lazy(() => import('./pages/image-tools/WEBPConverterPage'));
-const BackgroundRemoverPage = lazy(() => import('./pages/image-tools/BackgroundRemoverPage'));
-const SmartDocumentFixerPage = lazy(() => import('./pages/image-tools/SmartDocumentFixerPage'));
+// Image tool pages
+const PassportPhotoMakerPage = React.lazy(() => import('./pages/image-tools/PassportPhotoMakerPage'));
+const AadhaarPhotoResizePage = React.lazy(() => import('./pages/image-tools/AadhaarPhotoResizePage'));
+const PANPhotoResizePage = React.lazy(() => import('./pages/image-tools/PANPhotoResizePage'));
+const SSCPhotoResizePage = React.lazy(() => import('./pages/image-tools/SSCPhotoResizePage'));
+const RailwayPhotoResizePage = React.lazy(() => import('./pages/image-tools/RailwayPhotoResizePage'));
+const PoliceArmyPhotoPage = React.lazy(() => import('./pages/image-tools/PoliceArmyPhotoPage'));
+const VisaPhotoResizePage = React.lazy(() => import('./pages/image-tools/VisaPhotoResizePage'));
+const SignatureResizePage = React.lazy(() => import('./pages/image-tools/SignatureResizePage'));
+const ImageCompressorPage = React.lazy(() => import('./pages/image-tools/ImageCompressorPage'));
+const ImageCropperPage = React.lazy(() => import('./pages/image-tools/ImageCropperPage'));
+const DPIChangerPage = React.lazy(() => import('./pages/image-tools/DPIChangerPage'));
+const CustomImageResizePage = React.lazy(() => import('./pages/image-tools/CustomImageResizePage'));
+const JPGToPNGPage = React.lazy(() => import('./pages/image-tools/JPGToPNGPage'));
+const PNGToJPGPage = React.lazy(() => import('./pages/image-tools/PNGToJPGPage'));
+const WEBPConverterPage = React.lazy(() => import('./pages/image-tools/WEBPConverterPage'));
+const BackgroundRemoverPage = React.lazy(() => import('./pages/image-tools/BackgroundRemoverPage'));
+const SmartDocumentFixerPage = React.lazy(() => import('./pages/image-tools/SmartDocumentFixerPage'));
+const AIDocumentEnhancerPage = React.lazy(() => import('./pages/image-tools/AIDocumentEnhancerPage'));
+
+// Resume builder pages
+const ResumeTemplateBuilderPage = React.lazy(() => import('./pages/resume-builder/ResumeTemplateBuilderPage'));
+
+function LoadingFallback() {
+  return (
+    <div className="flex items-center justify-center min-h-[400px]">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-blue-500 border-t-transparent rounded-full animate-spin" />
+        <span className="text-gray-400 text-sm">Loading...</span>
+      </div>
+    </div>
+  );
+}
 
 type Page =
   | 'home' | 'pdf-tools' | 'image-tools' | 'resume-builder' | 'privacy' | 'terms' | 'disclaimer'
@@ -71,29 +78,44 @@ type Page =
   | 'railway-photo-resize' | 'police-army-photo' | 'visa-photo-resize' | 'signature-resize'
   | 'image-compressor' | 'image-cropper' | 'dpi-changer' | 'custom-image-resize'
   | 'jpg-to-png' | 'png-to-jpg' | 'webp-converter' | 'background-remover' | 'smart-document-fixer'
+  | 'ai-document-enhancer'
   | 'fresher-resume' | 'government-job-resume' | 'private-job-resume' | 'hindi-resume'
   | 'biodata-for-marriage' | 'teacher-resume' | 'police-army-resume' | 'ats-friendly-resume'
   | 'us-resume' | 'uk-cv-format' | 'canada-resume' | 'europass-cv' | 'creative-resume' | 'corporate-resume';
 
-const queryClient = new QueryClient();
-
-// Loading fallback component
-function PageLoader() {
-  return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <div className="text-center">
-        <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-4" />
-        <p className="text-muted-foreground">Loading...</p>
-      </div>
-    </div>
-  );
-}
-
-function App() {
+export default function App() {
   const [currentPage, setCurrentPage] = useState<Page>('home');
 
   const handleNavigate = (page: string) => {
-    setCurrentPage(page as Page);
+    // Map path-style routes to page keys
+    const pathToPage: Record<string, Page> = {
+      '/': 'home',
+      '/calculators': 'calculators',
+      '/pdf-tools': 'pdf-tools',
+      '/image-tools': 'image-tools',
+      '/resume-builder': 'resume-builder',
+      '/image-tools/passport-photo': 'passport-photo-maker',
+      '/image-tools/aadhaar-photo': 'aadhaar-photo-resize',
+      '/image-tools/pan-photo': 'pan-photo-resize',
+      '/image-tools/ssc-photo': 'ssc-photo-resize',
+      '/image-tools/railway-photo': 'railway-photo-resize',
+      '/image-tools/police-army-photo': 'police-army-photo',
+      '/image-tools/visa-photo': 'visa-photo-resize',
+      '/image-tools/signature-resize': 'signature-resize',
+      '/image-tools/compress': 'image-compressor',
+      '/image-tools/crop': 'image-cropper',
+      '/image-tools/dpi-changer': 'dpi-changer',
+      '/image-tools/resize': 'custom-image-resize',
+      '/image-tools/jpg-to-png': 'jpg-to-png',
+      '/image-tools/png-to-jpg': 'png-to-jpg',
+      '/image-tools/webp-converter': 'webp-converter',
+      '/image-tools/background-remover': 'background-remover',
+      '/image-tools/smart-document-fixer': 'smart-document-fixer',
+      '/ai-document-enhancer': 'ai-document-enhancer',
+    };
+
+    const mapped = pathToPage[page] || (page as Page);
+    setCurrentPage(mapped);
     window.scrollTo(0, 0);
   };
 
@@ -104,20 +126,22 @@ function App() {
 
   const renderPage = () => {
     switch (currentPage) {
+      case 'home':
+        return <HomePage onNavigate={handleNavigate} />;
+
       case 'pdf-tools':
         return <PDFToolsPage onBack={() => setCurrentPage('home')} />;
+
       case 'image-tools':
-        return <ImageToolsPage onBack={() => setCurrentPage('home')} onNavigate={handleNavigate} />;
+        return <ImageToolsPage onNavigate={handleNavigate} />;
+
       case 'resume-builder':
         return <ResumeBuilderPage onBack={() => setCurrentPage('home')} onNavigate={handleNavigate} />;
-      case 'privacy':
-        return <PrivacyPolicyPage onBack={() => setCurrentPage('home')} />;
-      case 'terms':
-        return <TermsOfUsePage onBack={() => setCurrentPage('home')} />;
-      case 'disclaimer':
-        return <DisclaimerPage onBack={() => setCurrentPage('home')} />;
+
       case 'calculators':
         return <CalculatorsPage onBack={() => setCurrentPage('home')} onNavigate={handleNavigate} />;
+
+      // Calculator pages — use onBack prop
       case 'cgpa-calculator':
         return <CGPACalculatorPage onBack={() => setCurrentPage('calculators')} />;
       case 'sgpa-calculator':
@@ -158,6 +182,7 @@ function App() {
         return <DateDifferenceCalculatorPage onBack={() => setCurrentPage('calculators')} />;
       case 'time-duration-calculator':
         return <TimeDurationCalculatorPage onBack={() => setCurrentPage('calculators')} />;
+
       // Image tool pages — use onNavigate prop
       case 'passport-photo-maker':
         return <PassportPhotoMakerPage onNavigate={handleNavigate} />;
@@ -192,7 +217,16 @@ function App() {
       case 'background-remover':
         return <BackgroundRemoverPage onNavigate={handleNavigate} />;
       case 'smart-document-fixer':
-        return <SmartDocumentFixerPage onBack={() => setCurrentPage('image-tools')} onNavigate={handleNavigate} />;
+        return (
+          <SmartDocumentFixerPage
+            onBack={() => setCurrentPage('image-tools')}
+            onNavigate={handleNavigate}
+          />
+        );
+      case 'ai-document-enhancer':
+        return <AIDocumentEnhancerPage onNavigate={handleNavigate} />;
+
+      // Resume template pages
       case 'fresher-resume':
         return <ResumeTemplateBuilderPage templateSlug="fresher-resume" onBack={() => setCurrentPage('resume-builder')} />;
       case 'government-job-resume':
@@ -221,27 +255,23 @@ function App() {
         return <ResumeTemplateBuilderPage templateSlug="creative-resume" onBack={() => setCurrentPage('resume-builder')} />;
       case 'corporate-resume':
         return <ResumeTemplateBuilderPage templateSlug="corporate-resume" onBack={() => setCurrentPage('resume-builder')} />;
+
       default:
         return <HomePage onNavigate={handleNavigate} />;
     }
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-        <LanguageProvider>
-          <div className="min-h-screen flex flex-col bg-background">
-            <Header onNavigateHome={handleNavigateHome} onNavigate={handleNavigate} />
-            <Suspense fallback={<PageLoader />}>
-              {renderPage()}
-            </Suspense>
-            <Footer onNavigate={handleNavigate} />
-            <Toaster />
-          </div>
-        </LanguageProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
+    <LanguageProvider>
+      <div className="min-h-screen bg-gray-900 flex flex-col">
+        <Header onNavigate={handleNavigate} onNavigateHome={handleNavigateHome} />
+        <main className="flex-1">
+          <Suspense fallback={<LoadingFallback />}>
+            {renderPage()}
+          </Suspense>
+        </main>
+        <Footer onNavigate={handleNavigate} />
+      </div>
+    </LanguageProvider>
   );
 }
-
-export default App;

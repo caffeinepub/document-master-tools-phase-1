@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 29,
-  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model (Free: 2 fixes/day, standard quality, watermark; Pro: unlimited, HD, A4 sheet, no watermark, multi-photo sheet) with Go Pro button, pricing modal (₹499/month, ₹3999/year), feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged. Phase 10 - Advanced User-Controlled Mode for all non-calculator tools: Image Tools, PDF Tools, Converters, and Compressors upgraded with manual settings selection before processing, unit selection (px/cm/inches/mm/KB/MB), quality/size controls, preview before download, format selection, before/after comparison, and download enabled only after preview. Homepage updated to show all FREE tools on front page with clear icons per tool card, Pro tools in a separate labeled section — existing layout/design/theme unchanged. Calculators remain 100% untouched.",
+  "projectStateVersion": 33,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model with Go Pro button, pricing modal, feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged. Phase 10 - Advanced User-Controlled Mode for all non-calculator tools. Phase 11 - International Office Platform Upgrade: Back to Home button on every tool page (top-left, arrow + label), breadcrumb navigation, post-download navigation buttons (Back to Home + Use Another Tool), mobile-friendly navigation, A4/Legal/Letter presets for office print-ready export, batch file processing, PDF stamp option, country auto-detect with language auto-switch, RTL support for Arabic, multi-language SEO. Pro plan: single Pro tool 'AI Document Enhancer' at ₹399/month or ₹3000/year, login + subscription required, Pro Active badge. Homepage: all FREE tools visible with icons, Pro tools in separate section. Calculators 100% untouched.",
   "architectural_notes": [
     "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
     "Each calculator gets individual SEO-friendly page",
@@ -984,6 +984,110 @@
         "REQ-148"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-custom-image-resize-tool-frontend-src-pages-image-tools-customimageresizepage-tsx-and-frontend-src-components-image-tools-photoresizetool-tsx-to-include-a-comprehensive-preset-selection-system-with-six-resize-modes-organized-as-tabbed-or-sectioned-categories-1-easy-resize-three-preset-buttons-small-640-480-px-medium-1280-960-px-large-1920-1440-px-2-percentage-resize-preset-buttons-for-25-40-50-75-and-a-custom-input-field-for-manual-percentage-entry-3-width-height-presets-a-dropdown-or-card-list-of-common-dimension-presets-e-g-800-600-1024-768-1280-720-1920-1080-2560-1440-4k-3840-2160-plus-a-custom-option-that-reveals-manual-width-and-height-inputs-with-maintain-aspect-ratio-toggle-4-target-file-size-preset-options-100-kb-500-kb-1-mb-2-mb-and-a-custom-input-with-kb-mb-unit-selector-5-print-size-mode-width-and-height-inputs-with-unit-selector-toggling-between-mm-cm-and-inch-plus-a-dpi-selector-72-96-150-200-300-to-calculate-pixel-dimensions-from-physical-dimensions-6-social-media-presets-a-labeled-preset-selector-with-the-following-entries-and-their-standard-dimensions-instagram-post-1080-1080-px-instagram-story-1080-1920-px-facebook-post-1200-630-px-facebook-cover-820-312-px-youtube-thumbnail-1280-720-px-youtube-channel-art-2560-1440-px-x-twitter-post-1200-675-px-x-twitter-header-1500-500-px-tiktok-video-cover-1080-1920-px-linkedin-personal-banner-1584-396-px-linkedin-company-banner-1128-191-px-pinterest-pin-1000-1500-px-snap-story-1080-1920-px-tumblr-post-500-750-px-each-social-media-preset-must-auto-populate-the-width-and-height-fields-upon-selection",
+      "title": "Upgrade the Custom Image Resize tool (frontend/src/pages/image-tools/CustomImageResizePage.tsx and frontend/src/components/image-tools/PhotoResizeTool.tsx) to include a comprehensive preset selection system with six resize modes organized as tabbed or sectioned categories: (1) Easy Resize — three preset buttons: Small (640×480 px), Medium (1280×960 px), Large (1920×1440 px); (2) Percentage Resize — preset buttons for 25%, 40%, 50%, 75%, and a Custom input field for manual percentage entry; (3) Width × Height Presets — a dropdown or card list of common dimension presets (e.g., 800×600, 1024×768, 1280×720, 1920×1080, 2560×1440, 4K 3840×2160) plus a Custom option that reveals manual width and height inputs with maintain aspect ratio toggle; (4) Target File Size — preset options: 100 KB, 500 KB, 1 MB, 2 MB, and a Custom input with KB/MB unit selector; (5) Print Size Mode — width and height inputs with unit selector toggling between mm, cm, and inch, plus a DPI selector (72, 96, 150, 200, 300) to calculate pixel dimensions from physical dimensions; (6) Social Media Presets — a labeled preset selector with the following entries and their standard dimensions: Instagram Post (1080×1080 px), Instagram Story (1080×1920 px), Facebook Post (1200×630 px), Facebook Cover (820×312 px), YouTube Thumbnail (1280×720 px), YouTube Channel Art (2560×1440 px), X/Twitter Post (1200×675 px), X/Twitter Header (1500×500 px), TikTok Video Cover (1080×1920 px), LinkedIn Personal Banner (1584×396 px), LinkedIn Company Banner (1128×191 px), Pinterest Pin (1000×1500 px), Snap Story (1080×1920 px), Tumblr Post (500×750 px). Each social media preset must auto-populate the width and height fields upon selection.",
+      "reqIds": [
+        "REQ-149"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-back-to-home-navigation-button-on-every-non-calculator-tool-page-all-image-tool-pages-all-pdf-tool-pages-all-converter-compressor-pages-and-the-resume-builder-pages-place-it-in-the-top-left-corner-of-the-page-content-area-above-the-h1-heading-it-must-display-a-left-arrow-icon-followed-by-the-label-home-it-must-be-visible-in-both-light-and-dark-modes-have-a-minimum-tap-target-of-44x44-px-for-mobile-and-navigate-the-user-to-the-homepage-do-not-modify-any-calculator-page-components",
+      "title": "Add a 'Back to Home' navigation button on every non-calculator tool page (all image tool pages, all PDF tool pages, all converter/compressor pages, and the Resume Builder pages). Place it in the top-left corner of the page content area, above the H1 heading. It must display a left-arrow icon followed by the label 'Home'. It must be visible in both light and dark modes, have a minimum tap target of 44x44 px for mobile, and navigate the user to the homepage (/). Do NOT modify any calculator page components.",
+      "reqIds": [
+        "REQ-151"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-after-a-download-completes-on-any-non-calculator-tool-page-display-two-post-download-navigation-buttons-below-the-download-area-1-back-to-home-that-navigates-to-2-use-another-tool-that-navigates-to-the-parent-hub-page-for-the-current-tool-category-image-tools-for-image-tools-pdf-tools-for-pdf-tools-resume-builder-for-resume-tools-these-buttons-must-appear-only-after-a-successful-download-action-and-must-be-mobile-responsive-with-full-width-layout-on-screens-below-768-px-do-not-modify-any-calculator-components",
+      "title": "After a download completes on any non-calculator tool page, display two post-download navigation buttons below the download area: (1) 'Back to Home' that navigates to /; (2) 'Use Another Tool' that navigates to the parent hub page for the current tool category (/image-tools for image tools, /pdf-tools for PDF tools, /resume-builder for resume tools). These buttons must appear only after a successful download action and must be mobile-responsive with full-width layout on screens below 768 px. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-153"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a4-210x297-mm-legal-215-9x355-6-mm-and-letter-215-9x279-4-mm-page-size-presets-across-all-relevant-image-tools-customimageresizepage-dpichangerpage-exportoptionspanel-and-pdf-tools-imagetopdftool-pdftoimagetool-settings-panels-each-preset-must-automatically-populate-the-corresponding-pixel-dimensions-based-on-the-selected-dpi-default-300-dpi-if-no-dpi-selector-is-present-label-these-presets-clearly-as-office-print-ready-in-the-preset-selector-ui-do-not-modify-any-calculator-components",
+      "title": "Add A4 (210x297 mm), Legal (215.9x355.6 mm), and Letter (215.9x279.4 mm) page size presets across all relevant image tools (CustomImageResizePage, DPIChangerPage, ExportOptionsPanel) and PDF tools (ImageToPDFTool, PDFToImageTool) settings panels. Each preset must automatically populate the corresponding pixel dimensions based on the selected DPI (default 300 DPI if no DPI selector is present). Label these presets clearly as 'Office Print Ready' in the preset selector UI. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-154"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-batch-file-processing-support-for-non-calculator-tools-users-must-be-able-to-upload-multiple-files-at-once-in-imagecompressorpage-customimageresizepage-dpichangerpage-jpgtopngpage-pngtojpgpage-webpconverterpage-backgroundremoverpage-pdfcompresstool-and-imagetopdftool-the-batch-mode-must-1-display-a-list-of-queued-files-with-individual-file-names-and-sizes-2-process-all-files-using-the-existing-client-side-processing-logic-3-allow-downloading-all-processed-files-individually-or-as-a-zip-archive-using-jszip-or-an-equivalent-already-in-the-project-4-show-per-file-processing-status-pending-processing-done-error-do-not-modify-any-calculator-components",
+      "title": "Implement batch file processing support for non-calculator tools. Users must be able to upload multiple files at once in: ImageCompressorPage, CustomImageResizePage, DPIChangerPage, JPGToPNGPage, PNGToJPGPage, WEBPConverterPage, BackgroundRemoverPage, PDFCompressTool, and ImageToPDFTool. The batch mode must: (1) display a list of queued files with individual file names and sizes; (2) process all files using the existing client-side processing logic; (3) allow downloading all processed files individually or as a ZIP archive using JSZip or an equivalent already in the project; (4) show per-file processing status (pending, processing, done, error). Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-155"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-expand-multi-language-support-beyond-the-current-9-indian-languages-add-the-following-languages-to-languagecontext-frontend-src-contexts-languagecontext-tsx-and-languageselector-frontend-src-components-languageselector-tsx-arabic-ar-french-fr-spanish-es-german-de-chinese-simplified-zh-portuguese-pt-russian-ru-japanese-ja-indonesian-id-create-corresponding-locale-json-files-at-frontend-src-locales-ar-json-fr-json-es-json-de-json-zh-json-pt-json-ru-json-ja-json-id-json-with-translations-for-all-ui-text-keys-already-present-in-the-existing-en-json-file-use-lazy-loading-dynamic-imports-for-all-new-locale-files-do-not-translate-calculation-logic-formulas-or-numerical-operations",
+      "title": "Expand multi-language support beyond the current 9 Indian languages. Add the following languages to LanguageContext (frontend/src/contexts/LanguageContext.tsx) and LanguageSelector (frontend/src/components/LanguageSelector.tsx): Arabic (ar), French (fr), Spanish (es), German (de), Chinese Simplified (zh), Portuguese (pt), Russian (ru), Japanese (ja), Indonesian (id). Create corresponding locale JSON files at frontend/src/locales/ar.json, fr.json, es.json, de.json, zh.json, pt.json, ru.json, ja.json, id.json with translations for all UI text keys already present in the existing en.json file. Use lazy loading (dynamic imports) for all new locale files. Do NOT translate calculation logic, formulas, or numerical operations.",
+      "reqIds": [
+        "REQ-157"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-rtl-right-to-left-layout-support-for-arabic-ar-when-the-active-language-is-arabic-set-dir-rtl-and-lang-ar-on-the-document-root-element-apply-tailwind-rtl-utilities-where-flex-grid-layouts-need-mirroring-switch-text-alignment-to-right-aligned-and-render-breadcrumbnavigation-in-rtl-order-all-other-languages-must-remain-ltr-ensure-header-footer-tool-cards-form-wizards-and-breadcrumbs-display-correctly-in-rtl-mode-no-calculator-component-should-be-modified",
+      "title": "Implement RTL (right-to-left) layout support for Arabic (ar). When the active language is Arabic, set dir='rtl' and lang='ar' on the document root element, apply Tailwind RTL utilities where flex/grid layouts need mirroring, switch text alignment to right-aligned, and render BreadcrumbNavigation in RTL order. All other languages must remain LTR. Ensure Header, Footer, tool cards, form wizards, and breadcrumbs display correctly in RTL mode. No calculator component should be modified.",
+      "reqIds": [
+        "REQ-158"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-multi-language-seo-support-for-all-newly-added-languages-update-the-seo-component-frontend-src-components-seo-tsx-to-render-hreflang-link-tags-for-all-supported-languages-existing-9-indian-languages-plus-9-new-global-languages-plus-x-default-pointing-to-english-update-the-sitemap-generation-utility-frontend-src-utils-generatesitemap-ts-and-public-sitemap-xml-to-include-language-specific-url-variants-for-all-new-languages-following-the-pattern-lang-route-update-app-tsx-routing-to-add-language-prefixed-routes-for-the-new-languages-following-the-same-pattern-already-established-for-the-existing-9-languages",
+      "title": "Implement multi-language SEO support for all newly added languages. Update the SEO component (frontend/src/components/SEO.tsx) to render hreflang link tags for all supported languages (existing 9 Indian languages plus 9 new global languages plus x-default pointing to English). Update the sitemap generation utility (frontend/src/utils/generateSitemap.ts) and public/sitemap.xml to include language-specific URL variants for all new languages following the pattern /[lang]/[route]. Update App.tsx routing to add language-prefixed routes for the new languages following the same pattern already established for the existing 9 languages.",
+      "reqIds": [
+        "REQ-159"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-country-based-language-auto-detection-on-initial-page-load-use-navigator-language-and-navigator-languages-to-detect-the-user-s-locale-if-the-detected-locale-matches-one-of-the-19-supported-languages-auto-switch-to-that-language-and-update-the-url-to-the-language-prefixed-variant-if-no-match-is-found-fall-back-to-english-persist-the-detected-or-selected-language-to-localstorage-do-not-redirect-if-the-user-has-already-manually-selected-a-language-check-localstorage-for-an-existing-preference-key",
+      "title": "Implement country-based language auto-detection on initial page load. Use navigator.language and navigator.languages to detect the user's locale. If the detected locale matches one of the 19 supported languages, auto-switch to that language and update the URL to the language-prefixed variant. If no match is found, fall back to English. Persist the detected or selected language to localStorage. Do not redirect if the user has already manually selected a language (check localStorage for an existing preference key).",
+      "reqIds": [
+        "REQ-160"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-frontend-src-pages-homepage-tsx-to-ensure-all-free-tools-are-visible-with-clear-icons-and-that-the-single-pro-tool-is-in-its-own-separate-section-specifically-1-all-free-tool-cards-pdf-tools-image-tools-excluding-ai-document-enhancer-calculator-hub-resume-builder-must-display-a-clear-recognizable-svg-icon-per-card-that-immediately-communicates-the-tool-purpose-2-the-ai-document-enhancer-the-only-pro-tool-must-be-placed-in-a-clearly-labeled-separate-section-titled-pro-tools-positioned-below-all-free-tool-sections-using-the-same-card-design-as-free-tools-but-with-the-amber-gold-pro-badge-3-free-tool-cards-must-not-display-any-pro-badge-4-the-existing-layout-dark-theme-card-shadows-border-radius-padding-gap-values-and-all-other-visual-properties-must-remain-completely-unchanged-do-not-modify-any-calculator-components",
+      "title": "Update frontend/src/pages/HomePage.tsx to ensure all FREE tools are visible with clear icons and that the single Pro tool is in its own separate section. Specifically: (1) all FREE tool cards (PDF Tools, Image Tools excluding AI Document Enhancer, Calculator Hub, Resume Builder) must display a clear recognizable SVG icon per card that immediately communicates the tool purpose; (2) the AI Document Enhancer (the only Pro tool) must be placed in a clearly labeled separate section titled 'Pro Tools' positioned below all free tool sections using the same card design as free tools but with the amber/gold PRO badge; (3) free tool cards must NOT display any PRO badge; (4) the existing layout, dark theme, card shadows, border radius, padding, gap values, and all other visual properties must remain completely unchanged. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-161"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-new-pro-tool-ai-document-enhancer-create-a-new-page-component-at-frontend-src-pages-image-tools-aidocumentenhancerpage-tsx-with-seo-metadata-title-ai-document-enhancer-pro-tool-document-master-tools-breadcrumbnavigation-home-image-tools-ai-document-enhancer-h1-heading-and-a-100-150-word-description-the-page-must-display-a-login-subscription-gate-show-a-prominent-login-required-and-subscribe-to-pro-message-with-pricing-399-rupees-per-month-or-3000-rupees-per-year-use-the-existing-useproaccess-hook-and-useinternetidentity-hook-when-ispro-is-true-and-the-user-is-authenticated-unlock-the-tool-otherwise-show-the-gate-display-a-pro-active-badge-in-the-page-header-when-the-user-has-active-pro-access-register-the-route-ai-document-enhancer-in-app-tsx-using-react-lazy-and-suspense-update-propricingmodal-to-replace-smart-document-fixer-pro-pricing-with-ai-document-enhancer-pricing-399-rupees-per-month-and-3000-rupees-per-year-add-an-ai-document-enhancer-card-with-the-amber-gold-pro-badge-to-imagetoolspage-in-its-own-pro-tools-sub-section-do-not-modify-any-calculator-components",
+      "title": "Create the new Pro tool 'AI Document Enhancer'. Create a new page component at frontend/src/pages/image-tools/AIDocumentEnhancerPage.tsx with SEO metadata (title: 'AI Document Enhancer - Pro Tool | Document Master Tools'), BreadcrumbNavigation (Home > Image Tools > AI Document Enhancer), H1 heading, and a 100-150 word description. The page must display a login/subscription gate: show a prominent 'Login Required' and 'Subscribe to Pro' message with pricing (399 rupees per month or 3000 rupees per year). Use the existing useProAccess hook and useInternetIdentity hook: when isPro is true AND the user is authenticated, unlock the tool; otherwise show the gate. Display a 'Pro Active' badge in the page header when the user has active Pro access. Register the route /ai-document-enhancer in App.tsx using React.lazy() and Suspense. Update ProPricingModal to replace Smart Document Fixer Pro pricing with AI Document Enhancer pricing: 399 rupees per month and 3000 rupees per year. Add an AI Document Enhancer card with the amber/gold PRO badge to ImageToolsPage in its own Pro Tools sub-section. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-162"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-update-the-header-component-frontend-src-components-header-tsx-languageselector-to-include-all-19-supported-languages-9-existing-indian-languages-plus-9-new-global-languages-with-english-as-default-the-navigation-link-order-must-remain-1-calculator-hub-to-calculators-2-pdf-tools-to-pdf-tools-3-image-tools-to-image-tools-4-resume-builder-to-resume-builder-5-jobsindiaa-com-external-new-tab-6-rjy-total-manpowers-com-external-new-tab-all-existing-hamburger-menu-mobile-overlay-touch-targets-and-responsive-behavior-must-remain-unchanged",
+      "title": "Update the Header component (frontend/src/components/Header.tsx) LanguageSelector to include all 19 supported languages (9 existing Indian languages plus 9 new global languages with English as default). The navigation link order must remain: (1) Calculator Hub to /calculators; (2) PDF Tools to /pdf-tools; (3) Image Tools to /image-tools; (4) Resume Builder to /resume-builder; (5) JobsIndiaa.com external new tab; (6) RJY Total Manpowers.com external new tab. All existing hamburger menu, mobile overlay, touch targets, and responsive behavior must remain unchanged.",
+      "reqIds": [
+        "REQ-163"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-non-calculator-tool-pages-with-the-new-navigation-elements-back-to-home-button-breadcrumbs-post-download-buttons-and-batch-processing-ui-are-fully-mobile-responsive-the-back-to-home-button-must-be-full-width-on-screens-below-480-px-breadcrumbs-must-truncate-gracefully-on-small-screens-using-ellipsis-or-horizontal-scrolling-post-download-navigation-buttons-must-be-full-width-with-min-height-48-px-on-mobile-the-batch-file-queue-list-must-stack-vertically-on-screens-below-768-px-with-scrollable-overflow-if-needed-do-not-modify-any-calculator-components",
+      "title": "Ensure all non-calculator tool pages with the new navigation elements (Back to Home button, breadcrumbs, post-download buttons) and batch processing UI are fully mobile-responsive. The Back to Home button must be full-width on screens below 480 px. Breadcrumbs must truncate gracefully on small screens using ellipsis or horizontal scrolling. Post-download navigation buttons must be full-width with min-height 48 px on mobile. The batch file queue list must stack vertically on screens below 768 px with scrollable overflow if needed. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-165"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1518,6 +1622,92 @@
       "summary": "Update frontend/src/pages/PDFToolsPage.tsx to add a clear, recognizable icon to every PDF tool card so users can immediately identify the tool's purpose at a glance (e.g., a merge icon for Merge PDF, a lock icon for Password Protect, a scissors icon for Split PDF). All existing card layout, grid structure, colors, spacing, and navigation behavior must remain unchanged. Do NOT modify any calculator components.",
       "reqIds": [
         "REQ-147"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-138",
+      "summary": "Upgrade Image Resizer tool with advanced preset selection: Easy Resize (Small/Medium/Large), Percentage Resize (25%/40%/50%/75%/Custom), Width×Height preset list + Custom, Target File Size (100KB/500KB/1MB/2MB/Custom), Print size mode (mm/cm/inch), Social Media presets (Instagram, Facebook, YouTube, X/Twitter, TikTok, LinkedIn Personal, LinkedIn Company, Pinterest, Snap, Tumblr). Flow: select settings → submit → preview → enable download. Layout unchanged, calculators untouched.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-140",
+      "summary": "Ensure the upgraded Image Resizer tool with all six preset modes is fully mobile responsive: preset category tabs or sections must stack vertically on screens below 768px, Social Media preset selector must use a full-width dropdown on mobile, width/height inputs and unit selectors must use full-width layout on small screens, 'Apply & Preview' and 'Download' buttons must be full-width with minimum height of 48px on mobile for touch friendliness, and the before/after comparison panel must switch from side-by-side to stacked layout (original on top, processed below) on screens below 768px.",
+      "reqIds": [
+        "REQ-150"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-141",
+      "summary": "Add 'Back to Home' arrow button on every tool page — top-left corner, arrow icon + 'Home' label, visible and mobile-friendly. No layout/theme changes.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-142",
+      "summary": "Add breadcrumb navigation on every tool page (e.g., Home > Image Tools > Image Resizer). Must not break existing layout.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-143",
+      "summary": "After download completes, show 'Back to Home' and 'Use Another Tool' navigation buttons on all tool pages.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-144",
+      "summary": "Add A4 / Legal / Letter dimension presets for office print-ready export across Image Tools and PDF Tools.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-145",
+      "summary": "Add batch file processing support to Image Tools, PDF Tools, Converters, and Compressors (non-calculator tools only).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-146",
+      "summary": "Add PDF stamp/watermark option to PDF tools.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-147",
+      "summary": "Expand multi-language support: auto-detect user country, auto-switch language, support major global languages (beyond current 9 Indian languages), add RTL support for Arabic, add multi-language SEO for new languages.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-148",
+      "summary": "Replace Smart Document Fixer Pro plan with new single Pro tool: 'AI Document Enhancer'. Pricing: ₹399/month, ₹3000/year. Requires login and subscription. Show 'Pro Active' badge. No other tool is Pro.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-150",
+      "summary": "Ensure BreadcrumbNavigation is integrated on every non-calculator tool page that does not already have it, using the existing BreadcrumbNavigation component (frontend/src/components/BreadcrumbNavigation.tsx). Each tool page must render the correct hierarchical path (e.g., Home > Image Tools > Image Resizer, Home > PDF Tools > Merge PDF, Home > Resume Builder > Fresher Resume). Breadcrumbs must be placed directly below the Back to Home button and above the H1 heading. Do NOT modify any calculator page components.",
+      "reqIds": [
+        "REQ-152"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-154",
+      "summary": "Enhance PDFAddWatermarkTool (frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx) to expose a full PDF Stamp/Watermark settings panel including: (1) text input for stamp content (e.g., CONFIDENTIAL, DRAFT, APPROVED, or custom); (2) font size selector (small/medium/large/custom pt); (3) opacity slider (10-100%); (4) position selector (center diagonal, top-left, top-right, bottom-left, bottom-right); (5) color picker for stamp text; (6) rotation angle input (0-360 degrees). Processing must follow the advanced user-controlled mode: settings then Apply & Preview then download enabled. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-156"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-162",
+      "summary": "Upgrade all 16 PDF tool components in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode via the existing AdvancedToolShell component (frontend/src/components/AdvancedToolShell.tsx). Each PDF tool must follow the strict sequence: settings selection then Apply and Preview then download enabled only after preview. Required settings panels: (a) PDFCompressTool: compression level selector (Low/Medium/High/Maximum) and target size input with KB/MB unit selector; (b) PDFMergeTool: page order drag-reorder list and output quality selector; (c) PDFSplitTool: split mode selector (by page range/every N pages/individual pages) and page range input; (d) PDFToImageTool: output format selector (PNG/JPEG/WebP), DPI selector (72/150/200/300), quality slider; (e) ImageToPDFTool: page size selector (A4/Letter/Legal/custom), orientation (portrait/landscape), image fit mode (fit/fill/center); (f) PDFPasswordProtectTool: password input and encryption level selector (128-bit/256-bit); (g) PDFAddWatermarkTool: settings as specified in REQ-156; (h) all remaining PDF tools: expose options relevant to their specific function. Processing must not begin until Apply and Preview is clicked. Show a preview panel before enabling download. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-164"
       ],
       "status": "pending"
     }

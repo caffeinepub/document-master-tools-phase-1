@@ -1,22 +1,12 @@
-import React from 'react';
-import { X, Check, Lock, Zap, Crown } from 'lucide-react';
-import { useProAccess } from '@/hooks/useProAccess';
+import { X, Check, Crown, Zap, Star } from 'lucide-react';
+import { useProAccess } from '../../hooks/useProAccess';
 
 interface ProPricingModalProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   onClose: () => void;
 }
 
-const features = [
-  { label: 'Fixes per day', free: '2', pro: 'Unlimited' },
-  { label: 'Export quality', free: 'Standard', pro: 'HD' },
-  { label: 'Watermark on export', free: 'Yes', pro: 'No' },
-  { label: 'A4 printable sheet', free: 'No', pro: 'Yes' },
-  { label: 'Advanced enhancements', free: 'No', pro: 'Yes' },
-  { label: 'Multi-photo sheet export', free: 'No', pro: 'Yes' },
-];
-
-export default function ProPricingModal({ isOpen, onClose }: ProPricingModalProps) {
+export default function ProPricingModal({ isOpen = true, onClose }: ProPricingModalProps) {
   const { activatePro } = useProAccess();
 
   const handleActivate = () => {
@@ -26,202 +16,112 @@ export default function ProPricingModal({ isOpen, onClose }: ProPricingModalProp
 
   if (!isOpen) return null;
 
+  const features = [
+    { label: 'AI Document Enhancement', free: false, pro: true },
+    { label: 'Unlimited Daily Fixes', free: '2/day', pro: 'Unlimited' },
+    { label: 'Multi-Copy Layout', free: false, pro: true },
+    { label: 'A4 PDF Printable Export', free: false, pro: true },
+    { label: 'Multi-Photo Sheet', free: false, pro: true },
+    { label: 'Watermark-Free Output', free: false, pro: true },
+    { label: 'Priority Processing', free: false, pro: true },
+    { label: 'Pro Active Badge', free: false, pro: true },
+  ];
+
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ animation: 'fadeIn 0.2s ease-out' }}
-    >
-      {/* Backdrop */}
-      <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-        onClick={onClose}
-        aria-hidden="true"
-      />
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+      <div className="bg-gray-900 rounded-2xl border border-gray-700 w-full max-w-2xl max-h-[90vh] overflow-y-auto shadow-2xl animate-in fade-in zoom-in-95 duration-200">
+        {/* Header */}
+        <div className="flex items-center justify-between p-6 border-b border-gray-800">
+          <div className="flex items-center gap-2">
+            <Crown className="w-6 h-6 text-amber-400" />
+            <h2 className="text-xl font-bold text-white">AI Document Enhancer Pro</h2>
+          </div>
+          <button
+            onClick={onClose}
+            className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-      {/* Modal */}
-      <div
-        className="relative bg-card border border-border rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto"
-        style={{ animation: 'scaleIn 0.2s ease-out' }}
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby="pro-modal-title"
-      >
-        {/* Close button */}
-        <button
-          onClick={onClose}
-          className="absolute top-4 right-4 z-10 p-2 rounded-full bg-muted hover:bg-muted/80 transition-colors text-muted-foreground hover:text-foreground"
-          aria-label="Close modal"
-        >
-          <X className="w-4 h-4" />
-        </button>
-
-        <div className="p-6 md:p-8">
-          {/* Header */}
-          <div className="text-center mb-6">
-            <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-amber-500/15 mb-3">
-              <Crown className="w-7 h-7 text-amber-500" />
+        {/* Pricing Cards */}
+        <div className="p-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="bg-gray-800 rounded-xl p-5 border border-gray-700">
+            <div className="flex items-center gap-2 mb-3">
+              <Zap className="w-5 h-5 text-blue-400" />
+              <span className="font-semibold text-white">Monthly</span>
             </div>
-            <h2 id="pro-modal-title" className="text-2xl md:text-3xl font-bold text-foreground mb-2">
-              Unlock Smart Document Fixer Pro
-            </h2>
-            <p className="text-muted-foreground text-sm md:text-base">
-              Get unlimited fixes, HD exports, A4 printable sheets, and more.
-            </p>
+            <div className="text-3xl font-bold text-white mb-1">₹399</div>
+            <div className="text-gray-400 text-sm mb-4">per month</div>
+            <button
+              onClick={handleActivate}
+              className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors text-sm"
+            >
+              Activate Monthly
+            </button>
           </div>
 
-          {/* Feature Comparison Table */}
-          <div className="mb-8 overflow-x-auto">
-            <table className="w-full text-sm border-collapse">
-              <thead>
-                <tr>
-                  <th className="text-left py-3 px-4 text-muted-foreground font-medium border-b border-border">Feature</th>
-                  <th className="text-center py-3 px-4 text-muted-foreground font-medium border-b border-border">Free</th>
-                  <th className="text-center py-3 px-4 font-semibold border-b border-border">
-                    <span className="inline-flex items-center gap-1 text-amber-600 dark:text-amber-400">
-                      <Crown className="w-3.5 h-3.5" />
-                      Pro
-                    </span>
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {features.map((feature, idx) => (
-                  <tr
-                    key={feature.label}
-                    className={idx % 2 === 0 ? 'bg-muted/20' : ''}
-                  >
-                    <td className="py-3 px-4 text-foreground font-medium">{feature.label}</td>
-                    <td className="py-3 px-4 text-center text-muted-foreground">
-                      {feature.free === 'No' ? (
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-destructive/15 text-destructive">
-                          <X className="w-3 h-3" />
-                        </span>
-                      ) : feature.free === 'Yes' ? (
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/15 text-amber-600">
-                          <Check className="w-3 h-3" />
-                        </span>
-                      ) : (
-                        <span>{feature.free}</span>
-                      )}
-                    </td>
-                    <td className="py-3 px-4 text-center">
-                      {feature.pro === 'No' ? (
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-destructive/15 text-destructive">
-                          <X className="w-3 h-3" />
-                        </span>
-                      ) : feature.pro === 'Yes' ? (
-                        <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-green-500/15 text-green-600 dark:text-green-400">
-                          <Check className="w-3 h-3" />
-                        </span>
-                      ) : (
-                        <span className="font-semibold text-green-600 dark:text-green-400">{feature.pro}</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="bg-amber-900/20 rounded-xl p-5 border border-amber-500/50 relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 bg-amber-500 text-black text-xs font-bold rounded-full">
+              BEST VALUE
+            </div>
+            <div className="flex items-center gap-2 mb-3">
+              <Star className="w-5 h-5 text-amber-400 fill-amber-400" />
+              <span className="font-semibold text-white">Yearly</span>
+            </div>
+            <div className="text-3xl font-bold text-white mb-1">₹3,000</div>
+            <div className="text-amber-400 text-sm mb-4">per year — Save 37%</div>
+            <button
+              onClick={handleActivate}
+              className="w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-medium transition-colors text-sm"
+            >
+              Activate Yearly
+            </button>
           </div>
+        </div>
 
-          {/* Plan Cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
-            {/* Monthly Plan */}
-            <div className="border border-border rounded-xl p-5 flex flex-col gap-3 hover:border-amber-500/50 transition-colors">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Monthly Plan</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-foreground">₹499</span>
-                  <span className="text-muted-foreground text-sm">/month</span>
-                </div>
-              </div>
-              <ul className="space-y-1.5 text-sm text-muted-foreground flex-1">
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  Unlimited fixes per day
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  HD export quality
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  No watermark
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  A4 printable sheet
-                </li>
-              </ul>
-              <button
-                onClick={handleActivate}
-                className="w-full py-2.5 px-4 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
+        {/* Feature Comparison */}
+        <div className="px-6 pb-6">
+          <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">
+            Feature Comparison
+          </h3>
+          <div className="rounded-xl border border-gray-800 overflow-hidden">
+            <div className="grid grid-cols-3 bg-gray-800/50 px-4 py-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+              <span>Feature</span>
+              <span className="text-center">Free</span>
+              <span className="text-center text-amber-400">Pro</span>
+            </div>
+            {features.map((feature, i) => (
+              <div
+                key={i}
+                className={`grid grid-cols-3 px-4 py-3 text-sm border-t border-gray-800 ${
+                  i % 2 === 0 ? 'bg-gray-900' : 'bg-gray-900/50'
+                }`}
               >
-                <Zap className="w-4 h-4" />
-                Activate Pro (Demo)
-              </button>
-            </div>
-
-            {/* Yearly Plan */}
-            <div className="border-2 border-amber-500/60 rounded-xl p-5 flex flex-col gap-3 relative bg-amber-500/5">
-              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <span className="bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full whitespace-nowrap">
-                  Save ~33%
+                <span className="text-gray-300">{feature.label}</span>
+                <span className="text-center">
+                  {feature.free === false ? (
+                    <span className="text-gray-600">—</span>
+                  ) : (
+                    <span className="text-gray-400">{feature.free}</span>
+                  )}
+                </span>
+                <span className="text-center">
+                  {feature.pro === true ? (
+                    <Check className="w-4 h-4 text-green-400 mx-auto" />
+                  ) : (
+                    <span className="text-green-400">{feature.pro}</span>
+                  )}
                 </span>
               </div>
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-1">Yearly Plan</p>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-foreground">₹3,999</span>
-                  <span className="text-muted-foreground text-sm">/year</span>
-                </div>
-                <p className="text-xs text-muted-foreground mt-0.5">≈ ₹333/month</p>
-              </div>
-              <ul className="space-y-1.5 text-sm text-muted-foreground flex-1">
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  Everything in Monthly
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  Multi-photo sheet export
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  Advanced enhancements
-                </li>
-                <li className="flex items-center gap-2">
-                  <Check className="w-3.5 h-3.5 text-green-500 flex-shrink-0" />
-                  Priority support
-                </li>
-              </ul>
-              <button
-                onClick={handleActivate}
-                className="w-full py-2.5 px-4 rounded-lg bg-amber-500 hover:bg-amber-600 text-white font-semibold text-sm transition-colors flex items-center justify-center gap-2"
-              >
-                <Crown className="w-4 h-4" />
-                Activate Pro (Demo)
-              </button>
-            </div>
+            ))}
           </div>
+        </div>
 
-          {/* Disclaimer */}
-          <p className="text-center text-xs text-muted-foreground">
-            <Lock className="w-3 h-3 inline mr-1" />
-            Demo only — no real payment processed. This simulates Pro access for UI testing.
-          </p>
+        <div className="px-6 pb-6 text-center text-xs text-gray-600">
+          Demo activation only. No real payment is processed.
         </div>
       </div>
-
-      <style>{`
-        @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        @keyframes scaleIn {
-          from { opacity: 0; transform: scale(0.95) translateY(8px); }
-          to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

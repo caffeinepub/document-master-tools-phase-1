@@ -170,3 +170,105 @@ export function formatFileSize(bytes: number): string {
   if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB';
   return (bytes / (1024 * 1024)).toFixed(2) + ' MB';
 }
+
+/**
+ * Convert physical dimensions (mm, cm, inch) to pixels using DPI.
+ */
+export function convertPhysicalToPixels(
+  width: number,
+  height: number,
+  unit: 'mm' | 'cm' | 'inch',
+  dpi: number
+): ImageDimensions {
+  let widthInches: number;
+  let heightInches: number;
+
+  switch (unit) {
+    case 'mm':
+      widthInches = width / 25.4;
+      heightInches = height / 25.4;
+      break;
+    case 'cm':
+      widthInches = width / 2.54;
+      heightInches = height / 2.54;
+      break;
+    case 'inch':
+    default:
+      widthInches = width;
+      heightInches = height;
+      break;
+  }
+
+  return {
+    width: Math.round(widthInches * dpi),
+    height: Math.round(heightInches * dpi),
+  };
+}
+
+/**
+ * Iteratively compress a canvas to meet a target file size in KB.
+ * Returns a Blob or null if compression fails.
+ */
+export async function resizeToTargetFileSize(
+  canvas: HTMLCanvasElement,
+  targetSizeKB: number,
+  mimeType: 'image/jpeg' | 'image/png' | 'image/webp' = 'image/jpeg'
+): Promise<Blob | null> {
+  const targetBytes = targetSizeKB * 1024;
+
+  // PNG doesn't support quality — just return as-is
+  if (mimeType === 'image/png') {
+    return new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, 'image/png');
+    });
+  }
+
+  let lo = 0.01;
+  let hi = 1.0;
+  let bestBlob: Blob | null = null;
+
+  // Binary search over quality
+  for (let i = 0; i < 12; i++) {
+    const mid = (lo + hi) / 2;
+    const blob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, mimeType, mid);
+    });
+
+    if (!blob) break;
+
+    if (blob.size <= targetBytes) {
+      bestBlob = blob;
+      lo = mid;
+    } else {
+      hi = mid;
+    }
+
+    if (Math.abs(blob.size - targetBytes) / targetBytes < 0.02) {
+      bestBlob = blob;
+      break;
+    }
+  }
+
+  // If we couldn't get under target, return the lowest quality attempt
+  if (!bestBlob) {
+    bestBlob = await new Promise<Blob | null>((resolve) => {
+      canvas.toBlob(resolve, mimeType, 0.01);
+    });
+  }
+
+  return bestBlob;
+}
+
+/**
+ * Scale original dimensions by a percentage factor.
+ */
+export function percentageResize(
+  originalWidth: number,
+  originalHeight: number,
+  percentage: number
+): ImageDimensions {
+  return {
+    width: Math.round(originalWidth * percentage / 100),
+    height: Math.round(originalHeight * percentage / 100),
+  };
+}

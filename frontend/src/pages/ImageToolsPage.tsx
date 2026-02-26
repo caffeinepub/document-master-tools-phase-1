@@ -1,173 +1,272 @@
-import { ArrowLeft, Camera, FileImage, Briefcase, GraduationCap, Train, Shield, Plane, PenTool, Minimize2, Crop, Monitor, Maximize2, FileType, Image as ImageIcon, Scissors, Wand2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Badge } from '@/components/ui/badge';
+import { Crown, Image, FileImage, Crop, Minimize2, ScanLine, FileOutput, Stamp, Wand2, Sparkles, Palette, Scissors } from 'lucide-react';
 
 interface ImageToolsPageProps {
-  onBack: () => void;
+  onBack?: () => void;
   onNavigate: (page: string) => void;
 }
 
-export default function ImageToolsPage({ onBack, onNavigate }: ImageToolsPageProps) {
-  const governmentDocTools = [
-    {
-      id: 'smart-document-fixer',
-      name: 'Smart Document Fixer',
-      description: 'All-in-one tool for photo fixing, resizing, background enhancement, and export for all government IDs.',
-      icon: Wand2,
-      isNew: true,
-      isPro: true,
-    },
-    { id: 'passport-photo-maker', name: 'Passport Photo Maker', description: 'Create government standard passport photos', icon: Camera },
-    { id: 'aadhaar-photo-resize', name: 'Aadhaar Photo Resize', description: 'Resize photos for Aadhaar card', icon: FileImage },
-    { id: 'pan-photo-resize', name: 'PAN Photo Resize', description: 'Resize photos for PAN card', icon: FileImage },
-    { id: 'ssc-photo-resize', name: 'SSC Photo Resize', description: 'Resize photos for SSC exams', icon: GraduationCap },
-    { id: 'railway-photo-resize', name: 'Railway Photo Resize', description: 'Resize photos for Railway exams', icon: Train },
-    { id: 'police-army-photo', name: 'Police/Army Photo', description: 'Resize photos for recruitment', icon: Shield },
-    { id: 'visa-photo-resize', name: 'Visa Photo Resize', description: 'Resize photos for visa applications', icon: Plane },
-    { id: 'signature-resize', name: 'Signature Resize', description: 'Resize signatures for applications', icon: PenTool },
-  ];
+interface ToolCard {
+  title: string;
+  description: string;
+  page: string;
+  icon: React.ReactNode;
+  badge?: 'new' | 'pro' | 'popular';
+}
 
-  const imageProcessingTools = [
-    { id: 'image-compressor', name: 'Image Compressor', description: 'Reduce image file size', icon: Minimize2 },
-    { id: 'image-cropper', name: 'Image Cropper', description: 'Crop and resize images', icon: Crop },
-    { id: 'dpi-changer', name: 'DPI Changer', description: 'Change image resolution (DPI)', icon: Monitor },
-    { id: 'custom-image-resize', name: 'Custom Image Resize', description: 'Resize to any dimension', icon: Maximize2 },
-  ];
+const governmentTools: ToolCard[] = [
+  {
+    title: 'Passport Photo Maker',
+    description: 'Create passport photos for India, US, UK, Schengen & more',
+    page: 'passport-photo-maker',
+    icon: <Image className="w-6 h-6 text-blue-400" />,
+    badge: 'popular',
+  },
+  {
+    title: 'Aadhaar Photo Resizer',
+    description: 'Resize photos to Aadhaar card specifications (200×200, 480×640)',
+    page: 'aadhaar-photo-resize',
+    icon: <FileImage className="w-6 h-6 text-green-400" />,
+  },
+  {
+    title: 'PAN Card Photo Resizer',
+    description: 'Resize photos for NSDL and UTIITSL PAN card applications',
+    page: 'pan-photo-resize',
+    icon: <FileImage className="w-6 h-6 text-orange-400" />,
+  },
+  {
+    title: 'SSC Photo Resizer',
+    description: 'Resize photos for SSC CGL, CHSL, MTS, and GD exams',
+    page: 'ssc-photo-resize',
+    icon: <FileImage className="w-6 h-6 text-purple-400" />,
+  },
+  {
+    title: 'Railway Photo Resizer',
+    description: 'Resize photos for RRB NTPC, Group D, and ALP recruitment',
+    page: 'railway-photo-resize',
+    icon: <FileImage className="w-6 h-6 text-red-400" />,
+  },
+  {
+    title: 'Police & Army Photo',
+    description: 'Resize photos for Police, Army, and CAPF recruitment',
+    page: 'police-army-photo',
+    icon: <FileImage className="w-6 h-6 text-yellow-400" />,
+  },
+  {
+    title: 'Visa Photo Resizer',
+    description: 'Resize photos for US, UK, Schengen, Canada & Australia visas',
+    page: 'visa-photo-resize',
+    icon: <FileImage className="w-6 h-6 text-cyan-400" />,
+  },
+  {
+    title: 'Signature Resizer',
+    description: 'Resize signatures for Aadhaar, PAN, and exam applications',
+    page: 'signature-resize',
+    icon: <Stamp className="w-6 h-6 text-pink-400" />,
+  },
+];
 
-  const formatConversionTools = [
-    { id: 'jpg-to-png', name: 'JPG to PNG', description: 'Convert JPEG to PNG format', icon: FileType },
-    { id: 'png-to-jpg', name: 'PNG to JPG', description: 'Convert PNG to JPEG format', icon: FileType },
-    { id: 'webp-converter', name: 'WEBP Converter', description: 'Convert to/from WEBP format', icon: ImageIcon },
-    { id: 'background-remover', name: 'Background Remover', description: 'Remove image backgrounds', icon: Scissors },
-  ];
+const processingTools: ToolCard[] = [
+  {
+    title: 'Image Compressor',
+    description: 'Compress images with quality control and target file size',
+    page: 'image-compressor',
+    icon: <Minimize2 className="w-6 h-6 text-blue-400" />,
+    badge: 'popular',
+  },
+  {
+    title: 'Image Cropper',
+    description: 'Crop images with aspect ratio presets and custom dimensions',
+    page: 'image-cropper',
+    icon: <Crop className="w-6 h-6 text-green-400" />,
+  },
+  {
+    title: 'DPI Changer',
+    description: 'Change image DPI/resolution for print and digital use',
+    page: 'dpi-changer',
+    icon: <ScanLine className="w-6 h-6 text-purple-400" />,
+  },
+  {
+    title: 'Custom Image Resizer',
+    description: 'Resize by dimensions, percentage, file size, or social media presets',
+    page: 'custom-image-resize',
+    icon: <FileOutput className="w-6 h-6 text-orange-400" />,
+    badge: 'popular',
+  },
+  {
+    title: 'Background Remover',
+    description: 'Remove or replace image backgrounds with custom colors',
+    page: 'background-remover',
+    icon: <Palette className="w-6 h-6 text-pink-400" />,
+  },
+];
 
+const conversionTools: ToolCard[] = [
+  {
+    title: 'JPG to PNG Converter',
+    description: 'Convert JPG images to PNG or WebP format',
+    page: 'jpg-to-png',
+    icon: <FileImage className="w-6 h-6 text-blue-400" />,
+  },
+  {
+    title: 'PNG to JPG Converter',
+    description: 'Convert PNG images to JPG or WebP format',
+    page: 'png-to-jpg',
+    icon: <FileImage className="w-6 h-6 text-green-400" />,
+  },
+  {
+    title: 'WebP Converter',
+    description: 'Convert images to/from WebP format',
+    page: 'webp-converter',
+    icon: <FileImage className="w-6 h-6 text-purple-400" />,
+  },
+];
+
+function BadgeEl({ type }: { type: 'new' | 'pro' | 'popular' }) {
+  if (type === 'pro') {
+    return (
+      <span className="flex items-center gap-1 px-2 py-0.5 bg-amber-500/20 border border-amber-500/50 text-amber-400 rounded-full text-xs font-bold">
+        <Crown className="w-3 h-3" />
+        PRO
+      </span>
+    );
+  }
+  if (type === 'popular') {
+    return (
+      <span className="px-2 py-0.5 bg-blue-500/20 border border-blue-500/50 text-blue-400 rounded-full text-xs font-bold">
+        Popular
+      </span>
+    );
+  }
   return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Home
-        </Button>
+    <span className="px-2 py-0.5 bg-green-500/20 border border-green-500/50 text-green-400 rounded-full text-xs font-bold">
+      New
+    </span>
+  );
+}
 
-        <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold mb-3">Image Tools</h1>
-          <p className="text-lg text-muted-foreground">
-            Professional image editing and processing tools for government documents, photos, and format conversion. All operations are performed in your browser for maximum privacy.
+function ToolCardEl({ tool, onNavigate }: { tool: ToolCard; onNavigate: (page: string) => void }) {
+  return (
+    <button
+      onClick={() => onNavigate(tool.page)}
+      className="flex items-start gap-4 p-4 bg-gray-800 hover:bg-gray-700 border border-gray-700 hover:border-gray-500 rounded-xl transition-all duration-200 hover:scale-[1.02] hover:shadow-lg text-left w-full group"
+    >
+      <div className="flex-shrink-0 w-10 h-10 flex items-center justify-center bg-gray-700 rounded-lg group-hover:bg-gray-600 transition-colors">
+        {tool.icon}
+      </div>
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 flex-wrap">
+          <span className="font-semibold text-gray-100 text-sm">{tool.title}</span>
+          {tool.badge && <BadgeEl type={tool.badge} />}
+        </div>
+        <p className="text-gray-400 text-xs mt-1 leading-relaxed">{tool.description}</p>
+      </div>
+    </button>
+  );
+}
+
+export default function ImageToolsPage({ onBack, onNavigate }: ImageToolsPageProps) {
+  return (
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <main className="max-w-5xl mx-auto px-4 py-8">
+        {onBack && (
+          <button
+            onClick={onBack}
+            className="flex items-center gap-2 text-gray-400 hover:text-white mb-4 transition-colors"
+          >
+            ← Back
+          </button>
+        )}
+
+        <div className="mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Image Tools</h1>
+          <p className="text-gray-400">
+            Professional image processing tools for government documents, office use, and personal projects.
           </p>
         </div>
 
         {/* Government Document Photos */}
-        <div className="mb-10">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-2">Government Document Photos</h2>
-            <p className="text-sm text-muted-foreground">
-              Resize and optimize photos for government IDs, exams, and official applications with preset dimensions and file size requirements.
-            </p>
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+            <FileImage className="w-5 h-5 text-blue-400" />
+            Government Document Photos
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {governmentTools.map((tool) => (
+              <ToolCardEl key={tool.page} tool={tool} onNavigate={onNavigate} />
+            ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {governmentDocTools.map((tool) => {
-              const Icon = tool.icon;
-              const isNew = 'isNew' in tool && tool.isNew;
-              const isPro = 'isPro' in tool && tool.isPro;
-              return (
-                <Card
-                  key={tool.id}
-                  className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group relative"
-                  onClick={() => onNavigate(tool.id)}
-                >
-                  {/* PRO badge — only for Smart Document Fixer */}
-                  {isPro && (
-                    <div className="absolute top-3 right-3 z-10">
-                      <span className="inline-flex items-center gap-0.5 bg-amber-500 dark:bg-amber-600 text-white text-xs font-bold px-2 py-0.5 rounded-full">
-                        ★ PRO
-                      </span>
-                    </div>
-                  )}
-                  {/* New badge — shown only when not PRO */}
-                  {isNew && !isPro && (
-                    <div className="absolute top-3 right-3 z-10">
-                      <Badge className="text-xs px-2 py-0.5">New</Badge>
-                    </div>
-                  )}
-                  <CardHeader className="p-4">
-                    <div className="w-12 h-12 rounded-lg bg-blue-500/10 flex items-center justify-center mb-3 group-hover:bg-blue-500/20 transition-colors">
-                      <Icon className="h-6 w-6 text-blue-600 dark:text-blue-400" />
-                    </div>
-                    <CardTitle className="text-base pr-12">{tool.name}</CardTitle>
-                    <CardDescription className="text-sm">{tool.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
+        </section>
 
-        <Separator className="my-8" />
+        {/* Image Processing */}
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+            <Wand2 className="w-5 h-5 text-purple-400" />
+            Image Processing
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {processingTools.map((tool) => (
+              <ToolCardEl key={tool.page} tool={tool} onNavigate={onNavigate} />
+            ))}
+          </div>
+        </section>
 
-        {/* Image Processing Tools */}
-        <div className="mb-10">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-2">Image Processing</h2>
-            <p className="text-sm text-muted-foreground">
-              Compress, crop, resize, and adjust image resolution for web and print use.
-            </p>
+        {/* Format Conversion */}
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+            <FileOutput className="w-5 h-5 text-green-400" />
+            Format Conversion
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {conversionTools.map((tool) => (
+              <ToolCardEl key={tool.page} tool={tool} onNavigate={onNavigate} />
+            ))}
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {imageProcessingTools.map((tool) => {
-              const Icon = tool.icon;
-              return (
-                <Card
-                  key={tool.id}
-                  className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                  onClick={() => onNavigate(tool.id)}
-                >
-                  <CardHeader className="p-4">
-                    <div className="w-12 h-12 rounded-lg bg-green-500/10 flex items-center justify-center mb-3 group-hover:bg-green-500/20 transition-colors">
-                      <Icon className="h-6 w-6 text-green-600 dark:text-green-400" />
-                    </div>
-                    <CardTitle className="text-base">{tool.name}</CardTitle>
-                    <CardDescription className="text-sm">{tool.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              );
-            })}
-          </div>
-        </div>
+        </section>
 
-        <Separator className="my-8" />
+        {/* Document Enhancement */}
+        <section className="mb-8">
+          <h2 className="text-lg font-semibold text-gray-200 mb-4 flex items-center gap-2">
+            <ScanLine className="w-5 h-5 text-cyan-400" />
+            Document Enhancement
+          </h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <ToolCardEl
+              tool={{
+                title: 'Smart Document Fixer',
+                description: 'Auto-fix document photos: brightness, contrast, crop guides, and more',
+                page: 'smart-document-fixer',
+                icon: <ScanLine className="w-6 h-6 text-cyan-400" />,
+              }}
+              onNavigate={onNavigate}
+            />
+          </div>
+        </section>
 
-        {/* Format Conversion Tools */}
-        <div className="mb-10">
-          <div className="mb-4">
-            <h2 className="text-2xl font-bold mb-2">Format Conversion</h2>
-            <p className="text-sm text-muted-foreground">
-              Convert images between JPG, PNG, WEBP formats and remove backgrounds.
-            </p>
+        {/* Pro Tools Section */}
+        <section className="mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-lg font-semibold text-gray-200 flex items-center gap-2">
+              <Crown className="w-5 h-5 text-amber-400" />
+              Pro Tools
+            </h2>
+            <span className="px-2 py-0.5 bg-amber-500/20 border border-amber-500/50 text-amber-400 rounded-full text-xs font-bold">
+              Premium
+            </span>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            {formatConversionTools.map((tool) => {
-              const Icon = tool.icon;
-              return (
-                <Card
-                  key={tool.id}
-                  className="cursor-pointer hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group"
-                  onClick={() => onNavigate(tool.id)}
-                >
-                  <CardHeader className="p-4">
-                    <div className="w-12 h-12 rounded-lg bg-purple-500/10 flex items-center justify-center mb-3 group-hover:bg-purple-500/20 transition-colors">
-                      <Icon className="h-6 w-6 text-purple-600 dark:text-purple-400" />
-                    </div>
-                    <CardTitle className="text-base">{tool.name}</CardTitle>
-                    <CardDescription className="text-sm">{tool.description}</CardDescription>
-                  </CardHeader>
-                </Card>
-              );
-            })}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <ToolCardEl
+              tool={{
+                title: 'AI Document Enhancer',
+                description: 'AI-powered document enhancement: fix lighting, sharpen text, remove noise',
+                page: 'ai-document-enhancer',
+                icon: <Sparkles className="w-6 h-6 text-amber-400" />,
+                badge: 'pro',
+              }}
+              onNavigate={onNavigate}
+            />
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }

@@ -158,38 +158,39 @@ function App() {
         return <DateDifferenceCalculatorPage onBack={() => setCurrentPage('calculators')} />;
       case 'time-duration-calculator':
         return <TimeDurationCalculatorPage onBack={() => setCurrentPage('calculators')} />;
+      // Image tool pages — use onNavigate prop
       case 'passport-photo-maker':
-        return <PassportPhotoMakerPage onBack={() => setCurrentPage('image-tools')} />;
+        return <PassportPhotoMakerPage onNavigate={handleNavigate} />;
       case 'aadhaar-photo-resize':
-        return <AadhaarPhotoResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <AadhaarPhotoResizePage onNavigate={handleNavigate} />;
       case 'pan-photo-resize':
-        return <PANPhotoResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <PANPhotoResizePage onNavigate={handleNavigate} />;
       case 'ssc-photo-resize':
-        return <SSCPhotoResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <SSCPhotoResizePage onNavigate={handleNavigate} />;
       case 'railway-photo-resize':
-        return <RailwayPhotoResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <RailwayPhotoResizePage onNavigate={handleNavigate} />;
       case 'police-army-photo':
-        return <PoliceArmyPhotoPage onBack={() => setCurrentPage('image-tools')} />;
+        return <PoliceArmyPhotoPage onNavigate={handleNavigate} />;
       case 'visa-photo-resize':
-        return <VisaPhotoResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <VisaPhotoResizePage onNavigate={handleNavigate} />;
       case 'signature-resize':
-        return <SignatureResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <SignatureResizePage onNavigate={handleNavigate} />;
       case 'image-compressor':
-        return <ImageCompressorPage onBack={() => setCurrentPage('image-tools')} />;
+        return <ImageCompressorPage onNavigate={handleNavigate} />;
       case 'image-cropper':
-        return <ImageCropperPage onBack={() => setCurrentPage('image-tools')} />;
+        return <ImageCropperPage onNavigate={handleNavigate} />;
       case 'dpi-changer':
-        return <DPIChangerPage onBack={() => setCurrentPage('image-tools')} />;
+        return <DPIChangerPage onNavigate={handleNavigate} />;
       case 'custom-image-resize':
-        return <CustomImageResizePage onBack={() => setCurrentPage('image-tools')} />;
+        return <CustomImageResizePage onNavigate={handleNavigate} />;
       case 'jpg-to-png':
-        return <JPGToPNGPage onBack={() => setCurrentPage('image-tools')} />;
+        return <JPGToPNGPage onNavigate={handleNavigate} />;
       case 'png-to-jpg':
-        return <PNGToJPGPage onBack={() => setCurrentPage('image-tools')} />;
+        return <PNGToJPGPage onNavigate={handleNavigate} />;
       case 'webp-converter':
-        return <WEBPConverterPage onBack={() => setCurrentPage('image-tools')} />;
+        return <WEBPConverterPage onNavigate={handleNavigate} />;
       case 'background-remover':
-        return <BackgroundRemoverPage onBack={() => setCurrentPage('image-tools')} />;
+        return <BackgroundRemoverPage onNavigate={handleNavigate} />;
       case 'smart-document-fixer':
         return <SmartDocumentFixerPage onBack={() => setCurrentPage('image-tools')} onNavigate={handleNavigate} />;
       case 'fresher-resume':

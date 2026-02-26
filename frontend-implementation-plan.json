@@ -1,25 +1,388 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Remove duplicate upper footer section, keep only Document Master Tools footer",
+  "title": "Upgrade all non-calculator tools to advanced user-controlled mode with homepage pro/free separation",
   "requirements": [
     {
-      "id": "REQ-131",
-      "summary": "Remove the first (upper) footer section entirely from Footer.tsx, keeping only the lower footer section that begins with 'Document Master Tools'",
+      "id": "REQ-136",
+      "summary": "Create reusable AdvancedToolShell component enforcing strict step sequence: upload → settings → apply & preview → download",
       "acceptanceCriteria": [
-        "The website renders exactly one footer section site-wide.",
-        "The retained footer section starts with 'Document Master Tools' branding.",
-        "The removed section (containing Quick Links, Legal, About, copyright, and 'Built with ❤️ using caffeine.ai') is no longer rendered anywhere.",
-        "All links, copyright text (© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.), and external link attributes (target, rel) in the remaining footer section are unchanged.",
-        "Footer styling (colors, typography, spacing, padding) is identical to the pre-change state.",
-        "Footer is fully mobile responsive and displays correctly at 320px width and above.",
-        "No other components or layout sections are affected by this change."
+        "Settings panel is rendered before any processing can occur",
+        "Apply & Preview button is the only trigger for processing",
+        "Download button is disabled (aria-disabled, visually grayed, not clickable) until preview has been generated",
+        "Before/after comparison is shown once preview is generated",
+        "Component accepts file upload, settings slot, processing function, and output filename as props"
       ],
       "file_operations": [
         {
-          "path": "frontend/src/components/Footer.tsx",
+          "path": "frontend/src/components/AdvancedToolShell.tsx",
+          "operation": "create",
+          "description": "Create the AdvancedToolShell component that provides standardized advanced user-controlled workflow for all non-calculator tools. Enforce step sequence: (1) file upload zone, (2) settings panel (ReactNode slot), (3) Apply & Preview button triggering client-side processing and rendering before/after comparison, (4) download button disabled until preview generated. Accept props: toolTitle, acceptedFileTypes, settingsSlot (ReactNode), processingFunction, outputFileName. Implement fully client-side with no backend calls."
+        }
+      ]
+    },
+    {
+      "id": "REQ-137",
+      "summary": "Upgrade ImageCompressor tool to use advanced user-controlled mode with target size, quality, and format settings",
+      "acceptanceCriteria": [
+        "Unit selector toggles between KB and MB for target size",
+        "Quality slider from 1–100% is present in settings panel",
+        "Output format selector offers JPEG, PNG, WebP options",
+        "Processing does not start until 'Apply & Preview' is clicked",
+        "Before/after comparison shows original and compressed file size and dimensions",
+        "Download button is disabled until after preview is shown",
+        "Calculator components are untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/ImageCompressorTool.tsx",
           "operation": "modify",
-          "description": "Remove the first footer section (containing Quick Links, Legal, About columns, 'Built with ❤️ using caffeine.ai', and copyright) entirely from the JSX return statement. Keep only the second footer section that starts with 'Document Master Tools' branding. Do not modify any styling, class names, links, href values, external link attributes (target='_blank', rel='noopener noreferrer'), copyright text, or responsive behavior of the retained footer section. The final component must render exactly one footer section with no visual or functional changes to that section."
+          "description": "Refactor ImageCompressorTool to use AdvancedToolShell. Implement settings panel with: (1) target size input with KB/MB unit selector toggle, (2) quality slider (1–100%), (3) output format selector (JPEG, PNG, WebP). Gate processing behind Apply & Preview button. Show before/after comparison with file size and dimensions. Disable download until preview shown. Use existing imageProcessing utilities for compression logic."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+          "operation": "modify",
+          "description": "Update ImageCompressorPage to wire the upgraded ImageCompressorTool component. Ensure the tool is properly integrated into the page layout with existing SEO, breadcrumbs, and related tools components. No structural page changes beyond tool integration."
+        }
+      ]
+    },
+    {
+      "id": "REQ-138",
+      "summary": "Upgrade all 8 government document photo resize tools to advanced user-controlled mode with comprehensive settings panels",
+      "acceptanceCriteria": [
+        "Each photo resize page has a settings panel with preset selector, custom dimensions (with unit selector: px/cm/mm/inches), aspect ratio toggle, target KB/MB input, quality slider, and format selector",
+        "Processing does not begin until 'Apply & Preview' is clicked",
+        "Before/after comparison shown after preview generation",
+        "Download button disabled until preview is shown",
+        "All 8 government document photo tools upgraded",
+        "Calculator components are untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/image-tools/PhotoResizeTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PhotoResizeTool to use AdvancedToolShell. Implement settings panel with: (1) preset dimension selector with government-standard presets passed as props, (2) custom width/height inputs with unit selector (px/cm/mm/inches), (3) maintain aspect ratio toggle, (4) target file size input with KB/MB unit selector, (5) output quality slider (1–100%), (6) output format selector (JPEG, PNG). Gate processing behind Apply & Preview. Show before/after comparison with dimensions and file size. Disable download until preview shown."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+          "operation": "modify",
+          "description": "Update PassportPhotoMakerPage to pass appropriate props to the upgraded PhotoResizeTool component. Ensure existing passport presets (India, US, UK, Schengen) are properly configured. No changes to page structure, SEO, or FAQ section."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+          "operation": "modify",
+          "description": "Update AadhaarPhotoResizePage to pass Aadhaar-specific presets (200×200, 480×640) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+          "operation": "modify",
+          "description": "Update PANPhotoResizePage to pass PAN card preset (200×230px, max 50KB) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+          "operation": "modify",
+          "description": "Update SSCPhotoResizePage to pass SSC exam presets (300×400px, max 100KB) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+          "operation": "modify",
+          "description": "Update RailwayPhotoResizePage to pass Railway recruitment presets (300×400px, max 100KB) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+          "operation": "modify",
+          "description": "Update PoliceArmyPhotoPage to pass Police/Army/CAPF presets (300×400px, max 100KB) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+          "operation": "modify",
+          "description": "Update VisaPhotoResizePage to pass visa photo presets (US, UK, Schengen, Canada) to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+          "operation": "modify",
+          "description": "Update SignatureResizePage to pass signature resize presets to the upgraded PhotoResizeTool component. No changes to page structure or SEO."
+        }
+      ]
+    },
+    {
+      "id": "REQ-139",
+      "summary": "Upgrade CustomImageResize tool to advanced user-controlled mode with unit selectors, aspect ratio toggle, and resize modes",
+      "acceptanceCriteria": [
+        "Width and height inputs each have a unit selector (px, cm, mm, inches)",
+        "Maintain aspect ratio toggle present",
+        "Resize mode (pixel/percentage) selector present",
+        "Quality slider and format selector present",
+        "Processing gated behind 'Apply & Preview' button",
+        "Before/after comparison shown after processing",
+        "Download disabled until preview shown"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+          "operation": "modify",
+          "description": "Refactor CustomImageResizePage to use AdvancedToolShell. Implement settings panel with: (1) width and height inputs with per-field unit selector (px/cm/mm/inches), (2) maintain aspect ratio toggle, (3) resize mode selector (by pixel/by percentage), (4) output quality slider (1–100%), (5) output format selector (JPEG, PNG, WebP). Gate processing behind Apply & Preview. Show before/after with dimensions. Disable download until preview shown. Use existing imageProcessing utilities."
+        }
+      ]
+    },
+    {
+      "id": "REQ-140",
+      "summary": "Upgrade DPI Changer tool to advanced user-controlled mode with preset and custom DPI inputs",
+      "acceptanceCriteria": [
+        "DPI preset selector (72, 96, 150, 200, 300, 600) and custom DPI input present",
+        "Output format selector with JPEG, PNG, TIFF present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after shows original vs new DPI and file size",
+        "Download disabled until preview shown",
+        "All processing is client-side only"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+          "operation": "modify",
+          "description": "Refactor DPIChangerPage to use AdvancedToolShell. Implement settings panel with: (1) DPI preset selector (72, 96, 150, 200, 300, 600 DPI), (2) custom DPI number input, (3) output format selector (JPEG, PNG, TIFF). Gate processing behind Apply & Preview. Implement client-side DPI metadata embedding via canvas. Show before/after with original vs new DPI and file size. Disable download until preview shown."
+        }
+      ]
+    },
+    {
+      "id": "REQ-141",
+      "summary": "Upgrade Image Cropper tool to advanced user-controlled mode with interactive crop area selection",
+      "acceptanceCriteria": [
+        "Aspect ratio preset selector present",
+        "Custom crop dimension inputs with px/percentage unit selector",
+        "Interactive drag-handle crop area selection on uploaded image",
+        "Quality slider and format selector present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shown after processing",
+        "Download disabled until preview shown"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+          "operation": "modify",
+          "description": "Refactor ImageCropperPage to use AdvancedToolShell. Implement settings panel with: (1) aspect ratio preset selector (Free, 1:1, 4:3, 3:2, 16:9, 9:16, custom), (2) custom crop dimensions inputs (width, height) with unit selector (px/percentage), (3) output quality slider (1–100%), (4) output format selector (JPEG, PNG, WebP). Implement interactive drag-handle crop area selection on uploaded image canvas. Gate processing behind Apply & Preview. Show before/after comparison. Disable download until preview shown."
+        }
+      ]
+    },
+    {
+      "id": "REQ-142",
+      "summary": "Upgrade all 3 format conversion tools to advanced user-controlled mode with format, quality, and size settings",
+      "acceptanceCriteria": [
+        "Output format selector shows valid targets for each converter tool",
+        "Quality slider present for lossy format targets",
+        "Optional target KB/MB size constraint input present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shows format, size, and dimension changes",
+        "Download disabled until preview shown",
+        "All three converters upgraded",
+        "Calculator components are untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+          "operation": "modify",
+          "description": "Refactor JPGToPNGPage to use AdvancedToolShell. Implement settings panel with: (1) output format selector showing PNG and WebP targets, (2) quality slider (1–100%) for WebP, (3) optional target file size input with KB/MB unit selector. Gate processing behind Apply & Preview. Show before/after comparison with original format/size vs converted. Disable download until preview shown. Use existing imageProcessing utilities."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+          "operation": "modify",
+          "description": "Refactor PNGToJPGPage to use AdvancedToolShell. Implement settings panel with: (1) output format selector showing JPEG and WebP targets, (2) quality slider (1–100%) for lossy formats, (3) optional target file size input with KB/MB unit selector. Gate processing behind Apply & Preview. Show before/after comparison with format/size changes. Disable download until preview shown. Use existing imageProcessing utilities."
+        },
+        {
+          "path": "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
+          "operation": "modify",
+          "description": "Refactor WEBPConverterPage to use AdvancedToolShell. Implement settings panel with: (1) output format selector showing WebP, JPEG, PNG targets, (2) quality slider (1–100%) for lossy formats, (3) optional target file size input with KB/MB unit selector. Gate processing behind Apply & Preview. Show before/after comparison with format/size changes. Disable download until preview shown. Use existing imageProcessing utilities."
+        }
+      ]
+    },
+    {
+      "id": "REQ-143",
+      "summary": "Upgrade Background Remover tool to advanced user-controlled mode with background fill options",
+      "acceptanceCriteria": [
+        "Background fill selector (Transparent, White, Custom Color, Blur) present",
+        "Output format selector present and context-aware (PNG forced for transparent)",
+        "Quality slider present for non-transparent output formats",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shown",
+        "Download disabled until preview shown",
+        "All processing client-side only"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+          "operation": "modify",
+          "description": "Refactor BackgroundRemoverPage to use AdvancedToolShell. Implement settings panel with: (1) background fill option selector (Transparent, White, Custom Color via color picker, Blur), (2) output format selector (PNG for transparent, JPEG/WebP for solid backgrounds), (3) output quality slider (1–100% for non-transparent formats). Gate processing behind Apply & Preview. Show before/after comparison. Disable download until preview shown. All processing remains client-side."
+        }
+      ]
+    },
+    {
+      "id": "REQ-144",
+      "summary": "Upgrade all 16 PDF tools to advanced user-controlled mode with tool-specific settings panels",
+      "acceptanceCriteria": [
+        "Each PDF tool has a tool-specific settings panel rendered before processing",
+        "PDFCompressTool has compression level selector and target size with KB/MB unit",
+        "PDFMergeTool has page reorder UI",
+        "PDFSplitTool has split mode and page range input",
+        "PDFToImageTool has format, DPI, and quality selectors",
+        "ImageToPDFTool has page size, orientation, and image fit selectors",
+        "PDFPasswordProtectTool has password and encryption level inputs",
+        "PDFAddWatermarkTool has text, size, opacity, and position controls",
+        "All 16 PDF tools gated behind 'Apply & Preview' before download",
+        "Download button disabled until preview/confirmation shown",
+        "Calculator components are untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/pdf-tools/PDFCompressTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFCompressTool to use AdvancedToolShell. Implement settings panel with: (1) compression level selector (Low/Medium/High/Maximum), (2) target size input with KB/MB unit selector. Gate processing behind Apply & Preview. Show preview panel (rendered page thumbnail or output summary). Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFMergeTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFMergeTool to use AdvancedToolShell. Implement settings panel with: (1) page order drag-reorder UI, (2) output quality selector. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFSplitTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFSplitTool to use AdvancedToolShell. Implement settings panel with: (1) split mode selector (by page range, every N pages, individual pages), (2) page range input. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFToImageTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFToImageTool to use AdvancedToolShell. Implement settings panel with: (1) output format selector (PNG, JPEG, WebP), (2) DPI selector (72/150/200/300), (3) quality slider. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/ImageToPDFTool.tsx",
+          "operation": "modify",
+          "description": "Refactor ImageToPDFTool to use AdvancedToolShell. Implement settings panel with: (1) page size selector (A4, Letter, Legal, custom), (2) orientation (portrait/landscape), (3) image fit mode (fit, fill, center). Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFPasswordProtectTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFPasswordProtectTool to use AdvancedToolShell. Implement settings panel with: (1) password input, (2) encryption level selector (128-bit, 256-bit). Gate processing behind Apply & Preview. Show preview/confirmation panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFAddWatermarkTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFAddWatermarkTool to use AdvancedToolShell. Implement settings panel with: (1) watermark text input, (2) font size, (3) opacity slider, (4) position selector. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFPasswordUnlockTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFPasswordUnlockTool to use AdvancedToolShell. Implement settings panel with password input field. Gate processing behind Apply & Preview. Show preview/confirmation panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFAddPageNumbersTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFAddPageNumbersTool to use AdvancedToolShell. Implement settings panel with page number format, position, and font options. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFOCRTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFOCRTool to use AdvancedToolShell. Implement settings panel with language selector and OCR quality options. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFPageCounterTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFPageCounterTool to use AdvancedToolShell. Implement minimal settings panel (output format for report). Gate processing behind Apply & Preview. Show result summary panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFRemoveBlankPagesTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFRemoveBlankPagesTool to use AdvancedToolShell. Implement settings panel with blank page detection sensitivity option. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFReorderTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFReorderTool to use AdvancedToolShell. Implement settings panel with drag-and-drop page reorder interface. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFSignTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFSignTool to use AdvancedToolShell. Implement settings panel with signature drawing/upload interface, position selector, and size controls. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/PDFToWordTool.tsx",
+          "operation": "modify",
+          "description": "Refactor PDFToWordTool to use AdvancedToolShell. Implement settings panel with conversion quality and layout preservation options. Gate processing behind Apply & Preview. Show preview/confirmation panel. Disable download until preview confirmed."
+        },
+        {
+          "path": "frontend/src/components/pdf-tools/WordToPDFTool.tsx",
+          "operation": "modify",
+          "description": "Refactor WordToPDFTool to use AdvancedToolShell. Implement settings panel with PDF quality and page size options. Gate processing behind Apply & Preview. Show preview panel. Disable download until preview confirmed."
+        }
+      ]
+    },
+    {
+      "id": "REQ-145",
+      "summary": "Update HomePage to add icons to free tool cards and move Smart Document Fixer to separate Pro Tools section",
+      "acceptanceCriteria": [
+        "Every free tool card on the homepage has a visible, recognizable icon representing its function",
+        "Smart Document Fixer card is in a separate section labeled 'Pro Tools'",
+        "Free tool cards show no PRO badge",
+        "Pro Tools section uses the amber/gold PRO badge styling from ImageToolsPage.tsx",
+        "Existing hero section, layout, theme, spacing, and card designs are unchanged",
+        "No new free-tool sections or structural changes introduced"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/HomePage.tsx",
+          "operation": "modify",
+          "description": "Update HomePage while keeping existing layout 100% unchanged. Add clear, recognizable SVG or emoji icons to all FREE tool cards (Image Tools, PDF Tools, Calculator Hub, Resume Builder) prominently within each card. Move Smart Document Fixer card out of Image Tools grid into a new separate section titled 'Pro Tools' positioned below all free tool sections. Apply amber/gold PRO badge styling (matching ImageToolsPage.tsx) to Smart Document Fixer card only. Ensure free tool cards display NO PRO badge. Reference existing workspace icons where available (frontend/public/assets/generated/). No structural layout, color, theme, spacing, or padding changes to existing sections."
+        }
+      ]
+    },
+    {
+      "id": "REQ-146",
+      "summary": "Update ImageToolsPage to add function-representing icons to every image tool card",
+      "acceptanceCriteria": [
+        "Every image tool card displays a distinct, function-representing icon",
+        "Smart Document Fixer card is in a separate labeled Pro Tools sub-section",
+        "PRO badge remains on Smart Document Fixer card only",
+        "All free tool cards have no PRO badge",
+        "Existing card layout, grid, spacing, and navigation behavior are unchanged"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/ImageToolsPage.tsx",
+          "operation": "modify",
+          "description": "Update ImageToolsPage to add clear, recognizable icon (SVG or emoji) to every image tool card that immediately communicates the tool's function (e.g., passport icon for Passport Photo Maker, scissors icon for Image Cropper, file-compress icon for Image Compressor). Ensure Smart Document Fixer card remains in its own visually distinct Pro Tools sub-section with existing amber/gold PRO badge. All other existing card layout, grid structure, spacing, colors, and navigation behavior remain unchanged. Do NOT modify any calculator components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-147",
+      "summary": "Update PDFToolsPage to add function-representing icons to every PDF tool card",
+      "acceptanceCriteria": [
+        "Every PDF tool card displays a distinct, function-representing icon",
+        "Existing card layout, grid structure, spacing, and navigation unchanged",
+        "Calculator components untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/PDFToolsPage.tsx",
+          "operation": "modify",
+          "description": "Update PDFToolsPage to add clear, recognizable icon (SVG or emoji) to every PDF tool card so users can immediately identify the tool's purpose at a glance (e.g., merge icon for Merge PDF, lock icon for Password Protect, scissors icon for Split PDF). All existing card layout, grid structure, colors, spacing, and navigation behavior remain unchanged. Do NOT modify any calculator components."
+        }
+      ]
+    },
+    {
+      "id": "REQ-148",
+      "summary": "Ensure all upgraded non-calculator tools are fully mobile responsive with vertical stacking and touch-friendly controls",
+      "acceptanceCriteria": [
+        "Settings panel stacks vertically on screens below 768px",
+        "Unit selector dropdowns are full-width on mobile",
+        "Before/after comparison stacks vertically (original top, processed bottom) on mobile",
+        "Action buttons are full-width with min-height 48px on mobile",
+        "All upgraded tools display correctly from 320px width upward",
+        "Calculator components untouched"
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/components/AdvancedToolShell.tsx",
+          "operation": "modify",
+          "description": "Add comprehensive mobile responsive styles to AdvancedToolShell. Implement: (1) settings panel stacks vertically on screens below 768px, (2) unit selectors use full-width dropdowns on mobile, (3) before/after comparison panel switches from side-by-side to stacked (original on top, processed below) on screens below 768px, (4) Apply & Preview and Download buttons are full-width on mobile with min-height 48px for touch friendliness. Ensure all upgraded tools display correctly from 320px width upward. Use Tailwind responsive utilities (sm:, md:, lg:). Do NOT modify any calculator components."
         }
       ]
     }

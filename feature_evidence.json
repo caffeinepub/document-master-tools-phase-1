@@ -2,10 +2,10 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-update-frontend-src-components-footer-tsx-to-remove-the-first-upper-footer-section-entirely-keeping-only-the-lower-footer-section-that-begins-with-document-master-tools-the-final-footer-must-be-a-single-section-do-not-modify-any-footer-styling-alignment-links-copyright-text-external-link-settings-or-mobile-responsiveness-no-other-layout-changes",
-      "featureTitle": "Update frontend/src/components/Footer.tsx to remove the first (upper) footer section entirely, keeping only the lower footer section that begins with 'Document Master Tools'. The final footer must be a single section. Do not modify any footer styling, alignment, links, copyright text, external link settings, or mobile responsiveness. No other layout changes.",
+      "featureId": "feature-create-a-reusable-advancedtoolshell-component-at-frontend-src-components-advancedtoolshell-tsx-that-provides-the-standardized-advanced-user-controlled-workflow-for-all-non-calculator-tools-the-shell-must-enforce-this-strict-step-sequence-1-file-upload-zone-2-settings-panel-all-user-settings-must-be-selected-confirmed-before-any-processing-begins-3-apply-preview-button-that-triggers-client-side-processing-and-renders-a-before-after-comparison-panel-4-download-button-that-is-disabled-and-visually-grayed-out-until-a-preview-has-been-successfully-generated-the-shell-must-accept-props-for-tool-title-accepted-file-types-settings-slot-reactnode-processing-function-and-output-file-name-implement-fully-client-side-with-no-backend-calls",
+      "featureTitle": "Create a reusable AdvancedToolShell component at frontend/src/components/AdvancedToolShell.tsx that provides the standardized advanced user-controlled workflow for all non-calculator tools. The shell must enforce this strict step sequence: (1) File upload zone; (2) Settings panel — all user settings must be selected/confirmed before any processing begins; (3) 'Apply & Preview' button that triggers client-side processing and renders a before/after comparison panel; (4) Download button that is disabled and visually grayed out until a preview has been successfully generated. The shell must accept props for: tool title, accepted file types, settings slot (ReactNode), processing function, and output file name. Implement fully client-side with no backend calls.",
       "files": [
-        "frontend/src/components/Footer.tsx"
+        "frontend/src/components/AdvancedToolShell.tsx"
       ],
       "components": [
         "blob-storage@4.0.0",
@@ -16,7 +16,169 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-131"
+        "REQ-136"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-imagecompressor-tool-frontend-src-components-image-tools-imagecompressortool-tsx-and-frontend-src-pages-image-tools-imagecompressorpage-tsx-to-use-the-advanced-user-controlled-mode-the-settings-panel-must-include-1-target-size-input-with-unit-selector-toggling-between-kb-and-mb-2-quality-slider-1-100-3-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-the-user-clicks-apply-preview-show-before-after-comparison-with-original-vs-compressed-file-dimensions-and-sizes-enable-the-download-button-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the ImageCompressor tool (frontend/src/components/image-tools/ImageCompressorTool.tsx and frontend/src/pages/image-tools/ImageCompressorPage.tsx) to use the advanced user-controlled mode. The settings panel must include: (1) Target size input with unit selector toggling between KB and MB; (2) Quality slider (1–100%); (3) Output format selector (JPEG, PNG, WebP). Processing must not begin until the user clicks 'Apply & Preview'. Show before/after comparison with original vs compressed file dimensions and sizes. Enable the download button only after preview is shown. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/ImageCompressorPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-137"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-all-government-document-photo-resize-tools-passportphotomakerpage-aadhaarphotoresizepage-panphotoresizepage-sscphotoresizepage-railwayphotoresizepage-policearmyphotopage-visaphotoresizepage-signatureresizepage-to-use-the-advanced-user-controlled-mode-via-the-advancedtoolshell-each-settings-panel-must-include-1-preset-dimension-selector-with-government-standard-presets-2-custom-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-3-maintain-aspect-ratio-toggle-4-target-file-size-input-with-unit-selector-kb-mb-5-output-quality-slider-1-100-6-output-format-selector-jpeg-png-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-with-original-vs-output-dimensions-and-file-size-enable-download-only-after-preview-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade all government document photo resize tools (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage) to use the advanced user-controlled mode via the AdvancedToolShell. Each settings panel must include: (1) Preset dimension selector with government-standard presets; (2) Custom width and height inputs with unit selector (px, cm, mm, inches); (3) Maintain aspect ratio toggle; (4) Target file size input with unit selector (KB, MB); (5) Output quality slider (1–100%); (6) Output format selector (JPEG, PNG). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel with original vs output dimensions and file size. Enable download only after preview. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/components/image-tools/PhotoResizeTool.tsx",
+        "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+        "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+        "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+        "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+        "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+        "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+        "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+        "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-138"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-customimageresize-tool-frontend-src-pages-image-tools-customimageresizepage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-per-field-2-maintain-aspect-ratio-toggle-3-resize-mode-selector-by-pixel-by-percentage-4-output-quality-slider-1-100-5-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-panel-with-original-vs-new-dimensions-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the CustomImageResize tool (frontend/src/pages/image-tools/CustomImageResizePage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Width and height inputs with unit selector (px, cm, mm, inches) per field; (2) Maintain aspect ratio toggle; (3) Resize mode selector (by pixel / by percentage); (4) Output quality slider (1–100%); (5) Output format selector (JPEG, PNG, WebP). Processing must not begin until 'Apply & Preview' is clicked. Show before/after panel with original vs new dimensions. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/CustomImageResizePage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-139"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-dpi-changer-tool-frontend-src-pages-image-tools-dpichangerpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-dpi-preset-selector-72-96-150-200-300-600-dpi-2-custom-dpi-number-input-3-output-format-selector-jpeg-png-tiff-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-dpi-vs-new-dpi-and-file-size-enable-download-only-after-preview-is-shown-implement-dpi-metadata-embedding-client-side-via-canvas-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the DPI Changer tool (frontend/src/pages/image-tools/DPIChangerPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) DPI preset selector (72, 96, 150, 200, 300, 600 DPI); (2) Custom DPI number input; (3) Output format selector (JPEG, PNG, TIFF). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original DPI vs new DPI and file size. Enable download only after preview is shown. Implement DPI metadata embedding client-side via canvas. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-140"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-image-cropper-tool-frontend-src-pages-image-tools-imagecropperpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-aspect-ratio-preset-selector-free-1-1-4-3-3-2-16-9-9-16-custom-2-custom-crop-dimensions-inputs-width-height-with-unit-selector-px-percentage-3-output-quality-slider-1-100-4-output-format-selector-jpeg-png-webp-user-must-define-crop-area-using-interactive-drag-handles-on-the-image-before-clicking-apply-preview-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the Image Cropper tool (frontend/src/pages/image-tools/ImageCropperPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Aspect ratio preset selector (Free, 1:1, 4:3, 3:2, 16:9, 9:16, custom); (2) Custom crop dimensions inputs (width, height) with unit selector (px, percentage); (3) Output quality slider (1–100%); (4) Output format selector (JPEG, PNG, WebP). User must define crop area using interactive drag handles on the image before clicking 'Apply & Preview'. Show before/after comparison panel. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-141"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-format-conversion-tools-jpgtopngpage-frontend-src-pages-image-tools-jpgtopngpage-tsx-pngtojpgpage-frontend-src-pages-image-tools-pngtojpgpage-tsx-and-webpconverterpage-frontend-src-pages-image-tools-webpconverterpage-tsx-to-use-the-advanced-user-controlled-mode-each-settings-panel-must-include-1-output-format-selector-showing-all-valid-conversion-targets-for-that-tool-2-output-quality-slider-1-100-applicable-to-lossy-formats-3-target-file-size-input-with-unit-selector-kb-mb-as-an-optional-constraint-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-format-size-and-dimensions-vs-converted-format-and-size-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the format conversion tools — JPGToPNGPage (frontend/src/pages/image-tools/JPGToPNGPage.tsx), PNGToJPGPage (frontend/src/pages/image-tools/PNGToJPGPage.tsx), and WEBPConverterPage (frontend/src/pages/image-tools/WEBPConverterPage.tsx) — to use the advanced user-controlled mode. Each settings panel must include: (1) Output format selector showing all valid conversion targets for that tool; (2) Output quality slider (1–100%, applicable to lossy formats); (3) Target file size input with unit selector (KB, MB) as an optional constraint. Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original format, size, and dimensions vs converted format and size. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+        "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+        "frontend/src/pages/image-tools/WEBPConverterPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-142"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-upgrade-the-background-remover-tool-frontend-src-pages-image-tools-backgroundremoverpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-background-fill-option-selector-transparent-white-custom-color-via-color-picker-blur-2-output-format-selector-png-for-transparent-jpeg-webp-for-solid-backgrounds-3-output-quality-slider-1-100-for-non-transparent-formats-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-all-processing-must-remain-client-side-do-not-modify-any-calculator-components",
+      "featureTitle": "Upgrade the Background Remover tool (frontend/src/pages/image-tools/BackgroundRemoverPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Background fill option selector (Transparent, White, Custom Color via color picker, Blur); (2) Output format selector (PNG for transparent, JPEG/WebP for solid backgrounds); (3) Output quality slider (1–100% for non-transparent formats). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel. Enable download only after preview is shown. All processing must remain client-side. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-143"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-ensure-all-upgraded-non-calculator-tool-pages-image-tools-and-pdf-tools-with-the-new-advanced-user-controlled-mode-are-fully-mobile-responsive-the-settings-panel-must-stack-vertically-on-screens-below-768px-unit-selectors-must-use-full-width-dropdowns-on-mobile-the-before-after-comparison-panel-must-switch-from-side-by-side-to-stacked-original-on-top-processed-below-on-screens-below-768px-the-apply-preview-and-download-buttons-must-be-full-width-on-mobile-with-a-minimum-height-of-48px-for-touch-friendliness-do-not-modify-any-calculator-components",
+      "featureTitle": "Ensure all upgraded non-calculator tool pages (image tools and PDF tools) with the new advanced user-controlled mode are fully mobile responsive. The settings panel must stack vertically on screens below 768px. Unit selectors must use full-width dropdowns on mobile. The before/after comparison panel must switch from side-by-side to stacked (original on top, processed below) on screens below 768px. The 'Apply & Preview' and 'Download' buttons must be full-width on mobile with a minimum height of 48px for touch friendliness. Do NOT modify any calculator components.",
+      "files": [
+        "frontend/src/components/AdvancedToolShell.tsx"
+      ],
+      "components": [
+        "blob-storage@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-148"
       ],
       "confidence": "high"
     }

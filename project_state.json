@@ -1,7 +1,7 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 21,
-  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model (Free: 2 fixes/day, standard quality, watermark; Pro: unlimited, HD, A4 sheet, no watermark, multi-photo sheet) with Go Pro button, pricing modal (₹499/month, ₹3999/year), feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged.",
+  "projectStateVersion": 29,
+  "summary": "All-in-One Utility Platform: Phase 1 - Advanced Calculator Hub, Phase 2 - PDF Tools Module, Phase 3 - Advanced Image Tools Module with passport/government document photo makers, image compression, format conversion, background removal, and DPI adjustment, Phase 4 - SEO & Monetization Foundation with global SEO structure, AdSense-ready layout, performance optimization, and internal linking, Phase 5 - Advanced Resume Builder with Indian and International format templates. Phase 6 - Global Multi-Language System with 9 languages, language switcher in header, i18n structure, language-based URLs, hreflang tags, canonical tags, and lazy-loaded language files. Phase 7 - Performance & UI Optimization with code splitting, lazy loading, UI refinement, AdSense optimization layout, improved internal linking, and enhanced SEO structure. Phase 9 - Smart Document Fixer Upgrade with side-by-side Before/After preview, zoom/toggle/crop/rotate preview, Auto Photo Size Generator with government presets, auto features, and export options — all client-side only. Phase 9 Pro UI: Smart Document Fixer now has a freemium model (Free: 2 fixes/day, standard quality, watermark; Pro: unlimited, HD, A4 sheet, no watermark, multi-photo sheet) with Go Pro button, pricing modal (₹499/month, ₹3999/year), feature comparison table, PRO badge on card, lock icons and blur on premium features for free users — all simulated via localStorage, no login/backend/payment gateway. All other tools remain 100% free and unchanged. Phase 10 - Advanced User-Controlled Mode for all non-calculator tools: Image Tools, PDF Tools, Converters, and Compressors upgraded with manual settings selection before processing, unit selection (px/cm/inches/mm/KB/MB), quality/size controls, preview before download, format selection, before/after comparison, and download enabled only after preview. Homepage updated to show all FREE tools on front page with clear icons per tool card, Pro tools in a separate labeled section — existing layout/design/theme unchanged. Calculators remain 100% untouched.",
   "architectural_notes": [
     "Phase 1 only: Advanced Calculator Hub - other modules (PDF Tools, Image Tools, Resume Builder, Multi-language) deferred to later phases",
     "Each calculator gets individual SEO-friendly page",
@@ -888,6 +888,102 @@
         "REQ-131"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-rewrite-frontend-src-pages-homepage-tsx-to-restore-the-previous-layout-exactly-as-it-was-before-the-most-recent-redesign-the-page-must-include-1-the-original-welcome-to-docmastertools-com-hero-section-with-its-original-headline-text-description-copy-cta-buttons-trust-stat-badges-and-background-styling-2-the-original-section-layout-card-designs-spacing-padding-gap-values-and-background-colors-as-they-appeared-in-the-previous-version-do-not-introduce-any-new-visual-design-color-palette-or-layout-structure-3-all-original-tool-category-sections-pdf-tools-image-tools-calculator-hub-resume-builder-rendered-with-the-same-card-structure-icon-placement-and-grid-layout-as-before-do-not-modify-footer-tsx-the-footer-must-remain-exactly-as-currently-deployed-single-section-footer-with-document-master-tools-brand-quick-links-including-internal-and-external-links-and-the-copyright-notice-2026-rjy-total-manpowers-services-private-limited-all-rights-reserved-do-not-alter-any-other-page-or-component-outside-of-homepage-tsx",
+      "title": "Rewrite frontend/src/pages/HomePage.tsx to restore the previous layout exactly as it was before the most recent redesign. The page must include: (1) the original 'Welcome to DocMasterTools.com' hero section with its original headline text, description copy, CTA buttons, trust/stat badges, and background styling; (2) the original section layout, card designs, spacing, padding, gap values, and background colors as they appeared in the previous version — do not introduce any new visual design, color palette, or layout structure; (3) all original tool-category sections (PDF Tools, Image Tools, Calculator Hub, Resume Builder) rendered with the same card structure, icon placement, and grid layout as before. Do NOT modify Footer.tsx — the footer must remain exactly as currently deployed (single-section footer with 'Document Master Tools' brand, Quick Links including internal and external links, and the copyright notice '© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.'). Do not alter any other page or component outside of HomePage.tsx.",
+      "reqIds": [
+        "REQ-133"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-rewrite-frontend-src-pages-homepage-tsx-using-the-exact-layout-visible-in-the-uploaded-screenshots-as-the-final-approved-base-the-page-must-preserve-1-hero-section-with-welcome-to-docmastertools-com-headline-your-all-in-one-document-image-pdf-utility-platform-subtitle-the-full-description-paragraph-and-the-three-trust-badge-cards-100-private-40-tools-free-forever-displayed-in-their-original-dark-card-style-2-calculator-hub-section-with-the-orange-amber-section-icon-and-21-calculators-for-academic-financial-health-needs-subtitle-followed-by-three-dark-category-cards-academic-calculators-9-tools-orange-link-financial-calculators-8-tools-orange-link-health-general-4-tools-orange-link-each-with-a-centered-illustration-image-bold-title-subtitle-and-colored-tool-count-link-3-pdf-tools-section-showing-the-grid-of-tool-cards-merge-pdf-split-pdf-compress-pdf-pdf-to-image-etc-exactly-as-shown-in-the-screenshots-with-the-16-professional-pdf-processing-tools-subtitle-4-image-tools-section-and-resume-builder-section-rendered-with-the-same-card-structure-and-layout-as-calculator-hub-and-pdf-tools-5-dark-background-theme-existing-card-shadows-border-radius-padding-and-gap-values-preserved-exactly-no-new-visual-elements-no-color-palette-changes-no-structural-changes",
+      "title": "Rewrite frontend/src/pages/HomePage.tsx using the exact layout visible in the uploaded screenshots as the final approved base. The page must preserve: (1) Hero section with 'Welcome to DocMasterTools.com' headline, 'Your All-in-One Document, Image & PDF Utility Platform' subtitle, the full description paragraph, and the three trust badge cards (100% Private, 40+ Tools, Free Forever) displayed in their original dark-card style; (2) Calculator Hub section with the orange/amber section icon and '21 calculators for academic, financial & health needs' subtitle, followed by three dark category cards — Academic Calculators (9 Tools, orange link), Financial Calculators (8 Tools, orange link), Health & General (4 Tools, orange link) — each with a centered illustration image, bold title, subtitle, and colored tool-count link; (3) PDF Tools section showing the grid of tool cards (Merge PDF, Split PDF, Compress PDF, PDF to Image, etc.) exactly as shown in the screenshots with the '16 professional PDF processing tools' subtitle; (4) Image Tools section and Resume Builder section rendered with the same card structure and layout as Calculator Hub and PDF Tools; (5) Dark background theme, existing card shadows, border radius, padding, and gap values preserved exactly — no new visual elements, no color palette changes, no structural changes.",
+      "reqIds": [
+        "REQ-134"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-within-frontend-src-pages-homepage-tsx-implement-the-pro-badge-system-on-the-homepage-tool-cards-specifically-1-the-smart-document-fixer-tool-card-wherever-it-appears-in-the-image-tools-section-must-display-a-visually-distinct-pro-pill-badge-amber-gold-background-dark-text-small-font-rounded-full-positioned-at-the-top-right-corner-of-the-card-or-inline-with-the-card-title-2-all-other-tool-cards-calculator-hub-categories-pdf-tools-standard-image-tools-resume-builder-must-not-display-any-pro-badge-and-must-remain-visually-unchanged-3-the-pro-badge-must-use-the-same-amber-gold-styling-already-established-in-imagetoolspage-tsx-for-the-smart-document-fixer-card-ensuring-visual-consistency-4-free-tools-and-the-single-pro-tool-must-not-be-mixed-in-a-visually-ambiguous-way-the-pro-badge-must-make-the-distinction-immediately-clear-at-a-glance-5-do-not-add-any-new-sections-change-any-card-layout-structure-or-alter-card-spacing",
+      "title": "Within frontend/src/pages/HomePage.tsx, implement the Pro badge system on the HomePage tool cards. Specifically: (1) The 'Smart Document Fixer' tool card — wherever it appears in the Image Tools section — must display a visually distinct 'PRO' pill badge (amber/gold background, dark text, small font, rounded-full) positioned at the top-right corner of the card or inline with the card title. (2) All other tool cards (Calculator Hub categories, PDF Tools, standard Image Tools, Resume Builder) must NOT display any Pro badge and must remain visually unchanged. (3) The Pro badge must use the same amber/gold styling already established in ImageToolsPage.tsx for the Smart Document Fixer card, ensuring visual consistency. (4) Free tools and the single Pro tool must not be mixed in a visually ambiguous way — the Pro badge must make the distinction immediately clear at a glance. (5) Do not add any new sections, change any card layout structure, or alter card spacing.",
+      "reqIds": [
+        "REQ-135"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-reusable-advancedtoolshell-component-at-frontend-src-components-advancedtoolshell-tsx-that-provides-the-standardized-advanced-user-controlled-workflow-for-all-non-calculator-tools-the-shell-must-enforce-this-strict-step-sequence-1-file-upload-zone-2-settings-panel-all-user-settings-must-be-selected-confirmed-before-any-processing-begins-3-apply-preview-button-that-triggers-client-side-processing-and-renders-a-before-after-comparison-panel-4-download-button-that-is-disabled-and-visually-grayed-out-until-a-preview-has-been-successfully-generated-the-shell-must-accept-props-for-tool-title-accepted-file-types-settings-slot-reactnode-processing-function-and-output-file-name-implement-fully-client-side-with-no-backend-calls",
+      "title": "Create a reusable AdvancedToolShell component at frontend/src/components/AdvancedToolShell.tsx that provides the standardized advanced user-controlled workflow for all non-calculator tools. The shell must enforce this strict step sequence: (1) File upload zone; (2) Settings panel — all user settings must be selected/confirmed before any processing begins; (3) 'Apply & Preview' button that triggers client-side processing and renders a before/after comparison panel; (4) Download button that is disabled and visually grayed out until a preview has been successfully generated. The shell must accept props for: tool title, accepted file types, settings slot (ReactNode), processing function, and output file name. Implement fully client-side with no backend calls.",
+      "reqIds": [
+        "REQ-136"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-imagecompressor-tool-frontend-src-components-image-tools-imagecompressortool-tsx-and-frontend-src-pages-image-tools-imagecompressorpage-tsx-to-use-the-advanced-user-controlled-mode-the-settings-panel-must-include-1-target-size-input-with-unit-selector-toggling-between-kb-and-mb-2-quality-slider-1-100-3-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-the-user-clicks-apply-preview-show-before-after-comparison-with-original-vs-compressed-file-dimensions-and-sizes-enable-the-download-button-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "title": "Upgrade the ImageCompressor tool (frontend/src/components/image-tools/ImageCompressorTool.tsx and frontend/src/pages/image-tools/ImageCompressorPage.tsx) to use the advanced user-controlled mode. The settings panel must include: (1) Target size input with unit selector toggling between KB and MB; (2) Quality slider (1–100%); (3) Output format selector (JPEG, PNG, WebP). Processing must not begin until the user clicks 'Apply & Preview'. Show before/after comparison with original vs compressed file dimensions and sizes. Enable the download button only after preview is shown. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-137"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-all-government-document-photo-resize-tools-passportphotomakerpage-aadhaarphotoresizepage-panphotoresizepage-sscphotoresizepage-railwayphotoresizepage-policearmyphotopage-visaphotoresizepage-signatureresizepage-to-use-the-advanced-user-controlled-mode-via-the-advancedtoolshell-each-settings-panel-must-include-1-preset-dimension-selector-with-government-standard-presets-2-custom-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-3-maintain-aspect-ratio-toggle-4-target-file-size-input-with-unit-selector-kb-mb-5-output-quality-slider-1-100-6-output-format-selector-jpeg-png-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-with-original-vs-output-dimensions-and-file-size-enable-download-only-after-preview-do-not-modify-any-calculator-components",
+      "title": "Upgrade all government document photo resize tools (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage) to use the advanced user-controlled mode via the AdvancedToolShell. Each settings panel must include: (1) Preset dimension selector with government-standard presets; (2) Custom width and height inputs with unit selector (px, cm, mm, inches); (3) Maintain aspect ratio toggle; (4) Target file size input with unit selector (KB, MB); (5) Output quality slider (1–100%); (6) Output format selector (JPEG, PNG). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel with original vs output dimensions and file size. Enable download only after preview. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-138"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-customimageresize-tool-frontend-src-pages-image-tools-customimageresizepage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-width-and-height-inputs-with-unit-selector-px-cm-mm-inches-per-field-2-maintain-aspect-ratio-toggle-3-resize-mode-selector-by-pixel-by-percentage-4-output-quality-slider-1-100-5-output-format-selector-jpeg-png-webp-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-panel-with-original-vs-new-dimensions-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "title": "Upgrade the CustomImageResize tool (frontend/src/pages/image-tools/CustomImageResizePage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Width and height inputs with unit selector (px, cm, mm, inches) per field; (2) Maintain aspect ratio toggle; (3) Resize mode selector (by pixel / by percentage); (4) Output quality slider (1–100%); (5) Output format selector (JPEG, PNG, WebP). Processing must not begin until 'Apply & Preview' is clicked. Show before/after panel with original vs new dimensions. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-139"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-dpi-changer-tool-frontend-src-pages-image-tools-dpichangerpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-dpi-preset-selector-72-96-150-200-300-600-dpi-2-custom-dpi-number-input-3-output-format-selector-jpeg-png-tiff-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-dpi-vs-new-dpi-and-file-size-enable-download-only-after-preview-is-shown-implement-dpi-metadata-embedding-client-side-via-canvas-do-not-modify-any-calculator-components",
+      "title": "Upgrade the DPI Changer tool (frontend/src/pages/image-tools/DPIChangerPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) DPI preset selector (72, 96, 150, 200, 300, 600 DPI); (2) Custom DPI number input; (3) Output format selector (JPEG, PNG, TIFF). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original DPI vs new DPI and file size. Enable download only after preview is shown. Implement DPI metadata embedding client-side via canvas. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-140"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-image-cropper-tool-frontend-src-pages-image-tools-imagecropperpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-aspect-ratio-preset-selector-free-1-1-4-3-3-2-16-9-9-16-custom-2-custom-crop-dimensions-inputs-width-height-with-unit-selector-px-percentage-3-output-quality-slider-1-100-4-output-format-selector-jpeg-png-webp-user-must-define-crop-area-using-interactive-drag-handles-on-the-image-before-clicking-apply-preview-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "title": "Upgrade the Image Cropper tool (frontend/src/pages/image-tools/ImageCropperPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Aspect ratio preset selector (Free, 1:1, 4:3, 3:2, 16:9, 9:16, custom); (2) Custom crop dimensions inputs (width, height) with unit selector (px, percentage); (3) Output quality slider (1–100%); (4) Output format selector (JPEG, PNG, WebP). User must define crop area using interactive drag handles on the image before clicking 'Apply & Preview'. Show before/after comparison panel. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-141"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-format-conversion-tools-jpgtopngpage-frontend-src-pages-image-tools-jpgtopngpage-tsx-pngtojpgpage-frontend-src-pages-image-tools-pngtojpgpage-tsx-and-webpconverterpage-frontend-src-pages-image-tools-webpconverterpage-tsx-to-use-the-advanced-user-controlled-mode-each-settings-panel-must-include-1-output-format-selector-showing-all-valid-conversion-targets-for-that-tool-2-output-quality-slider-1-100-applicable-to-lossy-formats-3-target-file-size-input-with-unit-selector-kb-mb-as-an-optional-constraint-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-with-original-format-size-and-dimensions-vs-converted-format-and-size-enable-download-only-after-preview-is-shown-do-not-modify-any-calculator-components",
+      "title": "Upgrade the format conversion tools — JPGToPNGPage (frontend/src/pages/image-tools/JPGToPNGPage.tsx), PNGToJPGPage (frontend/src/pages/image-tools/PNGToJPGPage.tsx), and WEBPConverterPage (frontend/src/pages/image-tools/WEBPConverterPage.tsx) — to use the advanced user-controlled mode. Each settings panel must include: (1) Output format selector showing all valid conversion targets for that tool; (2) Output quality slider (1–100%, applicable to lossy formats); (3) Target file size input with unit selector (KB, MB) as an optional constraint. Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original format, size, and dimensions vs converted format and size. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-142"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-upgrade-the-background-remover-tool-frontend-src-pages-image-tools-backgroundremoverpage-tsx-to-use-the-advanced-user-controlled-mode-settings-panel-must-include-1-background-fill-option-selector-transparent-white-custom-color-via-color-picker-blur-2-output-format-selector-png-for-transparent-jpeg-webp-for-solid-backgrounds-3-output-quality-slider-1-100-for-non-transparent-formats-processing-must-not-begin-until-apply-preview-is-clicked-show-before-after-comparison-panel-enable-download-only-after-preview-is-shown-all-processing-must-remain-client-side-do-not-modify-any-calculator-components",
+      "title": "Upgrade the Background Remover tool (frontend/src/pages/image-tools/BackgroundRemoverPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Background fill option selector (Transparent, White, Custom Color via color picker, Blur); (2) Output format selector (PNG for transparent, JPEG/WebP for solid backgrounds); (3) Output quality slider (1–100% for non-transparent formats). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel. Enable download only after preview is shown. All processing must remain client-side. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-143"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-ensure-all-upgraded-non-calculator-tool-pages-image-tools-and-pdf-tools-with-the-new-advanced-user-controlled-mode-are-fully-mobile-responsive-the-settings-panel-must-stack-vertically-on-screens-below-768px-unit-selectors-must-use-full-width-dropdowns-on-mobile-the-before-after-comparison-panel-must-switch-from-side-by-side-to-stacked-original-on-top-processed-below-on-screens-below-768px-the-apply-preview-and-download-buttons-must-be-full-width-on-mobile-with-a-minimum-height-of-48px-for-touch-friendliness-do-not-modify-any-calculator-components",
+      "title": "Ensure all upgraded non-calculator tool pages (image tools and PDF tools) with the new advanced user-controlled mode are fully mobile responsive. The settings panel must stack vertically on screens below 768px. Unit selectors must use full-width dropdowns on mobile. The before/after comparison panel must switch from side-by-side to stacked (original on top, processed below) on screens below 768px. The 'Apply & Preview' and 'Download' buttons must be full-width on mobile with a minimum height of 48px for touch friendliness. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-148"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -1365,6 +1461,64 @@
       "id": "AR-120",
       "summary": "Update Header navigation: show Calculator Hub, PDF Tools, Image Tools, Resume Builder as internal links; add JobsIndiaa.com and RJY Total Manpowers.com as external links (new tab); remove Smart Document Fixer from main nav. Update Footer Quick Links: include Calculator Hub, PDF Tools, Image Tools, Resume Builder, Smart Document Fixer (internal) + JobsIndiaa.com and RJY Total Manpowers.com (external, new tab). Mobile responsive, no layout breaking.",
       "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-121",
+      "summary": "In frontend/src/components/Footer.tsx, permanently delete the first (upper) footer section that appears before the 'Document Master Tools' section. The file must contain only one footer section in the rendered output — the one that begins with 'Document Master Tools'. Do not hide, comment out, or duplicate any markup. Do not alter the remaining footer's styling, links, copyright text, external link attributes, or responsive behavior in any way.",
+      "reqIds": [
+        "REQ-132"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-123",
+      "summary": "Restore HomePage to old layout with Pro culture system: Pro tools clearly marked with 'Pro' badge, free/pro tools not mixed randomly, Pro tools visually distinct but using same card design system, no new sections added, no redesign — old layout with Pro tagging is the final approved structure replacing previous layout lock.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-124",
+      "summary": "Upgrade all non-calculator tools (Image Tools, PDF Tools, Converters, Compressors) to advanced user-controlled mode: manual settings before processing, unit selection (px/cm/inches/mm/KB/MB), quality/size controls, preview before download, format selection before download, before/after comparison, download enabled only after preview shown. Calculators must remain 100% untouched.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-125",
+      "summary": "Homepage structure: All FREE tools visible on front page with clear sign image/icon per tool card indicating tool purpose. Pro tools must NOT be mixed with free tools — keep a separate clearly labeled 'Pro Tools' section. Existing layout, design, and theme must remain completely unchanged.",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-134",
+      "summary": "Upgrade all 16 PDF tools in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode. For each PDF tool, add a settings panel appropriate to its function before any processing occurs. Required settings by tool type: (a) PDFCompressTool — compression level selector (Low/Medium/High/Maximum), target size input with KB/MB unit selector; (b) PDFMergeTool — page order drag-reorder UI, output quality selector; (c) PDFSplitTool — split mode selector (by page range, every N pages, individual pages), page range input; (d) PDFToImageTool — output format selector (PNG, JPEG, WebP), DPI selector (72/150/200/300), quality slider; (e) ImageToPDFTool — page size selector (A4, Letter, Legal, custom), orientation (portrait/landscape), image fit mode (fit, fill, center); (f) PDFPasswordProtectTool — password input, encryption level selector (128-bit, 256-bit); (g) PDFAddWatermarkTool — watermark text input, font size, opacity slider, position selector; (h) All remaining PDF tools — expose relevant options specific to their function. Processing must not begin until 'Apply & Preview' is clicked. Show a preview panel (rendered page thumbnail or output summary) before enabling the download button. Download button must remain disabled until preview is confirmed. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-144"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-135",
+      "summary": "Update frontend/src/pages/HomePage.tsx to implement the homepage structure rules while keeping the existing layout, design, theme, and structure 100% unchanged. Specifically: (1) All FREE tool cards (Image Tools, PDF Tools, Calculator Hub, Resume Builder) must each display a clear, recognizable SVG or emoji icon that visually represents the tool's primary function — icons must be placed prominently within each card so users can immediately identify the tool purpose at a glance; (2) The Smart Document Fixer card (the only Pro tool) must be moved out of the standard Image Tools card grid and placed into a clearly labeled separate section titled 'Pro Tools' positioned below all free tool sections; (3) The 'Pro Tools' section must use the same card design system as free tool cards but display the amber/gold 'PRO' badge already established in ImageToolsPage.tsx; (4) Free tool cards must NOT display any PRO badge; (5) No structural layout changes, no new sections beyond the 'Pro Tools' section, no color or theme changes, no spacing or padding changes to existing sections.",
+      "reqIds": [
+        "REQ-145"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-136",
+      "summary": "Update frontend/src/pages/ImageToolsPage.tsx to add a clear, recognizable icon to every image tool card. Each card must display an SVG icon or well-known emoji that immediately communicates the tool's function (e.g., a passport icon for Passport Photo Maker, a scissors icon for Image Cropper, a file-compress icon for Image Compressor). The Smart Document Fixer card must remain in its own visually distinct 'Pro Tools' sub-section within the Image Tools page with its existing amber/gold PRO badge. All other existing card layout, grid structure, spacing, colors, and navigation behavior must remain unchanged. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-146"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-137",
+      "summary": "Update frontend/src/pages/PDFToolsPage.tsx to add a clear, recognizable icon to every PDF tool card so users can immediately identify the tool's purpose at a glance (e.g., a merge icon for Merge PDF, a lock icon for Password Protect, a scissors icon for Split PDF). All existing card layout, grid structure, colors, spacing, and navigation behavior must remain unchanged. Do NOT modify any calculator components.",
+      "reqIds": [
+        "REQ-147"
+      ],
       "status": "pending"
     }
   ],

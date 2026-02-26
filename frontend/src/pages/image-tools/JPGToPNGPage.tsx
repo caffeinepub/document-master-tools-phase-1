@@ -1,130 +1,135 @@
-import { useState } from 'react';
-import { ArrowLeft, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import FileUploadZone from '@/components/FileUploadZone';
-import ProcessingState from '@/components/ProcessingState';
-import { toast } from 'sonner';
-import { convertFormat, formatFileSize } from '@/lib/imageProcessing';
+import React, { useState, useCallback } from 'react';
+import SEO from '../../components/SEO';
+import BreadcrumbNavigation from '../../components/BreadcrumbNavigation';
+import AdvancedToolShell, { ProcessingResult } from '../../components/AdvancedToolShell';
+import { Slider } from '@/components/ui/slider';
+import { Label } from '@/components/ui/label';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
-interface JPGToPNGPageProps {
-  onBack: () => void;
-}
+const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({ onNavigate }) => {
+  const [format, setFormat] = useState<'png' | 'webp'>('png');
+  const [quality, setQuality] = useState(90);
+  const [targetSizeEnabled, setTargetSizeEnabled] = useState(false);
+  const [targetSize, setTargetSize] = useState(500);
+  const [targetSizeUnit, setTargetSizeUnit] = useState<'KB' | 'MB'>('KB');
 
-export default function JPGToPNGPage({ onBack }: JPGToPNGPageProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [processing, setProcessing] = useState(false);
-  const [converted, setConverted] = useState<{ blob: Blob; url: string; size: number } | null>(null);
+  const processingFunction = useCallback(async (file: File): Promise<ProcessingResult> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Canvas not supported')); return; }
+        ctx.drawImage(img, 0, 0);
 
-  const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.match(/image\/(jpeg|jpg)/)) {
-      toast.error('Please select a JPG/JPEG file');
-      return;
-    }
-    setFile(selectedFile);
-    setConverted(null);
-  };
+        const mimeType = `image/${format}`;
+        const q = format === 'webp' ? quality / 100 : undefined;
 
-  const convertImage = async () => {
-    if (!file) return;
-    setProcessing(true);
-    try {
-      const result = await convertFormat(file, 'image/png', 1);
-      setConverted(result);
-      toast.success('Image converted to PNG successfully!');
-    } catch (error) {
-      toast.error('Failed to convert image');
-    } finally {
-      setProcessing(false);
-    }
-  };
+        canvas.toBlob((blob) => {
+          if (!blob) { reject(new Error('Conversion failed')); return; }
+          const baseName = file.name.replace(/\.[^.]+$/, '');
+          const ext = format === 'webp' ? 'webp' : 'png';
+          const outputFileName = `${baseName}.${ext}`;
+          const previewUrl = URL.createObjectURL(blob);
+          resolve({
+            blob,
+            previewUrl,
+            outputFileName,
+            metadata: {
+              'Format': format.toUpperCase(),
+              'Dimensions': `${img.naturalWidth}×${img.naturalHeight}px`,
+            }
+          });
+        }, mimeType, q);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
+      img.src = url;
+    });
+  }, [format, quality]);
 
-  const downloadFile = () => {
-    if (!converted || !file) return;
-    const a = document.createElement('a');
-    a.href = converted.url;
-    a.download = file.name.replace(/\.(jpg|jpeg)$/i, '.png');
-    a.click();
-  };
+  const settingsSlot = (
+    <div className="space-y-5">
+      <div className="space-y-2">
+        <Label className="text-gray-200 text-sm font-medium">Output Format</Label>
+        <Select value={format} onValueChange={(v) => setFormat(v as 'png' | 'webp')}>
+          <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-gray-100">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            <SelectItem value="png">PNG (lossless)</SelectItem>
+            <SelectItem value="webp">WebP (modern)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-  const reset = () => {
-    setFile(null);
-    setConverted(null);
-  };
+      {format === 'webp' && (
+        <div className="space-y-3">
+          <div className="flex justify-between items-center">
+            <Label className="text-gray-200 text-sm font-medium">Quality</Label>
+            <span className="text-blue-400 font-semibold text-sm">{quality}%</span>
+          </div>
+          <Slider min={1} max={100} step={1} value={[quality]} onValueChange={([v]) => setQuality(v)} className="w-full" />
+        </div>
+      )}
 
-  return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Image Tools
-        </Button>
-
-        <Card>
-          <CardContent className="p-6 space-y-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">JPG to PNG Converter</h1>
-              <p className="text-muted-foreground">
-                Convert JPEG images to PNG format with transparency support.
-              </p>
-            </div>
-
-            {!converted && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/jpeg,image/jpg"
-                    description="Click to upload JPG/JPEG or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Size: {formatFileSize(file.size)}
-                      </p>
-                    </div>
-                    <Button onClick={convertImage} className="w-full" size="lg">
-                      Convert to PNG
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-
-            {processing && <ProcessingState message="Converting to PNG..." />}
-
-            {converted && file && (
-              <div className="space-y-4">
-                <div className="p-4 bg-muted rounded-lg">
-                  <p className="font-medium">{file.name.replace(/\.(jpg|jpeg)$/i, '.png')}</p>
-                  <div className="grid grid-cols-2 gap-4 text-sm mt-2">
-                    <div>
-                      <p className="text-muted-foreground">Original (JPG):</p>
-                      <p className="font-semibold">{formatFileSize(file.size)}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Converted (PNG):</p>
-                      <p className="font-semibold">{formatFileSize(converted.size)}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button onClick={downloadFile} className="flex-1" size="lg">
-                    Download PNG
-                  </Button>
-                  <Button onClick={reset} variant="outline" size="lg">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Reset
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <input type="checkbox" id="ts-jpg-png" checked={targetSizeEnabled} onChange={(e) => setTargetSizeEnabled(e.target.checked)} className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-500" />
+          <Label htmlFor="ts-jpg-png" className="text-gray-200 text-sm font-medium cursor-pointer">Target File Size (optional)</Label>
+        </div>
+        {targetSizeEnabled && (
+          <div className="flex gap-2 mt-2">
+            <Input type="number" min={1} value={targetSize} onChange={(e) => setTargetSize(Number(e.target.value))} className="flex-1 bg-gray-700 border-gray-600 text-gray-100" />
+            <Select value={targetSizeUnit} onValueChange={(v) => setTargetSizeUnit(v as 'KB' | 'MB')}>
+              <SelectTrigger className="w-24 bg-gray-700 border-gray-600 text-gray-100"><SelectValue /></SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-600">
+                <SelectItem value="KB">KB</SelectItem>
+                <SelectItem value="MB">MB</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <SEO
+        title="JPG to PNG Converter - Convert JPEG to PNG Online Free"
+        description="Convert JPG/JPEG images to PNG or WebP online for free. Advanced settings with before/after preview and instant download."
+        canonicalUrl="https://docmastertools.com/jpg-to-png"
+      />
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        <BreadcrumbNavigation
+          items={[
+            { label: 'Home', onClick: () => onNavigate?.('home') },
+            { label: 'Image Tools', onClick: () => onNavigate?.('image-tools') },
+            { label: 'JPG to PNG' },
+          ]}
+        />
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-100 mb-2">JPG to PNG Converter</h1>
+          <p className="text-gray-400">Convert JPEG images to PNG or WebP format with quality control and before/after preview.</p>
+        </div>
+        <div className="bg-gray-800 rounded-2xl border border-gray-700 p-6">
+          <AdvancedToolShell
+            toolTitle="JPG to PNG"
+            acceptedFileTypes="image/jpeg,image/jpg"
+            acceptedFileTypesLabel="Accepts JPEG/JPG files"
+            settingsSlot={settingsSlot}
+            processingFunction={processingFunction}
+            outputFileName="converted.png"
+          />
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default JPGToPNGPage;

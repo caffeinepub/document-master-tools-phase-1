@@ -1,14 +1,108 @@
 {
   "kind": "spec_vs_diff_report",
   "version": "1.0",
-  "generatedAt": "2026-02-25T11:33:48.870Z",
-  "summary": "The diff shows that Footer.tsx was modified. The visible content in the diff shows the footer starting with 'Document Master Tools' branding and containing Quick Links and Legal columns — which according to REQ-131 should be the RETAINED lower section. The removed section was supposed to contain Quick Links, Legal, About, copyright, and 'Built with ❤️ using caffeine.ai'. However, since the diff is truncated, it is difficult to determine with certainty whether the upper duplicate section was fully removed. The file-summaries.txt does not provide a clear description of what changed in Footer.tsx. Given the truncation, the implementation appears to align with REQ-131 — the footer now starts with Document Master Tools branding — but full verification is limited.",
-  "missing_requirements": [],
-  "hallucinated_features": [],
-  "confidence": 0.55,
+  "generatedAt": "2026-02-25T15:21:42.749Z",
+  "summary": "The diff implements REQ-136 (AdvancedToolShell), REQ-137 (ImageCompressor), REQ-138 (8 government photo tools via PhotoResizeTool), REQ-139 (CustomImageResize), REQ-140 (DPIChanger), REQ-141 (ImageCropper), REQ-142 (format converters), REQ-143 (BackgroundRemover), and partially REQ-145/146/147 per the file summaries. However, REQ-144 (16 PDF tools upgrade) shows no PDF tool component files modified in the diff. REQ-140 is missing TIFF format support. REQ-141 is missing interactive drag-handle crop UI. REQ-148 mobile responsiveness is partially unconfirmed. REQ-145, REQ-146, REQ-147 page files are not in the modified files list.",
+  "missing_requirements": [
+    {
+      "id": "REQ-144",
+      "requirement": "Upgrade all 16 PDF tools in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode with tool-specific settings panels, Apply & Preview gating, and disabled download until preview.",
+      "reason": "No PDF tool component files (PDFCompressTool.tsx, PDFMergeTool.tsx, PDFToImageTool.tsx, ImageToPDFTool.tsx, PDFPasswordProtectTool.tsx, PDFAddWatermarkTool.tsx, etc.) appear in the modified files list. The only PDF tool mentioned in the diff summary is PDFSplitTool.tsx, which only describes split download behavior with no mention of settings panels, Apply & Preview gating, or disabled download until preview.",
+      "evidence": [
+        "frontend/src/components/pdf-tools/PDFSplitTool.tsx",
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "id": "REQ-140",
+      "requirement": "Output format selector must include TIFF as one of the options (JPEG, PNG, TIFF) for the DPI Changer tool.",
+      "reason": "DPIChangerPage.tsx only declares format state as 'jpeg' | 'png' and the settings slot only offers JPEG and PNG options. TIFF format is entirely absent.",
+      "evidence": [
+        "frontend/src/pages/image-tools/DPIChangerPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-141",
+      "requirement": "User must define crop area using interactive drag handles on the image before clicking Apply & Preview.",
+      "reason": "ImageCropperPage.tsx implements cropping only via numeric inputs for cropX, cropY, cropW, cropH. There is no interactive drag-handle overlay on the uploaded image, which is an explicit AC requirement.",
+      "evidence": [
+        "frontend/src/pages/image-tools/ImageCropperPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-145",
+      "requirement": "Update HomePage.tsx to add icons to all free tool cards and move Smart Document Fixer to a separate labeled Pro Tools section while keeping layout unchanged.",
+      "reason": "frontend/src/pages/HomePage.tsx does not appear in the diff's modified files list. Only the file-summaries.txt references these changes indirectly.",
+      "evidence": [
+        "frontend/src/pages/HomePage.tsx",
+        "frontend-file-summaries.txt"
+      ]
+    },
+    {
+      "id": "REQ-146",
+      "requirement": "Update ImageToolsPage.tsx to add recognizable icons to every image tool card and keep Smart Document Fixer in a separate labeled Pro Tools sub-section.",
+      "reason": "frontend/src/pages/ImageToolsPage.tsx does not appear in the modified files list in the diff summary.",
+      "evidence": [
+        "frontend/src/pages/ImageToolsPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-147",
+      "requirement": "Update PDFToolsPage.tsx to add a clear, recognizable icon to every PDF tool card.",
+      "reason": "frontend/src/pages/PDFToolsPage.tsx does not appear in the modified files list in the diff summary.",
+      "evidence": [
+        "frontend/src/pages/PDFToolsPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-148",
+      "requirement": "All upgraded tools must be fully mobile responsive: settings panel stacks vertically below 768px, unit selectors full-width on mobile, before/after comparison stacks vertically on mobile, action buttons full-width with min-height 48px on mobile.",
+      "reason": "The AdvancedToolShell.tsx content is truncated and no explicit responsive Tailwind breakpoint classes for the before/after panel switching from side-by-side to stacked, full-width unit selectors, or full-width action buttons on mobile are confirmed in the visible diff content.",
+      "evidence": [
+        "frontend/src/components/AdvancedToolShell.tsx",
+        "frontend/src/index.css"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "AdvancedToolShell supports multiple file uploads via multipleFiles prop and onMultipleFilesChange callback.",
+      "reason": "The build request does not specify multiple file upload capability for AdvancedToolShell. The props interface includes multipleFiles and onMultipleFilesChange which were not requested.",
+      "evidence": [
+        "frontend/src/components/AdvancedToolShell.tsx"
+      ]
+    },
+    {
+      "description": "A separate DownloadSection component was created supporting multiple file downloads with individual download buttons and no ZIP bundling.",
+      "reason": "The build request does not request a separate DownloadSection component or multiple-file individual download UI. The requirement is a single download button disabled until preview is generated.",
+      "evidence": [
+        "frontend/src/components/DownloadSection.tsx",
+        "frontend-file-summaries.txt"
+      ]
+    }
+  ],
+  "confidence": 0.72,
   "changed_files": [
     "frontend-file-summaries.txt",
-    "frontend/src/components/Footer.tsx",
+    "frontend/src/App.tsx",
+    "frontend/src/components/AdvancedToolShell.tsx",
+    "frontend/src/components/image-tools/PhotoResizeTool.tsx",
+    "frontend/src/pages/image-tools/AadhaarPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/BackgroundRemoverPage.tsx",
+    "frontend/src/pages/image-tools/CustomImageResizePage.tsx",
+    "frontend/src/pages/image-tools/DPIChangerPage.tsx",
+    "frontend/src/pages/image-tools/ImageCompressorPage.tsx",
+    "frontend/src/pages/image-tools/ImageCropperPage.tsx",
+    "frontend/src/pages/image-tools/JPGToPNGPage.tsx",
+    "frontend/src/pages/image-tools/PANPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/PNGToJPGPage.tsx",
+    "frontend/src/pages/image-tools/PassportPhotoMakerPage.tsx",
+    "frontend/src/pages/image-tools/PoliceArmyPhotoPage.tsx",
+    "frontend/src/pages/image-tools/RailwayPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SSCPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/SignatureResizePage.tsx",
+    "frontend/src/pages/image-tools/VisaPhotoResizePage.tsx",
+    "frontend/src/pages/image-tools/WEBPConverterPage.tsx",
     "project_state.json"
   ]
 }

@@ -1,46 +1,352 @@
 {
   "kind": "build_request",
-  "title": "Remove duplicate upper footer section, keep only the Document Master Tools footer",
-  "priority": "normal",
+  "title": "Upgrade all non-calculator tools to advanced user-controlled mode with homepage pro/free separation",
+  "projectName": "DocMasterTools",
+  "priority": "high",
   "requirements": [
     {
-      "id": "REQ-131",
-      "text": "Update frontend/src/components/Footer.tsx to remove the first (upper) footer section entirely, keeping only the lower footer section that begins with 'Document Master Tools'. The final footer must be a single section. Do not modify any footer styling, alignment, links, copyright text, external link settings, or mobile responsiveness. No other layout changes.",
+      "id": "REQ-136",
+      "text": "Create a reusable AdvancedToolShell component at frontend/src/components/AdvancedToolShell.tsx that provides the standardized advanced user-controlled workflow for all non-calculator tools. The shell must enforce this strict step sequence: (1) File upload zone; (2) Settings panel — all user settings must be selected/confirmed before any processing begins; (3) 'Apply & Preview' button that triggers client-side processing and renders a before/after comparison panel; (4) Download button that is disabled and visually grayed out until a preview has been successfully generated. The shell must accept props for: tool title, accepted file types, settings slot (ReactNode), processing function, and output file name. Implement fully client-side with no backend calls.",
       "target": "frontend",
       "source": {
         "messageIds": [
-          "msg-latest"
+          "msg-1"
         ],
         "quotes": [
-          "Remove the FIRST (upper) footer section completely.",
-          "Keep ONLY the SECOND (lower) footer section that starts with: \"Document Master Tools\"",
-          "The final website must have only ONE footer section.",
-          "Do NOT modify: Footer styling, Footer alignment, Links, Copyright text, External link settings, Mobile responsiveness"
+          "User must manually select settings before processing.",
+          "Show preview before download.",
+          "Enable final download button only after preview is shown."
         ]
       },
       "acceptanceCriteria": [
-        "The website renders exactly one footer section site-wide.",
-        "The retained footer section starts with 'Document Master Tools' branding.",
-        "The removed section (containing Quick Links, Legal, About, copyright, and 'Built with ❤️ using caffeine.ai') is no longer rendered anywhere.",
-        "All links, copyright text (© 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.), and external link attributes (target, rel) in the remaining footer section are unchanged.",
-        "Footer styling (colors, typography, spacing, padding) is identical to the pre-change state.",
-        "Footer is fully mobile responsive and displays correctly at 320px width and above.",
-        "No other components or layout sections are affected by this change."
+        "Settings panel is rendered before any processing can occur",
+        "Apply & Preview button is the only trigger for processing",
+        "Download button is disabled (aria-disabled, visually grayed, not clickable) until preview has been generated",
+        "Before/after comparison is shown once preview is generated",
+        "Component accepts file upload, settings slot, processing function, and output filename as props"
+      ]
+    },
+    {
+      "id": "REQ-137",
+      "text": "Upgrade the ImageCompressor tool (frontend/src/components/image-tools/ImageCompressorTool.tsx and frontend/src/pages/image-tools/ImageCompressorPage.tsx) to use the advanced user-controlled mode. The settings panel must include: (1) Target size input with unit selector toggling between KB and MB; (2) Quality slider (1–100%); (3) Output format selector (JPEG, PNG, WebP). Processing must not begin until the user clicks 'Apply & Preview'. Show before/after comparison with original vs compressed file dimensions and sizes. Enable the download button only after preview is shown. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Provide unit selection where applicable (px, cm, inches, mm, KB, MB).",
+          "Provide quality and size control options.",
+          "Show preview before download.",
+          "Allow format selection before download.",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Unit selector toggles between KB and MB for target size",
+        "Quality slider from 1–100% is present in settings panel",
+        "Output format selector offers JPEG, PNG, WebP options",
+        "Processing does not start until 'Apply & Preview' is clicked",
+        "Before/after comparison shows original and compressed file size and dimensions",
+        "Download button is disabled until after preview is shown",
+        "Calculator components are untouched"
+      ]
+    },
+    {
+      "id": "REQ-138",
+      "text": "Upgrade all government document photo resize tools (PassportPhotoMakerPage, AadhaarPhotoResizePage, PANPhotoResizePage, SSCPhotoResizePage, RailwayPhotoResizePage, PoliceArmyPhotoPage, VisaPhotoResizePage, SignatureResizePage) to use the advanced user-controlled mode via the AdvancedToolShell. Each settings panel must include: (1) Preset dimension selector with government-standard presets; (2) Custom width and height inputs with unit selector (px, cm, mm, inches); (3) Maintain aspect ratio toggle; (4) Target file size input with unit selector (KB, MB); (5) Output quality slider (1–100%); (6) Output format selector (JPEG, PNG). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel with original vs output dimensions and file size. Enable download only after preview. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Provide unit selection where applicable (px, cm, inches, mm, KB, MB).",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each photo resize page has a settings panel with preset selector, custom dimensions (with unit selector: px/cm/mm/inches), aspect ratio toggle, target KB/MB input, quality slider, and format selector",
+        "Processing does not begin until 'Apply & Preview' is clicked",
+        "Before/after comparison shown after preview generation",
+        "Download button disabled until preview is shown",
+        "All 8 government document photo tools upgraded",
+        "Calculator components are untouched"
+      ]
+    },
+    {
+      "id": "REQ-139",
+      "text": "Upgrade the CustomImageResize tool (frontend/src/pages/image-tools/CustomImageResizePage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Width and height inputs with unit selector (px, cm, mm, inches) per field; (2) Maintain aspect ratio toggle; (3) Resize mode selector (by pixel / by percentage); (4) Output quality slider (1–100%); (5) Output format selector (JPEG, PNG, WebP). Processing must not begin until 'Apply & Preview' is clicked. Show before/after panel with original vs new dimensions. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Provide unit selection where applicable (px, cm, inches, mm, KB, MB).",
+          "Allow format selection before download.",
+          "Show before/after comparison where possible."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Width and height inputs each have a unit selector (px, cm, mm, inches)",
+        "Maintain aspect ratio toggle present",
+        "Resize mode (pixel/percentage) selector present",
+        "Quality slider and format selector present",
+        "Processing gated behind 'Apply & Preview' button",
+        "Before/after comparison shown after processing",
+        "Download disabled until preview shown"
+      ]
+    },
+    {
+      "id": "REQ-140",
+      "text": "Upgrade the DPI Changer tool (frontend/src/pages/image-tools/DPIChangerPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) DPI preset selector (72, 96, 150, 200, 300, 600 DPI); (2) Custom DPI number input; (3) Output format selector (JPEG, PNG, TIFF). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original DPI vs new DPI and file size. Enable download only after preview is shown. Implement DPI metadata embedding client-side via canvas. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Provide quality and size control options.",
+          "Allow format selection before download.",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "DPI preset selector (72, 96, 150, 200, 300, 600) and custom DPI input present",
+        "Output format selector with JPEG, PNG, TIFF present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after shows original vs new DPI and file size",
+        "Download disabled until preview shown",
+        "All processing is client-side only"
+      ]
+    },
+    {
+      "id": "REQ-141",
+      "text": "Upgrade the Image Cropper tool (frontend/src/pages/image-tools/ImageCropperPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Aspect ratio preset selector (Free, 1:1, 4:3, 3:2, 16:9, 9:16, custom); (2) Custom crop dimensions inputs (width, height) with unit selector (px, percentage); (3) Output quality slider (1–100%); (4) Output format selector (JPEG, PNG, WebP). User must define crop area using interactive drag handles on the image before clicking 'Apply & Preview'. Show before/after comparison panel. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Provide unit selection where applicable (px, cm, inches, mm, KB, MB).",
+          "Allow format selection before download.",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Aspect ratio preset selector present",
+        "Custom crop dimension inputs with px/percentage unit selector",
+        "Interactive drag-handle crop area selection on uploaded image",
+        "Quality slider and format selector present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shown after processing",
+        "Download disabled until preview shown"
+      ]
+    },
+    {
+      "id": "REQ-142",
+      "text": "Upgrade the format conversion tools — JPGToPNGPage (frontend/src/pages/image-tools/JPGToPNGPage.tsx), PNGToJPGPage (frontend/src/pages/image-tools/PNGToJPGPage.tsx), and WEBPConverterPage (frontend/src/pages/image-tools/WEBPConverterPage.tsx) — to use the advanced user-controlled mode. Each settings panel must include: (1) Output format selector showing all valid conversion targets for that tool; (2) Output quality slider (1–100%, applicable to lossy formats); (3) Target file size input with unit selector (KB, MB) as an optional constraint. Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison with original format, size, and dimensions vs converted format and size. Enable download only after preview is shown. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Allow format selection before download.",
+          "Provide quality and size control options.",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Output format selector shows valid targets for each converter tool",
+        "Quality slider present for lossy format targets",
+        "Optional target KB/MB size constraint input present",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shows format, size, and dimension changes",
+        "Download disabled until preview shown",
+        "All three converters upgraded",
+        "Calculator components are untouched"
+      ]
+    },
+    {
+      "id": "REQ-143",
+      "text": "Upgrade the Background Remover tool (frontend/src/pages/image-tools/BackgroundRemoverPage.tsx) to use the advanced user-controlled mode. Settings panel must include: (1) Background fill option selector (Transparent, White, Custom Color via color picker, Blur); (2) Output format selector (PNG for transparent, JPEG/WebP for solid backgrounds); (3) Output quality slider (1–100% for non-transparent formats). Processing must not begin until 'Apply & Preview' is clicked. Show before/after comparison panel. Enable download only after preview is shown. All processing must remain client-side. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Allow format selection before download.",
+          "Provide quality and size control options.",
+          "Show before/after comparison where possible.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Background fill selector (Transparent, White, Custom Color, Blur) present",
+        "Output format selector present and context-aware (PNG forced for transparent)",
+        "Quality slider present for non-transparent output formats",
+        "Processing gated behind 'Apply & Preview'",
+        "Before/after comparison shown",
+        "Download disabled until preview shown",
+        "All processing client-side only"
+      ]
+    },
+    {
+      "id": "REQ-144",
+      "text": "Upgrade all 16 PDF tools in frontend/src/components/pdf-tools/ to use the advanced user-controlled mode. For each PDF tool, add a settings panel appropriate to its function before any processing occurs. Required settings by tool type: (a) PDFCompressTool — compression level selector (Low/Medium/High/Maximum), target size input with KB/MB unit selector; (b) PDFMergeTool — page order drag-reorder UI, output quality selector; (c) PDFSplitTool — split mode selector (by page range, every N pages, individual pages), page range input; (d) PDFToImageTool — output format selector (PNG, JPEG, WebP), DPI selector (72/150/200/300), quality slider; (e) ImageToPDFTool — page size selector (A4, Letter, Legal, custom), orientation (portrait/landscape), image fit mode (fit, fill, center); (f) PDFPasswordProtectTool — password input, encryption level selector (128-bit, 256-bit); (g) PDFAddWatermarkTool — watermark text input, font size, opacity slider, position selector; (h) All remaining PDF tools — expose relevant options specific to their function. Processing must not begin until 'Apply & Preview' is clicked. Show a preview panel (rendered page thumbnail or output summary) before enabling the download button. Download button must remain disabled until preview is confirmed. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "User must manually select settings before processing.",
+          "Provide unit selection where applicable (px, cm, inches, mm, KB, MB).",
+          "Provide quality and size control options.",
+          "Show preview before download.",
+          "Allow format selection before download.",
+          "Enable final download button only after preview is shown."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Each PDF tool has a tool-specific settings panel rendered before processing",
+        "PDFCompressTool has compression level selector and target size with KB/MB unit",
+        "PDFMergeTool has page reorder UI",
+        "PDFSplitTool has split mode and page range input",
+        "PDFToImageTool has format, DPI, and quality selectors",
+        "ImageToPDFTool has page size, orientation, and image fit selectors",
+        "PDFPasswordProtectTool has password and encryption level inputs",
+        "PDFAddWatermarkTool has text, size, opacity, and position controls",
+        "All 16 PDF tools gated behind 'Apply & Preview' before download",
+        "Download button disabled until preview/confirmation shown",
+        "Calculator components are untouched"
+      ]
+    },
+    {
+      "id": "REQ-145",
+      "text": "Update frontend/src/pages/HomePage.tsx to implement the homepage structure rules while keeping the existing layout, design, theme, and structure 100% unchanged. Specifically: (1) All FREE tool cards (Image Tools, PDF Tools, Calculator Hub, Resume Builder) must each display a clear, recognizable SVG or emoji icon that visually represents the tool's primary function — icons must be placed prominently within each card so users can immediately identify the tool purpose at a glance; (2) The Smart Document Fixer card (the only Pro tool) must be moved out of the standard Image Tools card grid and placed into a clearly labeled separate section titled 'Pro Tools' positioned below all free tool sections; (3) The 'Pro Tools' section must use the same card design system as free tool cards but display the amber/gold 'PRO' badge already established in ImageToolsPage.tsx; (4) Free tool cards must NOT display any PRO badge; (5) No structural layout changes, no new sections beyond the 'Pro Tools' section, no color or theme changes, no spacing or padding changes to existing sections.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "All FREE tools must be visible on the front page.",
+          "Each tool card must include a clear sign image/icon representing its function.",
+          "Users should easily recognize the tool purpose by its icon.",
+          "Pro tools must NOT be mixed with free tools.",
+          "Keep a separate clearly labeled 'Pro Tool' section.",
+          "Keep the existing layout completely unchanged.",
+          "No structural changes.",
+          "No design changes.",
+          "No theme changes."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every free tool card on the homepage has a visible, recognizable icon representing its function",
+        "Smart Document Fixer card is in a separate section labeled 'Pro Tools'",
+        "Free tool cards show no PRO badge",
+        "Pro Tools section uses the amber/gold PRO badge styling from ImageToolsPage.tsx",
+        "Existing hero section, layout, theme, spacing, and card designs are unchanged",
+        "No new free-tool sections or structural changes introduced"
+      ]
+    },
+    {
+      "id": "REQ-146",
+      "text": "Update frontend/src/pages/ImageToolsPage.tsx to add a clear, recognizable icon to every image tool card. Each card must display an SVG icon or well-known emoji that immediately communicates the tool's function (e.g., a passport icon for Passport Photo Maker, a scissors icon for Image Cropper, a file-compress icon for Image Compressor). The Smart Document Fixer card must remain in its own visually distinct 'Pro Tools' sub-section within the Image Tools page with its existing amber/gold PRO badge. All other existing card layout, grid structure, spacing, colors, and navigation behavior must remain unchanged. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Each tool card must include a clear sign image/icon representing its function.",
+          "Users should easily recognize the tool purpose by its icon.",
+          "Pro tools must NOT be mixed with free tools.",
+          "Keep a separate clearly labeled 'Pro Tool' section."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every image tool card displays a distinct, function-representing icon",
+        "Smart Document Fixer card is in a separate labeled Pro Tools sub-section",
+        "PRO badge remains on Smart Document Fixer card only",
+        "All free tool cards have no PRO badge",
+        "Existing card layout, grid, spacing, and navigation behavior are unchanged"
+      ]
+    },
+    {
+      "id": "REQ-147",
+      "text": "Update frontend/src/pages/PDFToolsPage.tsx to add a clear, recognizable icon to every PDF tool card so users can immediately identify the tool's purpose at a glance (e.g., a merge icon for Merge PDF, a lock icon for Password Protect, a scissors icon for Split PDF). All existing card layout, grid structure, colors, spacing, and navigation behavior must remain unchanged. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Each tool card must include a clear sign image/icon representing its function.",
+          "Users should easily recognize the tool purpose by its icon."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Every PDF tool card displays a distinct, function-representing icon",
+        "Existing card layout, grid structure, spacing, and navigation unchanged",
+        "Calculator components untouched"
+      ]
+    },
+    {
+      "id": "REQ-148",
+      "text": "Ensure all upgraded non-calculator tool pages (image tools and PDF tools) with the new advanced user-controlled mode are fully mobile responsive. The settings panel must stack vertically on screens below 768px. Unit selectors must use full-width dropdowns on mobile. The before/after comparison panel must switch from side-by-side to stacked (original on top, processed below) on screens below 768px. The 'Apply & Preview' and 'Download' buttons must be full-width on mobile with a minimum height of 48px for touch friendliness. Do NOT modify any calculator components.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-1"
+        ],
+        "quotes": [
+          "Only enhance internal functionality for Image, PDF, Converter, and Compressor tools."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Settings panel stacks vertically on screens below 768px",
+        "Unit selector dropdowns are full-width on mobile",
+        "Before/after comparison stacks vertically (original top, processed bottom) on mobile",
+        "Action buttons are full-width with min-height 48px on mobile",
+        "All upgraded tools display correctly from 320px width upward",
+        "Calculator components untouched"
       ]
     }
   ],
   "constraints": [
-    "Do not modify footer styling, colors, typography, or spacing.",
-    "Do not modify any links, href values, or external link attributes (target='_blank', rel='noopener noreferrer').",
-    "Do not modify the copyright text: © 2026 RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED. All Rights Reserved.",
-    "Do not alter mobile responsiveness or layout of the retained footer section.",
-    "No changes to any component other than Footer.tsx."
+    "Do NOT modify any calculator components or calculator page components in any way — no UI changes, no logic changes, no additional options, no redesign.",
+    "Do NOT change the existing homepage layout, design, theme, structure, spacing, or color palette beyond adding icons to tool cards and moving the Pro tool to a separate labeled section.",
+    "Do NOT change the existing Header or Footer components.",
+    "All processing in image and PDF tools must remain fully client-side — no backend calls.",
+    "The download button must remain disabled until after the user has triggered and viewed a preview.",
+    "The Smart Document Fixer freemium gating logic (useProAccess, ProPricingModal, daily fix limit, watermark, lock icons) must remain completely unchanged.",
+    "Do not edit files listed in frontend.immutablePaths."
   ],
   "nonGoals": [
-    "Adding new links or sections to the footer.",
-    "Changing footer styling or design.",
-    "Modifying the Header or any other layout component.",
-    "Altering any page routing or content outside the footer."
+    "Modifying any calculator tool components or their pages",
+    "Changing the homepage layout structure, card designs, spacing, or color theme beyond icon additions and the Pro Tools section",
+    "Adding backend logic or server-side processing",
+    "Implementing real payment processing or authentication for Pro access",
+    "Modifying Header.tsx or Footer.tsx navigation or layout",
+    "Adding new routes or pages beyond what is required for the upgraded tools",
+    "Changing the SEO components, BreadcrumbNavigation, or structured data on existing pages"
   ],
   "imageRequirements": {
     "required": [],

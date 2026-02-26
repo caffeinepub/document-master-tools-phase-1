@@ -1,252 +1,297 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Camera, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
+import React, { useState, useCallback } from 'react';
+import AdvancedToolShell, { ProcessingResult } from '../AdvancedToolShell';
 import { Slider } from '@/components/ui/slider';
-import { Switch } from '@/components/ui/switch';
+import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import { toast } from 'sonner';
-import { resizeImage, compressToTargetSize, loadImage, formatFileSize, calculateAspectRatio, calculateAspectRatioWidth } from '@/lib/imageProcessing';
+import { Input } from '@/components/ui/input';
+import { Switch } from '@/components/ui/switch';
 
 export interface PhotoPreset {
-  name: string;
+  label: string;
   width: number;
   height: number;
+  unit: 'px' | 'cm' | 'mm' | 'inches';
   maxSizeKB?: number;
+  dpi?: number;
 }
 
 interface PhotoResizeToolProps {
-  onBack: () => void;
-  title: string;
-  description: string;
+  toolTitle: string;
   presets: PhotoPreset[];
-  defaultPreset?: string;
+  defaultPresetIndex?: number;
+  onNavigate?: (page: string) => void;
 }
 
-export default function PhotoResizeTool({ onBack, title, description, presets, defaultPreset }: PhotoResizeToolProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [processing, setProcessing] = useState(false);
-  const [selectedPreset, setSelectedPreset] = useState<string>(defaultPreset || 'custom');
-  const [width, setWidth] = useState<number>(600);
-  const [height, setHeight] = useState<number>(600);
-  const [targetSizeKB, setTargetSizeKB] = useState<number>(100);
-  const [maintainAspectRatio, setMaintainAspectRatio] = useState(true);
-  const [quality, setQuality] = useState([85]);
-  const [originalDimensions, setOriginalDimensions] = useState<{ width: number; height: number } | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [processedImage, setProcessedImage] = useState<{ blob: Blob; url: string; size: number } | null>(null);
+type Unit = 'px' | 'cm' | 'mm' | 'inches';
 
-  useEffect(() => {
-    if (selectedPreset !== 'custom') {
-      const preset = presets.find(p => p.name === selectedPreset);
-      if (preset) {
-        setWidth(preset.width);
-        setHeight(preset.height);
-        if (preset.maxSizeKB) {
-          setTargetSizeKB(preset.maxSizeKB);
+const toPx = (value: number, unit: Unit, dpi = 96): number => {
+  switch (unit) {
+    case 'px': return value;
+    case 'cm': return Math.round(value * dpi / 2.54);
+    case 'mm': return Math.round(value * dpi / 25.4);
+    case 'inches': return Math.round(value * dpi);
+    default: return value;
+  }
+};
+
+const fromPx = (px: number, unit: Unit, dpi = 96): number => {
+  switch (unit) {
+    case 'px': return px;
+    case 'cm': return parseFloat((px * 2.54 / dpi).toFixed(2));
+    case 'mm': return parseFloat((px * 25.4 / dpi).toFixed(1));
+    case 'inches': return parseFloat((px / dpi).toFixed(2));
+    default: return px;
+  }
+};
+
+const PhotoResizeTool: React.FC<PhotoResizeToolProps> = ({ toolTitle, presets, defaultPresetIndex = 0 }) => {
+  const [selectedPreset, setSelectedPreset] = useState<string>(presets[defaultPresetIndex]?.label || 'custom');
+  const [unit, setUnit] = useState<Unit>('px');
+  const [width, setWidth] = useState<number>(presets[defaultPresetIndex]?.width || 200);
+  const [height, setHeight] = useState<number>(presets[defaultPresetIndex]?.height || 200);
+  const [maintainAspect, setMaintainAspect] = useState(false);
+  const [quality, setQuality] = useState(90);
+  const [format, setFormat] = useState<'jpeg' | 'png'>('jpeg');
+  const [targetSizeEnabled, setTargetSizeEnabled] = useState(false);
+  const [targetSize, setTargetSize] = useState(100);
+  const [targetSizeUnit, setTargetSizeUnit] = useState<'KB' | 'MB'>('KB');
+  const [originalAspect, setOriginalAspect] = useState<number | null>(null);
+
+  const handlePresetChange = (label: string) => {
+    setSelectedPreset(label);
+    if (label === 'custom') return;
+    const preset = presets.find(p => p.label === label);
+    if (!preset) return;
+    const dpi = preset.dpi || 96;
+    if (unit === 'px') {
+      setWidth(preset.width);
+      setHeight(preset.height);
+    } else {
+      setWidth(fromPx(preset.width, unit, dpi));
+      setHeight(fromPx(preset.height, unit, dpi));
+    }
+    if (preset.maxSizeKB) {
+      setTargetSizeEnabled(true);
+      setTargetSize(preset.maxSizeKB);
+      setTargetSizeUnit('KB');
+    }
+  };
+
+  const handleWidthChange = (val: number) => {
+    setWidth(val);
+    if (maintainAspect && originalAspect) {
+      setHeight(parseFloat((val / originalAspect).toFixed(2)));
+    }
+  };
+
+  const handleHeightChange = (val: number) => {
+    setHeight(val);
+    if (maintainAspect && originalAspect) {
+      setWidth(parseFloat((val * originalAspect).toFixed(2)));
+    }
+  };
+
+  const processingFunction = useCallback(async (file: File): Promise<ProcessingResult> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const aspect = img.naturalWidth / img.naturalHeight;
+        setOriginalAspect(aspect);
+
+        const dpi = 96;
+        const targetW = toPx(width, unit, dpi);
+        const targetH = toPx(height, unit, dpi);
+
+        const canvas = document.createElement('canvas');
+        canvas.width = targetW;
+        canvas.height = targetH;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Canvas not supported')); return; }
+
+        if (format === 'jpeg') {
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(0, 0, targetW, targetH);
         }
-      }
-    }
-  }, [selectedPreset, presets]);
+        ctx.drawImage(img, 0, 0, targetW, targetH);
 
-  const handleFileSelect = async (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
-      return;
-    }
-    setFile(selectedFile);
-    setProcessedImage(null);
-    
-    try {
-      const img = await loadImage(selectedFile);
-      setOriginalDimensions({ width: img.width, height: img.height });
-      const url = URL.createObjectURL(selectedFile);
-      setPreviewUrl(url);
-    } catch (error) {
-      toast.error('Failed to load image');
-    }
-  };
+        const mimeType = `image/${format}`;
+        const q = quality / 100;
 
-  const handleWidthChange = (value: string) => {
-    const newWidth = parseInt(value) || 0;
-    setWidth(newWidth);
-    if (maintainAspectRatio && originalDimensions) {
-      const newHeight = Math.round(calculateAspectRatio(originalDimensions.width, originalDimensions.height, newWidth));
-      setHeight(newHeight);
-    }
-  };
+        canvas.toBlob((blob) => {
+          if (!blob) { reject(new Error('Processing failed')); return; }
+          const ext = format === 'jpeg' ? 'jpg' : 'png';
+          const baseName = file.name.replace(/\.[^.]+$/, '');
+          const outputFileName = `${baseName}_resized.${ext}`;
+          const previewUrl = URL.createObjectURL(blob);
+          resolve({
+            blob,
+            previewUrl,
+            outputFileName,
+            metadata: {
+              'Dimensions': `${targetW}×${targetH}px`,
+              'Format': format.toUpperCase(),
+              'Quality': `${quality}%`,
+            }
+          });
+        }, mimeType, q);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
+      img.src = url;
+    });
+  }, [width, height, unit, format, quality]);
 
-  const handleHeightChange = (value: string) => {
-    const newHeight = parseInt(value) || 0;
-    setHeight(newHeight);
-    if (maintainAspectRatio && originalDimensions) {
-      const newWidth = Math.round(calculateAspectRatioWidth(originalDimensions.width, originalDimensions.height, newHeight));
-      setWidth(newWidth);
-    }
-  };
+  const settingsSlot = (
+    <div className="space-y-5">
+      {/* Preset Selector */}
+      <div className="space-y-2">
+        <Label className="text-gray-200 text-sm font-medium">Preset</Label>
+        <Select value={selectedPreset} onValueChange={handlePresetChange}>
+          <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-gray-100">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            {presets.map(p => (
+              <SelectItem key={p.label} value={p.label}>
+                {p.label} ({p.width}×{p.height}{p.unit}{p.maxSizeKB ? `, max ${p.maxSizeKB}KB` : ''})
+              </SelectItem>
+            ))}
+            <SelectItem value="custom">Custom</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-  const processImage = async () => {
-    if (!file) return;
-    setProcessing(true);
-    
-    try {
-      const result = await compressToTargetSize(file, targetSizeKB, width, height);
-      setProcessedImage(result);
-      toast.success('Image processed successfully!');
-    } catch (error) {
-      toast.error('Failed to process image');
-      console.error(error);
-    } finally {
-      setProcessing(false);
-    }
-  };
+      {/* Unit Selector */}
+      <div className="space-y-2">
+        <Label className="text-gray-200 text-sm font-medium">Unit</Label>
+        <Select value={unit} onValueChange={(v) => setUnit(v as Unit)}>
+          <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-gray-100">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            <SelectItem value="px">Pixels (px)</SelectItem>
+            <SelectItem value="cm">Centimeters (cm)</SelectItem>
+            <SelectItem value="mm">Millimeters (mm)</SelectItem>
+            <SelectItem value="inches">Inches</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-  const downloadImage = () => {
-    if (!processedImage) return;
-    const a = document.createElement('a');
-    a.href = processedImage.url;
-    a.download = `resized-${file?.name || 'image.jpg'}`;
-    a.click();
-  };
+      {/* Width & Height */}
+      <div className="grid grid-cols-2 gap-3">
+        <div className="space-y-2">
+          <Label className="text-gray-200 text-sm font-medium">Width ({unit})</Label>
+          <Input
+            type="number"
+            min={1}
+            value={width}
+            onChange={(e) => handleWidthChange(Number(e.target.value))}
+            className="bg-gray-700 border-gray-600 text-gray-100"
+          />
+        </div>
+        <div className="space-y-2">
+          <Label className="text-gray-200 text-sm font-medium">Height ({unit})</Label>
+          <Input
+            type="number"
+            min={1}
+            value={height}
+            onChange={(e) => handleHeightChange(Number(e.target.value))}
+            className="bg-gray-700 border-gray-600 text-gray-100"
+          />
+        </div>
+      </div>
 
-  const reset = () => {
-    setFile(null);
-    setProcessedImage(null);
-    setPreviewUrl(null);
-    setOriginalDimensions(null);
-    setSelectedPreset(defaultPreset || 'custom');
-  };
+      {/* Maintain Aspect Ratio */}
+      <div className="flex items-center gap-3">
+        <Switch
+          id="aspect-ratio"
+          checked={maintainAspect}
+          onCheckedChange={setMaintainAspect}
+        />
+        <Label htmlFor="aspect-ratio" className="text-gray-200 text-sm cursor-pointer">
+          Maintain Aspect Ratio
+        </Label>
+      </div>
 
-  return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Image Tools
-        </Button>
+      {/* Output Format */}
+      <div className="space-y-2">
+        <Label className="text-gray-200 text-sm font-medium">Output Format</Label>
+        <Select value={format} onValueChange={(v) => setFormat(v as 'jpeg' | 'png')}>
+          <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-gray-100">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            <SelectItem value="jpeg">JPEG</SelectItem>
+            <SelectItem value="png">PNG</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-        <Card>
-          <CardContent className="p-6 space-y-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">{title}</h1>
-              <p className="text-muted-foreground">{description}</p>
-            </div>
+      {/* Quality */}
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <Label className="text-gray-200 text-sm font-medium">Quality</Label>
+          <span className="text-blue-400 font-semibold text-sm">{quality}%</span>
+        </div>
+        <Slider
+          min={1}
+          max={100}
+          step={1}
+          value={[quality]}
+          onValueChange={([v]) => setQuality(v)}
+          className="w-full"
+        />
+      </div>
 
-            {!file && !processing && (
-              <FileUploadZone
-                onFileSelect={handleFileSelect}
-                accept="image/*"
-                description="Click to upload image or drag and drop"
-                maxSize={10 * 1024 * 1024}
-              />
-            )}
-
-            {file && !processedImage && !processing && (
-              <div className="space-y-6">
-                {previewUrl && (
-                  <div className="relative rounded-lg overflow-hidden bg-muted/30 p-4">
-                    <img src={previewUrl} alt="Preview" className="max-w-full h-auto mx-auto max-h-96 object-contain" />
-                    {originalDimensions && (
-                      <p className="text-sm text-muted-foreground mt-2 text-center">
-                        Original: {originalDimensions.width} × {originalDimensions.height} px ({formatFileSize(file.size)})
-                      </p>
-                    )}
-                  </div>
-                )}
-
-                <div className="space-y-4">
-                  <div>
-                    <Label>Preset</Label>
-                    <Select value={selectedPreset} onValueChange={setSelectedPreset}>
-                      <SelectTrigger>
-                        <SelectValue />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="custom">Custom</SelectItem>
-                        {presets.map((preset) => (
-                          <SelectItem key={preset.name} value={preset.name}>
-                            {preset.name} ({preset.width}×{preset.height}px)
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <Label>Width (px)</Label>
-                      <Input
-                        type="number"
-                        value={width}
-                        onChange={(e) => handleWidthChange(e.target.value)}
-                        min={1}
-                      />
-                    </div>
-                    <div>
-                      <Label>Height (px)</Label>
-                      <Input
-                        type="number"
-                        value={height}
-                        onChange={(e) => handleHeightChange(e.target.value)}
-                        min={1}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between">
-                    <Label>Maintain Aspect Ratio</Label>
-                    <Switch checked={maintainAspectRatio} onCheckedChange={setMaintainAspectRatio} />
-                  </div>
-
-                  <div>
-                    <Label>Target File Size (KB): {targetSizeKB}</Label>
-                    <Slider
-                      value={[targetSizeKB]}
-                      onValueChange={(value) => setTargetSizeKB(value[0])}
-                      min={20}
-                      max={200}
-                      step={10}
-                      className="mt-2"
-                    />
-                  </div>
-
-                  <Button onClick={processImage} className="w-full" size="lg">
-                    <Camera className="mr-2 h-4 w-4" />
-                    Process Image
-                  </Button>
-                </div>
-              </div>
-            )}
-
-            {processing && <ProcessingState message="Processing image..." />}
-
-            {processedImage && (
-              <div className="space-y-4">
-                <div className="relative rounded-lg overflow-hidden bg-muted/30 p-4">
-                  <img src={processedImage.url} alt="Processed" className="max-w-full h-auto mx-auto max-h-96 object-contain" />
-                  <p className="text-sm text-muted-foreground mt-2 text-center">
-                    Processed: {width} × {height} px ({formatFileSize(processedImage.size)})
-                  </p>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button onClick={downloadImage} className="flex-1" size="lg">
-                    Download Image
-                  </Button>
-                  <Button onClick={reset} variant="outline" size="lg">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Reset
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      {/* Target File Size */}
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="target-size-photo"
+            checked={targetSizeEnabled}
+            onChange={(e) => setTargetSizeEnabled(e.target.checked)}
+            className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-500"
+          />
+          <Label htmlFor="target-size-photo" className="text-gray-200 text-sm font-medium cursor-pointer">
+            Target File Size (optional)
+          </Label>
+        </div>
+        {targetSizeEnabled && (
+          <div className="flex gap-2 mt-2">
+            <Input
+              type="number"
+              min={1}
+              value={targetSize}
+              onChange={(e) => setTargetSize(Number(e.target.value))}
+              className="flex-1 bg-gray-700 border-gray-600 text-gray-100"
+            />
+            <Select value={targetSizeUnit} onValueChange={(v) => setTargetSizeUnit(v as 'KB' | 'MB')}>
+              <SelectTrigger className="w-24 bg-gray-700 border-gray-600 text-gray-100">
+                <SelectValue />
+              </SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-600">
+                <SelectItem value="KB">KB</SelectItem>
+                <SelectItem value="MB">MB</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+
+  return (
+    <AdvancedToolShell
+      toolTitle={toolTitle}
+      acceptedFileTypes="image/jpeg,image/png,image/webp,image/gif,image/bmp"
+      acceptedFileTypesLabel="Supports JPEG, PNG, WebP, GIF, BMP"
+      settingsSlot={settingsSlot}
+      processingFunction={processingFunction}
+      outputFileName="resized-photo.jpg"
+    />
+  );
+};
+
+export default PhotoResizeTool;

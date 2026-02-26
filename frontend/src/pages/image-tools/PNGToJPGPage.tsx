@@ -1,145 +1,136 @@
-import { useState } from 'react';
-import { ArrowLeft, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import React, { useState, useCallback } from 'react';
+import SEO from '../../components/SEO';
+import BreadcrumbNavigation from '../../components/BreadcrumbNavigation';
+import AdvancedToolShell, { ProcessingResult } from '../../components/AdvancedToolShell';
 import { Slider } from '@/components/ui/slider';
 import { Label } from '@/components/ui/label';
-import FileUploadZone from '@/components/FileUploadZone';
-import ProcessingState from '@/components/ProcessingState';
-import { toast } from 'sonner';
-import { convertFormat, formatFileSize } from '@/lib/imageProcessing';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Input } from '@/components/ui/input';
 
-interface PNGToJPGPageProps {
-  onBack: () => void;
-}
+const PNGToJPGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({ onNavigate }) => {
+  const [format, setFormat] = useState<'jpeg' | 'webp'>('jpeg');
+  const [quality, setQuality] = useState(90);
+  const [targetSizeEnabled, setTargetSizeEnabled] = useState(false);
+  const [targetSize, setTargetSize] = useState(500);
+  const [targetSizeUnit, setTargetSizeUnit] = useState<'KB' | 'MB'>('KB');
 
-export default function PNGToJPGPage({ onBack }: PNGToJPGPageProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [quality, setQuality] = useState([90]);
-  const [processing, setProcessing] = useState(false);
-  const [converted, setConverted] = useState<{ blob: Blob; url: string; size: number } | null>(null);
+  const processingFunction = useCallback(async (file: File): Promise<ProcessingResult> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.onload = () => {
+        URL.revokeObjectURL(url);
+        const canvas = document.createElement('canvas');
+        canvas.width = img.naturalWidth;
+        canvas.height = img.naturalHeight;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) { reject(new Error('Canvas not supported')); return; }
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0);
 
-  const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.match(/image\/png/)) {
-      toast.error('Please select a PNG file');
-      return;
-    }
-    setFile(selectedFile);
-    setConverted(null);
-  };
+        const mimeType = `image/${format}`;
+        const q = quality / 100;
 
-  const convertImage = async () => {
-    if (!file) return;
-    setProcessing(true);
-    try {
-      const result = await convertFormat(file, 'image/jpeg', quality[0] / 100);
-      setConverted(result);
-      toast.success('Image converted to JPG successfully!');
-    } catch (error) {
-      toast.error('Failed to convert image');
-    } finally {
-      setProcessing(false);
-    }
-  };
+        canvas.toBlob((blob) => {
+          if (!blob) { reject(new Error('Conversion failed')); return; }
+          const baseName = file.name.replace(/\.[^.]+$/, '');
+          const ext = format === 'jpeg' ? 'jpg' : 'webp';
+          const outputFileName = `${baseName}.${ext}`;
+          const previewUrl = URL.createObjectURL(blob);
+          resolve({
+            blob,
+            previewUrl,
+            outputFileName,
+            metadata: {
+              'Format': format.toUpperCase(),
+              'Dimensions': `${img.naturalWidth}×${img.naturalHeight}px`,
+              'Quality': `${quality}%`,
+            }
+          });
+        }, mimeType, q);
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('Failed to load image')); };
+      img.src = url;
+    });
+  }, [format, quality]);
 
-  const downloadFile = () => {
-    if (!converted || !file) return;
-    const a = document.createElement('a');
-    a.href = converted.url;
-    a.download = file.name.replace(/\.png$/i, '.jpg');
-    a.click();
-  };
+  const settingsSlot = (
+    <div className="space-y-5">
+      <div className="space-y-2">
+        <Label className="text-gray-200 text-sm font-medium">Output Format</Label>
+        <Select value={format} onValueChange={(v) => setFormat(v as 'jpeg' | 'webp')}>
+          <SelectTrigger className="w-full bg-gray-700 border-gray-600 text-gray-100">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent className="bg-gray-800 border-gray-600">
+            <SelectItem value="jpeg">JPEG (smaller size)</SelectItem>
+            <SelectItem value="webp">WebP (modern)</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-  const reset = () => {
-    setFile(null);
-    setQuality([90]);
-    setConverted(null);
-  };
+      <div className="space-y-3">
+        <div className="flex justify-between items-center">
+          <Label className="text-gray-200 text-sm font-medium">Quality</Label>
+          <span className="text-blue-400 font-semibold text-sm">{quality}%</span>
+        </div>
+        <Slider min={1} max={100} step={1} value={[quality]} onValueChange={([v]) => setQuality(v)} className="w-full" />
+      </div>
 
-  return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Image Tools
-        </Button>
-
-        <Card>
-          <CardContent className="p-6 space-y-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">PNG to JPG Converter</h1>
-              <p className="text-muted-foreground">
-                Convert PNG images to JPG format with adjustable quality settings.
-              </p>
-            </div>
-
-            {!converted && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/png"
-                    description="Click to upload PNG or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Size: {formatFileSize(file.size)}
-                      </p>
-                    </div>
-                    <div className="space-y-3">
-                      <Label>Quality: {quality[0]}%</Label>
-                      <Slider
-                        value={quality}
-                        onValueChange={setQuality}
-                        min={50}
-                        max={100}
-                        step={5}
-                        className="w-full"
-                      />
-                    </div>
-                    <Button onClick={convertImage} className="w-full" size="lg">
-                      Convert to JPG
-                    </Button>
-                  </div>
-                )}
-              </>
-            )}
-
-            {processing && <ProcessingState message="Converting to JPG..." />}
-
-            {converted && file && (
-              <div className="space-y-4">
-                <div className="p-4 bg-muted rounded-lg">
-                  <p className="font-medium">{file.name.replace(/\.png$/i, '.jpg')}</p>
-                  <div className="grid grid-cols-2 gap-4 text-sm mt-2">
-                    <div>
-                      <p className="text-muted-foreground">Original (PNG):</p>
-                      <p className="font-semibold">{formatFileSize(file.size)}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Converted (JPG):</p>
-                      <p className="font-semibold">{formatFileSize(converted.size)}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex gap-2">
-                  <Button onClick={downloadFile} className="flex-1" size="lg">
-                    Download JPG
-                  </Button>
-                  <Button onClick={reset} variant="outline" size="lg">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Reset
-                  </Button>
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      <div className="space-y-2">
+        <div className="flex items-center gap-2">
+          <input type="checkbox" id="ts-png-jpg" checked={targetSizeEnabled} onChange={(e) => setTargetSizeEnabled(e.target.checked)} className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-500" />
+          <Label htmlFor="ts-png-jpg" className="text-gray-200 text-sm font-medium cursor-pointer">Target File Size (optional)</Label>
+        </div>
+        {targetSizeEnabled && (
+          <div className="flex gap-2 mt-2">
+            <Input type="number" min={1} value={targetSize} onChange={(e) => setTargetSize(Number(e.target.value))} className="flex-1 bg-gray-700 border-gray-600 text-gray-100" />
+            <Select value={targetSizeUnit} onValueChange={(v) => setTargetSizeUnit(v as 'KB' | 'MB')}>
+              <SelectTrigger className="w-24 bg-gray-700 border-gray-600 text-gray-100"><SelectValue /></SelectTrigger>
+              <SelectContent className="bg-gray-800 border-gray-600">
+                <SelectItem value="KB">KB</SelectItem>
+                <SelectItem value="MB">MB</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
       </div>
     </div>
   );
-}
+
+  return (
+    <div className="min-h-screen bg-gray-900 text-gray-100">
+      <SEO
+        title="PNG to JPG Converter - Convert PNG to JPEG Online Free"
+        description="Convert PNG images to JPEG or WebP online for free. Quality control, before/after preview, and instant download."
+        canonicalUrl="https://docmastertools.com/png-to-jpg"
+      />
+      <main className="max-w-4xl mx-auto px-4 py-8">
+        <BreadcrumbNavigation
+          items={[
+            { label: 'Home', onClick: () => onNavigate?.('home') },
+            { label: 'Image Tools', onClick: () => onNavigate?.('image-tools') },
+            { label: 'PNG to JPG' },
+          ]}
+        />
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold text-gray-100 mb-2">PNG to JPG Converter</h1>
+          <p className="text-gray-400">Convert PNG images to JPEG or WebP format with quality control and before/after preview.</p>
+        </div>
+        <div className="bg-gray-800 rounded-2xl border border-gray-700 p-6">
+          <AdvancedToolShell
+            toolTitle="PNG to JPG"
+            acceptedFileTypes="image/png"
+            acceptedFileTypesLabel="Accepts PNG files"
+            settingsSlot={settingsSlot}
+            processingFunction={processingFunction}
+            outputFileName="converted.jpg"
+          />
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default PNGToJPGPage;

@@ -6,6 +6,14 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const TypingTestPage = React.lazy(() => import("./pages/TypingTestPage"));
+
+// Legal pages
+const ContactUsPage = React.lazy(() => import("./pages/ContactUsPage"));
+const AboutUsPage = React.lazy(() => import("./pages/AboutUsPage"));
+const PrivacyPolicyPage = React.lazy(() => import("./pages/PrivacyPolicyPage"));
+const DisclaimerPage = React.lazy(() => import("./pages/DisclaimerPage"));
+const TermsOfUsePage = React.lazy(() => import("./pages/TermsOfUsePage"));
+const DMCAPolicyPage = React.lazy(() => import("./pages/DMCAPolicyPage"));
 const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage"));
 const PDFToolsPage = React.lazy(() => import("./pages/PDFToolsPage"));
 const ImageToolsPage = React.lazy(() => import("./pages/ImageToolsPage"));
@@ -180,8 +188,15 @@ type Page =
   | "image-png-to-jpg"
   | "image-webp-converter"
   | "image-background-remover"
-  // resume templates
+  // typing
   | "typing-test"
+  // legal pages
+  | "contact-us"
+  | "about-us"
+  | "privacy-policy"
+  | "disclaimer"
+  | "terms-and-conditions"
+  | "dmca-policy"
   // resume templates
   | "resume-fresher-india"
   | "resume-experienced-india"
@@ -323,6 +338,20 @@ function App() {
 
       case "typing-test":
         return <TypingTestPage onBack={goHome} />;
+
+      // Legal pages
+      case "contact-us":
+        return <ContactUsPage onBack={goHome} />;
+      case "about-us":
+        return <AboutUsPage onBack={goHome} />;
+      case "privacy-policy":
+        return <PrivacyPolicyPage onBack={goHome} />;
+      case "disclaimer":
+        return <DisclaimerPage onBack={goHome} />;
+      case "terms-and-conditions":
+        return <TermsOfUsePage onBack={goHome} />;
+      case "dmca-policy":
+        return <DMCAPolicyPage onBack={goHome} />;
 
       // Image tools
       case "image-passport-photo":

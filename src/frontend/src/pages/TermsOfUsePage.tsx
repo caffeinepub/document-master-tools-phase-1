@@ -1,4 +1,3 @@
-import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
 interface TermsOfUsePageProps {
@@ -6,121 +5,157 @@ interface TermsOfUsePageProps {
 }
 
 export default function TermsOfUsePage({ onBack }: TermsOfUsePageProps) {
+  const sections = [
+    {
+      title: "Acceptance of Terms",
+      content:
+        "By accessing and using DocMasterTools.com, you accept and agree to be bound by the terms and provisions of this agreement. If you do not agree to these terms, please do not use our services.",
+    },
+    {
+      title: "Use License",
+      content:
+        "Permission is granted to temporarily use DocMasterTools.com for personal and commercial document processing purposes. Under this license you may not: modify or copy the materials; use the materials for any commercial purpose without proper attribution; attempt to decompile or reverse engineer any software; or remove any copyright or other proprietary notations from the materials.",
+    },
+    {
+      title: "Service Description",
+      content:
+        "DocMasterTools.com provides browser-based document processing tools including PDF manipulation and conversion tools, image editing and processing tools, resume building templates and tools, calculator tools, and typing practice tools.",
+    },
+    {
+      title: "User Responsibilities",
+      content:
+        "You are responsible for ensuring you have the right to process any documents you handle, complying with all applicable laws and regulations, not using our services for any illegal or unauthorized purpose, and not attempting to interfere with or disrupt our services.",
+    },
+    {
+      title: "Privacy & Data",
+      content:
+        "All file processing runs entirely in your browser. We do not upload, store, or share your files. By using this site, you acknowledge this browser-based processing model.",
+    },
+    {
+      title: "Disclaimer of Warranties",
+      content:
+        "The materials on DocMasterTools.com are provided on an 'as is' basis. We make no warranties, expressed or implied, and hereby disclaim all other warranties including implied warranties of merchantability, fitness for a particular purpose, or non-infringement of intellectual property.",
+    },
+    {
+      title: "Limitations of Liability",
+      content:
+        "In no event shall DocMasterTools.com or its suppliers be liable for any damages (including, without limitation, damages for loss of data or profit, or due to business interruption) arising out of the use or inability to use our services.",
+    },
+    {
+      title: "Modifications",
+      content:
+        "We may revise these terms of use at any time without notice. By using this website you are agreeing to be bound by the then current version of these terms.",
+    },
+    {
+      title: "Governing Law",
+      content:
+        "These terms and conditions are governed by and construed in accordance with applicable laws and you irrevocably submit to the exclusive jurisdiction of the courts in that location.",
+    },
+    {
+      title: "Contact",
+      content:
+        "For questions about these Terms, contact us at support@docmastertools.com.",
+    },
+  ];
+
   return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "linear-gradient(135deg, #0f172a, #1e293b)",
+        padding: "2rem 1rem",
+      }}
+    >
+      <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+        <button
+          type="button"
+          data-ocid="terms_conditions.back_button"
+          onClick={onBack}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.5rem",
+            background: "transparent",
+            border: "none",
+            color: "#94a3b8",
+            cursor: "pointer",
+            fontSize: "0.9rem",
+            marginBottom: "2rem",
+            padding: "0.25rem 0",
+          }}
+        >
+          <ArrowLeft size={16} />
           Back to Home
-        </Button>
+        </button>
 
-        <article className="prose prose-slate dark:prose-invert max-w-none">
-          <h1>Terms of Use</h1>
-          <p className="text-muted-foreground">
-            Last updated: January 30, 2026
-          </p>
+        <h1
+          style={{
+            color: "#ffffff",
+            fontSize: "2rem",
+            fontWeight: 700,
+            marginBottom: "0.5rem",
+          }}
+        >
+          Terms &amp; Conditions
+        </h1>
+        <p
+          style={{
+            color: "#94a3b8",
+            marginBottom: "2.5rem",
+            fontSize: "0.95rem",
+          }}
+        >
+          Last updated: March 2026
+        </p>
 
-          <h2>Acceptance of Terms</h2>
-          <p>
-            By accessing and using Document Master Tools, you accept and agree
-            to be bound by the terms and provisions of this agreement. If you do
-            not agree to these terms, please do not use our services.
-          </p>
+        <div
+          style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
+        >
+          {sections.map((section) => (
+            <div
+              key={section.title}
+              style={{
+                background: "#111827",
+                borderRadius: "0.75rem",
+                padding: "1.5rem",
+                borderLeft: "3px solid #f97316",
+              }}
+            >
+              <h2
+                style={{
+                  color: "#ffffff",
+                  fontSize: "1.05rem",
+                  fontWeight: 600,
+                  marginBottom: "0.75rem",
+                }}
+              >
+                {section.title}
+              </h2>
+              <p
+                style={{
+                  color: "#cbd5e1",
+                  fontSize: "0.93rem",
+                  lineHeight: "1.7",
+                  margin: 0,
+                }}
+              >
+                {section.content}
+              </p>
+            </div>
+          ))}
+        </div>
 
-          <h2>Use License</h2>
-          <p>
-            Permission is granted to temporarily use Document Master Tools for
-            personal and commercial document processing purposes. This is the
-            grant of a license, not a transfer of title, and under this license
-            you may not:
-          </p>
-          <ul>
-            <li>Modify or copy the materials</li>
-            <li>
-              Use the materials for any commercial purpose without proper
-              attribution
-            </li>
-            <li>
-              Attempt to decompile or reverse engineer any software contained on
-              our website
-            </li>
-            <li>
-              Remove any copyright or other proprietary notations from the
-              materials
-            </li>
-          </ul>
-
-          <h2>Service Description</h2>
-          <p>
-            Document Master Tools provides browser-based document processing
-            tools including:
-          </p>
-          <ul>
-            <li>PDF manipulation and conversion tools</li>
-            <li>Image editing and processing tools</li>
-            <li>Resume building templates and tools</li>
-          </ul>
-
-          <h2>User Responsibilities</h2>
-          <p>You are responsible for:</p>
-          <ul>
-            <li>
-              Ensuring you have the right to process any documents you upload
-            </li>
-            <li>Complying with all applicable laws and regulations</li>
-            <li>
-              Not using our services for any illegal or unauthorized purpose
-            </li>
-            <li>Not attempting to interfere with or disrupt our services</li>
-          </ul>
-
-          <h2>Disclaimer</h2>
-          <p>
-            The materials on Document Master Tools are provided on an 'as is'
-            basis. We make no warranties, expressed or implied, and hereby
-            disclaim and negate all other warranties including, without
-            limitation, implied warranties or conditions of merchantability,
-            fitness for a particular purpose, or non-infringement of
-            intellectual property or other violation of rights.
-          </p>
-
-          <h2>Limitations</h2>
-          <p>
-            In no event shall Document Master Tools or its suppliers be liable
-            for any damages (including, without limitation, damages for loss of
-            data or profit, or due to business interruption) arising out of the
-            use or inability to use our services.
-          </p>
-
-          <h2>Accuracy of Materials</h2>
-          <p>
-            The materials appearing on Document Master Tools could include
-            technical, typographical, or photographic errors. We do not warrant
-            that any of the materials on our website are accurate, complete, or
-            current.
-          </p>
-
-          <h2>Links</h2>
-          <p>
-            We have not reviewed all of the sites linked to our website and are
-            not responsible for the contents of any such linked site. The
-            inclusion of any link does not imply endorsement by us of the site.
-          </p>
-
-          <h2>Modifications</h2>
-          <p>
-            We may revise these terms of use at any time without notice. By
-            using this website you are agreeing to be bound by the then current
-            version of these terms of use.
-          </p>
-
-          <h2>Governing Law</h2>
-          <p>
-            These terms and conditions are governed by and construed in
-            accordance with applicable laws and you irrevocably submit to the
-            exclusive jurisdiction of the courts in that location.
-          </p>
-        </article>
+        <p
+          style={{
+            color: "#475569",
+            fontSize: "0.8rem",
+            textAlign: "center",
+            marginTop: "2.5rem",
+          }}
+        >
+          © {new Date().getFullYear()} RJY TOTAL MANPOWERS SERVICES PRIVATE
+          LIMITED. All Rights Reserved.
+        </p>
       </div>
     </div>
   );

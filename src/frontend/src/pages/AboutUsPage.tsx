@@ -1,60 +1,35 @@
 import { ArrowLeft } from "lucide-react";
 
-interface PrivacyPolicyPageProps {
+interface AboutUsPageProps {
   onBack: () => void;
 }
 
-export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
+export default function AboutUsPage({ onBack }: AboutUsPageProps) {
   const sections = [
     {
-      title: "Introduction",
+      title: "Who We Are",
       content:
-        "DocMasterTools.com ('we', 'our', or 'us') is committed to protecting your privacy. This Privacy Policy explains how we handle your information when you use our document processing tools.",
+        "DocMasterTools.com is a free, browser-based platform providing document, image, PDF, and productivity tools for students, job seekers, professionals, and individuals across India and the world. We are operated by RJY TOTAL MANPOWERS SERVICES PRIVATE LIMITED.",
     },
     {
-      title: "Data Processing",
+      title: "Our Mission",
       content:
-        "All file processing on DocMasterTools.com happens entirely in your browser. We do not upload, store, or transmit your files to any server. Your documents remain on your device at all times.",
+        "Our mission is to make powerful document tools accessible to everyone — completely free and with full privacy. Every tool on our platform runs entirely in your browser. Your files are never uploaded to any server.",
     },
     {
-      title: "What We Don't Collect",
+      title: "What We Offer",
       content:
-        "We do not collect or store any files you process. We do not collect personal information unless you voluntarily provide it. We do not track your document content or processing activities.",
+        "We provide 40+ tools including PDF merge, split, compress, convert, and protect; image resize, compress, crop, and background removal; a multi-template resume builder; calculators for finance, academics, and general use; and a full typing test and practice system.",
     },
     {
-      title: "What We May Collect",
+      title: "Privacy First",
       content:
-        "We may collect anonymous usage statistics (page views, tool usage counts), technical information (browser type, device type) for improving user experience, and cookies for essential website functionality.",
+        "All processing happens locally in your browser. We do not store, transmit, or share your files. What you upload stays on your device — period.",
     },
     {
-      title: "Third-Party Services",
+      title: "Contact",
       content:
-        "We may use third-party services for analytics and advertising. These services may collect information about your visit to our website in accordance with their own privacy policies.",
-    },
-    {
-      title: "Data Security",
-      content:
-        "Since all processing happens in your browser, your files never leave your device. We implement industry-standard security measures to protect our website and any information we may collect.",
-    },
-    {
-      title: "Your Rights",
-      content:
-        "You have the right to access any personal information we may have collected, request deletion of your information, opt-out of analytics tracking, and disable cookies in your browser settings.",
-    },
-    {
-      title: "Children's Privacy",
-      content:
-        "Our services are not directed to children under 13. We do not knowingly collect information from children under 13.",
-    },
-    {
-      title: "Changes to This Policy",
-      content:
-        "We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the 'Last updated' date.",
-    },
-    {
-      title: "Contact Us",
-      content:
-        "If you have any questions about this Privacy Policy, please contact us at support@docmastertools.com.",
+        "For support or feedback, reach us at support@docmastertools.com. We aim to respond within 1-2 business days.",
     },
   ];
 
@@ -67,9 +42,10 @@ export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
       }}
     >
       <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+        {/* Back button */}
         <button
           type="button"
-          data-ocid="privacy_policy.back_button"
+          data-ocid="about_us.back_button"
           onClick={onBack}
           style={{
             display: "flex",
@@ -88,6 +64,7 @@ export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
           Back to Home
         </button>
 
+        {/* Header */}
         <h1
           style={{
             color: "#ffffff",
@@ -96,7 +73,7 @@ export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
             marginBottom: "0.5rem",
           }}
         >
-          Privacy Policy
+          About Us
         </h1>
         <p
           style={{
@@ -108,6 +85,7 @@ export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
           Last updated: March 2026
         </p>
 
+        {/* Sections */}
         <div
           style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
         >
@@ -145,6 +123,7 @@ export default function PrivacyPolicyPage({ onBack }: PrivacyPolicyPageProps) {
           ))}
         </div>
 
+        {/* Footer note */}
         <p
           style={{
             color: "#475569",

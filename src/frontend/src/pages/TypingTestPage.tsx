@@ -14,6 +14,74 @@ type TestDuration = 1 | 3 | 5;
 type TestState = "idle" | "running" | "finished";
 type ActiveTab = "test" | "learn" | "practice";
 
+interface ProgressStats {
+  bestWpm: number;
+  totalWpm: number;
+  testsCompleted: number;
+}
+
+const PROGRESS_KEY = "typingmaster_progress";
+
+function loadProgress(): ProgressStats {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY);
+    if (raw) return JSON.parse(raw) as ProgressStats;
+  } catch {
+    // ignore
+  }
+  return { bestWpm: 0, totalWpm: 0, testsCompleted: 0 };
+}
+
+function saveProgress(stats: ProgressStats) {
+  try {
+    localStorage.setItem(PROGRESS_KEY, JSON.stringify(stats));
+  } catch {
+    // ignore
+  }
+}
+
+// ---- Leaderboard ----
+
+const LEADERBOARD_KEY = "typingmaster_leaderboard";
+
+interface LeaderboardEntry {
+  name: string;
+  wpm: number;
+  accuracy: number;
+  date: string;
+}
+
+function loadLeaderboard(): LeaderboardEntry[] {
+  try {
+    const raw = localStorage.getItem(LEADERBOARD_KEY);
+    if (raw) return JSON.parse(raw) as LeaderboardEntry[];
+  } catch {
+    // ignore
+  }
+  return [];
+}
+
+function saveLeaderboard(entries: LeaderboardEntry[]) {
+  try {
+    localStorage.setItem(LEADERBOARD_KEY, JSON.stringify(entries));
+  } catch {
+    // ignore
+  }
+}
+
+function addLeaderboardEntry(
+  entries: LeaderboardEntry[],
+  newEntry: LeaderboardEntry,
+): LeaderboardEntry[] {
+  const updated = [...entries, newEntry];
+  // Sort: highest WPM first; tie-break by highest accuracy
+  updated.sort((a, b) =>
+    b.wpm !== a.wpm ? b.wpm - a.wpm : b.accuracy - a.accuracy,
+  );
+  // Keep top 10
+  return updated.slice(0, 10);
+}
+
 interface Lesson {
   id: string;
   title: string;
@@ -114,6 +182,15 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
     mistakes: number;
   } | null>(null);
 
+  const [progress, setProgress] = useState<ProgressStats>(loadProgress);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  // --- Leaderboard state ---
+  const [leaderboard, setLeaderboard] =
+    useState<LeaderboardEntry[]>(loadLeaderboard);
+  const [playerName, setPlayerName] = useState("");
+  const [scoreSubmitted, setScoreSubmitted] = useState(false);
+
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const startTimeRef = useRef<number>(0);
@@ -175,8 +252,19 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
 
   const stopTest = useCallback(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    setFinalStats({ ...liveStatsRef.current });
+    const stats = { ...liveStatsRef.current };
+    setFinalStats(stats);
     setTestState("finished");
+    // Update progress tracking
+    setProgress((prev) => {
+      const updated: ProgressStats = {
+        bestWpm: Math.max(prev.bestWpm, stats.wpm),
+        totalWpm: prev.totalWpm + stats.wpm,
+        testsCompleted: prev.testsCompleted + 1,
+      };
+      saveProgress(updated);
+      return updated;
+    });
   }, []);
 
   const startTest = () => {
@@ -190,6 +278,8 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
     setAccuracy(100);
     setMistakes(0);
     setFinalStats(null);
+    setScoreSubmitted(false);
+    setPlayerName("");
     setTestState("running");
     startTimeRef.current = Date.now();
     setTimeout(() => inputRef.current?.focus(), 50);
@@ -429,6 +519,101 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
           </p>
         </div>
 
+        {/* Progress Stats Panel */}
+        <div className="mb-6">
+          <div
+            data-ocid="typing_test.progress.panel"
+            className="grid grid-cols-3 gap-3 mb-2"
+          >
+            {[
+              {
+                label: "Best WPM",
+                value: progress.bestWpm,
+                color: "text-green-400",
+                ocid: "typing_test.best_wpm.card",
+              },
+              {
+                label: "Avg WPM",
+                value:
+                  progress.testsCompleted > 0
+                    ? Math.round(progress.totalWpm / progress.testsCompleted)
+                    : 0,
+                color: "text-blue-400",
+                ocid: "typing_test.avg_wpm.card",
+              },
+              {
+                label: "Tests Done",
+                value: progress.testsCompleted,
+                color: "text-yellow-400",
+                ocid: "typing_test.tests_done.card",
+              },
+            ].map((s) => (
+              <div
+                key={s.label}
+                data-ocid={s.ocid}
+                className="bg-slate-800/70 border border-slate-700 rounded-xl py-3 px-2 text-center"
+              >
+                <div className={`text-2xl font-bold ${s.color}`}>{s.value}</div>
+                <div className="text-slate-400 text-xs mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </div>
+          <div className="flex justify-end">
+            <button
+              type="button"
+              data-ocid="typing_test.reset_stats.button"
+              onClick={() => setShowResetConfirm(true)}
+              className="text-xs text-slate-500 hover:text-red-400 transition-colors px-2 py-1 rounded border border-transparent hover:border-red-400/30"
+            >
+              Reset Stats
+            </button>
+          </div>
+
+          {/* Reset Confirmation Dialog */}
+          {showResetConfirm && (
+            <div
+              data-ocid="typing_test.reset_stats.dialog"
+              className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-4"
+            >
+              <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 w-full max-w-sm shadow-2xl">
+                <h2 className="text-white font-bold text-lg mb-2 text-center">
+                  Reset Statistics
+                </h2>
+                <p className="text-slate-300 text-sm text-center mb-6">
+                  Are you sure you want to reset your typing statistics?
+                </p>
+                <div className="flex gap-3 justify-center">
+                  <button
+                    type="button"
+                    data-ocid="typing_test.reset_stats.cancel_button"
+                    onClick={() => setShowResetConfirm(false)}
+                    className="flex-1 bg-slate-700 hover:bg-slate-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    data-ocid="typing_test.reset_stats.confirm_button"
+                    onClick={() => {
+                      localStorage.removeItem(PROGRESS_KEY);
+                      const reset: ProgressStats = {
+                        bestWpm: 0,
+                        totalWpm: 0,
+                        testsCompleted: 0,
+                      };
+                      setProgress(reset);
+                      setShowResetConfirm(false);
+                    }}
+                    className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    Reset
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
         {/* Tab Switcher */}
         <div className="flex justify-center gap-2 mb-8">
           {(["test", "learn", "practice"] as ActiveTab[]).map((tab) => {
@@ -575,13 +760,67 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                     <div className="text-slate-400 text-sm">Mistakes</div>
                   </div>
                 </div>
-                <p className="text-slate-300 text-sm">
+                <p className="text-slate-300 text-sm mb-5">
                   {finalStats.wpm >= 60
                     ? "Excellent speed! You're a proficient typist."
                     : finalStats.wpm >= 40
                       ? "Good job! Keep practicing to increase your speed."
                       : "Keep practicing — consistent effort will improve your speed."}
                 </p>
+
+                {/* Submit Score to Leaderboard */}
+                {!scoreSubmitted ? (
+                  <div className="mt-2">
+                    <p className="text-slate-300 text-sm mb-3">
+                      Enter your name to save your score to the leaderboard:
+                    </p>
+                    <div className="flex gap-2 justify-center flex-wrap">
+                      <input
+                        type="text"
+                        data-ocid="leaderboard.name.input"
+                        value={playerName}
+                        onChange={(e) =>
+                          setPlayerName(e.target.value.slice(0, 30))
+                        }
+                        placeholder="Your name..."
+                        maxLength={30}
+                        className="bg-slate-900 border border-slate-600 focus:border-blue-500 rounded-lg text-white text-sm px-4 py-2.5 outline-none transition-colors w-52"
+                      />
+                      <button
+                        type="button"
+                        data-ocid="leaderboard.submit.primary_button"
+                        disabled={!playerName.trim()}
+                        onClick={() => {
+                          if (!playerName.trim() || !finalStats) return;
+                          const entry: LeaderboardEntry = {
+                            name: playerName.trim(),
+                            wpm: finalStats.wpm,
+                            accuracy: finalStats.accuracy,
+                            date: new Date().toLocaleDateString("en-IN", {
+                              day: "2-digit",
+                              month: "short",
+                              year: "numeric",
+                            }),
+                          };
+                          const updated = addLeaderboardEntry(
+                            leaderboard,
+                            entry,
+                          );
+                          setLeaderboard(updated);
+                          saveLeaderboard(updated);
+                          setScoreSubmitted(true);
+                        }}
+                        className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200"
+                      >
+                        Submit Score
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="mt-2 text-green-400 text-sm font-semibold">
+                    ✓ Score saved to leaderboard!
+                  </div>
+                )}
               </div>
             )}
 
@@ -616,6 +855,110 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                 >
                   <RotateCcw className="w-4 h-4" /> Try Again
                 </button>
+              )}
+            </div>
+
+            {/* Leaderboard Table */}
+            <div
+              data-ocid="leaderboard.section"
+              className="mt-10 bg-slate-800 border border-slate-700 rounded-xl overflow-hidden"
+            >
+              <div className="flex items-center justify-between px-5 py-4 border-b border-slate-700">
+                <h3 className="text-white font-bold text-base">
+                  🏆 Leaderboard — Top 10
+                </h3>
+                {leaderboard.length > 0 && (
+                  <button
+                    type="button"
+                    data-ocid="leaderboard.clear.delete_button"
+                    onClick={() => {
+                      if (
+                        window.confirm(
+                          "Clear all leaderboard entries? This cannot be undone.",
+                        )
+                      ) {
+                        setLeaderboard([]);
+                        saveLeaderboard([]);
+                      }
+                    }}
+                    className="text-xs text-slate-500 hover:text-red-400 transition-colors px-2 py-1 rounded border border-transparent hover:border-red-400/30"
+                  >
+                    Clear
+                  </button>
+                )}
+              </div>
+
+              {leaderboard.length === 0 ? (
+                <div
+                  data-ocid="leaderboard.empty_state"
+                  className="px-5 py-10 text-center text-slate-500 text-sm"
+                >
+                  No scores yet. Complete a test and submit your name to appear
+                  here.
+                </div>
+              ) : (
+                <div className="overflow-x-auto">
+                  <table
+                    data-ocid="leaderboard.table"
+                    className="w-full text-sm"
+                  >
+                    <thead>
+                      <tr className="bg-slate-900/60 text-slate-400 text-xs uppercase tracking-wider">
+                        <th className="px-4 py-3 text-center w-12">Rank</th>
+                        <th className="px-4 py-3 text-left">Name</th>
+                        <th className="px-4 py-3 text-center">WPM</th>
+                        <th className="px-4 py-3 text-center">Accuracy</th>
+                        <th className="px-4 py-3 text-center">Date</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leaderboard.map((entry, index) => {
+                        const rankColors = [
+                          "text-yellow-400",
+                          "text-slate-300",
+                          "text-amber-600",
+                        ];
+                        const rankEmojis = ["🥇", "🥈", "🥉"];
+                        const rankDisplay =
+                          index < 3 ? (
+                            <span className={rankColors[index]}>
+                              {rankEmojis[index]}
+                            </span>
+                          ) : (
+                            <span className="text-slate-500">{index + 1}</span>
+                          );
+                        return (
+                          <tr
+                            // biome-ignore lint/suspicious/noArrayIndexKey: leaderboard rows are ordered by rank position
+                            key={index}
+                            data-ocid={`leaderboard.row.${index + 1}`}
+                            className={`border-t border-slate-700/50 transition-colors ${
+                              index === 0
+                                ? "bg-yellow-500/5"
+                                : "hover:bg-slate-700/30"
+                            }`}
+                          >
+                            <td className="px-4 py-3 text-center font-bold">
+                              {rankDisplay}
+                            </td>
+                            <td className="px-4 py-3 text-white font-medium max-w-[140px] truncate">
+                              {entry.name}
+                            </td>
+                            <td className="px-4 py-3 text-center text-green-400 font-bold">
+                              {entry.wpm}
+                            </td>
+                            <td className="px-4 py-3 text-center text-yellow-400">
+                              {entry.accuracy}%
+                            </td>
+                            <td className="px-4 py-3 text-center text-slate-400 text-xs">
+                              {entry.date}
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
               )}
             </div>
 

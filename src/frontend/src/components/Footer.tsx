@@ -13,7 +13,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   return (
     <footer className="bg-gray-900 border-t border-gray-700 mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-2 mb-3">
@@ -98,6 +98,67 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                 >
                   RJY Total Manpowers.com <span className="text-xs">↗</span>
                 </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h3 className="text-white font-bold text-base mb-4">Legal</h3>
+            <ul className="space-y-2">
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("contact-us")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Contact Us
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("about-us")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  About Us
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("privacy-policy")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Privacy Policy
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("disclaimer")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Disclaimer
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("terms-and-conditions")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Terms &amp; Conditions
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => onNavigate("dmca-policy")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  DMCA Policy
+                </button>
               </li>
             </ul>
           </div>

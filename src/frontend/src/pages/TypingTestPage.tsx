@@ -70,49 +70,26 @@ const LESSONS: Lesson[] = [
 
 // Practice Mode word/sentence/paragraph pools
 const PRACTICE_WORDS = [
-  "apple",
-  "banana",
-  "chair",
-  "dance",
-  "eagle",
-  "flame",
-  "grace",
-  "house",
-  "input",
-  "juice",
-  "knife",
-  "lemon",
-  "magic",
-  "night",
-  "ocean",
-  "piano",
-  "queen",
-  "river",
-  "solar",
-  "tiger",
-  "ultra",
-  "vivid",
-  "water",
-  "xenon",
-  "yacht",
-  "zebra",
-  "brave",
-  "cloud",
-  "drape",
-  "flint",
+  "keyboard typing speed practice accuracy learning focus improve skill",
+  "finger position home row touch type method train daily effort",
+  "quick brown lazy dog jump over fence strong brave smart bold",
+  "desk chair screen monitor mouse click drag scroll zoom copy paste",
+  "document format print export save open close edit delete insert",
 ];
 
 const PRACTICE_SENTENCES = [
-  "The quick brown fox jumps over the lazy dog.",
-  "Practice makes perfect with consistent daily effort.",
+  "Typing regularly helps improve both speed and accuracy.",
   "Keep your eyes on the screen and not the keyboard.",
   "Accuracy is more important than speed when learning.",
   "Touch typing is a skill that saves hours every week.",
+  "Practice every day to build strong muscle memory.",
+  "Focus on each word carefully before moving to the next.",
 ];
 
 const PRACTICE_PARAGRAPHS = [
-  "Typing is one of the most useful skills in the modern workplace. Whether you are writing emails, coding software, or filling out forms, the ability to type quickly and accurately saves a great deal of time every day.",
+  "Typing is a very important skill in the digital world. Practicing every day helps improve speed, accuracy, and productivity.",
   "The home row is the foundation of touch typing. By keeping your fingers anchored on A S D F and J K L semicolon, your hands can reach every other key efficiently without looking down at the keyboard.",
+  "Good typing habits start with the correct posture. Sit up straight, keep your wrists slightly elevated, and let your fingers rest lightly on the home row keys at all times.",
 ];
 
 interface TypingTestPageProps {
@@ -154,6 +131,10 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
   const [practiceText, setPracticeText] = useState("");
   const [practiceTyped, setPracticeTyped] = useState("");
   const [practiceCorrect, setPracticeCorrect] = useState<boolean | null>(null);
+  const [practiceWpm, setPracticeWpm] = useState(0);
+  const [practiceAccuracy, setPracticeAccuracy] = useState(100);
+  const [practiceMistakes, setPracticeMistakes] = useState(0);
+  const practiceStartTimeRef = useRef<number>(0);
   const practiceRef = useRef<HTMLTextAreaElement>(null);
 
   // ---- Typing Test logic ----
@@ -337,12 +318,49 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
     setPracticeText(generatePracticeText(mode));
     setPracticeTyped("");
     setPracticeCorrect(null);
+    setPracticeWpm(0);
+    setPracticeAccuracy(100);
+    setPracticeMistakes(0);
+    practiceStartTimeRef.current = 0;
     setTimeout(() => practiceRef.current?.focus(), 50);
   };
 
   const handlePracticeInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
+
+    // Record start time on first keystroke
+    if (value.length === 1 && practiceStartTimeRef.current === 0) {
+      practiceStartTimeRef.current = Date.now();
+    }
+
     setPracticeTyped(value);
+
+    // Live stats
+    const elapsedSeconds =
+      practiceStartTimeRef.current > 0
+        ? (Date.now() - practiceStartTimeRef.current) / 1000
+        : 1;
+    const elapsedMinutes = elapsedSeconds / 60;
+    const wordCount = value.trim().split(/\s+/).filter(Boolean).length;
+    const liveWpm =
+      elapsedMinutes > 0 ? Math.round(wordCount / elapsedMinutes) : 0;
+
+    let errors = 0;
+    for (let i = 0; i < value.length; i++) {
+      if (value[i] !== practiceText[i]) errors++;
+    }
+    const liveAccuracy =
+      value.length > 0
+        ? Math.max(
+            0,
+            Math.round(((value.length - errors) / value.length) * 100),
+          )
+        : 100;
+
+    setPracticeWpm(liveWpm);
+    setPracticeAccuracy(liveAccuracy);
+    setPracticeMistakes(errors);
+
     if (value.length >= practiceText.length) {
       setPracticeCorrect(value === practiceText);
     } else {
@@ -724,9 +742,9 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
             <div className="flex flex-wrap justify-center gap-3 mb-6">
               {(["word", "sentence", "paragraph"] as const).map((mode) => {
                 const labels = {
-                  word: "Word Practice",
-                  sentence: "Sentence Practice",
-                  paragraph: "Paragraph Practice",
+                  word: "Words",
+                  sentence: "Sentences",
+                  paragraph: "Paragraph",
                 };
                 return (
                   <button
@@ -734,7 +752,7 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                     type="button"
                     data-ocid={`practice.${mode}.tab`}
                     onClick={() => startPractice(mode)}
-                    className={`px-5 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
+                    className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-200 ${
                       practiceMode === mode && practiceText
                         ? "bg-blue-600 text-white shadow-lg shadow-blue-500/20"
                         : "bg-slate-700 text-slate-300 hover:bg-slate-600 hover:text-white"
@@ -748,6 +766,39 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
 
             {practiceText ? (
               <>
+                {/* Live Stats Bar */}
+                <div className="grid grid-cols-3 gap-3 mb-5">
+                  {[
+                    {
+                      label: "WPM",
+                      value: String(practiceWpm),
+                      color: "text-green-400",
+                    },
+                    {
+                      label: "Accuracy",
+                      value: `${practiceAccuracy}%`,
+                      color: "text-yellow-400",
+                    },
+                    {
+                      label: "Mistakes",
+                      value: String(practiceMistakes),
+                      color: "text-red-400",
+                    },
+                  ].map((stat) => (
+                    <div
+                      key={stat.label}
+                      className="bg-slate-800 border border-slate-700 rounded-xl py-3 px-2 text-center"
+                    >
+                      <div className={`text-2xl font-bold ${stat.color}`}>
+                        {stat.value}
+                      </div>
+                      <div className="text-slate-400 text-xs mt-0.5">
+                        {stat.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
                 {/* Practice Text Display */}
                 <div className="bg-slate-800 border border-slate-700 rounded-xl p-5 mb-4 font-mono text-base leading-8 tracking-wide select-none break-words min-h-[80px]">
                   {renderPracticeText()}

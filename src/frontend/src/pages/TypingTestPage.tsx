@@ -1,4 +1,11 @@
-import { ArrowLeft, CheckCircle, RotateCcw } from "lucide-react";
+import {
+  ArrowLeft,
+  Award,
+  CheckCircle,
+  Download,
+  RotateCcw,
+  Share2,
+} from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const SAMPLE_TEXTS = [
@@ -190,6 +197,13 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
     useState<LeaderboardEntry[]>(loadLeaderboard);
   const [playerName, setPlayerName] = useState("");
   const [scoreSubmitted, setScoreSubmitted] = useState(false);
+
+  // --- Certificate state ---
+  const [showCertificate, setShowCertificate] = useState(false);
+  const [certName, setCertName] = useState("");
+  const [shareToastVisible, setShareToastVisible] = useState(false);
+  const [showSharePanel, setShowSharePanel] = useState(false);
+  const certRef = useRef<HTMLDivElement>(null);
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -476,6 +490,211 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
         </span>
       );
     });
+
+  // ---- Certificate generation ----
+
+  const downloadCertificate = async () => {
+    const node = certRef.current;
+    if (!node || !finalStats) return;
+
+    const canvas = document.createElement("canvas");
+    const scale = 2; // retina
+    const W = 800;
+    const H = 560;
+    canvas.width = W * scale;
+    canvas.height = H * scale;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.scale(scale, scale);
+
+    // Background gradient
+    const grad = ctx.createLinearGradient(0, 0, W, H);
+    grad.addColorStop(0, "#0f172a");
+    grad.addColorStop(1, "#1e293b");
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Outer border glow
+    ctx.strokeStyle = "#3b82f6";
+    ctx.lineWidth = 3;
+    ctx.strokeRect(16, 16, W - 32, H - 32);
+    ctx.strokeStyle = "rgba(59,130,246,0.25)";
+    ctx.lineWidth = 8;
+    ctx.strokeRect(24, 24, W - 48, H - 48);
+
+    // Decorative corner accents
+    const drawCorner = (x: number, y: number, dx: number, dy: number) => {
+      ctx.strokeStyle = "#60a5fa";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(x + dx * 40, y);
+      ctx.lineTo(x, y);
+      ctx.lineTo(x, y + dy * 40);
+      ctx.stroke();
+    };
+    drawCorner(32, 32, 1, 1);
+    drawCorner(W - 32, 32, -1, 1);
+    drawCorner(32, H - 32, 1, -1);
+    drawCorner(W - 32, H - 32, -1, -1);
+
+    // Website name
+    ctx.fillStyle = "#60a5fa";
+    ctx.font = "bold 14px 'Segoe UI', Arial, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText("DocMasterTools.com", W / 2, 68);
+
+    // Trophy emoji area
+    ctx.font = "44px serif";
+    ctx.fillText("🏆", W / 2, 128);
+
+    // Title
+    ctx.fillStyle = "#ffffff";
+    ctx.font = "bold 32px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText("Certificate of Achievement", W / 2, 178);
+
+    // Subtitle
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "16px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText("This certifies that", W / 2, 214);
+
+    // Recipient name
+    ctx.fillStyle = "#f1f5f9";
+    ctx.font = "bold 28px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText(certName || "Typist", W / 2, 256);
+
+    // Horizontal divider
+    ctx.strokeStyle = "rgba(148,163,184,0.3)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 160, 272);
+    ctx.lineTo(W / 2 + 160, 272);
+    ctx.stroke();
+
+    // Achievement description
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = "15px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText(
+      "has successfully completed a Typing Speed Test with the following results:",
+      W / 2,
+      298,
+    );
+
+    // Stats row
+    const stats = [
+      {
+        label: "Typing Speed",
+        value: `${finalStats.wpm} WPM`,
+        color: "#4ade80",
+      },
+      { label: "Accuracy", value: `${finalStats.accuracy}%`, color: "#facc15" },
+      { label: "Duration", value: `${duration} Min`, color: "#38bdf8" },
+    ];
+    const cellW = 200;
+    const startX = W / 2 - cellW;
+    stats.forEach((s, i) => {
+      const cx = startX + i * cellW;
+      // Card bg
+      ctx.fillStyle = "rgba(30,41,59,0.8)";
+      ctx.beginPath();
+      const cardX = cx - 70;
+      const cardY = 318;
+      const cardW = 140;
+      const cardH = 78;
+      const r = 12;
+      ctx.moveTo(cardX + r, cardY);
+      ctx.lineTo(cardX + cardW - r, cardY);
+      ctx.quadraticCurveTo(cardX + cardW, cardY, cardX + cardW, cardY + r);
+      ctx.lineTo(cardX + cardW, cardY + cardH - r);
+      ctx.quadraticCurveTo(
+        cardX + cardW,
+        cardY + cardH,
+        cardX + cardW - r,
+        cardY + cardH,
+      );
+      ctx.lineTo(cardX + r, cardY + cardH);
+      ctx.quadraticCurveTo(cardX, cardY + cardH, cardX, cardY + cardH - r);
+      ctx.lineTo(cardX, cardY + r);
+      ctx.quadraticCurveTo(cardX, cardY, cardX + r, cardY);
+      ctx.fill();
+
+      ctx.fillStyle = s.color;
+      ctx.font = "bold 24px 'Segoe UI', Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText(s.value, cx, 366);
+      ctx.fillStyle = "#64748b";
+      ctx.font = "12px 'Segoe UI', Arial, sans-serif";
+      ctx.fillText(s.label, cx, 386);
+    });
+
+    // Date
+    ctx.fillStyle = "#64748b";
+    ctx.font = "13px 'Segoe UI', Arial, sans-serif";
+    ctx.textAlign = "center";
+    const dateStr = new Date().toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+    ctx.fillText(`Date: ${dateStr}`, W / 2, 432);
+
+    // Footer line
+    ctx.strokeStyle = "rgba(59,130,246,0.3)";
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(80, 455);
+    ctx.lineTo(W - 80, 455);
+    ctx.stroke();
+
+    ctx.fillStyle = "#60a5fa";
+    ctx.font = "bold 14px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText(
+      "Generated by DocMasterTools.com — Free Online Document & Utility Tools",
+      W / 2,
+      476,
+    );
+
+    // Download
+    const link = document.createElement("a");
+    link.download = `typing-certificate-${(certName || "typist").replace(/\s+/g, "-").toLowerCase()}.png`;
+    link.href = canvas.toDataURL("image/png");
+    link.click();
+  };
+
+  const getShareMessage = () =>
+    `I just completed a typing speed test on DocMasterTools.com 🚀\nSpeed: ${finalStats?.wpm ?? 0} WPM | Accuracy: ${finalStats?.accuracy ?? 0}%\n\nTry the typing test here:\nhttps://docmastertools.com/typing-test`;
+
+  const shareWhatsApp = () => {
+    const text = encodeURIComponent(getShareMessage());
+    window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
+  };
+
+  const shareFacebook = () => {
+    const url = encodeURIComponent("https://docmastertools.com/typing-test");
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  const shareTwitter = () => {
+    const text = encodeURIComponent(getShareMessage());
+    window.open(
+      `https://twitter.com/intent/tweet?text=${text}`,
+      "_blank",
+      "noopener,noreferrer",
+    );
+  };
+
+  const copyShareLink = async () => {
+    try {
+      await navigator.clipboard.writeText(getShareMessage());
+      setShareToastVisible(true);
+      setTimeout(() => setShareToastVisible(false), 3000);
+    } catch {
+      // ignore
+    }
+  };
 
   // ---- Keyboard key highlight ----
   const highlightKeys = (keyString: string) => {
@@ -821,6 +1040,21 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                     ✓ Score saved to leaderboard!
                   </div>
                 )}
+
+                {/* Generate Certificate Button */}
+                <div className="mt-5 pt-4 border-t border-slate-700">
+                  <button
+                    type="button"
+                    data-ocid="certificate.open_modal_button"
+                    onClick={() => {
+                      setShowCertificate(true);
+                      setCertName(playerName || "");
+                    }}
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20"
+                  >
+                    <Award className="w-4 h-4" /> Generate Typing Certificate
+                  </button>
+                </div>
               </div>
             )}
 
@@ -1193,6 +1427,281 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
           </div>
         )}
       </div>
+
+      {/* ===== CERTIFICATE MODAL ===== */}
+      {showCertificate && finalStats && (
+        <div
+          data-ocid="certificate.modal"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm px-4 py-8 overflow-y-auto"
+        >
+          <div className="w-full max-w-2xl">
+            {/* Modal Header */}
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-white font-bold text-lg flex items-center gap-2">
+                <Award className="w-5 h-5 text-blue-400" /> Typing Certificate
+              </h2>
+              <button
+                type="button"
+                data-ocid="certificate.close_button"
+                onClick={() => {
+                  setShowCertificate(false);
+                  setShowSharePanel(false);
+                }}
+                className="text-slate-400 hover:text-white transition-colors text-sm px-3 py-1.5 rounded-lg border border-slate-600 hover:border-slate-400"
+              >
+                ✕ Close
+              </button>
+            </div>
+
+            {/* Name Input */}
+            <div className="mb-4">
+              <label
+                htmlFor="cert-name-input"
+                className="block text-slate-300 text-sm mb-1.5 font-medium"
+              >
+                Your Name (appears on certificate)
+              </label>
+              <input
+                id="cert-name-input"
+                type="text"
+                data-ocid="certificate.name.input"
+                value={certName}
+                onChange={(e) => setCertName(e.target.value.slice(0, 40))}
+                placeholder="Enter your full name..."
+                maxLength={40}
+                className="w-full bg-slate-900 border border-slate-600 focus:border-blue-500 rounded-lg text-white text-sm px-4 py-2.5 outline-none transition-colors"
+              />
+            </div>
+
+            {/* Certificate Preview */}
+            <div
+              ref={certRef}
+              data-ocid="certificate.card"
+              className="relative w-full rounded-2xl overflow-hidden border-2 border-blue-500/60 shadow-2xl shadow-blue-500/20"
+              style={{
+                background: "linear-gradient(135deg, #0f172a 0%, #1e293b 100%)",
+              }}
+            >
+              {/* Inner decorative border */}
+              <div className="absolute inset-3 rounded-xl border border-blue-500/20 pointer-events-none" />
+
+              {/* Corner accents */}
+              {[
+                "top-5 left-5 border-t-2 border-l-2",
+                "top-5 right-5 border-t-2 border-r-2",
+                "bottom-5 left-5 border-b-2 border-l-2",
+                "bottom-5 right-5 border-b-2 border-r-2",
+              ].map((cls) => (
+                <div
+                  key={cls}
+                  className={`absolute w-8 h-8 border-blue-400/60 rounded-sm ${cls} pointer-events-none`}
+                />
+              ))}
+
+              <div className="relative px-8 py-10 text-center">
+                {/* Site name */}
+                <p className="text-blue-400 font-semibold text-xs tracking-[0.2em] uppercase mb-3">
+                  DocMasterTools.com
+                </p>
+
+                {/* Trophy */}
+                <div className="text-5xl mb-3">🏆</div>
+
+                {/* Title */}
+                <h3 className="text-white font-bold text-2xl md:text-3xl mb-2">
+                  Certificate of Achievement
+                </h3>
+                <p className="text-slate-400 text-sm mb-4">
+                  This certifies that
+                </p>
+
+                {/* Name */}
+                <div className="text-white font-bold text-2xl md:text-3xl mb-1 min-h-[40px]">
+                  {certName.trim() || (
+                    <span className="text-slate-500 italic text-xl">
+                      Your Name
+                    </span>
+                  )}
+                </div>
+                <div className="w-48 h-px bg-slate-600 mx-auto mb-4" />
+
+                <p className="text-slate-400 text-sm mb-6">
+                  has successfully completed a Typing Speed Test with the
+                  following results:
+                </p>
+
+                {/* Stats Cards */}
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {[
+                    {
+                      label: "Typing Speed",
+                      value: `${finalStats.wpm} WPM`,
+                      color: "text-green-400",
+                      border: "border-green-500/30",
+                    },
+                    {
+                      label: "Accuracy",
+                      value: `${finalStats.accuracy}%`,
+                      color: "text-yellow-400",
+                      border: "border-yellow-500/30",
+                    },
+                    {
+                      label: "Duration",
+                      value: `${duration} Min`,
+                      color: "text-blue-400",
+                      border: "border-blue-500/30",
+                    },
+                  ].map((s) => (
+                    <div
+                      key={s.label}
+                      className={`bg-slate-900/70 border ${s.border} rounded-xl py-3 px-2`}
+                    >
+                      <div
+                        className={`text-xl md:text-2xl font-bold ${s.color}`}
+                      >
+                        {s.value}
+                      </div>
+                      <div className="text-slate-500 text-xs mt-0.5">
+                        {s.label}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Date */}
+                <p className="text-slate-500 text-xs mb-4">
+                  Date:{" "}
+                  {new Date().toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+
+                {/* Footer */}
+                <div className="border-t border-slate-700 pt-4">
+                  <p className="text-blue-400 text-sm font-bold text-center">
+                    Generated by DocMasterTools.com — Free Online Document &amp;
+                    Utility Tools
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 mt-4 flex-wrap">
+              <button
+                type="button"
+                data-ocid="certificate.download.primary_button"
+                onClick={downloadCertificate}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20"
+              >
+                <Download className="w-4 h-4" /> Download Certificate
+              </button>
+              <button
+                type="button"
+                data-ocid="certificate.share.secondary_button"
+                onClick={() => setShowSharePanel((v) => !v)}
+                className="flex-1 bg-slate-700 hover:bg-slate-600 text-white py-3 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 border border-slate-600"
+              >
+                <Share2 className="w-4 h-4" /> Share Certificate
+              </button>
+            </div>
+
+            {/* Share Panel */}
+            {showSharePanel && (
+              <div
+                data-ocid="certificate.share.panel"
+                className="mt-3 bg-slate-800 border border-slate-700 rounded-xl p-4"
+              >
+                <p className="text-slate-400 text-xs mb-3 text-center">
+                  Share your achievement:
+                </p>
+                <div className="flex flex-wrap gap-2 justify-center">
+                  <button
+                    type="button"
+                    data-ocid="certificate.share.whatsapp.button"
+                    onClick={shareWhatsApp}
+                    className="flex items-center gap-1.5 bg-[#25D366] hover:bg-[#1ebe5a] text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                    </svg>
+                    WhatsApp
+                  </button>
+                  <button
+                    type="button"
+                    data-ocid="certificate.share.facebook.button"
+                    onClick={shareFacebook}
+                    className="flex items-center gap-1.5 bg-[#1877F2] hover:bg-[#166fe5] text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                    Facebook
+                  </button>
+                  <button
+                    type="button"
+                    data-ocid="certificate.share.twitter.button"
+                    onClick={shareTwitter}
+                    className="flex items-center gap-1.5 bg-slate-900 hover:bg-slate-700 border border-slate-600 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.259 5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                    </svg>
+                    Twitter (X)
+                  </button>
+                  <button
+                    type="button"
+                    data-ocid="certificate.share.copy.button"
+                    onClick={copyShareLink}
+                    className="flex items-center gap-1.5 bg-slate-700 hover:bg-slate-600 border border-slate-500 text-white px-4 py-2 rounded-lg font-semibold text-sm transition-colors"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      aria-hidden="true"
+                    >
+                      <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+                      <path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1" />
+                    </svg>
+                    Copy Link
+                  </button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* Share copied toast */}
+      {shareToastVisible && (
+        <div
+          data-ocid="certificate.success_state"
+          className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-700 border border-slate-600 text-white text-sm px-5 py-3 rounded-xl shadow-xl z-[60] flex items-center gap-2"
+        >
+          <CheckCircle className="w-4 h-4 text-green-400" /> Share message
+          copied to clipboard!
+        </div>
+      )}
     </div>
   );
 }

@@ -126,11 +126,11 @@ export default function CrossCategorySuggestions({
     <section className="mt-12 pt-8 border-t">
       <h2 className="text-2xl font-bold mb-6">You May Also Like</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {suggestions.map((suggestion, index) => {
+        {suggestions.map((suggestion) => {
           const Icon = suggestion.icon;
           return (
             <Card
-              key={index}
+              key={suggestion.page}
               className="hover:shadow-lg hover:scale-105 hover:border-primary/50 transition-all duration-200 cursor-pointer"
               onClick={() => onNavigate(suggestion.page)}
             >

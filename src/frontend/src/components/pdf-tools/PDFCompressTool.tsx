@@ -56,7 +56,7 @@ export default function PDFCompressTool({ onBack }: PDFCompressToolProps) {
 
       setCompressedPDF({
         blob,
-        name: "compressed-" + file.name,
+        name: `compressed-${file.name}`,
         originalSize: file.size,
       });
       toast.success("PDF compressed successfully!");
@@ -106,72 +106,70 @@ export default function PDFCompressTool({ onBack }: PDFCompressToolProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!compressedPDF && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="application/pdf"
-                    description="Click to upload PDF file or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Original size: {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
-                    </div>
-
-                    <Tabs defaultValue="auto" className="w-full">
-                      <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="auto">Auto Compress</TabsTrigger>
-                        <TabsTrigger value="manual">Manual Adjust</TabsTrigger>
-                      </TabsList>
-                      <TabsContent value="auto" className="space-y-4">
-                        <p className="text-sm text-muted-foreground">
-                          Automatically optimize your PDF for the best balance
-                          between file size and quality.
-                        </p>
-                        <Button
-                          onClick={() => compressPDF("auto")}
-                          className="w-full"
-                          size="lg"
-                        >
-                          <Minimize2 className="mr-2 h-4 w-4" />
-                          Auto Compress
-                        </Button>
-                      </TabsContent>
-                      <TabsContent value="manual" className="space-y-4">
-                        <div className="space-y-3">
-                          <Label>Quality: {quality[0]}%</Label>
-                          <Slider
-                            value={quality}
-                            onValueChange={setQuality}
-                            min={10}
-                            max={100}
-                            step={5}
-                            className="w-full"
-                          />
-                          <p className="text-xs text-muted-foreground">
-                            Lower quality = smaller file size. Higher quality =
-                            larger file size.
-                          </p>
-                        </div>
-                        <Button
-                          onClick={() => compressPDF("manual")}
-                          className="w-full"
-                          size="lg"
-                        >
-                          <Minimize2 className="mr-2 h-4 w-4" />
-                          Compress with {quality[0]}% Quality
-                        </Button>
-                      </TabsContent>
-                    </Tabs>
+            {!compressedPDF &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="application/pdf"
+                  description="Click to upload PDF file or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Original size: {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+
+                  <Tabs defaultValue="auto" className="w-full">
+                    <TabsList className="grid w-full grid-cols-2">
+                      <TabsTrigger value="auto">Auto Compress</TabsTrigger>
+                      <TabsTrigger value="manual">Manual Adjust</TabsTrigger>
+                    </TabsList>
+                    <TabsContent value="auto" className="space-y-4">
+                      <p className="text-sm text-muted-foreground">
+                        Automatically optimize your PDF for the best balance
+                        between file size and quality.
+                      </p>
+                      <Button
+                        onClick={() => compressPDF("auto")}
+                        className="w-full"
+                        size="lg"
+                      >
+                        <Minimize2 className="mr-2 h-4 w-4" />
+                        Auto Compress
+                      </Button>
+                    </TabsContent>
+                    <TabsContent value="manual" className="space-y-4">
+                      <div className="space-y-3">
+                        <Label>Quality: {quality[0]}%</Label>
+                        <Slider
+                          value={quality}
+                          onValueChange={setQuality}
+                          min={10}
+                          max={100}
+                          step={5}
+                          className="w-full"
+                        />
+                        <p className="text-xs text-muted-foreground">
+                          Lower quality = smaller file size. Higher quality =
+                          larger file size.
+                        </p>
+                      </div>
+                      <Button
+                        onClick={() => compressPDF("manual")}
+                        className="w-full"
+                        size="lg"
+                      >
+                        <Minimize2 className="mr-2 h-4 w-4" />
+                        Compress with {quality[0]}% Quality
+                      </Button>
+                    </TabsContent>
+                  </Tabs>
+                </div>
+              ))}
 
             {processing && <ProcessingState message="Compressing PDF..." />}
 

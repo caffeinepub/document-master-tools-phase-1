@@ -88,29 +88,27 @@ export function BasePDFTool({
             <CardDescription>{description}</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!result && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept={accept}
-                    description="Click to upload file or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
-                    </div>
-                    <Button onClick={processFile} className="w-full" size="lg">
-                      {buttonLabel}
-                    </Button>
+            {!result &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept={accept}
+                  description="Click to upload file or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <Button onClick={processFile} className="w-full" size="lg">
+                    {buttonLabel}
+                  </Button>
+                </div>
+              ))}
 
             {processing && <ProcessingState message={processingMessage} />}
 

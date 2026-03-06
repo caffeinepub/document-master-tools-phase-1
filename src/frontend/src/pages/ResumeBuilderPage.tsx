@@ -126,6 +126,7 @@ export default function ResumeBuilderPage({
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <button
+          type="button"
           onClick={() => onNavigate("home")}
           className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors duration-200 group"
         >
@@ -189,6 +190,13 @@ export default function ResumeBuilderPage({
                 key={template.id}
                 className="bg-gray-900 hover:bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-colors duration-200 ease-in-out border border-gray-700 hover:border-gray-500 group flex flex-col"
                 onClick={() => onNavigate(template.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate(template.id);
+                }}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div
                   className={`bg-gradient-to-br ${template.color} p-6 flex items-center justify-center`}
@@ -213,6 +221,7 @@ export default function ResumeBuilderPage({
                     ))}
                   </div>
                   <button
+                    type="button"
                     className="w-full min-h-[48px] px-6 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-1"
                     onClick={(e) => {
                       e.stopPropagation();
@@ -238,6 +247,13 @@ export default function ResumeBuilderPage({
                 key={template.id}
                 className="bg-gray-900 hover:bg-gray-800 rounded-xl overflow-hidden cursor-pointer transition-colors duration-200 ease-in-out border border-gray-700 hover:border-gray-500 group flex flex-col"
                 onClick={() => onNavigate(template.id)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate(template.id);
+                }}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div
                   className={`bg-gradient-to-br ${template.color} p-6 flex items-center justify-center`}
@@ -262,6 +278,7 @@ export default function ResumeBuilderPage({
                     ))}
                   </div>
                   <button
+                    type="button"
                     className="w-full min-h-[48px] px-6 bg-purple-600 hover:bg-purple-700 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-1"
                     onClick={(e) => {
                       e.stopPropagation();

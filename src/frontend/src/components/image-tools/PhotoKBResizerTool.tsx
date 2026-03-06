@@ -99,57 +99,55 @@ export default function PhotoKBResizerTool({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!resized && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/*"
-                    description="Click to upload image or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Current size: {(file.size / 1024).toFixed(2)} KB
-                      </p>
-                    </div>
-                    <div className="space-y-2">
-                      <Label>Target Size</Label>
-                      <Select value={targetSize} onValueChange={setTargetSize}>
-                        <SelectTrigger>
-                          <SelectValue />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="20">20 KB</SelectItem>
-                          <SelectItem value="50">50 KB</SelectItem>
-                          <SelectItem value="100">100 KB</SelectItem>
-                          <SelectItem value="150">150 KB</SelectItem>
-                          <SelectItem value="200">200 KB</SelectItem>
-                          <SelectItem value="custom">Custom Size</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    {targetSize === "custom" && (
-                      <div className="space-y-2">
-                        <Label>Custom Size (KB)</Label>
-                        <Input
-                          type="number"
-                          placeholder="Enter size in KB"
-                          value={customSize}
-                          onChange={(e) => setCustomSize(e.target.value)}
-                        />
-                      </div>
-                    )}
-                    <Button onClick={resizeImage} className="w-full" size="lg">
-                      <Ruler className="mr-2 h-4 w-4" />
-                      Resize Image
-                    </Button>
+            {!resized &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="image/*"
+                  description="Click to upload image or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Current size: {(file.size / 1024).toFixed(2)} KB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <div className="space-y-2">
+                    <Label>Target Size</Label>
+                    <Select value={targetSize} onValueChange={setTargetSize}>
+                      <SelectTrigger>
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="20">20 KB</SelectItem>
+                        <SelectItem value="50">50 KB</SelectItem>
+                        <SelectItem value="100">100 KB</SelectItem>
+                        <SelectItem value="150">150 KB</SelectItem>
+                        <SelectItem value="200">200 KB</SelectItem>
+                        <SelectItem value="custom">Custom Size</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  {targetSize === "custom" && (
+                    <div className="space-y-2">
+                      <Label>Custom Size (KB)</Label>
+                      <Input
+                        type="number"
+                        placeholder="Enter size in KB"
+                        value={customSize}
+                        onChange={(e) => setCustomSize(e.target.value)}
+                      />
+                    </div>
+                  )}
+                  <Button onClick={resizeImage} className="w-full" size="lg">
+                    <Ruler className="mr-2 h-4 w-4" />
+                    Resize Image
+                  </Button>
+                </div>
+              ))}
 
             {processing && <ProcessingState message="Resizing image..." />}
 

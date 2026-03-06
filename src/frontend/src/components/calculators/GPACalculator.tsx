@@ -47,12 +47,12 @@ export default function GPACalculator() {
     let totalPoints = 0;
     let totalCredits = 0;
 
-    courses.forEach((course) => {
+    for (const course of courses) {
       const grade = Number.parseFloat(course.grade) || 0;
       const cr = Number.parseFloat(course.credits) || 0;
       totalPoints += grade * cr;
       totalCredits += cr;
-    });
+    }
 
     return totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : "0.00";
   };

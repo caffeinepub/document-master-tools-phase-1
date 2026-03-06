@@ -339,6 +339,7 @@ const CustomImageResizePage: React.FC<{
         <div className="flex flex-wrap gap-2">
           {tabs.map((tab) => (
             <button
+              type="button"
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors min-h-[36px] ${
@@ -383,6 +384,7 @@ const CustomImageResizePage: React.FC<{
           <div className="flex flex-wrap gap-2">
             {[25, 40, 50, 75].map((p) => (
               <button
+                type="button"
                 key={p}
                 onClick={() => setPercentValue(p)}
                 className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors min-h-[36px] ${
@@ -487,6 +489,7 @@ const CustomImageResizePage: React.FC<{
           <div className="flex flex-wrap gap-2">
             {[100, 500, 1024, 2048].map((kb) => (
               <button
+                type="button"
                 key={kb}
                 onClick={() => {
                   setFileSizePreset(kb);

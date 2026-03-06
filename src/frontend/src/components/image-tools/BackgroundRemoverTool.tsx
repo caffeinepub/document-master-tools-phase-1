@@ -44,7 +44,7 @@ export default function BackgroundRemoverTool({
       });
       setResult({
         blob,
-        name: "no-background-" + file.name.replace(/\.[^/.]+$/, ".png"),
+        name: `no-background-${file.name.replace(/\.[^/.]+$/, ".png")}`,
       });
       toast.success("Background removed successfully!");
     } catch (_error) {
@@ -86,34 +86,32 @@ export default function BackgroundRemoverTool({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!result && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/*"
-                    description="Click to upload image or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {(file.size / 1024).toFixed(2)} KB
-                      </p>
-                    </div>
-                    <Button
-                      onClick={removeBackground}
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Scissors className="mr-2 h-4 w-4" />
-                      Remove Background
-                    </Button>
+            {!result &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="image/*"
+                  description="Click to upload image or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {(file.size / 1024).toFixed(2)} KB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <Button
+                    onClick={removeBackground}
+                    className="w-full"
+                    size="lg"
+                  >
+                    <Scissors className="mr-2 h-4 w-4" />
+                    Remove Background
+                  </Button>
+                </div>
+              ))}
 
             {processing && <ProcessingState message="Removing background..." />}
 

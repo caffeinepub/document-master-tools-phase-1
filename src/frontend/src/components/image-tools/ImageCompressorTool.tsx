@@ -51,7 +51,7 @@ export default function ImageCompressorTool({
       });
       setCompressed({
         blob,
-        name: "compressed-" + file.name,
+        name: `compressed-${file.name}`,
         originalSize: file.size,
       });
       toast.success("Image compressed successfully!");
@@ -94,45 +94,39 @@ export default function ImageCompressorTool({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!compressed && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/*"
-                    description="Click to upload image or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        Original size: {(file.size / 1024).toFixed(2)} KB
-                      </p>
-                    </div>
-                    <div className="space-y-3">
-                      <Label>Quality: {quality[0]}%</Label>
-                      <Slider
-                        value={quality}
-                        onValueChange={setQuality}
-                        min={10}
-                        max={100}
-                        step={5}
-                        className="w-full"
-                      />
-                    </div>
-                    <Button
-                      onClick={compressImage}
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Minimize2 className="mr-2 h-4 w-4" />
-                      Compress Image
-                    </Button>
+            {!compressed &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="image/*"
+                  description="Click to upload image or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      Original size: {(file.size / 1024).toFixed(2)} KB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <div className="space-y-3">
+                    <Label>Quality: {quality[0]}%</Label>
+                    <Slider
+                      value={quality}
+                      onValueChange={setQuality}
+                      min={10}
+                      max={100}
+                      step={5}
+                      className="w-full"
+                    />
+                  </div>
+                  <Button onClick={compressImage} className="w-full" size="lg">
+                    <Minimize2 className="mr-2 h-4 w-4" />
+                    Compress Image
+                  </Button>
+                </div>
+              ))}
 
             {processing && <ProcessingState message="Compressing image..." />}
 

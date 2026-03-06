@@ -46,6 +46,7 @@ export default function AIDocumentEnhancerPage({
       <main className="max-w-4xl mx-auto px-4 py-8">
         {/* Back Button */}
         <button
+          type="button"
           onClick={handleBack}
           className="flex items-center gap-2 text-gray-400 hover:text-orange-400 transition-colors text-sm font-medium mb-4 min-h-[44px]"
         >
@@ -123,7 +124,10 @@ export default function AIDocumentEnhancerPage({
               <p className="text-gray-500 text-sm mt-1">
                 Supports JPG, PNG, PDF formats
               </p>
-              <button className="mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors">
+              <button
+                type="button"
+                className="mt-4 px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors"
+              >
                 Upload Document
               </button>
             </div>
@@ -183,6 +187,7 @@ export default function AIDocumentEnhancerPage({
               <div className="flex flex-col sm:flex-row gap-3">
                 {!isAuthenticated ? (
                   <button
+                    type="button"
                     onClick={() => login()}
                     disabled={isLoggingIn}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-500 disabled:opacity-60 text-white rounded-lg font-medium transition-colors min-h-[48px]"
@@ -191,6 +196,7 @@ export default function AIDocumentEnhancerPage({
                   </button>
                 ) : (
                   <button
+                    type="button"
                     onClick={() => setShowPricingModal(true)}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-medium transition-colors min-h-[48px]"
                   >
@@ -200,6 +206,7 @@ export default function AIDocumentEnhancerPage({
                 )}
                 {isAuthenticated && (
                   <button
+                    type="button"
                     onClick={() => setShowPricingModal(true)}
                     className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-gray-700 hover:bg-gray-600 text-gray-200 rounded-lg font-medium transition-colors min-h-[48px]"
                   >

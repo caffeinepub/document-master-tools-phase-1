@@ -107,7 +107,7 @@ export default function PDFMergeTool({ onBack }: PDFMergeToolProps) {
                     </h3>
                     {files.map((file, index) => (
                       <div
-                        key={index}
+                        key={`${file.name}-${index}`}
                         className="flex items-center justify-between p-3 bg-muted rounded-lg"
                       >
                         <div className="flex-1">

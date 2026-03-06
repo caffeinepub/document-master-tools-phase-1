@@ -57,9 +57,9 @@ export default function DownloadSection({
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
-            {files.map((file, index) => (
+            {files.map((file) => (
               <div
-                key={index}
+                key={file.name}
                 className="bg-muted/50 rounded-lg p-4 flex items-center justify-between gap-4"
               >
                 <div className="flex-1 min-w-0">

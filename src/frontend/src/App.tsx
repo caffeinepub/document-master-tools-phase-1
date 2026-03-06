@@ -5,6 +5,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
+const TypingTestPage = React.lazy(() => import("./pages/TypingTestPage"));
 const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage"));
 const PDFToolsPage = React.lazy(() => import("./pages/PDFToolsPage"));
 const ImageToolsPage = React.lazy(() => import("./pages/ImageToolsPage"));
@@ -180,6 +181,8 @@ type Page =
   | "image-webp-converter"
   | "image-background-remover"
   // resume templates
+  | "typing-test"
+  // resume templates
   | "resume-fresher-india"
   | "resume-experienced-india"
   | "resume-professional-india"
@@ -317,6 +320,9 @@ function App() {
         return (
           <TimeDurationCalculatorPage onBack={() => navigate("calculators")} />
         );
+
+      case "typing-test":
+        return <TypingTestPage onBack={goHome} />;
 
       // Image tools
       case "image-passport-photo":

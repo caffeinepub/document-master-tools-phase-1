@@ -22,17 +22,16 @@ export default function DiscountCalculator() {
         finalPrice: final.toFixed(2),
         savings: discountAmount.toFixed(2),
       };
-    } else {
-      const sale = Number.parseFloat(salePrice) || 0;
-      const discountAmount = original - sale;
-      const discountPercent =
-        original > 0 ? (discountAmount / original) * 100 : 0;
-      return {
-        discountPercent: discountPercent.toFixed(2),
-        discountAmount: discountAmount.toFixed(2),
-        savings: discountAmount.toFixed(2),
-      };
     }
+    const sale = Number.parseFloat(salePrice) || 0;
+    const discountAmount = original - sale;
+    const discountPercent =
+      original > 0 ? (discountAmount / original) * 100 : 0;
+    return {
+      discountPercent: discountPercent.toFixed(2),
+      discountAmount: discountAmount.toFixed(2),
+      savings: discountAmount.toFixed(2),
+    };
   };
 
   const result = calculate();

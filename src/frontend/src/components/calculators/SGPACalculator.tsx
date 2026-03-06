@@ -43,12 +43,12 @@ export default function SGPACalculator() {
     let totalGradePoints = 0;
     let totalCredits = 0;
 
-    courses.forEach((course) => {
+    for (const course of courses) {
       const gp = Number.parseFloat(course.gradePoints) || 0;
       const cr = Number.parseFloat(course.credits) || 0;
       totalGradePoints += gp * cr;
       totalCredits += cr;
-    });
+    }
 
     return totalCredits > 0
       ? (totalGradePoints / totalCredits).toFixed(2)

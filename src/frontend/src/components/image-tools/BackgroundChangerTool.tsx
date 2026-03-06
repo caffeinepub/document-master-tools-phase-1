@@ -56,7 +56,7 @@ export default function BackgroundChangerTool({
       });
       setResult({
         blob,
-        name: "new-background-" + file.name.replace(/\.[^/.]+$/, ".png"),
+        name: `new-background-${file.name.replace(/\.[^/.]+$/, ".png")}`,
       });
       toast.success("Background changed successfully!");
     } catch (_error) {
@@ -98,66 +98,65 @@ export default function BackgroundChangerTool({
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!result && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/*"
-                    description="Click to upload image or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {(file.size / 1024).toFixed(2)} KB
-                      </p>
-                    </div>
-                    <div className="space-y-3">
-                      <Label>Background Color</Label>
-                      <div className="flex gap-2 flex-wrap">
-                        {presetColors.map((color) => (
-                          <button
-                            key={color}
-                            onClick={() => setBgColor(color)}
-                            className={`w-12 h-12 rounded-lg border-2 transition-all ${
-                              bgColor === color
-                                ? "border-primary scale-110"
-                                : "border-border"
-                            }`}
-                            style={{ backgroundColor: color }}
-                          />
-                        ))}
-                      </div>
-                      <div className="flex gap-2 items-center">
-                        <Input
-                          type="color"
-                          value={bgColor}
-                          onChange={(e) => setBgColor(e.target.value)}
-                          className="w-20 h-10"
-                        />
-                        <Input
-                          type="text"
-                          value={bgColor}
-                          onChange={(e) => setBgColor(e.target.value)}
-                          placeholder="#ffffff"
-                          className="flex-1"
-                        />
-                      </div>
-                    </div>
-                    <Button
-                      onClick={changeBackground}
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Palette className="mr-2 h-4 w-4" />
-                      Change Background
-                    </Button>
+            {!result &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="image/*"
+                  description="Click to upload image or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {(file.size / 1024).toFixed(2)} KB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <div className="space-y-3">
+                    <Label>Background Color</Label>
+                    <div className="flex gap-2 flex-wrap">
+                      {presetColors.map((color) => (
+                        <button
+                          type="button"
+                          key={color}
+                          onClick={() => setBgColor(color)}
+                          className={`w-12 h-12 rounded-lg border-2 transition-all ${
+                            bgColor === color
+                              ? "border-primary scale-110"
+                              : "border-border"
+                          }`}
+                          style={{ backgroundColor: color }}
+                        />
+                      ))}
+                    </div>
+                    <div className="flex gap-2 items-center">
+                      <Input
+                        type="color"
+                        value={bgColor}
+                        onChange={(e) => setBgColor(e.target.value)}
+                        className="w-20 h-10"
+                      />
+                      <Input
+                        type="text"
+                        value={bgColor}
+                        onChange={(e) => setBgColor(e.target.value)}
+                        placeholder="#ffffff"
+                        className="flex-1"
+                      />
+                    </div>
+                  </div>
+                  <Button
+                    onClick={changeBackground}
+                    className="w-full"
+                    size="lg"
+                  >
+                    <Palette className="mr-2 h-4 w-4" />
+                    Change Background
+                  </Button>
+                </div>
+              ))}
 
             {processing && <ProcessingState message="Changing background..." />}
 

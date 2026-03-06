@@ -139,6 +139,13 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
           }}
           onDragLeave={() => setIsDragging(false)}
           onClick={() => fileInputRef.current?.click()}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ")
+              fileInputRef.current?.click();
+          }}
+          // biome-ignore lint/a11y/useSemanticElements: drag-and-drop zone requires div; converting to button breaks drop events
+          role="button"
+          tabIndex={0}
           className={`border-2 border-dashed rounded-xl p-8 md:p-12 text-center transition-colors cursor-pointer ${
             isDragging
               ? "border-blue-500 bg-blue-500/10"
@@ -177,6 +184,7 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
             </div>
           </div>
           <button
+            type="button"
             onClick={handleReset}
             className="ml-3 p-1.5 text-gray-400 hover:text-red-400 hover:bg-gray-600 rounded-lg transition-colors shrink-0"
             title="Remove file"
@@ -206,6 +214,7 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
       {file && (
         <div className="flex flex-col md:flex-row gap-3">
           <button
+            type="button"
             onClick={handleProcess}
             disabled={isProcessing}
             className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:shadow-lg w-full md:w-auto min-h-[48px]"
@@ -223,6 +232,7 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
             )}
           </button>
           <button
+            type="button"
             onClick={handleDownload}
             disabled={!result}
             className="flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-700 disabled:text-gray-500 disabled:cursor-not-allowed text-white font-semibold px-6 py-3 rounded-xl transition-all duration-200 hover:shadow-lg w-full md:w-auto min-h-[48px]"

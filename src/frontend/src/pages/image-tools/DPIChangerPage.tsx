@@ -128,12 +128,13 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
             <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
               <h2 className="text-white font-semibold mb-4">DPI Settings</h2>
               <div className="mb-4">
-                <label className="block text-slate-300 text-sm mb-3">
+                <p className="block text-slate-300 text-sm mb-3">
                   Select DPI Preset
-                </label>
+                </p>
                 <div className="flex flex-wrap gap-2">
                   {dpiPresets.map((dpi) => (
                     <button
+                      type="button"
                       key={dpi}
                       onClick={() => {
                         setTargetDPI(dpi);
@@ -151,10 +152,14 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
                 </div>
               </div>
               <div className="mb-6">
-                <label className="block text-slate-300 text-sm mb-2">
+                <label
+                  htmlFor="dpi-custom-input"
+                  className="block text-slate-300 text-sm mb-2"
+                >
                   Custom DPI (optional)
                 </label>
                 <input
+                  id="dpi-custom-input"
                   type="number"
                   min={1}
                   max={1200}
@@ -165,10 +170,14 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
                 />
               </div>
               <div className="mb-6">
-                <label className="block text-slate-300 text-sm mb-2">
+                <label
+                  htmlFor="dpi-format-select"
+                  className="block text-slate-300 text-sm mb-2"
+                >
                   Output Format
                 </label>
                 <select
+                  id="dpi-format-select"
                   value={outputFormat}
                   onChange={(e) =>
                     setOutputFormat(e.target.value as "jpeg" | "png" | "webp")
@@ -188,6 +197,7 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
               </p>
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
+                  type="button"
                   onClick={handleProcess}
                   disabled={isProcessing}
                   className="flex-1 min-h-[48px] px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
@@ -202,6 +212,7 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
                   )}
                 </button>
                 <button
+                  type="button"
                   onClick={handleReset}
                   className="min-h-[48px] px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >
@@ -223,6 +234,7 @@ export default function DPIChangerPage({ onNavigate }: DPIChangerPageProps) {
                   />
                 </div>
                 <button
+                  type="button"
                   onClick={handleDownload}
                   className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >

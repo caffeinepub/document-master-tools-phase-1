@@ -181,8 +181,8 @@ export default function ResumeTemplateBuilderPage({
               Frequently Asked Questions
             </h2>
             <div className="space-y-4">
-              {templateConfig.faqs.map((faq, index) => (
-                <div key={index} className="border rounded-lg p-6">
+              {templateConfig.faqs.map((faq) => (
+                <div key={faq.question} className="border rounded-lg p-6">
                   <h3 className="font-semibold text-lg mb-2">{faq.question}</h3>
                   <p className="text-muted-foreground">{faq.answer}</p>
                 </div>

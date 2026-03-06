@@ -233,6 +233,7 @@ export default function PDFToolsPage({
         >
           <div className="max-w-4xl mx-auto">
             <button
+              type="button"
               onClick={() => onNavigate("pdf-tools")}
               className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors duration-200 group"
             >
@@ -271,6 +272,7 @@ export default function PDFToolsPage({
       <div className="max-w-6xl mx-auto">
         {/* Back Button */}
         <button
+          type="button"
           onClick={() => onNavigate("home")}
           className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors duration-200 group"
         >
@@ -296,6 +298,13 @@ export default function PDFToolsPage({
               key={tool.id}
               className="bg-gray-900 hover:bg-gray-800 rounded-xl p-4 sm:p-6 cursor-pointer transition-colors duration-200 ease-in-out border border-gray-700 hover:border-gray-500 group flex flex-col"
               onClick={() => onNavigate(`pdf-tools/${tool.id}`)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  onNavigate(`pdf-tools/${tool.id}`);
+              }}
+              // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+              role="button"
+              tabIndex={0}
             >
               <div
                 className={`${tool.colorClass} mb-3 group-hover:scale-110 transition-transform duration-200 shrink-0`}
@@ -309,6 +318,7 @@ export default function PDFToolsPage({
                 {tool.description}
               </p>
               <button
+                type="button"
                 className="w-full min-h-[48px] px-6 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-1"
                 onClick={(e) => {
                   e.stopPropagation();

@@ -23,16 +23,15 @@ export default function SalaryHikeCalculator() {
         annualIncrement: (increment * 12).toFixed(2),
         percentage: hike.toFixed(2),
       };
-    } else {
-      const desired = Number.parseFloat(desiredSalary) || 0;
-      const increment = desired - current;
-      const hike = current > 0 ? (increment / current) * 100 : 0;
-      return {
-        requiredHike: hike.toFixed(2),
-        monthlyIncrement: increment.toFixed(2),
-        annualIncrement: (increment * 12).toFixed(2),
-      };
     }
+    const desired = Number.parseFloat(desiredSalary) || 0;
+    const increment = desired - current;
+    const hikeCalc = current > 0 ? (increment / current) * 100 : 0;
+    return {
+      requiredHike: hikeCalc.toFixed(2),
+      monthlyIncrement: increment.toFixed(2),
+      annualIncrement: (increment * 12).toFixed(2),
+    };
   };
 
   const result = calculate();

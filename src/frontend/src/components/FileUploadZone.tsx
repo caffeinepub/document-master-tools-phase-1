@@ -65,6 +65,13 @@ export default function FileUploadZone({
       onTouchStart={handleTouch}
       className="border-2 border-dashed border-border rounded-lg p-8 md:p-12 text-center hover:border-primary/50 transition-colors cursor-pointer bg-muted/30 min-h-[200px] flex flex-col items-center justify-center touch-manipulation"
       onClick={() => document.getElementById("file-input")?.click()}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ")
+          document.getElementById("file-input")?.click();
+      }}
+      // biome-ignore lint/a11y/useSemanticElements: drag-and-drop zone requires div; converting to button breaks drop events
+      role="button"
+      tabIndex={0}
     >
       <img
         src="/assets/generated/upload-illustration.dim_300x200.png"

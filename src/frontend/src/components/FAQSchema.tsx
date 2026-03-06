@@ -24,6 +24,7 @@ export default function FAQSchema({ faqs }: FAQSchemaProps) {
   return (
     <script
       type="application/ld+json"
+      // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe; content is serialized JSON, not user input
       dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
     />
   );

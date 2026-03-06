@@ -40,6 +40,7 @@ export default function PostDownloadNavigation({
       </div>
       <div className="flex flex-col sm:flex-row gap-3">
         <button
+          type="button"
           onClick={handleBackHome}
           className="flex items-center justify-center gap-2 min-h-[48px] px-6 bg-slate-700 hover:bg-slate-600 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md"
         >
@@ -47,6 +48,7 @@ export default function PostDownloadNavigation({
           Back to Home
         </button>
         <button
+          type="button"
           onClick={handleUseAnother}
           className="flex items-center justify-center gap-2 min-h-[48px] px-6 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 hover:shadow-md"
         >

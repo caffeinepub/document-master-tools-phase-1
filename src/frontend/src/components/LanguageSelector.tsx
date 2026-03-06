@@ -54,6 +54,7 @@ const LanguageSelector: React.FC = () => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-1.5 px-3 py-2 text-sm text-gray-300 hover:text-white bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors min-h-[44px] min-w-[44px]"
         aria-label="Select language"
@@ -72,12 +73,13 @@ const LanguageSelector: React.FC = () => {
         <div
           className="absolute right-0 top-full mt-1 w-52 bg-gray-800 border border-gray-600 rounded-xl shadow-2xl z-50 overflow-hidden"
           style={{ animation: "slideIn 0.15s ease-out" }}
-          role="listbox"
+          role="menu"
           aria-label="Language options"
         >
           <div className="max-h-72 overflow-y-auto py-1">
             {languages.map((lang) => (
               <button
+                type="button"
                 key={lang.code}
                 onClick={() => handleSelect(lang.code)}
                 className={`w-full flex items-center justify-between px-4 py-2.5 text-sm transition-colors min-h-[44px] ${
@@ -85,7 +87,6 @@ const LanguageSelector: React.FC = () => {
                     ? "bg-orange-500/20 text-orange-400 font-semibold"
                     : "text-gray-300 hover:bg-gray-700 hover:text-white"
                 }`}
-                role="option"
                 aria-selected={language === lang.code}
               >
                 <span>{lang.native}</span>

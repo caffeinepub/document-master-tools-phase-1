@@ -80,34 +80,28 @@ export default function PDFToImageTool({ onBack }: PDFToImageToolProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {!images && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="application/pdf"
-                    description="Click to upload PDF file or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
-                    </div>
-                    <Button
-                      onClick={convertToImage}
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Image className="mr-2 h-4 w-4" />
-                      Convert to Images
-                    </Button>
+            {!images &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="application/pdf"
+                  description="Click to upload PDF file or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+                  <Button onClick={convertToImage} className="w-full" size="lg">
+                    <Image className="mr-2 h-4 w-4" />
+                    Convert to Images
+                  </Button>
+                </div>
+              ))}
 
             {processing && (
               <ProcessingState message="Converting PDF to images..." />

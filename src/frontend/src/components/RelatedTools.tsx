@@ -30,11 +30,11 @@ export default function RelatedTools({
     <section className="mt-12 pt-8 border-t">
       <h2 className="text-2xl font-bold mb-6">Related Tools</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {tools.map((tool, index) => {
+        {tools.map((tool) => {
           const Icon = tool.icon;
           return (
             <Card
-              key={index}
+              key={tool.name}
               className="hover:shadow-lg hover:scale-105 hover:border-primary/50 transition-all duration-200 cursor-pointer"
               onClick={tool.onClick}
             >

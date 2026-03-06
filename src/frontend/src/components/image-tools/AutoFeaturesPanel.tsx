@@ -51,9 +51,9 @@ function applyWhiteBackground(canvas: HTMLCanvasElement): HTMLCanvasElement {
   const isNearWhiteOrTransparent = (idx: number) => {
     const a = data[idx + 3];
     if (a < 30) return true;
-    const r = data[idx],
-      g = data[idx + 1],
-      b = data[idx + 2];
+    const r = data[idx];
+    const g = data[idx + 1];
+    const b = data[idx + 2];
     return r > threshold && g > threshold && b > threshold;
   };
 
@@ -305,6 +305,12 @@ export default function AutoFeaturesPanel({
             className="relative flex items-start gap-3 p-3 rounded-lg border border-border bg-muted/20 cursor-pointer"
             style={{ filter: "blur(1.5px)", opacity: 0.7 }}
             onClick={onUpgradeClick}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") onUpgradeClick?.();
+            }}
+            // biome-ignore lint/a11y/useSemanticElements: overlay upgrade prompt must be a div to wrap non-interactive children
+            role="button"
+            tabIndex={0}
             title="Pro feature — click to upgrade"
           >
             <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-black/10 z-10">

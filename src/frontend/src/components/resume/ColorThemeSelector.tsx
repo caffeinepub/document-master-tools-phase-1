@@ -18,6 +18,7 @@ export default function ColorThemeSelector({
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {COLOR_THEMES.map((theme) => (
           <button
+            type="button"
             key={theme.name}
             onClick={() => onSelect(theme)}
             className={`relative border-2 rounded-lg p-3 transition-all hover:shadow-md ${

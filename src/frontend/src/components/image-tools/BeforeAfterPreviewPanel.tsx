@@ -119,6 +119,7 @@ export default function BeforeAfterPreviewPanel({
           {/* View mode toggle */}
           <div className="flex rounded-lg border border-border overflow-hidden">
             <button
+              type="button"
               onClick={() => setViewMode("side-by-side")}
               className={`px-3 py-1.5 text-xs font-medium transition-colors ${
                 viewMode === "side-by-side"
@@ -130,6 +131,7 @@ export default function BeforeAfterPreviewPanel({
               <Columns2 className="w-4 h-4" />
             </button>
             <button
+              type="button"
               onClick={() => setViewMode("original")}
               className={`px-3 py-1.5 text-xs font-medium transition-colors border-l border-border ${
                 viewMode === "original"
@@ -141,6 +143,7 @@ export default function BeforeAfterPreviewPanel({
               Before
             </button>
             <button
+              type="button"
               onClick={() => setViewMode("enhanced")}
               className={`px-3 py-1.5 text-xs font-medium transition-colors border-l border-border ${
                 viewMode === "enhanced"

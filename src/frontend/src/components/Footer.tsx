@@ -36,6 +36,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
             <ul className="space-y-2">
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate("calculators")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
@@ -44,6 +45,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate("pdf-tools")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
@@ -52,6 +54,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate("image-tools")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
@@ -60,6 +63,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate("resume-builder")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
@@ -68,6 +72,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => onNavigate("smart-document-fixer")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >

@@ -12,9 +12,8 @@ export default function PercentageToCGPAConverter() {
     const percentageValue = Number.parseFloat(percentage) || 0;
     if (formula === "cbse") {
       return (percentageValue / 9.5).toFixed(2);
-    } else {
-      return (percentageValue / 10).toFixed(2);
     }
+    return (percentageValue / 10).toFixed(2);
   };
 
   return (

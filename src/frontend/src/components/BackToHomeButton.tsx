@@ -21,6 +21,7 @@ export default function BackToHomeButton({
 
   return (
     <button
+      type="button"
       onClick={handleClick}
       className="flex items-center gap-2 text-slate-300 hover:text-white transition-colors duration-200 group mb-6"
     >

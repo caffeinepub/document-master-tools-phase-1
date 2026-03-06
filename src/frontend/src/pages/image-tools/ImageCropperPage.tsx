@@ -145,10 +145,14 @@ export default function ImageCropperPage({
               <h2 className="text-white font-semibold mb-4">Crop Settings</h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="aspect-ratio-select"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Aspect Ratio
                   </label>
                   <select
+                    id="aspect-ratio-select"
                     defaultValue="free"
                     onChange={(e) => {
                       // aspect ratio selection — visual only for now
@@ -164,10 +168,14 @@ export default function ImageCropperPage({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="output-format-select"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Output Format
                   </label>
                   <select
+                    id="output-format-select"
                     value={outputFormat}
                     onChange={(e) =>
                       setOutputFormat(e.target.value as "jpeg" | "png" | "webp")
@@ -182,10 +190,14 @@ export default function ImageCropperPage({
               </div>
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="crop-x-range"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Crop X (%): {cropX}
                   </label>
                   <input
+                    id="crop-x-range"
                     type="range"
                     min={0}
                     max={90}
@@ -195,10 +207,14 @@ export default function ImageCropperPage({
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="crop-y-range"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Crop Y (%): {cropY}
                   </label>
                   <input
+                    id="crop-y-range"
                     type="range"
                     min={0}
                     max={90}
@@ -208,10 +224,14 @@ export default function ImageCropperPage({
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="crop-width-range"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Width (%): {cropWidth}
                   </label>
                   <input
+                    id="crop-width-range"
                     type="range"
                     min={10}
                     max={100}
@@ -221,10 +241,14 @@ export default function ImageCropperPage({
                   />
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="crop-height-range"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Height (%): {cropHeight}
                   </label>
                   <input
+                    id="crop-height-range"
                     type="range"
                     min={10}
                     max={100}
@@ -235,10 +259,14 @@ export default function ImageCropperPage({
                 </div>
               </div>
               <div className="mb-4">
-                <label className="block text-slate-300 text-sm mb-2">
+                <label
+                  htmlFor="crop-quality-range"
+                  className="block text-slate-300 text-sm mb-2"
+                >
                   Quality: {quality}%
                 </label>
                 <input
+                  id="crop-quality-range"
                   type="range"
                   min={10}
                   max={100}
@@ -249,6 +277,7 @@ export default function ImageCropperPage({
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
+                  type="button"
                   onClick={handleCrop}
                   disabled={isProcessing}
                   className="flex-1 min-h-[48px] px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
@@ -263,6 +292,7 @@ export default function ImageCropperPage({
                   )}
                 </button>
                 <button
+                  type="button"
                   onClick={handleReset}
                   className="min-h-[48px] px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >
@@ -284,6 +314,7 @@ export default function ImageCropperPage({
                   />
                 </div>
                 <button
+                  type="button"
                   onClick={handleDownload}
                   className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >

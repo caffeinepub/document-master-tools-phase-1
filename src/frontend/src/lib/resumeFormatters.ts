@@ -29,14 +29,13 @@ export function formatPhoneNumber(phone: string, isIndian = true): string {
     // Format as +91-XXXXX-XXXXX
     if (digits.length === 10) {
       return `+91-${digits.slice(0, 5)}-${digits.slice(5)}`;
-    } else if (digits.length === 12 && digits.startsWith("91")) {
+    }
+    if (digits.length === 12 && digits.startsWith("91")) {
       return `+91-${digits.slice(2, 7)}-${digits.slice(7)}`;
     }
-  } else {
+  } else if (digits.length >= 10) {
     // International format - simple E.164 style
-    if (digits.length >= 10) {
-      return `+${digits}`;
-    }
+    return `+${digits}`;
   }
 
   return phone; // Return original if format doesn't match
@@ -73,9 +72,9 @@ export function formatExperienceDuration(
 
   if (years === 0) {
     return `${remainingMonths} month${remainingMonths !== 1 ? "s" : ""}`;
-  } else if (remainingMonths === 0) {
-    return `${years} year${years !== 1 ? "s" : ""}`;
-  } else {
-    return `${years} year${years !== 1 ? "s" : ""} ${remainingMonths} month${remainingMonths !== 1 ? "s" : ""}`;
   }
+  if (remainingMonths === 0) {
+    return `${years} year${years !== 1 ? "s" : ""}`;
+  }
+  return `${years} year${years !== 1 ? "s" : ""} ${remainingMonths} month${remainingMonths !== 1 ? "s" : ""}`;
 }

@@ -152,32 +152,33 @@ async function resizeToCanvas(
 }
 
 async function compressCanvas(
-  canvas: HTMLCanvasElement,
+  initialCanvas: HTMLCanvasElement,
   maxKB: number,
 ): Promise<HTMLCanvasElement> {
   return new Promise((resolve) => {
     let quality = 0.95;
+    let currentCanvas = initialCanvas;
     const tryCompress = () => {
-      canvas.toBlob(
+      currentCanvas.toBlob(
         (blob) => {
           if (!blob) {
-            resolve(canvas);
+            resolve(currentCanvas);
             return;
           }
           if (blob.size <= maxKB * 1024 || quality <= 0.1) {
-            resolve(canvas);
+            resolve(currentCanvas);
           } else {
             quality -= 0.05;
             const newCanvas = document.createElement("canvas");
-            newCanvas.width = canvas.width;
-            newCanvas.height = canvas.height;
+            newCanvas.width = currentCanvas.width;
+            newCanvas.height = currentCanvas.height;
             const ctx = newCanvas.getContext("2d")!;
             const img = new Image();
             const url = URL.createObjectURL(blob);
             img.onload = () => {
               URL.revokeObjectURL(url);
               ctx.drawImage(img, 0, 0);
-              canvas = newCanvas;
+              currentCanvas = newCanvas;
               tryCompress();
             };
             img.src = url;
@@ -332,6 +333,7 @@ export default function AutoPhotoSizeGenerator({
         <div className="grid grid-cols-2 gap-2">
           {PRESETS.map((preset) => (
             <button
+              type="button"
               key={preset.id}
               onClick={() => selectPreset(preset)}
               className={`text-left px-3 py-2 rounded-lg border text-xs transition-all ${
@@ -349,6 +351,7 @@ export default function AutoPhotoSizeGenerator({
 
       {/* Custom Mode Toggle */}
       <button
+        type="button"
         onClick={() => setCustomMode((v) => !v)}
         className="flex items-center gap-2 text-sm text-primary font-medium hover:underline"
       >

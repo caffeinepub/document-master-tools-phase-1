@@ -13,6 +13,7 @@ import {
   GraduationCap,
   Heart,
   Image,
+  Keyboard,
   Layers,
   Maximize2,
   Minimize2,
@@ -344,7 +345,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 md:py-24">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-orange-900/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-orange-900/20" />
         <div className="relative max-w-6xl mx-auto px-4 text-center">
           {/* Logo */}
           <div className="mb-6 flex justify-center">
@@ -366,6 +367,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button
+              type="button"
               onClick={() => onNavigate("calculators")}
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
@@ -373,6 +375,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               Try Calculators
             </button>
             <button
+              type="button"
               onClick={() => onNavigate("pdf-tools")}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
@@ -380,6 +383,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               PDF Tools
             </button>
             <button
+              type="button"
               onClick={() => onNavigate("image-tools")}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
@@ -427,8 +431,15 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 key={cat.id}
                 className="bg-slate-700 hover:bg-slate-600 rounded-xl p-6 cursor-pointer transition-all duration-200 hover:shadow-xl hover:scale-105 border border-slate-600 hover:border-slate-500"
                 onClick={() => onNavigate("calculators")}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate("calculators");
+                }}
                 onMouseEnter={() => setHoveredCard(cat.id)}
                 onMouseLeave={() => setHoveredCard(null)}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div
                   className={`inline-flex p-3 rounded-lg bg-gradient-to-br ${cat.color} text-white mb-4`}
@@ -455,6 +466,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
           <div className="text-center">
             <button
+              type="button"
               onClick={() => onNavigate("calculators")}
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
@@ -481,6 +493,13 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 key={tool.id}
                 className="bg-slate-800 hover:bg-slate-700 rounded-xl p-4 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-700 hover:border-slate-500 group"
                 onClick={() => onNavigate(`pdf-tools/${tool.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate(`pdf-tools/${tool.id}`);
+                }}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div className="text-orange-400 mb-3 group-hover:scale-110 transition-transform duration-200">
                   {tool.icon}
@@ -494,6 +513,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
           <div className="text-center">
             <button
+              type="button"
               onClick={() => onNavigate("pdf-tools")}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
@@ -521,6 +541,13 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 key={tool.id}
                 className="bg-slate-700 hover:bg-slate-600 rounded-xl p-4 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-600 hover:border-slate-400 group"
                 onClick={() => onNavigate(`image-tools/${tool.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate(`image-tools/${tool.id}`);
+                }}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div className="text-green-400 mb-3 group-hover:scale-110 transition-transform duration-200">
                   {tool.icon}
@@ -545,6 +572,13 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                   key={tool.id}
                   className="bg-gradient-to-r from-slate-700 to-slate-600 hover:from-slate-600 hover:to-slate-500 rounded-xl p-4 cursor-pointer transition-all duration-200 hover:shadow-lg border border-yellow-500/30 hover:border-yellow-500/60 group"
                   onClick={() => onNavigate(`image-tools/${tool.id}`)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      onNavigate(`image-tools/${tool.id}`);
+                  }}
+                  // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                  role="button"
+                  tabIndex={0}
                 >
                   <div className="flex items-start gap-3">
                     <div className="text-yellow-400 shrink-0 group-hover:scale-110 transition-transform duration-200">
@@ -571,6 +605,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
           <div className="text-center">
             <button
+              type="button"
               onClick={() => onNavigate("image-tools")}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
@@ -597,6 +632,13 @@ export default function HomePage({ onNavigate }: HomePageProps) {
                 key={template.id}
                 className="bg-slate-800 hover:bg-slate-700 rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-700 hover:border-slate-500 group text-center"
                 onClick={() => onNavigate(`resume-builder/${template.id}`)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ")
+                    onNavigate(`resume-builder/${template.id}`);
+                }}
+                // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+                role="button"
+                tabIndex={0}
               >
                 <div className="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-200">
                   <FileText className="w-6 h-6 text-white" />
@@ -610,6 +652,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
           <div className="text-center">
             <button
+              type="button"
               onClick={() => onNavigate("resume-builder")}
               className="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
@@ -619,8 +662,46 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Typing Test Tool */}
       <section className="py-12 md:py-16 bg-slate-800">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="text-center mb-10">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+              Typing Tools
+            </h2>
+            <p className="text-slate-300 max-w-2xl mx-auto">
+              Test and improve your typing speed and accuracy
+            </p>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
+            <div
+              className="bg-slate-700 hover:bg-slate-600 rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-600 hover:border-slate-400 group"
+              onClick={() => onNavigate("typing-test")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  onNavigate("typing-test");
+              }}
+              // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+              role="button"
+              tabIndex={0}
+              data-ocid="typing_test.card"
+            >
+              <div className="text-blue-400 mb-3 group-hover:scale-110 transition-transform duration-200">
+                <Keyboard className="w-6 h-6" />
+              </div>
+              <h3 className="text-white font-semibold text-sm mb-1">
+                Typing Test
+              </h3>
+              <p className="text-slate-400 text-xs">
+                Test WPM, accuracy &amp; mistakes — 1, 3 or 5 minute tests
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="py-12 md:py-16 bg-slate-900">
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">

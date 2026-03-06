@@ -32,15 +32,14 @@ export default function GSTCalculator() {
         gst: gstAmount.toFixed(2),
         total: total.toFixed(2),
       };
-    } else {
-      const base = amt / (1 + rate / 100);
-      const gstAmount = amt - base;
-      return {
-        base: base.toFixed(2),
-        gst: gstAmount.toFixed(2),
-        total: amt.toFixed(2),
-      };
     }
+    const base = amt / (1 + rate / 100);
+    const gstAmount = amt - base;
+    return {
+      base: base.toFixed(2),
+      gst: gstAmount.toFixed(2),
+      total: amt.toFixed(2),
+    };
   };
 
   const result = calculate();

@@ -101,7 +101,10 @@ function _canvasToPDFBlob(
           const imgAspect = canvas.width / canvas.height;
           const pageAspect = pdfWidth / pdfHeight;
 
-          let imgW: number, imgH: number, imgX: number, imgY: number;
+          let imgW: number;
+          let imgH: number;
+          let imgX: number;
+          let imgY: number;
           if (imgAspect > pageAspect) {
             imgW = pdfWidth - 40;
             imgH = imgW / imgAspect;
@@ -123,7 +126,7 @@ function _canvasToPDFBlob(
           objects.push("1 0 obj\n<< /Type /Catalog /Pages 2 0 R >>\nendobj");
           // Object 2: pages
           objects.push(
-            `2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj`,
+            "2 0 obj\n<< /Type /Pages /Kids [3 0 R] /Count 1 >>\nendobj",
           );
           // Object 3: page
           objects.push(
@@ -352,6 +355,7 @@ export default function ExportOptionsPanel({
         if (isLocked) {
           return (
             <button
+              type="button"
               key={action.id}
               onClick={onUpgradeClick}
               className={`relative flex flex-col items-center gap-2 p-4 rounded-xl border transition-all ${action.color} cursor-pointer`}
@@ -374,6 +378,7 @@ export default function ExportOptionsPanel({
 
         return (
           <button
+            type="button"
             key={action.id}
             onClick={action.onClick}
             disabled={loadingAction !== null}

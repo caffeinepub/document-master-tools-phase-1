@@ -86,6 +86,7 @@ export default function BatchFileQueue({
         <div className="flex items-center gap-2">
           {doneCount > 1 && (
             <button
+              type="button"
               onClick={onDownloadAll}
               disabled={isProcessing}
               className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-blue-600 hover:bg-blue-500 text-white rounded-lg transition-colors disabled:opacity-50"
@@ -95,6 +96,7 @@ export default function BatchFileQueue({
             </button>
           )}
           <button
+            type="button"
             onClick={onClearAll}
             disabled={isProcessing}
             className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-gray-700 hover:bg-gray-600 text-gray-300 rounded-lg transition-colors disabled:opacity-50"
@@ -134,6 +136,7 @@ export default function BatchFileQueue({
             <div className="flex items-center gap-2 flex-shrink-0">
               {file.status === "done" && (
                 <button
+                  type="button"
                   onClick={() => onDownloadFile(file.id)}
                   className="flex items-center gap-1.5 px-3 py-1.5 text-xs bg-green-700 hover:bg-green-600 text-white rounded-lg transition-colors"
                 >
@@ -143,6 +146,7 @@ export default function BatchFileQueue({
               )}
               {!isProcessing && (
                 <button
+                  type="button"
                   onClick={() => onRemoveFile(file.id)}
                   className="p-1.5 text-gray-500 hover:text-red-400 hover:bg-red-900/20 rounded-lg transition-colors"
                   aria-label="Remove file"

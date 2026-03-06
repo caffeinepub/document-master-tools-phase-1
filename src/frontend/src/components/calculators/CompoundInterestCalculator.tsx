@@ -26,7 +26,7 @@ export default function CompoundInterestCalculator() {
       return { amount: "0.00", interest: "0.00" };
     }
 
-    const A = P * Math.pow(1 + r / n, n * t);
+    const A = P * (1 + r / n) ** (n * t);
     const interest = A - P;
 
     return { amount: A.toFixed(2), interest: interest.toFixed(2) };

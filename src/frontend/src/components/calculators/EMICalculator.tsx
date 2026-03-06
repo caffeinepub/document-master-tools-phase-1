@@ -23,7 +23,7 @@ export default function EMICalculator() {
       return { emi: "0.00", totalInterest: "0.00", totalAmount: "0.00" };
     }
 
-    const emi = (P * R * Math.pow(1 + R, N)) / (Math.pow(1 + R, N) - 1);
+    const emi = (P * R * (1 + R) ** N) / ((1 + R) ** N - 1);
     const totalAmount = emi * N;
     const totalInterest = totalAmount - P;
 

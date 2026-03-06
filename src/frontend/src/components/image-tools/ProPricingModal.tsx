@@ -42,6 +42,7 @@ export default function ProPricingModal({
             </h2>
           </div>
           <button
+            type="button"
             onClick={onClose}
             className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
           >
@@ -59,6 +60,7 @@ export default function ProPricingModal({
             <div className="text-3xl font-bold text-white mb-1">₹399</div>
             <div className="text-gray-400 text-sm mb-4">per month</div>
             <button
+              type="button"
               onClick={handleActivate}
               className="w-full py-2.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg font-medium transition-colors text-sm"
             >
@@ -79,6 +81,7 @@ export default function ProPricingModal({
               per year — Save 37%
             </div>
             <button
+              type="button"
               onClick={handleActivate}
               className="w-full py-2.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg font-medium transition-colors text-sm"
             >
@@ -100,7 +103,7 @@ export default function ProPricingModal({
             </div>
             {features.map((feature, i) => (
               <div
-                key={i}
+                key={feature.label}
                 className={`grid grid-cols-3 px-4 py-3 text-sm border-t border-gray-800 ${
                   i % 2 === 0 ? "bg-gray-900" : "bg-gray-900/50"
                 }`}

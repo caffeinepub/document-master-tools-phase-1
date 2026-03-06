@@ -24,7 +24,7 @@ export function generateProfessionalSummary(resumeData: ResumeData): string {
 
   // Calculate total years of experience
   let totalMonths = 0;
-  experience.forEach((exp) => {
+  for (const exp of experience) {
     const start = new Date(exp.startDate);
     const end = exp.current ? new Date() : new Date(exp.endDate);
     if (!Number.isNaN(start.getTime()) && !Number.isNaN(end.getTime())) {
@@ -32,7 +32,7 @@ export function generateProfessionalSummary(resumeData: ResumeData): string {
         (end.getFullYear() - start.getFullYear()) * 12 +
         (end.getMonth() - start.getMonth());
     }
-  });
+  }
   const years = Math.max(1, Math.floor(totalMonths / 12));
 
   // Extract top skills (max 5)
@@ -68,12 +68,12 @@ export function generateProfessionalSummary(resumeData: ResumeData): string {
 
   // Part 3: Achievement or objective
   if (achievements.length > 0) {
-    parts.push(`Proven track record of delivering results and driving success`);
+    parts.push("Proven track record of delivering results and driving success");
   } else {
     parts.push(
       `${actionVerb} to leverage skills and contribute to organizational growth`,
     );
   }
 
-  return parts.join(". ") + ".";
+  return `${parts.join(". ")}.`;
 }

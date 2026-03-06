@@ -87,14 +87,14 @@ export default function CGPACalculator() {
     let totalGradePoints = 0;
     let totalCredits = 0;
 
-    semesters.forEach((sem) => {
-      sem.courses.forEach((course) => {
+    for (const sem of semesters) {
+      for (const course of sem.courses) {
         const gp = Number.parseFloat(course.gradePoints) || 0;
         const cr = Number.parseFloat(course.credits) || 0;
         totalGradePoints += gp * cr;
         totalCredits += cr;
-      });
-    });
+      }
+    }
 
     return totalCredits > 0
       ? (totalGradePoints / totalCredits).toFixed(2)

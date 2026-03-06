@@ -40,6 +40,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
         <button
+          type="button"
           onClick={handleHome}
           className="flex items-center gap-2 focus:outline-none"
           aria-label="Go to homepage"
@@ -66,6 +67,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
               </a>
             ) : (
               <button
+                type="button"
                 key={link.label}
                 onClick={() => handleNav(link.page)}
                 className="px-3 py-2 text-sm text-gray-300 hover:text-orange-400 transition-colors rounded-lg hover:bg-gray-800 font-medium min-h-[44px]"
@@ -80,6 +82,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
         <div className="flex items-center gap-2">
           <LanguageSelector />
           <button
+            type="button"
             className="lg:hidden p-2 text-gray-300 hover:text-white rounded-lg hover:bg-gray-800 min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
@@ -107,6 +110,7 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
                 </a>
               ) : (
                 <button
+                  type="button"
                   key={link.label}
                   onClick={() => handleNav(link.page)}
                   className="px-4 py-3 text-gray-300 hover:text-orange-400 transition-colors rounded-lg hover:bg-gray-800 font-medium text-base min-h-[44px] text-left"

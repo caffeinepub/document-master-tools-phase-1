@@ -21,6 +21,7 @@ export default function BreadcrumbNavigation({
       className="flex items-center gap-1 text-sm text-slate-400 mb-6 flex-wrap"
     >
       <button
+        type="button"
         onClick={() => onNavigate?.("home")}
         className="flex items-center gap-1 hover:text-white transition-colors duration-200"
         aria-label="Home"
@@ -28,8 +29,8 @@ export default function BreadcrumbNavigation({
         <Home className="w-4 h-4 shrink-0" />
         <span className="hidden sm:inline">Home</span>
       </button>
-      {items.map((item, index) => (
-        <span key={index} className="flex items-center gap-1">
+      {items.map((item) => (
+        <span key={item.label} className="flex items-center gap-1">
           <ChevronRight className="w-4 h-4 shrink-0 text-slate-600" />
           {item.onClick || item.href ? (
             item.href ? (
@@ -41,6 +42,7 @@ export default function BreadcrumbNavigation({
               </a>
             ) : (
               <button
+                type="button"
                 onClick={item.onClick}
                 className="hover:text-white transition-colors duration-200"
               >

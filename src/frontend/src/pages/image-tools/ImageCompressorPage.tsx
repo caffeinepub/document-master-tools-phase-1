@@ -138,10 +138,14 @@ export default function ImageCompressorPage({
               </h2>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="compress-format-select"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Output Format
                   </label>
                   <select
+                    id="compress-format-select"
                     value={outputFormat}
                     onChange={(e) =>
                       setOutputFormat(e.target.value as "jpeg" | "png" | "webp")
@@ -154,10 +158,14 @@ export default function ImageCompressorPage({
                   </select>
                 </div>
                 <div>
-                  <label className="block text-slate-300 text-sm mb-2">
+                  <label
+                    htmlFor="compress-quality-range"
+                    className="block text-slate-300 text-sm mb-2"
+                  >
                     Quality: {quality}%
                   </label>
                   <input
+                    id="compress-quality-range"
                     type="range"
                     min={10}
                     max={100}
@@ -169,6 +177,7 @@ export default function ImageCompressorPage({
               </div>
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
+                  type="button"
                   onClick={handleCompress}
                   disabled={isProcessing}
                   className="flex-1 min-h-[48px] px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
@@ -183,6 +192,7 @@ export default function ImageCompressorPage({
                   )}
                 </button>
                 <button
+                  type="button"
                   onClick={handleReset}
                   className="min-h-[48px] px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >
@@ -221,6 +231,7 @@ export default function ImageCompressorPage({
                   </div>
                 </div>
                 <button
+                  type="button"
                   onClick={handleDownload}
                   className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
                 >

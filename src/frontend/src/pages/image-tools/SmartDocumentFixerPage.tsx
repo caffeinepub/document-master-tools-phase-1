@@ -131,7 +131,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
     const url = URL.createObjectURL(processedBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = file.name.replace(/\.[^.]+$/, "") + "_fixed.jpg";
+    a.download = `${file.name.replace(/\.[^.]+$/, "")}_fixed.jpg`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -201,6 +201,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
                   {remainingFixes}/{FREE_DAILY_LIMIT} remaining
                 </span>
                 <button
+                  type="button"
                   onClick={() => setShowProModal(true)}
                   className="ml-2 flex items-center gap-1 text-violet-400 hover:text-violet-300 transition-colors text-xs"
                 >
@@ -214,6 +215,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
           {/* Dev Toggle */}
           <div className="mb-4">
             <button
+              type="button"
               onClick={devToggle}
               className="text-xs px-3 py-1.5 rounded bg-gray-700 text-slate-300 hover:bg-gray-600 transition-colors"
             >
@@ -252,6 +254,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
                     </div>
                   </div>
                   <button
+                    type="button"
                     onClick={handleReset}
                     className="flex items-center gap-1.5 text-slate-400 hover:text-white transition-colors text-sm min-h-[36px] px-3 py-1.5 rounded-lg hover:bg-white/5"
                   >
@@ -268,10 +271,14 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
                 </h3>
                 <div className="space-y-4">
                   <div>
-                    <label className="block text-slate-300 text-sm mb-2">
+                    <label
+                      htmlFor="brightness-range"
+                      className="block text-slate-300 text-sm mb-2"
+                    >
                       Brightness: +{brightness}%
                     </label>
                     <input
+                      id="brightness-range"
                       type="range"
                       min={0}
                       max={50}
@@ -281,10 +288,14 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
                     />
                   </div>
                   <div>
-                    <label className="block text-slate-300 text-sm mb-2">
+                    <label
+                      htmlFor="contrast-range"
+                      className="block text-slate-300 text-sm mb-2"
+                    >
                       Contrast: +{contrast}%
                     </label>
                     <input
+                      id="contrast-range"
                       type="range"
                       min={0}
                       max={50}
@@ -308,6 +319,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3">
                 <button
+                  type="button"
                   onClick={handleProcess}
                   disabled={isProcessing || (!isPro && remainingFixes === 0)}
                   className="flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold transition-all duration-200 hover:shadow-lg text-sm flex-1 sm:flex-none"
@@ -327,6 +339,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
 
                 {processedBlob && (
                   <button
+                    type="button"
                     onClick={handleDownload}
                     className="flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 text-white font-semibold transition-all duration-200 hover:shadow-lg text-sm flex-1 sm:flex-none"
                   >
@@ -337,6 +350,7 @@ const SmartDocumentFixerPage: React.FC<SmartDocumentFixerPageProps> = ({
 
                 {!isPro && remainingFixes === 0 && (
                   <button
+                    type="button"
                     onClick={() => setShowProModal(true)}
                     className="flex items-center justify-center gap-2 min-h-[48px] px-6 py-3 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold transition-all duration-200 hover:shadow-lg text-sm flex-1 sm:flex-none"
                   >

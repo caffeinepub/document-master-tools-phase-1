@@ -12,9 +12,8 @@ export default function CGPAToPercentageConverter() {
     const cgpaValue = Number.parseFloat(cgpa) || 0;
     if (formula === "cbse") {
       return (cgpaValue * 9.5).toFixed(2);
-    } else {
-      return (cgpaValue * 10).toFixed(2);
     }
+    return (cgpaValue * 10).toFixed(2);
   };
 
   return (

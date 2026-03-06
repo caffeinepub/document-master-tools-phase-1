@@ -33,22 +33,21 @@ export default function TimeDurationCalculator() {
       const totalSeconds = Math.floor(diff / 1000);
 
       return { hours: h, minutes: m, seconds: s, totalMinutes, totalSeconds };
-    } else {
-      if (!baseTime) return null;
-
-      const base = new Date(`2000-01-01T${baseTime}:00`);
-      const h = Number.parseInt(hours) || 0;
-      const m = Number.parseInt(minutes) || 0;
-      const s = Number.parseInt(seconds) || 0;
-
-      const totalMs = (h * 60 * 60 + m * 60 + s) * 1000;
-      const result = new Date(
-        base.getTime() + (mode === "add" ? totalMs : -totalMs),
-      );
-
-      const resultTime = result.toTimeString().slice(0, 8);
-      return { resultTime };
     }
+    if (!baseTime) return null;
+
+    const base = new Date(`2000-01-01T${baseTime}:00`);
+    const h = Number.parseInt(hours) || 0;
+    const m = Number.parseInt(minutes) || 0;
+    const s = Number.parseInt(seconds) || 0;
+
+    const totalMs = (h * 60 * 60 + m * 60 + s) * 1000;
+    const result = new Date(
+      base.getTime() + (mode === "add" ? totalMs : -totalMs),
+    );
+
+    const resultTime = result.toTimeString().slice(0, 8);
+    return { resultTime };
   };
 
   const result = calculateDuration();

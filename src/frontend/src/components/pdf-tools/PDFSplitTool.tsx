@@ -94,48 +94,42 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {splitResults.length === 0 && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="application/pdf"
-                    description="Click to upload PDF file or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    <div className="p-4 bg-muted rounded-lg">
-                      <p className="font-medium">{file.name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {(file.size / 1024 / 1024).toFixed(2)} MB
-                      </p>
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label htmlFor="pageRange">Page Range (optional)</Label>
-                      <Input
-                        id="pageRange"
-                        placeholder="e.g., 1-3, 5, 7-9"
-                        value={pageRange}
-                        onChange={(e) => setPageRange(e.target.value)}
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Leave empty to split all pages into separate files
-                      </p>
-                    </div>
-
-                    <Button
-                      onClick={handleSplitPDF}
-                      className="w-full"
-                      size="lg"
-                    >
-                      <Scissors className="mr-2 h-4 w-4" />
-                      Split PDF
-                    </Button>
+            {splitResults.length === 0 &&
+              !processing &&
+              (!file ? (
+                <FileUploadZone
+                  onFileSelect={handleFileSelect}
+                  accept="application/pdf"
+                  description="Click to upload PDF file or drag and drop"
+                />
+              ) : (
+                <div className="space-y-4">
+                  <div className="p-4 bg-muted rounded-lg">
+                    <p className="font-medium">{file.name}</p>
+                    <p className="text-sm text-muted-foreground">
+                      {(file.size / 1024 / 1024).toFixed(2)} MB
+                    </p>
                   </div>
-                )}
-              </>
-            )}
+
+                  <div className="space-y-2">
+                    <Label htmlFor="pageRange">Page Range (optional)</Label>
+                    <Input
+                      id="pageRange"
+                      placeholder="e.g., 1-3, 5, 7-9"
+                      value={pageRange}
+                      onChange={(e) => setPageRange(e.target.value)}
+                    />
+                    <p className="text-xs text-muted-foreground">
+                      Leave empty to split all pages into separate files
+                    </p>
+                  </div>
+
+                  <Button onClick={handleSplitPDF} className="w-full" size="lg">
+                    <Scissors className="mr-2 h-4 w-4" />
+                    Split PDF
+                  </Button>
+                </div>
+              ))}
 
             {processing && (
               <ProcessingState message="Splitting PDF into individual files..." />

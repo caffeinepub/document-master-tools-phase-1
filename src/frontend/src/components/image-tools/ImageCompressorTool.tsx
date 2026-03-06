@@ -1,27 +1,39 @@
-import { useState } from 'react';
-import { ArrowLeft, Minimize2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Slider } from "@/components/ui/slider";
+import { ArrowLeft, Minimize2 } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface ImageCompressorToolProps {
   onBack: () => void;
 }
 
-export default function ImageCompressorTool({ onBack }: ImageCompressorToolProps) {
+export default function ImageCompressorTool({
+  onBack,
+}: ImageCompressorToolProps) {
   const [file, setFile] = useState<File | null>(null);
   const [quality, setQuality] = useState([80]);
   const [processing, setProcessing] = useState(false);
-  const [compressed, setCompressed] = useState<{ blob: Blob; name: string; originalSize: number } | null>(null);
+  const [compressed, setCompressed] = useState<{
+    blob: Blob;
+    name: string;
+    originalSize: number;
+  } | null>(null);
 
   const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!selectedFile.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
     setFile(selectedFile);
@@ -31,14 +43,20 @@ export default function ImageCompressorTool({ onBack }: ImageCompressorToolProps
     if (!file) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise((resolve) => setTimeout(resolve, 1500));
       const compressionRatio = quality[0] / 100;
       const compressedSize = Math.floor(file.size * compressionRatio);
-      const blob = new Blob([new Uint8Array(compressedSize)], { type: file.type });
-      setCompressed({ blob, name: 'compressed-' + file.name, originalSize: file.size });
-      toast.success('Image compressed successfully!');
-    } catch (error) {
-      toast.error('Failed to compress image');
+      const blob = new Blob([new Uint8Array(compressedSize)], {
+        type: file.type,
+      });
+      setCompressed({
+        blob,
+        name: "compressed-" + file.name,
+        originalSize: file.size,
+      });
+      toast.success("Image compressed successfully!");
+    } catch (_error) {
+      toast.error("Failed to compress image");
     } finally {
       setProcessing(false);
     }
@@ -47,7 +65,7 @@ export default function ImageCompressorTool({ onBack }: ImageCompressorToolProps
   const downloadFile = () => {
     if (!compressed) return;
     const url = URL.createObjectURL(compressed.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = compressed.name;
     a.click();
@@ -103,7 +121,11 @@ export default function ImageCompressorTool({ onBack }: ImageCompressorToolProps
                         className="w-full"
                       />
                     </div>
-                    <Button onClick={compressImage} className="w-full" size="lg">
+                    <Button
+                      onClick={compressImage}
+                      className="w-full"
+                      size="lg"
+                    >
                       <Minimize2 className="mr-2 h-4 w-4" />
                       Compress Image
                     </Button>

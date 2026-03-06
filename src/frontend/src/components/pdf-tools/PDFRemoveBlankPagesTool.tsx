@@ -1,6 +1,8 @@
-import { BasePDFTool } from './BasePDFTool';
+import { BasePDFTool } from "./BasePDFTool";
 
-export default function PDFRemoveBlankPagesTool({ onBack }: { onBack: () => void }) {
+export default function PDFRemoveBlankPagesTool({
+  onBack,
+}: { onBack: () => void }) {
   return (
     <BasePDFTool
       onBack={onBack}

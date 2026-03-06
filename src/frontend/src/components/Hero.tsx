@@ -1,5 +1,5 @@
-import { ArrowRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
 
 export default function Hero() {
   return (
@@ -8,11 +8,12 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              Master Your Documents with{' '}
+              Master Your Documents with{" "}
               <span className="text-primary">Professional Tools</span>
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground">
-              Process PDFs, edit images, and build stunning resumes - all in your browser. Fast, secure, and completely private.
+              Process PDFs, edit images, and build stunning resumes - all in
+              your browser. Fast, secure, and completely private.
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="group">

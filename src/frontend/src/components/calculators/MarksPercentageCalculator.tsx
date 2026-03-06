@@ -1,21 +1,25 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { CheckCircle2, XCircle } from 'lucide-react';
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { CheckCircle2, XCircle } from "lucide-react";
+import { useState } from "react";
 
 export default function MarksPercentageCalculator() {
-  const [obtained, setObtained] = useState('');
-  const [total, setTotal] = useState('');
+  const [obtained, setObtained] = useState("");
+  const [total, setTotal] = useState("");
 
   const calculate = () => {
-    const obt = parseFloat(obtained) || 0;
-    const tot = parseFloat(total) || 0;
-    if (tot === 0) return { percentage: '0.00', pass: false, error: false };
-    if (obt > tot) return { percentage: '0.00', pass: false, error: true };
+    const obt = Number.parseFloat(obtained) || 0;
+    const tot = Number.parseFloat(total) || 0;
+    if (tot === 0) return { percentage: "0.00", pass: false, error: false };
+    if (obt > tot) return { percentage: "0.00", pass: false, error: true };
     const percentage = (obt / tot) * 100;
-    return { percentage: percentage.toFixed(2), pass: percentage >= 40, error: false };
+    return {
+      percentage: percentage.toFixed(2),
+      pass: percentage >= 40,
+      error: false,
+    };
   };
 
   const result = calculate();
@@ -25,7 +29,9 @@ export default function MarksPercentageCalculator() {
       <Card className="bg-card border-border">
         <CardContent className="pt-6 space-y-6">
           <div>
-            <Label htmlFor="obtained" className="text-sm font-medium">Obtained Marks</Label>
+            <Label htmlFor="obtained" className="text-sm font-medium">
+              Obtained Marks
+            </Label>
             <Input
               id="obtained"
               type="number"
@@ -37,7 +43,9 @@ export default function MarksPercentageCalculator() {
             />
           </div>
           <div>
-            <Label htmlFor="total" className="text-sm font-medium">Total Marks</Label>
+            <Label htmlFor="total" className="text-sm font-medium">
+              Total Marks
+            </Label>
             <Input
               id="total"
               type="number"
@@ -53,7 +61,9 @@ export default function MarksPercentageCalculator() {
 
       {result.error && (
         <Alert variant="destructive">
-          <AlertDescription>Obtained marks cannot exceed total marks</AlertDescription>
+          <AlertDescription>
+            Obtained marks cannot exceed total marks
+          </AlertDescription>
         </Alert>
       )}
 
@@ -62,12 +72,22 @@ export default function MarksPercentageCalculator() {
           <div className="text-center space-y-4">
             <div>
               <p className="text-sm text-muted-foreground mb-2">Percentage</p>
-              <p className="text-5xl font-bold text-primary">{result.percentage}%</p>
+              <p className="text-5xl font-bold text-primary">
+                {result.percentage}%
+              </p>
             </div>
-            {!result.error && parseFloat(total) > 0 && (
-              <div className={`flex items-center justify-center gap-2 ${result.pass ? 'text-green-600' : 'text-red-600'}`}>
-                {result.pass ? <CheckCircle2 className="h-6 w-6" /> : <XCircle className="h-6 w-6" />}
-                <span className="text-lg font-semibold">{result.pass ? 'Pass' : 'Fail'}</span>
+            {!result.error && Number.parseFloat(total) > 0 && (
+              <div
+                className={`flex items-center justify-center gap-2 ${result.pass ? "text-green-600" : "text-red-600"}`}
+              >
+                {result.pass ? (
+                  <CheckCircle2 className="h-6 w-6" />
+                ) : (
+                  <XCircle className="h-6 w-6" />
+                )}
+                <span className="text-lg font-semibold">
+                  {result.pass ? "Pass" : "Fail"}
+                </span>
               </div>
             )}
           </div>

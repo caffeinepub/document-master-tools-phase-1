@@ -1,14 +1,17 @@
-import { Check } from 'lucide-react';
-import { Label } from '@/components/ui/label';
-import { ColorTheme } from '@/types/resume';
-import { COLOR_THEMES } from '@/lib/colorThemes';
+import { Label } from "@/components/ui/label";
+import { COLOR_THEMES } from "@/lib/colorThemes";
+import type { ColorTheme } from "@/types/resume";
+import { Check } from "lucide-react";
 
 interface ColorThemeSelectorProps {
   selected: ColorTheme;
   onSelect: (theme: ColorTheme) => void;
 }
 
-export default function ColorThemeSelector({ selected, onSelect }: ColorThemeSelectorProps) {
+export default function ColorThemeSelector({
+  selected,
+  onSelect,
+}: ColorThemeSelectorProps) {
   return (
     <div>
       <Label className="mb-3 block">Color Theme</Label>
@@ -18,7 +21,7 @@ export default function ColorThemeSelector({ selected, onSelect }: ColorThemeSel
             key={theme.name}
             onClick={() => onSelect(theme)}
             className={`relative border-2 rounded-lg p-3 transition-all hover:shadow-md ${
-              selected.name === theme.name ? 'border-primary' : 'border-border'
+              selected.name === theme.name ? "border-primary" : "border-border"
             }`}
           >
             <div className="flex items-center gap-2 mb-2">

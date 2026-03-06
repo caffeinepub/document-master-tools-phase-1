@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import GPACalculator from '@/components/calculators/GPACalculator';
+import GPACalculator from "@/components/calculators/GPACalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface GPACalculatorPageProps {
   onBack: () => void;
@@ -9,7 +9,7 @@ interface GPACalculatorPageProps {
 
 export default function GPACalculatorPage({ onBack }: GPACalculatorPageProps) {
   useEffect(() => {
-    document.title = 'GPA Calculator (4.0 & 10.0 Scale) | Calculator Hub';
+    document.title = "GPA Calculator (4.0 & 10.0 Scale) | Calculator Hub";
   }, []);
 
   return (
@@ -22,9 +22,12 @@ export default function GPACalculatorPage({ onBack }: GPACalculatorPageProps) {
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">GPA Calculator (4.0 & 10.0 Scale)</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              GPA Calculator (4.0 & 10.0 Scale)
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Calculate your GPA on 4.0 or 10.0 scale with course-wise grade input.
+              Calculate your GPA on 4.0 or 10.0 scale with course-wise grade
+              input.
             </p>
           </header>
 
@@ -33,10 +36,13 @@ export default function GPACalculatorPage({ onBack }: GPACalculatorPageProps) {
           <section className="mt-8 prose prose-sm max-w-none">
             <h2 className="text-xl font-semibold mb-3">About GPA Calculator</h2>
             <p className="text-muted-foreground mb-4">
-              Calculate your Grade Point Average on either 4.0 scale (common in US universities) or 10.0 scale (common in Indian institutions). The calculator supports both scales with instant switching.
+              Calculate your Grade Point Average on either 4.0 scale (common in
+              US universities) or 10.0 scale (common in Indian institutions).
+              The calculator supports both scales with instant switching.
             </p>
             <p className="text-muted-foreground">
-              Enter your course grades and credit hours to calculate your weighted GPA and total credits attempted.
+              Enter your course grades and credit hours to calculate your
+              weighted GPA and total credits attempted.
             </p>
           </section>
 

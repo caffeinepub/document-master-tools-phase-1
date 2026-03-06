@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { ArrowLeft, FileText } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft, FileText } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface ImageToPDFToolProps {
   onBack: () => void;
@@ -17,23 +23,25 @@ export default function ImageToPDFTool({ onBack }: ImageToPDFToolProps) {
   const [pdf, setPdf] = useState<{ blob: Blob; name: string } | null>(null);
 
   const handleFileSelect = (file: File) => {
-    if (!file.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
-    setFiles(prev => [...prev, file]);
+    setFiles((prev) => [...prev, file]);
   };
 
   const convertToPDF = async () => {
     if (files.length === 0) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const blob = new Blob([new Uint8Array(1024 * 100)], { type: 'application/pdf' });
-      setPdf({ blob, name: 'images-to-pdf.pdf' });
-      toast.success('Images converted to PDF!');
-    } catch (error) {
-      toast.error('Failed to convert images');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const blob = new Blob([new Uint8Array(1024 * 100)], {
+        type: "application/pdf",
+      });
+      setPdf({ blob, name: "images-to-pdf.pdf" });
+      toast.success("Images converted to PDF!");
+    } catch (_error) {
+      toast.error("Failed to convert images");
     } finally {
       setProcessing(false);
     }
@@ -42,7 +50,7 @@ export default function ImageToPDFTool({ onBack }: ImageToPDFToolProps) {
   const downloadFile = () => {
     if (!pdf) return;
     const url = URL.createObjectURL(pdf.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = pdf.name;
     a.click();
@@ -79,7 +87,9 @@ export default function ImageToPDFTool({ onBack }: ImageToPDFToolProps) {
                 />
                 {files.length > 0 && (
                   <div className="space-y-3">
-                    <p className="font-medium">{files.length} image(s) selected</p>
+                    <p className="font-medium">
+                      {files.length} image(s) selected
+                    </p>
                     <Button onClick={convertToPDF} className="w-full" size="lg">
                       <FileText className="mr-2 h-4 w-4" />
                       Convert to PDF
@@ -89,7 +99,9 @@ export default function ImageToPDFTool({ onBack }: ImageToPDFToolProps) {
               </>
             )}
 
-            {processing && <ProcessingState message="Converting images to PDF..." />}
+            {processing && (
+              <ProcessingState message="Converting images to PDF..." />
+            )}
 
             {pdf && (
               <DownloadSection

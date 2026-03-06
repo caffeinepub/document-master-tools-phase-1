@@ -1,29 +1,46 @@
-import { useState } from 'react';
-import { ArrowLeft, Palette } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, Palette } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface BackgroundChangerToolProps {
   onBack: () => void;
 }
 
-export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolProps) {
+export default function BackgroundChangerTool({
+  onBack,
+}: BackgroundChangerToolProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [bgColor, setBgColor] = useState('#ffffff');
+  const [bgColor, setBgColor] = useState("#ffffff");
   const [processing, setProcessing] = useState(false);
-  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(
+    null,
+  );
 
-  const presetColors = ['#ffffff', '#000000', '#3b82f6', '#10b981', '#f59e0b', '#ef4444'];
+  const presetColors = [
+    "#ffffff",
+    "#000000",
+    "#3b82f6",
+    "#10b981",
+    "#f59e0b",
+    "#ef4444",
+  ];
 
   const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!selectedFile.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
     setFile(selectedFile);
@@ -33,12 +50,17 @@ export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolP
     if (!file) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const blob = new Blob([new Uint8Array(1024 * 120)], { type: 'image/png' });
-      setResult({ blob, name: 'new-background-' + file.name.replace(/\.[^/.]+$/, '.png') });
-      toast.success('Background changed successfully!');
-    } catch (error) {
-      toast.error('Failed to change background');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const blob = new Blob([new Uint8Array(1024 * 120)], {
+        type: "image/png",
+      });
+      setResult({
+        blob,
+        name: "new-background-" + file.name.replace(/\.[^/.]+$/, ".png"),
+      });
+      toast.success("Background changed successfully!");
+    } catch (_error) {
+      toast.error("Failed to change background");
     } finally {
       setProcessing(false);
     }
@@ -47,7 +69,7 @@ export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolP
   const downloadFile = () => {
     if (!result) return;
     const url = URL.createObjectURL(result.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = result.name;
     a.click();
@@ -56,7 +78,7 @@ export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolP
 
   const reset = () => {
     setFile(null);
-    setBgColor('#ffffff');
+    setBgColor("#ffffff");
     setResult(null);
   };
 
@@ -100,7 +122,9 @@ export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolP
                             key={color}
                             onClick={() => setBgColor(color)}
                             className={`w-12 h-12 rounded-lg border-2 transition-all ${
-                              bgColor === color ? 'border-primary scale-110' : 'border-border'
+                              bgColor === color
+                                ? "border-primary scale-110"
+                                : "border-border"
                             }`}
                             style={{ backgroundColor: color }}
                           />
@@ -122,7 +146,11 @@ export default function BackgroundChangerTool({ onBack }: BackgroundChangerToolP
                         />
                       </div>
                     </div>
-                    <Button onClick={changeBackground} className="w-full" size="lg">
+                    <Button
+                      onClick={changeBackground}
+                      className="w-full"
+                      size="lg"
+                    >
                       <Palette className="mr-2 h-4 w-4" />
                       Change Background
                     </Button>

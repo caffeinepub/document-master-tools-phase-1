@@ -1,6 +1,8 @@
-import { BasePDFTool } from './BasePDFTool';
+import { BasePDFTool } from "./BasePDFTool";
 
-export default function PDFAddPageNumbersTool({ onBack }: { onBack: () => void }) {
+export default function PDFAddPageNumbersTool({
+  onBack,
+}: { onBack: () => void }) {
   return (
     <BasePDFTool
       onBack={onBack}

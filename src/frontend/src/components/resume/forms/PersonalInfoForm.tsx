@@ -1,12 +1,15 @@
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Textarea } from '@/components/ui/textarea';
-import { Button } from '@/components/ui/button';
-import { Sparkles, Upload, X } from 'lucide-react';
-import { ResumeData } from '@/types/resume';
-import { capitalizeProperNouns, formatPhoneNumber } from '@/lib/resumeFormatters';
-import { generateProfessionalSummary } from '@/lib/summaryGenerator';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  capitalizeProperNouns,
+  formatPhoneNumber,
+} from "@/lib/resumeFormatters";
+import { generateProfessionalSummary } from "@/lib/summaryGenerator";
+import type { ResumeData } from "@/types/resume";
+import { Sparkles, Upload, X } from "lucide-react";
+import { toast } from "sonner";
 
 interface PersonalInfoFormProps {
   data: ResumeData;
@@ -14,15 +17,30 @@ interface PersonalInfoFormProps {
   templateSlug: string;
 }
 
-export default function PersonalInfoForm({ data, onChange, templateSlug }: PersonalInfoFormProps) {
-  const isIndianTemplate = ['fresher-resume', 'government-job-resume', 'private-job-resume', 'hindi-resume', 'biodata-for-marriage', 'teacher-resume', 'police-army-resume'].includes(templateSlug);
+export default function PersonalInfoForm({
+  data,
+  onChange,
+  templateSlug,
+}: PersonalInfoFormProps) {
+  const isIndianTemplate = [
+    "fresher-resume",
+    "government-job-resume",
+    "private-job-resume",
+    "hindi-resume",
+    "biodata-for-marriage",
+    "teacher-resume",
+    "police-army-resume",
+  ].includes(templateSlug);
 
-  const handleChange = (field: keyof ResumeData['personalInfo'], value: string) => {
+  const handleChange = (
+    field: keyof ResumeData["personalInfo"],
+    value: string,
+  ) => {
     let processedValue = value;
 
-    if (field === 'name') {
+    if (field === "name") {
       processedValue = capitalizeProperNouns(value);
-    } else if (field === 'phone') {
+    } else if (field === "phone") {
       processedValue = formatPhoneNumber(value, isIndianTemplate);
     }
 
@@ -30,8 +48,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
       ...data,
       personalInfo: {
         ...data.personalInfo,
-        [field]: processedValue
-      }
+        [field]: processedValue,
+      },
     });
   };
 
@@ -40,7 +58,7 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
     if (!file) return;
 
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Photo size must be less than 5MB');
+      toast.error("Photo size must be less than 5MB");
       return;
     }
 
@@ -51,10 +69,10 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
         ...data,
         personalInfo: {
           ...data.personalInfo,
-          photo: dataUrl
-        }
+          photo: dataUrl,
+        },
       });
-      toast.success('Photo uploaded successfully');
+      toast.success("Photo uploaded successfully");
     };
     reader.readAsDataURL(file);
   };
@@ -64,8 +82,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
       ...data,
       personalInfo: {
         ...data.personalInfo,
-        photo: ''
-      }
+        photo: "",
+      },
     });
   };
 
@@ -75,17 +93,17 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
       ...data,
       personalInfo: {
         ...data.personalInfo,
-        summary
-      }
+        summary,
+      },
     });
-    toast.success('Professional summary generated!');
+    toast.success("Professional summary generated!");
   };
 
   return (
     <div className="space-y-6">
       {/* Photo Upload */}
       <div>
-        <Label>Photo {!isIndianTemplate && '(Optional)'}</Label>
+        <Label>Photo {!isIndianTemplate && "(Optional)"}</Label>
         <div className="mt-2">
           {data.personalInfo.photo ? (
             <div className="relative inline-block">
@@ -107,7 +125,9 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
             <label className="flex items-center justify-center w-32 h-32 border-2 border-dashed rounded-lg cursor-pointer hover:border-primary transition-colors">
               <div className="text-center">
                 <Upload className="h-8 w-8 mx-auto mb-2 text-muted-foreground" />
-                <span className="text-xs text-muted-foreground">Upload Photo</span>
+                <span className="text-xs text-muted-foreground">
+                  Upload Photo
+                </span>
               </div>
               <input
                 type="file"
@@ -118,7 +138,9 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
             </label>
           )}
         </div>
-        <p className="text-xs text-muted-foreground mt-1">Max 5MB, JPG or PNG</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          Max 5MB, JPG or PNG
+        </p>
       </div>
 
       {/* Basic Info */}
@@ -128,7 +150,7 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
           <Input
             id="name"
             value={data.personalInfo.name}
-            onChange={(e) => handleChange('name', e.target.value)}
+            onChange={(e) => handleChange("name", e.target.value)}
             placeholder="John Doe"
             className="mt-1"
           />
@@ -140,7 +162,7 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
             id="email"
             type="email"
             value={data.personalInfo.email}
-            onChange={(e) => handleChange('email', e.target.value)}
+            onChange={(e) => handleChange("email", e.target.value)}
             placeholder="john@example.com"
             className="mt-1"
           />
@@ -152,8 +174,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
             id="phone"
             type="tel"
             value={data.personalInfo.phone}
-            onChange={(e) => handleChange('phone', e.target.value)}
-            placeholder={isIndianTemplate ? '+91-XXXXX-XXXXX' : '+1234567890'}
+            onChange={(e) => handleChange("phone", e.target.value)}
+            placeholder={isIndianTemplate ? "+91-XXXXX-XXXXX" : "+1234567890"}
             className="mt-1"
           />
         </div>
@@ -163,7 +185,7 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
           <Input
             id="address"
             value={data.personalInfo.address}
-            onChange={(e) => handleChange('address', e.target.value)}
+            onChange={(e) => handleChange("address", e.target.value)}
             placeholder="City, State, Country"
             className="mt-1"
           />
@@ -173,8 +195,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
           <Label htmlFor="linkedin">LinkedIn (Optional)</Label>
           <Input
             id="linkedin"
-            value={data.personalInfo.linkedin || ''}
-            onChange={(e) => handleChange('linkedin', e.target.value)}
+            value={data.personalInfo.linkedin || ""}
+            onChange={(e) => handleChange("linkedin", e.target.value)}
             placeholder="linkedin.com/in/username"
             className="mt-1"
           />
@@ -184,8 +206,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
           <Label htmlFor="portfolio">Portfolio/Website (Optional)</Label>
           <Input
             id="portfolio"
-            value={data.personalInfo.portfolio || ''}
-            onChange={(e) => handleChange('portfolio', e.target.value)}
+            value={data.personalInfo.portfolio || ""}
+            onChange={(e) => handleChange("portfolio", e.target.value)}
             placeholder="www.yourportfolio.com"
             className="mt-1"
           />
@@ -208,8 +230,8 @@ export default function PersonalInfoForm({ data, onChange, templateSlug }: Perso
         </div>
         <Textarea
           id="summary"
-          value={data.personalInfo.summary || ''}
-          onChange={(e) => handleChange('summary', e.target.value)}
+          value={data.personalInfo.summary || ""}
+          onChange={(e) => handleChange("summary", e.target.value)}
           placeholder="Brief professional summary highlighting your key strengths and career objectives..."
           rows={4}
           className="mt-1"

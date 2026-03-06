@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import EMICalculator from '@/components/calculators/EMICalculator';
+import EMICalculator from "@/components/calculators/EMICalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface EMICalculatorPageProps {
   onBack: () => void;
@@ -9,7 +9,7 @@ interface EMICalculatorPageProps {
 
 export default function EMICalculatorPage({ onBack }: EMICalculatorPageProps) {
   useEffect(() => {
-    document.title = 'EMI Calculator | Calculator Hub';
+    document.title = "EMI Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +22,9 @@ export default function EMICalculatorPage({ onBack }: EMICalculatorPageProps) {
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">EMI Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              EMI Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
               Calculate monthly EMI for loans with interest rate and tenure.
             </p>
@@ -33,10 +35,14 @@ export default function EMICalculatorPage({ onBack }: EMICalculatorPageProps) {
           <section className="mt-8 prose prose-sm max-w-none">
             <h2 className="text-xl font-semibold mb-3">About EMI Calculator</h2>
             <p className="text-muted-foreground mb-4">
-              Calculate your Equated Monthly Installment (EMI) for home loans, car loans, or personal loans. Enter loan amount, interest rate, and tenure to get monthly payment amount, total interest, and payment breakdown.
+              Calculate your Equated Monthly Installment (EMI) for home loans,
+              car loans, or personal loans. Enter loan amount, interest rate,
+              and tenure to get monthly payment amount, total interest, and
+              payment breakdown.
             </p>
             <p className="text-muted-foreground">
-              Formula: EMI = [P × R × (1+R)^N] / [(1+R)^N-1] where P is principal, R is monthly interest rate, and N is number of months.
+              Formula: EMI = [P × R × (1+R)^N] / [(1+R)^N-1] where P is
+              principal, R is monthly interest rate, and N is number of months.
             </p>
           </section>
 

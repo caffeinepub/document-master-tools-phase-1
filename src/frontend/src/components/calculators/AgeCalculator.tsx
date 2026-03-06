@@ -1,10 +1,10 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function AgeCalculator() {
-  const [birthDate, setBirthDate] = useState('');
+  const [birthDate, setBirthDate] = useState("");
 
   const calculateAge = () => {
     if (!birthDate) return null;
@@ -28,16 +28,24 @@ export default function AgeCalculator() {
     }
 
     const totalMonths = years * 12 + months;
-    const totalDays = Math.floor((today.getTime() - birth.getTime()) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor(
+      (today.getTime() - birth.getTime()) / (1000 * 60 * 60 * 24),
+    );
     const totalWeeks = Math.floor(totalDays / 7);
     const totalHours = totalDays * 24;
 
-    const nextBirthday = new Date(today.getFullYear(), birth.getMonth(), birth.getDate());
+    const nextBirthday = new Date(
+      today.getFullYear(),
+      birth.getMonth(),
+      birth.getDate(),
+    );
     if (nextBirthday < today) {
       nextBirthday.setFullYear(today.getFullYear() + 1);
     }
 
-    const daysToNext = Math.floor((nextBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
+    const daysToNext = Math.floor(
+      (nextBirthday.getTime() - today.getTime()) / (1000 * 60 * 60 * 24),
+    );
     const monthsToNext = Math.floor(daysToNext / 30);
     const remainingDays = daysToNext % 30;
 
@@ -52,7 +60,7 @@ export default function AgeCalculator() {
       nextBirthday: nextBirthday.toLocaleDateString(),
       daysToNext,
       monthsToNext,
-      remainingDays
+      remainingDays,
     };
   };
 
@@ -62,13 +70,15 @@ export default function AgeCalculator() {
     <div className="space-y-6">
       <Card className="bg-card border-border">
         <CardContent className="pt-6">
-          <Label htmlFor="birthdate" className="text-sm font-medium">Date of Birth</Label>
+          <Label htmlFor="birthdate" className="text-sm font-medium">
+            Date of Birth
+          </Label>
           <Input
             id="birthdate"
             type="date"
             value={birthDate}
             onChange={(e) => setBirthDate(e.target.value)}
-            max={new Date().toISOString().split('T')[0]}
+            max={new Date().toISOString().split("T")[0]}
             className="mt-2"
           />
         </CardContent>
@@ -82,7 +92,8 @@ export default function AgeCalculator() {
                 <div>
                   <p className="text-sm text-muted-foreground mb-2">Your Age</p>
                   <p className="text-4xl font-bold text-primary">
-                    {result.years} years, {result.months} months, {result.days} days
+                    {result.years} years, {result.months} months, {result.days}{" "}
+                    days
                   </p>
                 </div>
               </div>
@@ -94,20 +105,36 @@ export default function AgeCalculator() {
               <h3 className="font-semibold mb-3 text-sm">Age Breakdown</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Months</div>
-                  <div className="font-semibold text-lg">{result.totalMonths}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Months
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalMonths}
+                  </div>
                 </div>
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Weeks</div>
-                  <div className="font-semibold text-lg">{result.totalWeeks}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Weeks
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalWeeks}
+                  </div>
                 </div>
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Days</div>
-                  <div className="font-semibold text-lg">{result.totalDays}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Days
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalDays}
+                  </div>
                 </div>
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Hours</div>
-                  <div className="font-semibold text-lg">{result.totalHours.toLocaleString()}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Hours
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalHours.toLocaleString()}
+                  </div>
                 </div>
               </div>
             </CardContent>
@@ -117,9 +144,12 @@ export default function AgeCalculator() {
             <CardContent className="pt-6">
               <div className="text-center space-y-2">
                 <p className="text-sm text-muted-foreground">Next Birthday</p>
-                <p className="text-xl font-bold text-green-600">{result.nextBirthday}</p>
+                <p className="text-xl font-bold text-green-600">
+                  {result.nextBirthday}
+                </p>
                 <p className="text-sm text-muted-foreground">
-                  {result.monthsToNext} months and {result.remainingDays} days to go
+                  {result.monthsToNext} months and {result.remainingDays} days
+                  to go
                 </p>
               </div>
             </CardContent>

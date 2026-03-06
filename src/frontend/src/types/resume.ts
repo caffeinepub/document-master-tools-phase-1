@@ -1,18 +1,18 @@
-export type TemplateType = 
-  | 'fresher-resume'
-  | 'government-job-resume'
-  | 'private-job-resume'
-  | 'hindi-resume'
-  | 'biodata-for-marriage'
-  | 'teacher-resume'
-  | 'police-army-resume'
-  | 'ats-friendly-resume'
-  | 'us-resume'
-  | 'uk-cv-format'
-  | 'canada-resume'
-  | 'europass-cv'
-  | 'creative-resume'
-  | 'corporate-resume';
+export type TemplateType =
+  | "fresher-resume"
+  | "government-job-resume"
+  | "private-job-resume"
+  | "hindi-resume"
+  | "biodata-for-marriage"
+  | "teacher-resume"
+  | "police-army-resume"
+  | "ats-friendly-resume"
+  | "us-resume"
+  | "uk-cv-format"
+  | "canada-resume"
+  | "europass-cv"
+  | "creative-resume"
+  | "corporate-resume";
 
 export interface PersonalInfo {
   name: string;

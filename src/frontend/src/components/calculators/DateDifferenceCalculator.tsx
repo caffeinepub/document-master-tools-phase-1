@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Checkbox } from '@/components/ui/checkbox';
+import { Card, CardContent } from "@/components/ui/card";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function DateDifferenceCalculator() {
-  const [startDate, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
   const [excludeWeekends, setExcludeWeekends] = useState(false);
 
   const calculateDifference = () => {
@@ -32,7 +32,9 @@ export default function DateDifferenceCalculator() {
       months += 12;
     }
 
-    const totalDays = Math.floor((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+    const totalDays = Math.floor(
+      (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24),
+    );
     const totalWeeks = Math.floor(totalDays / 7);
 
     let weekdays = totalDays;
@@ -58,7 +60,9 @@ export default function DateDifferenceCalculator() {
       <Card className="bg-card border-border">
         <CardContent className="pt-6 space-y-6">
           <div>
-            <Label htmlFor="start" className="text-sm font-medium">Start Date</Label>
+            <Label htmlFor="start" className="text-sm font-medium">
+              Start Date
+            </Label>
             <Input
               id="start"
               type="date"
@@ -68,7 +72,9 @@ export default function DateDifferenceCalculator() {
             />
           </div>
           <div>
-            <Label htmlFor="end" className="text-sm font-medium">End Date</Label>
+            <Label htmlFor="end" className="text-sm font-medium">
+              End Date
+            </Label>
             <Input
               id="end"
               type="date"
@@ -81,7 +87,9 @@ export default function DateDifferenceCalculator() {
             <Checkbox
               id="weekends"
               checked={excludeWeekends}
-              onCheckedChange={(checked) => setExcludeWeekends(checked as boolean)}
+              onCheckedChange={(checked) =>
+                setExcludeWeekends(checked as boolean)
+              }
             />
             <Label htmlFor="weekends" className="text-sm cursor-pointer">
               Exclude weekends (count only weekdays)
@@ -96,9 +104,12 @@ export default function DateDifferenceCalculator() {
             <CardContent className="pt-6">
               <div className="text-center space-y-4">
                 <div>
-                  <p className="text-sm text-muted-foreground mb-2">Difference</p>
+                  <p className="text-sm text-muted-foreground mb-2">
+                    Difference
+                  </p>
                   <p className="text-4xl font-bold text-primary">
-                    {result.years} years, {result.months} months, {result.days} days
+                    {result.years} years, {result.months} months, {result.days}{" "}
+                    days
                   </p>
                 </div>
               </div>
@@ -110,17 +121,29 @@ export default function DateDifferenceCalculator() {
               <h3 className="font-semibold mb-3 text-sm">Total Duration</h3>
               <div className="grid grid-cols-2 gap-3 text-sm">
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Weeks</div>
-                  <div className="font-semibold text-lg">{result.totalWeeks}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Weeks
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalWeeks}
+                  </div>
                 </div>
                 <div className="p-3 bg-background rounded border">
-                  <div className="text-muted-foreground text-xs">Total Days</div>
-                  <div className="font-semibold text-lg">{result.totalDays}</div>
+                  <div className="text-muted-foreground text-xs">
+                    Total Days
+                  </div>
+                  <div className="font-semibold text-lg">
+                    {result.totalDays}
+                  </div>
                 </div>
                 {excludeWeekends && (
                   <div className="p-3 bg-background rounded border col-span-2">
-                    <div className="text-muted-foreground text-xs">Weekdays Only</div>
-                    <div className="font-semibold text-lg">{result.weekdays} days</div>
+                    <div className="text-muted-foreground text-xs">
+                      Weekdays Only
+                    </div>
+                    <div className="font-semibold text-lg">
+                      {result.weekdays} days
+                    </div>
                   </div>
                 )}
               </div>

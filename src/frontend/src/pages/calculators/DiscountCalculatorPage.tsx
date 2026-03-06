@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import DiscountCalculator from '@/components/calculators/DiscountCalculator';
+import DiscountCalculator from "@/components/calculators/DiscountCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface DiscountCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function DiscountCalculatorPage({ onBack }: DiscountCalculatorPageProps) {
+export default function DiscountCalculatorPage({
+  onBack,
+}: DiscountCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Discount Calculator | Calculator Hub';
+    document.title = "Discount Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +24,9 @@ export default function DiscountCalculatorPage({ onBack }: DiscountCalculatorPag
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Discount Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Discount Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
               Calculate discount amount and final price from original price.
             </p>
@@ -31,12 +35,17 @@ export default function DiscountCalculatorPage({ onBack }: DiscountCalculatorPag
           <DiscountCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Discount Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Discount Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Calculate discounts in two ways: enter discount percentage to find final price, or enter sale price to find discount percentage. Perfect for shopping, sales planning, and price comparisons.
+              Calculate discounts in two ways: enter discount percentage to find
+              final price, or enter sale price to find discount percentage.
+              Perfect for shopping, sales planning, and price comparisons.
             </p>
             <p className="text-muted-foreground">
-              See exactly how much you save with clear breakdown of original price, discount amount, and final price.
+              See exactly how much you save with clear breakdown of original
+              price, discount amount, and final price.
             </p>
           </section>
 

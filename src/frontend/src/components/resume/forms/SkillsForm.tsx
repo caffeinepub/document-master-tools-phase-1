@@ -1,8 +1,8 @@
-import { Plus, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ResumeData, Skill } from '@/types/resume';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { ResumeData, Skill } from "@/types/resume";
+import { Plus, Trash2 } from "lucide-react";
 
 interface SkillsFormProps {
   data: ResumeData;
@@ -14,29 +14,29 @@ export default function SkillsForm({ data, onChange }: SkillsFormProps) {
   const handleAdd = () => {
     const newSkill: Skill = {
       id: Date.now().toString(),
-      name: '',
-      level: ''
+      name: "",
+      level: "",
     };
 
     onChange({
       ...data,
-      skills: [...data.skills, newSkill]
+      skills: [...data.skills, newSkill],
     });
   };
 
   const handleRemove = (id: string) => {
     onChange({
       ...data,
-      skills: data.skills.filter(skill => skill.id !== id)
+      skills: data.skills.filter((skill) => skill.id !== id),
     });
   };
 
   const handleChange = (id: string, field: keyof Skill, value: string) => {
     onChange({
       ...data,
-      skills: data.skills.map(skill =>
-        skill.id === id ? { ...skill, [field]: value } : skill
-      )
+      skills: data.skills.map((skill) =>
+        skill.id === id ? { ...skill, [field]: value } : skill,
+      ),
     });
   };
 
@@ -48,7 +48,7 @@ export default function SkillsForm({ data, onChange }: SkillsFormProps) {
             <Label>Skill {index + 1} *</Label>
             <Input
               value={skill.name}
-              onChange={(e) => handleChange(skill.id, 'name', e.target.value)}
+              onChange={(e) => handleChange(skill.id, "name", e.target.value)}
               placeholder="e.g., JavaScript, Project Management"
               className="mt-1"
             />
@@ -56,8 +56,8 @@ export default function SkillsForm({ data, onChange }: SkillsFormProps) {
           <div className="w-32">
             <Label>Level</Label>
             <Input
-              value={skill.level || ''}
-              onChange={(e) => handleChange(skill.id, 'level', e.target.value)}
+              value={skill.level || ""}
+              onChange={(e) => handleChange(skill.id, "level", e.target.value)}
               placeholder="Expert"
               className="mt-1"
             />

@@ -1,24 +1,34 @@
-import { useState } from 'react';
-import { ArrowLeft, Scissors } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft, Scissors } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface BackgroundRemoverToolProps {
   onBack: () => void;
 }
 
-export default function BackgroundRemoverTool({ onBack }: BackgroundRemoverToolProps) {
+export default function BackgroundRemoverTool({
+  onBack,
+}: BackgroundRemoverToolProps) {
   const [file, setFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
-  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(
+    null,
+  );
 
   const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!selectedFile.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
     setFile(selectedFile);
@@ -28,12 +38,17 @@ export default function BackgroundRemoverTool({ onBack }: BackgroundRemoverToolP
     if (!file) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      const blob = new Blob([new Uint8Array(1024 * 100)], { type: 'image/png' });
-      setResult({ blob, name: 'no-background-' + file.name.replace(/\.[^/.]+$/, '.png') });
-      toast.success('Background removed successfully!');
-    } catch (error) {
-      toast.error('Failed to remove background');
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const blob = new Blob([new Uint8Array(1024 * 100)], {
+        type: "image/png",
+      });
+      setResult({
+        blob,
+        name: "no-background-" + file.name.replace(/\.[^/.]+$/, ".png"),
+      });
+      toast.success("Background removed successfully!");
+    } catch (_error) {
+      toast.error("Failed to remove background");
     } finally {
       setProcessing(false);
     }
@@ -42,7 +57,7 @@ export default function BackgroundRemoverTool({ onBack }: BackgroundRemoverToolP
   const downloadFile = () => {
     if (!result) return;
     const url = URL.createObjectURL(result.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = result.name;
     a.click();
@@ -66,7 +81,8 @@ export default function BackgroundRemoverTool({ onBack }: BackgroundRemoverToolP
           <CardHeader>
             <CardTitle className="text-2xl">Background Remover</CardTitle>
             <CardDescription>
-              Automatically remove backgrounds from images with AI-powered detection
+              Automatically remove backgrounds from images with AI-powered
+              detection
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -86,7 +102,11 @@ export default function BackgroundRemoverTool({ onBack }: BackgroundRemoverToolP
                         {(file.size / 1024).toFixed(2)} KB
                       </p>
                     </div>
-                    <Button onClick={removeBackground} className="w-full" size="lg">
+                    <Button
+                      onClick={removeBackground}
+                      className="w-full"
+                      size="lg"
+                    >
                       <Scissors className="mr-2 h-4 w-4" />
                       Remove Background
                     </Button>

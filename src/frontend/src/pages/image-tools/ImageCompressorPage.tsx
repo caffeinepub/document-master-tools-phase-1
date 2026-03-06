@@ -1,160 +1,235 @@
-import { useState } from 'react';
-import { ArrowLeft, Minimize2, RotateCcw } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Slider } from '@/components/ui/slider';
-import { Label } from '@/components/ui/label';
-import FileUploadZone from '@/components/FileUploadZone';
-import ProcessingState from '@/components/ProcessingState';
-import { toast } from 'sonner';
-import { resizeImage, formatFileSize, loadImage } from '@/lib/imageProcessing';
+import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
+import FileUploadZone from "@/components/FileUploadZone";
+import SEO from "@/components/SEO";
+import { Download, RefreshCw } from "lucide-react";
+import { useRef, useState } from "react";
 
 interface ImageCompressorPageProps {
-  onBack: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export default function ImageCompressorPage({ onBack }: ImageCompressorPageProps) {
-  const [file, setFile] = useState<File | null>(null);
-  const [quality, setQuality] = useState([80]);
-  const [processing, setProcessing] = useState(false);
-  const [compressed, setCompressed] = useState<{ blob: Blob; url: string; size: number } | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+export default function ImageCompressorPage({
+  onNavigate,
+}: ImageCompressorPageProps) {
+  const [originalFile, setOriginalFile] = useState<File | null>(null);
+  const [originalPreview, setOriginalPreview] = useState<string | null>(null);
+  const [compressedUrl, setCompressedUrl] = useState<string | null>(null);
+  const [quality, setQuality] = useState(80);
+  const [outputFormat, setOutputFormat] = useState<"jpeg" | "png" | "webp">(
+    "jpeg",
+  );
+  const [originalSize, setOriginalSize] = useState<number>(0);
+  const [compressedSize, setCompressedSize] = useState<number>(0);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const handleFileSelect = async (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
-      return;
-    }
-    setFile(selectedFile);
-    setCompressed(null);
-    const url = URL.createObjectURL(selectedFile);
-    setPreviewUrl(url);
+  const handleFileSelect = (file: File) => {
+    setOriginalFile(file);
+    setOriginalSize(file.size);
+    setCompressedUrl(null);
+    const reader = new FileReader();
+    reader.onload = (e) => setOriginalPreview(e.target?.result as string);
+    reader.readAsDataURL(file);
   };
 
-  const compressImage = async () => {
-    if (!file) return;
-    setProcessing(true);
+  const handleCompress = async () => {
+    if (!originalFile || !canvasRef.current) return;
+    setIsProcessing(true);
     try {
-      const img = await loadImage(file);
-      const result = await resizeImage(file, img.width, img.height, quality[0] / 100, file.type);
-      setCompressed(result);
-      toast.success('Image compressed successfully!');
-    } catch (error) {
-      toast.error('Failed to compress image');
-    } finally {
-      setProcessing(false);
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = canvasRef.current!;
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d")!;
+        ctx.drawImage(img, 0, 0);
+        const mimeType =
+          outputFormat === "jpeg"
+            ? "image/jpeg"
+            : outputFormat === "png"
+              ? "image/png"
+              : "image/webp";
+        canvas.toBlob(
+          (blob) => {
+            if (blob) {
+              setCompressedSize(blob.size);
+              const url = URL.createObjectURL(blob);
+              setCompressedUrl(url);
+            }
+            setIsProcessing(false);
+          },
+          mimeType,
+          quality / 100,
+        );
+      };
+      img.src = originalPreview!;
+    } catch {
+      setIsProcessing(false);
     }
   };
 
-  const downloadFile = () => {
-    if (!compressed || !file) return;
-    const a = document.createElement('a');
-    a.href = compressed.url;
-    a.download = 'compressed-' + file.name;
+  const handleDownload = () => {
+    if (!compressedUrl) return;
+    const a = document.createElement("a");
+    a.href = compressedUrl;
+    a.download = `compressed.${outputFormat}`;
     a.click();
   };
 
-  const reset = () => {
-    setFile(null);
-    setQuality([80]);
-    setCompressed(null);
-    setPreviewUrl(null);
+  const handleReset = () => {
+    setOriginalFile(null);
+    setOriginalPreview(null);
+    setCompressedUrl(null);
+    setOriginalSize(0);
+    setCompressedSize(0);
+  };
+
+  const formatSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
   };
 
   return (
-    <div className="py-8 md:py-12">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Image Tools
-        </Button>
+    <div
+      className="min-h-screen py-8 px-4"
+      style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+    >
+      <SEO
+        title="Image Compressor Online Free | DocMasterTools"
+        description="Compress images online for free without losing quality. Supports JPEG, PNG, and WebP formats."
+        canonicalUrl="https://docmastertools.com/image-tools/image-compressor"
+      />
+      <canvas ref={canvasRef} className="hidden" />
+      <div className="max-w-4xl mx-auto">
+        <BreadcrumbNavigation
+          items={[
+            {
+              label: "Image Tools",
+              onClick: () => onNavigate?.("image-tools"),
+            },
+            { label: "Image Compressor" },
+          ]}
+          onNavigate={onNavigate}
+        />
+        <div className="text-center mb-8">
+          <h1 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            Image Compressor
+          </h1>
+          <p className="text-slate-300 max-w-2xl mx-auto">
+            Compress images without visible quality loss. Supports JPEG, PNG,
+            and WebP formats.
+          </p>
+        </div>
 
-        <Card>
-          <CardContent className="p-6 space-y-6">
-            <div>
-              <h1 className="text-2xl md:text-3xl font-bold mb-2">Image Compressor</h1>
-              <p className="text-muted-foreground">
-                Reduce image file size while maintaining visual quality. Perfect for web optimization and email attachments.
-              </p>
+        {!originalFile ? (
+          <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-8">
+            <FileUploadZone
+              accept="image/*"
+              description="Upload an image to compress (JPEG, PNG, WebP)"
+              onFileSelect={handleFileSelect}
+            />
+          </div>
+        ) : (
+          <>
+            <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
+              <h2 className="text-white font-semibold mb-4">
+                Compression Settings
+              </h2>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-6">
+                <div>
+                  <label className="block text-slate-300 text-sm mb-2">
+                    Output Format
+                  </label>
+                  <select
+                    value={outputFormat}
+                    onChange={(e) =>
+                      setOutputFormat(e.target.value as "jpeg" | "png" | "webp")
+                    }
+                    className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm"
+                  >
+                    <option value="jpeg">JPEG</option>
+                    <option value="png">PNG</option>
+                    <option value="webp">WebP</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-slate-300 text-sm mb-2">
+                    Quality: {quality}%
+                  </label>
+                  <input
+                    type="range"
+                    min={10}
+                    max={100}
+                    value={quality}
+                    onChange={(e) => setQuality(Number(e.target.value))}
+                    className="w-full accent-blue-500"
+                  />
+                </div>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3">
+                <button
+                  onClick={handleCompress}
+                  disabled={isProcessing}
+                  className="flex-1 min-h-[48px] px-6 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  {isProcessing ? (
+                    <>
+                      <RefreshCw className="w-4 h-4 animate-spin" />{" "}
+                      Processing...
+                    </>
+                  ) : (
+                    "Compress Image"
+                  )}
+                </button>
+                <button
+                  onClick={handleReset}
+                  className="min-h-[48px] px-6 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  <RefreshCw className="w-4 h-4" /> Reset
+                </button>
+              </div>
             </div>
 
-            {!compressed && !processing && (
-              <>
-                {!file ? (
-                  <FileUploadZone
-                    onFileSelect={handleFileSelect}
-                    accept="image/*"
-                    description="Click to upload image or drag and drop"
-                  />
-                ) : (
-                  <div className="space-y-4">
-                    {previewUrl && (
-                      <div className="relative rounded-lg overflow-hidden bg-muted/30 p-4">
-                        <img src={previewUrl} alt="Preview" className="max-w-full h-auto mx-auto max-h-96 object-contain" />
-                        <p className="text-sm text-muted-foreground mt-2 text-center">
-                          Original size: {formatFileSize(file.size)}
-                        </p>
-                      </div>
-                    )}
-                    <div className="space-y-3">
-                      <Label>Quality: {quality[0]}%</Label>
-                      <Slider
-                        value={quality}
-                        onValueChange={setQuality}
-                        min={10}
-                        max={100}
-                        step={5}
-                        className="w-full"
-                      />
-                      <p className="text-xs text-muted-foreground">
-                        Lower quality = smaller file size. Recommended: 70-85% for web use.
-                      </p>
-                    </div>
-                    <Button onClick={compressImage} className="w-full" size="lg">
-                      <Minimize2 className="mr-2 h-4 w-4" />
-                      Compress Image
-                    </Button>
+            {compressedUrl && (
+              <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
+                <h2 className="text-white font-semibold mb-4">Result</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
+                  <div className="text-center">
+                    <p className="text-slate-300 text-sm mb-2">Original</p>
+                    <img
+                      src={originalPreview!}
+                      alt="Original"
+                      className="max-w-full rounded-lg mx-auto max-h-48 object-contain"
+                    />
+                    <p className="text-slate-400 text-xs mt-2">
+                      {formatSize(originalSize)}
+                    </p>
                   </div>
-                )}
-              </>
-            )}
-
-            {processing && <ProcessingState message="Compressing image..." />}
-
-            {compressed && file && (
-              <div className="space-y-4">
-                <div className="relative rounded-lg overflow-hidden bg-muted/30 p-4">
-                  <img src={compressed.url} alt="Compressed" className="max-w-full h-auto mx-auto max-h-96 object-contain" />
-                  <div className="mt-4 p-3 bg-background rounded-lg">
-                    <div className="grid grid-cols-2 gap-4 text-sm">
-                      <div>
-                        <p className="text-muted-foreground">Original:</p>
-                        <p className="font-semibold">{formatFileSize(file.size)}</p>
-                      </div>
-                      <div>
-                        <p className="text-muted-foreground">Compressed:</p>
-                        <p className="font-semibold text-green-600">{formatFileSize(compressed.size)}</p>
-                      </div>
-                    </div>
-                    <p className="text-xs text-muted-foreground mt-2 text-center">
-                      Reduced by {Math.round((1 - compressed.size / file.size) * 100)}%
+                  <div className="text-center">
+                    <p className="text-slate-300 text-sm mb-2">Compressed</p>
+                    <img
+                      src={compressedUrl}
+                      alt="Compressed"
+                      className="max-w-full rounded-lg mx-auto max-h-48 object-contain"
+                    />
+                    <p className="text-green-400 text-xs mt-2">
+                      {formatSize(compressedSize)} (
+                      {Math.round((1 - compressedSize / originalSize) * 100)}%
+                      smaller)
                     </p>
                   </div>
                 </div>
-
-                <div className="flex gap-2">
-                  <Button onClick={downloadFile} className="flex-1" size="lg">
-                    Download Compressed Image
-                  </Button>
-                  <Button onClick={reset} variant="outline" size="lg">
-                    <RotateCcw className="mr-2 h-4 w-4" />
-                    Reset
-                  </Button>
-                </div>
+                <button
+                  onClick={handleDownload}
+                  className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+                >
+                  <Download className="w-4 h-4" /> Download Compressed Image
+                </button>
               </div>
             )}
-          </CardContent>
-        </Card>
+          </>
+        )}
       </div>
     </div>
   );

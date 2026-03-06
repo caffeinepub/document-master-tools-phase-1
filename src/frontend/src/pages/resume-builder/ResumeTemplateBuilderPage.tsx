@@ -1,16 +1,16 @@
-import { useState, useEffect } from 'react';
-import { ArrowLeft, Calculator, FileText, Image } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import SEO from '@/components/SEO';
-import BreadcrumbNavigation from '@/components/BreadcrumbNavigation';
-import AdPlaceholder from '@/components/AdPlaceholder';
-import FAQSchema from '@/components/FAQSchema';
-import RelatedTools from '@/components/RelatedTools';
-import ResumeFormWizard from '@/components/resume/ResumeFormWizard';
-import ResumePreview from '@/components/resume/ResumePreview';
-import { getTemplateBySlug } from '@/data/resumeTemplateConfigs';
-import { ResumeData } from '@/types/resume';
-import { COLOR_THEMES } from '@/lib/colorThemes';
+import AdPlaceholder from "@/components/AdPlaceholder";
+import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
+import FAQSchema from "@/components/FAQSchema";
+import RelatedTools from "@/components/RelatedTools";
+import SEO from "@/components/SEO";
+import ResumeFormWizard from "@/components/resume/ResumeFormWizard";
+import ResumePreview from "@/components/resume/ResumePreview";
+import { Button } from "@/components/ui/button";
+import { getTemplateBySlug } from "@/data/resumeTemplateConfigs";
+import { COLOR_THEMES } from "@/lib/colorThemes";
+import type { ResumeData } from "@/types/resume";
+import { ArrowLeft, Calculator, FileText, Image } from "lucide-react";
+import { useEffect, useState } from "react";
 
 interface ResumeTemplateBuilderPageProps {
   templateSlug: string;
@@ -19,14 +19,14 @@ interface ResumeTemplateBuilderPageProps {
 
 const initialResumeData: ResumeData = {
   personalInfo: {
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
-    linkedin: '',
-    portfolio: '',
-    photo: '',
-    summary: ''
+    name: "",
+    email: "",
+    phone: "",
+    address: "",
+    linkedin: "",
+    portfolio: "",
+    photo: "",
+    summary: "",
   },
   education: [],
   experience: [],
@@ -35,13 +35,16 @@ const initialResumeData: ResumeData = {
   certifications: [],
   languages: [],
   achievements: [],
-  references: []
+  references: [],
 };
 
-export default function ResumeTemplateBuilderPage({ templateSlug, onBack }: ResumeTemplateBuilderPageProps) {
+export default function ResumeTemplateBuilderPage({
+  templateSlug,
+  onBack,
+}: ResumeTemplateBuilderPageProps) {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
   const [selectedTheme, setSelectedTheme] = useState(COLOR_THEMES[0]);
-  
+
   const templateConfig = getTemplateBySlug(templateSlug);
 
   useEffect(() => {
@@ -52,10 +55,10 @@ export default function ResumeTemplateBuilderPage({ templateSlug, onBack }: Resu
       try {
         const parsed = JSON.parse(savedDraft);
         setResumeData(parsed.data);
-        const savedTheme = COLOR_THEMES.find(t => t.name === parsed.theme);
+        const savedTheme = COLOR_THEMES.find((t) => t.name === parsed.theme);
         if (savedTheme) setSelectedTheme(savedTheme);
       } catch (e) {
-        console.error('Failed to load draft:', e);
+        console.error("Failed to load draft:", e);
       }
     }
   }, [templateSlug]);
@@ -75,42 +78,45 @@ export default function ResumeTemplateBuilderPage({ templateSlug, onBack }: Resu
   }
 
   const breadcrumbs = [
-    { label: 'Home', href: '/' },
-    { label: 'Resume Builder', href: '/resume-builder' },
-    { label: templateConfig.name }
+    { label: "Home", href: "/" },
+    { label: "Resume Builder", href: "/resume-builder" },
+    { label: templateConfig.name },
   ];
 
   const relatedTools = [
     {
-      name: 'Calculator Hub',
-      description: '21 calculators for academic and financial needs',
+      name: "Calculator Hub",
+      description: "21 calculators for academic and financial needs",
       icon: Calculator,
-      onClick: () => window.scrollTo(0, 0)
+      onClick: () => window.scrollTo(0, 0),
     },
     {
-      name: 'PDF Tools',
-      description: '16 tools for PDF manipulation',
+      name: "PDF Tools",
+      description: "16 tools for PDF manipulation",
       icon: FileText,
-      onClick: () => window.scrollTo(0, 0)
+      onClick: () => window.scrollTo(0, 0),
     },
     {
-      name: 'Image Tools',
-      description: '16 tools for image processing',
+      name: "Image Tools",
+      description: "16 tools for image processing",
       icon: Image,
-      onClick: () => window.scrollTo(0, 0)
-    }
+      onClick: () => window.scrollTo(0, 0),
+    },
   ];
 
   const handleResumeDataChange = (data: ResumeData) => {
     setResumeData(data);
-    
+
     // Auto-save to localStorage
     const draftKey = `resume_draft_${templateSlug}`;
-    localStorage.setItem(draftKey, JSON.stringify({
-      data,
-      theme: selectedTheme.name,
-      timestamp: Date.now()
-    }));
+    localStorage.setItem(
+      draftKey,
+      JSON.stringify({
+        data,
+        theme: selectedTheme.name,
+        timestamp: Date.now(),
+      }),
+    );
   };
 
   return (
@@ -134,8 +140,12 @@ export default function ResumeTemplateBuilderPage({ templateSlug, onBack }: Resu
           <BreadcrumbNavigation items={breadcrumbs} />
 
           <div className="mb-6">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">{templateConfig.name}</h1>
-            <p className="text-lg text-muted-foreground">{templateConfig.description}</p>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              {templateConfig.name}
+            </h1>
+            <p className="text-lg text-muted-foreground">
+              {templateConfig.description}
+            </p>
           </div>
 
           <AdPlaceholder adType="banner" />
@@ -167,7 +177,9 @@ export default function ResumeTemplateBuilderPage({ templateSlug, onBack }: Resu
 
           {/* FAQ Section */}
           <section className="mb-12">
-            <h2 className="text-2xl font-bold mb-6">Frequently Asked Questions</h2>
+            <h2 className="text-2xl font-bold mb-6">
+              Frequently Asked Questions
+            </h2>
             <div className="space-y-4">
               {templateConfig.faqs.map((faq, index) => (
                 <div key={index} className="border rounded-lg p-6">

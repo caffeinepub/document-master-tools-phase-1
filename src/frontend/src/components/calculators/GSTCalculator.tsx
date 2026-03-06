@@ -1,28 +1,45 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { useState } from "react";
 
 export default function GSTCalculator() {
-  const [mode, setMode] = useState<'add' | 'remove'>('add');
-  const [amount, setAmount] = useState('');
-  const [gstRate, setGstRate] = useState('18');
-  const [customRate, setCustomRate] = useState('');
+  const [mode, setMode] = useState<"add" | "remove">("add");
+  const [amount, setAmount] = useState("");
+  const [gstRate, setGstRate] = useState("18");
+  const [customRate, setCustomRate] = useState("");
 
-  const rate = gstRate === 'custom' ? parseFloat(customRate) || 0 : parseFloat(gstRate);
+  const rate =
+    gstRate === "custom"
+      ? Number.parseFloat(customRate) || 0
+      : Number.parseFloat(gstRate);
 
   const calculate = () => {
-    const amt = parseFloat(amount) || 0;
-    if (mode === 'add') {
+    const amt = Number.parseFloat(amount) || 0;
+    if (mode === "add") {
       const gstAmount = (amt * rate) / 100;
       const total = amt + gstAmount;
-      return { base: amt.toFixed(2), gst: gstAmount.toFixed(2), total: total.toFixed(2) };
+      return {
+        base: amt.toFixed(2),
+        gst: gstAmount.toFixed(2),
+        total: total.toFixed(2),
+      };
     } else {
       const base = amt / (1 + rate / 100);
       const gstAmount = amt - base;
-      return { base: base.toFixed(2), gst: gstAmount.toFixed(2), total: amt.toFixed(2) };
+      return {
+        base: base.toFixed(2),
+        gst: gstAmount.toFixed(2),
+        total: amt.toFixed(2),
+      };
     }
   };
 
@@ -34,15 +51,22 @@ export default function GSTCalculator() {
         <CardContent className="pt-6 space-y-6">
           <div>
             <Label className="text-sm font-medium mb-3 block">Mode</Label>
-            <RadioGroup value={mode} onValueChange={(value) => setMode(value as 'add' | 'remove')}>
+            <RadioGroup
+              value={mode}
+              onValueChange={(value) => setMode(value as "add" | "remove")}
+            >
               <div className="flex gap-4">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="add" id="add" />
-                  <Label htmlFor="add" className="cursor-pointer">Add GST</Label>
+                  <Label htmlFor="add" className="cursor-pointer">
+                    Add GST
+                  </Label>
                 </div>
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="remove" id="remove" />
-                  <Label htmlFor="remove" className="cursor-pointer">Remove GST</Label>
+                  <Label htmlFor="remove" className="cursor-pointer">
+                    Remove GST
+                  </Label>
                 </div>
               </div>
             </RadioGroup>
@@ -50,7 +74,7 @@ export default function GSTCalculator() {
 
           <div>
             <Label htmlFor="amount" className="text-sm font-medium">
-              {mode === 'add' ? 'Base Amount' : 'Total Amount (with GST)'}
+              {mode === "add" ? "Base Amount" : "Total Amount (with GST)"}
             </Label>
             <Input
               id="amount"
@@ -82,7 +106,7 @@ export default function GSTCalculator() {
             </Select>
           </div>
 
-          {gstRate === 'custom' && (
+          {gstRate === "custom" && (
             <div>
               <Label htmlFor="custom-rate" className="text-sm font-medium">
                 Custom GST Rate (%)
@@ -111,12 +135,18 @@ export default function GSTCalculator() {
               <span className="text-lg font-semibold">₹{result.base}</span>
             </div>
             <div className="flex justify-between items-center pb-2 border-b">
-              <span className="text-sm text-muted-foreground">GST Amount ({rate}%)</span>
-              <span className="text-lg font-semibold text-orange-600">₹{result.gst}</span>
+              <span className="text-sm text-muted-foreground">
+                GST Amount ({rate}%)
+              </span>
+              <span className="text-lg font-semibold text-orange-600">
+                ₹{result.gst}
+              </span>
             </div>
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Total Amount</span>
-              <span className="text-2xl font-bold text-primary">₹{result.total}</span>
+              <span className="text-2xl font-bold text-primary">
+                ₹{result.total}
+              </span>
             </div>
           </div>
         </CardContent>

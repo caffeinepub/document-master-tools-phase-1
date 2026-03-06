@@ -1,5 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileText, Image, FileEdit } from 'lucide-react';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { FileEdit, FileText, Image } from "lucide-react";
 
 interface ToolsGridProps {
   onNavigate: (page: string) => void;
@@ -8,31 +14,34 @@ interface ToolsGridProps {
 export default function ToolsGrid({ onNavigate }: ToolsGridProps) {
   const toolCategories = [
     {
-      id: 'pdf-tools',
-      title: 'PDF Tools',
-      description: 'Merge, split, compress, convert, and edit PDF files with professional-grade tools.',
-      icon: '/assets/generated/pdf-tools-icon-transparent.dim_64x64.png',
+      id: "pdf-tools",
+      title: "PDF Tools",
+      description:
+        "Merge, split, compress, convert, and edit PDF files with professional-grade tools.",
+      icon: "/assets/generated/pdf-tools-icon-transparent.dim_64x64.png",
       IconComponent: FileText,
-      toolCount: '13 Tools',
-      color: 'from-blue-500/10 to-blue-600/10',
+      toolCount: "13 Tools",
+      color: "from-blue-500/10 to-blue-600/10",
     },
     {
-      id: 'image-tools',
-      title: 'Image Tools',
-      description: 'Compress, resize, remove backgrounds, and edit images with powerful browser-based tools.',
-      icon: '/assets/generated/image-tools-icon-transparent.dim_64x64.png',
+      id: "image-tools",
+      title: "Image Tools",
+      description:
+        "Compress, resize, remove backgrounds, and edit images with powerful browser-based tools.",
+      icon: "/assets/generated/image-tools-icon-transparent.dim_64x64.png",
       IconComponent: Image,
-      toolCount: '4 Tools',
-      color: 'from-green-500/10 to-green-600/10',
+      toolCount: "4 Tools",
+      color: "from-green-500/10 to-green-600/10",
     },
     {
-      id: 'resume-builder',
-      title: 'Resume Builder',
-      description: 'Create professional resumes with multiple templates for freshers and experienced professionals.',
-      icon: '/assets/generated/resume-builder-icon-transparent.dim_64x64.png',
+      id: "resume-builder",
+      title: "Resume Builder",
+      description:
+        "Create professional resumes with multiple templates for freshers and experienced professionals.",
+      icon: "/assets/generated/resume-builder-icon-transparent.dim_64x64.png",
       IconComponent: FileEdit,
-      toolCount: '5 Templates',
-      color: 'from-purple-500/10 to-purple-600/10',
+      toolCount: "5 Templates",
+      color: "from-purple-500/10 to-purple-600/10",
     },
   ];
 
@@ -40,9 +49,13 @@ export default function ToolsGrid({ onNavigate }: ToolsGridProps) {
     <section className="py-16 md:py-24">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">Choose Your Tool Category</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Choose Your Tool Category
+          </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Select from our comprehensive suite of document processing tools. All tools work directly in your browser for maximum privacy and speed.
+            Select from our comprehensive suite of document processing tools.
+            All tools work directly in your browser for maximum privacy and
+            speed.
           </p>
         </div>
 
@@ -54,8 +67,14 @@ export default function ToolsGrid({ onNavigate }: ToolsGridProps) {
               onClick={() => onNavigate(category.id)}
             >
               <CardHeader>
-                <div className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4`}>
-                  <img src={category.icon} alt={category.title} className="w-10 h-10" />
+                <div
+                  className={`w-16 h-16 rounded-lg bg-gradient-to-br ${category.color} flex items-center justify-center mb-4`}
+                >
+                  <img
+                    src={category.icon}
+                    alt={category.title}
+                    className="w-10 h-10"
+                  />
                 </div>
                 <CardTitle className="text-xl group-hover:text-primary transition-colors">
                   {category.title}
@@ -64,7 +83,9 @@ export default function ToolsGrid({ onNavigate }: ToolsGridProps) {
               </CardHeader>
               <CardContent>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm font-medium text-muted-foreground">{category.toolCount}</span>
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {category.toolCount}
+                  </span>
                   <span className="text-sm font-medium text-primary group-hover:translate-x-1 transition-transform">
                     Explore →
                   </span>

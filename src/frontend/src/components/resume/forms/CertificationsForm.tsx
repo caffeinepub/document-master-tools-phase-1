@@ -1,8 +1,8 @@
-import { Plus, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { ResumeData, Certification } from '@/types/resume';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { Certification, ResumeData } from "@/types/resume";
+import { Plus, Trash2 } from "lucide-react";
 
 interface CertificationsFormProps {
   data: ResumeData;
@@ -10,34 +10,41 @@ interface CertificationsFormProps {
   templateSlug: string;
 }
 
-export default function CertificationsForm({ data, onChange }: CertificationsFormProps) {
+export default function CertificationsForm({
+  data,
+  onChange,
+}: CertificationsFormProps) {
   const handleAdd = () => {
     const newCert: Certification = {
       id: Date.now().toString(),
-      name: '',
-      issuer: '',
-      date: ''
+      name: "",
+      issuer: "",
+      date: "",
     };
 
     onChange({
       ...data,
-      certifications: [...data.certifications, newCert]
+      certifications: [...data.certifications, newCert],
     });
   };
 
   const handleRemove = (id: string) => {
     onChange({
       ...data,
-      certifications: data.certifications.filter(cert => cert.id !== id)
+      certifications: data.certifications.filter((cert) => cert.id !== id),
     });
   };
 
-  const handleChange = (id: string, field: keyof Certification, value: string) => {
+  const handleChange = (
+    id: string,
+    field: keyof Certification,
+    value: string,
+  ) => {
     onChange({
       ...data,
-      certifications: data.certifications.map(cert =>
-        cert.id === id ? { ...cert, [field]: value } : cert
-      )
+      certifications: data.certifications.map((cert) =>
+        cert.id === id ? { ...cert, [field]: value } : cert,
+      ),
     });
   };
 
@@ -47,7 +54,11 @@ export default function CertificationsForm({ data, onChange }: CertificationsFor
         <div key={cert.id} className="border rounded-lg p-4">
           <div className="flex justify-between items-center mb-4">
             <h4 className="font-semibold">Certification {index + 1}</h4>
-            <Button size="sm" variant="ghost" onClick={() => handleRemove(cert.id)}>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => handleRemove(cert.id)}
+            >
               <Trash2 className="h-4 w-4 text-destructive" />
             </Button>
           </div>
@@ -57,7 +68,7 @@ export default function CertificationsForm({ data, onChange }: CertificationsFor
               <Label>Certification Name *</Label>
               <Input
                 value={cert.name}
-                onChange={(e) => handleChange(cert.id, 'name', e.target.value)}
+                onChange={(e) => handleChange(cert.id, "name", e.target.value)}
                 placeholder="AWS Certified Solutions Architect"
                 className="mt-1"
               />
@@ -67,7 +78,9 @@ export default function CertificationsForm({ data, onChange }: CertificationsFor
               <Label>Issuing Organization *</Label>
               <Input
                 value={cert.issuer}
-                onChange={(e) => handleChange(cert.id, 'issuer', e.target.value)}
+                onChange={(e) =>
+                  handleChange(cert.id, "issuer", e.target.value)
+                }
                 placeholder="Amazon Web Services"
                 className="mt-1"
               />
@@ -78,7 +91,7 @@ export default function CertificationsForm({ data, onChange }: CertificationsFor
               <Input
                 type="month"
                 value={cert.date}
-                onChange={(e) => handleChange(cert.id, 'date', e.target.value)}
+                onChange={(e) => handleChange(cert.id, "date", e.target.value)}
                 className="mt-1"
               />
             </div>

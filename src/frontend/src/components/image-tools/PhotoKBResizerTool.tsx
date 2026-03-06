@@ -1,29 +1,45 @@
-import { useState } from 'react';
-import { ArrowLeft, Ruler } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { ArrowLeft, Ruler } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface PhotoKBResizerToolProps {
   onBack: () => void;
 }
 
-export default function PhotoKBResizerTool({ onBack }: PhotoKBResizerToolProps) {
+export default function PhotoKBResizerTool({
+  onBack,
+}: PhotoKBResizerToolProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [targetSize, setTargetSize] = useState('50');
-  const [customSize, setCustomSize] = useState('');
+  const [targetSize, setTargetSize] = useState("50");
+  const [customSize, setCustomSize] = useState("");
   const [processing, setProcessing] = useState(false);
-  const [resized, setResized] = useState<{ blob: Blob; name: string } | null>(null);
+  const [resized, setResized] = useState<{ blob: Blob; name: string } | null>(
+    null,
+  );
 
   const handleFileSelect = (selectedFile: File) => {
-    if (!selectedFile.type.startsWith('image/')) {
-      toast.error('Please select an image file');
+    if (!selectedFile.type.startsWith("image/")) {
+      toast.error("Please select an image file");
       return;
     }
     setFile(selectedFile);
@@ -33,13 +49,18 @@ export default function PhotoKBResizerTool({ onBack }: PhotoKBResizerToolProps) 
     if (!file) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      const target = targetSize === 'custom' ? parseInt(customSize) : parseInt(targetSize);
-      const blob = new Blob([new Uint8Array(target * 1024)], { type: file.type });
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      const target =
+        targetSize === "custom"
+          ? Number.parseInt(customSize)
+          : Number.parseInt(targetSize);
+      const blob = new Blob([new Uint8Array(target * 1024)], {
+        type: file.type,
+      });
       setResized({ blob, name: `resized-${target}kb-${file.name}` });
-      toast.success('Image resized successfully!');
-    } catch (error) {
-      toast.error('Failed to resize image');
+      toast.success("Image resized successfully!");
+    } catch (_error) {
+      toast.error("Failed to resize image");
     } finally {
       setProcessing(false);
     }
@@ -48,7 +69,7 @@ export default function PhotoKBResizerTool({ onBack }: PhotoKBResizerToolProps) 
   const downloadFile = () => {
     if (!resized) return;
     const url = URL.createObjectURL(resized.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = resized.name;
     a.click();
@@ -57,8 +78,8 @@ export default function PhotoKBResizerTool({ onBack }: PhotoKBResizerToolProps) 
 
   const reset = () => {
     setFile(null);
-    setTargetSize('50');
-    setCustomSize('');
+    setTargetSize("50");
+    setCustomSize("");
     setResized(null);
   };
 
@@ -110,7 +131,7 @@ export default function PhotoKBResizerTool({ onBack }: PhotoKBResizerToolProps) 
                         </SelectContent>
                       </Select>
                     </div>
-                    {targetSize === 'custom' && (
+                    {targetSize === "custom" && (
                       <div className="space-y-2">
                         <Label>Custom Size (KB)</Label>
                         <Input

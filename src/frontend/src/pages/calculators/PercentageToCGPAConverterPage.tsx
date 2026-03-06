@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import PercentageToCGPAConverter from '@/components/calculators/PercentageToCGPAConverter';
+import PercentageToCGPAConverter from "@/components/calculators/PercentageToCGPAConverter";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface PercentageToCGPAConverterPageProps {
   onBack: () => void;
 }
 
-export default function PercentageToCGPAConverterPage({ onBack }: PercentageToCGPAConverterPageProps) {
+export default function PercentageToCGPAConverterPage({
+  onBack,
+}: PercentageToCGPAConverterPageProps) {
   useEffect(() => {
-    document.title = 'Percentage to CGPA Converter | Calculator Hub';
+    document.title = "Percentage to CGPA Converter | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +24,9 @@ export default function PercentageToCGPAConverterPage({ onBack }: PercentageToCG
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Percentage to CGPA Converter</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Percentage to CGPA Converter
+            </h1>
             <p className="text-lg text-muted-foreground">
               Convert percentage to CGPA using CBSE or Engineering formula.
             </p>
@@ -31,12 +35,17 @@ export default function PercentageToCGPAConverterPage({ onBack }: PercentageToCG
           <PercentageToCGPAConverter />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Percentage to CGPA Conversion</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Percentage to CGPA Conversion
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Convert your percentage marks to CGPA using reverse formulas. CBSE formula (Percentage ÷ 9.5) and Engineering formula (Percentage ÷ 10) help you understand your grade point equivalent.
+              Convert your percentage marks to CGPA using reverse formulas. CBSE
+              formula (Percentage ÷ 9.5) and Engineering formula (Percentage ÷
+              10) help you understand your grade point equivalent.
             </p>
             <p className="text-muted-foreground">
-              This is useful when applying to institutions that require CGPA instead of percentage marks.
+              This is useful when applying to institutions that require CGPA
+              instead of percentage marks.
             </p>
           </section>
 

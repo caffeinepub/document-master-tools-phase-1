@@ -1,6 +1,6 @@
-import { Download, Upload, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Download, Upload, X } from "lucide-react";
 
 interface DownloadFile {
   blob: Blob;
@@ -24,7 +24,7 @@ export default function DownloadSection({
   onDownload,
   onProcessAnother,
   onClear,
-  downloadLabel = 'Download File'
+  downloadLabel = "Download File",
 }: DownloadSectionProps) {
   const formatFileSize = (bytes: number): string => {
     if (bytes < 1024) return `${bytes} B`;
@@ -34,7 +34,7 @@ export default function DownloadSection({
 
   const handleDownloadFile = (file: DownloadFile) => {
     const url = URL.createObjectURL(file.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = file.name;
     a.click();
@@ -47,14 +47,21 @@ export default function DownloadSection({
       <Card className="border-2 border-primary/20">
         <CardHeader>
           <div className="flex items-center gap-3">
-            <img src="/assets/generated/success-icon-transparent.dim_32x32.png" alt="Success" className="w-8 h-8" />
+            <img
+              src="/assets/generated/success-icon-transparent.dim_32x32.png"
+              alt="Success"
+              className="w-8 h-8"
+            />
             <CardTitle className="text-xl">Files Ready!</CardTitle>
           </div>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="space-y-3">
             {files.map((file, index) => (
-              <div key={index} className="bg-muted/50 rounded-lg p-4 flex items-center justify-between gap-4">
+              <div
+                key={index}
+                className="bg-muted/50 rounded-lg p-4 flex items-center justify-between gap-4"
+              >
                 <div className="flex-1 min-w-0">
                   <p className="font-medium break-all text-sm">{file.name}</p>
                   <p className="text-xs text-muted-foreground mt-1">
@@ -71,7 +78,11 @@ export default function DownloadSection({
 
           <div className="flex flex-col sm:flex-row gap-2 pt-2">
             {onProcessAnother && (
-              <Button onClick={onProcessAnother} variant="outline" className="flex-1">
+              <Button
+                onClick={onProcessAnother}
+                variant="outline"
+                className="flex-1"
+              >
                 <Upload className="mr-2 h-4 w-4" />
                 Process Another File
               </Button>
@@ -93,7 +104,11 @@ export default function DownloadSection({
     <Card className="border-2 border-primary/20">
       <CardHeader>
         <div className="flex items-center gap-3">
-          <img src="/assets/generated/success-icon-transparent.dim_32x32.png" alt="Success" className="w-8 h-8" />
+          <img
+            src="/assets/generated/success-icon-transparent.dim_32x32.png"
+            alt="Success"
+            className="w-8 h-8"
+          />
           <CardTitle className="text-xl">File Ready!</CardTitle>
         </div>
       </CardHeader>
@@ -102,7 +117,9 @@ export default function DownloadSection({
           <p className="text-sm text-muted-foreground mb-1">File Name</p>
           <p className="font-medium break-all">{fileName}</p>
           {fileSize && (
-            <p className="text-sm text-muted-foreground mt-2">File Size: {formatFileSize(fileSize)}</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              File Size: {formatFileSize(fileSize)}
+            </p>
           )}
         </div>
 
@@ -115,7 +132,11 @@ export default function DownloadSection({
 
         <div className="flex flex-col sm:flex-row gap-2">
           {onProcessAnother && (
-            <Button onClick={onProcessAnother} variant="outline" className="flex-1">
+            <Button
+              onClick={onProcessAnother}
+              variant="outline"
+              className="flex-1"
+            >
               <Upload className="mr-2 h-4 w-4" />
               Process Another File
             </Button>

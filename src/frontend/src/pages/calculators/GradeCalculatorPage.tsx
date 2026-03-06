@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import GradeCalculator from '@/components/calculators/GradeCalculator';
+import GradeCalculator from "@/components/calculators/GradeCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface GradeCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function GradeCalculatorPage({ onBack }: GradeCalculatorPageProps) {
+export default function GradeCalculatorPage({
+  onBack,
+}: GradeCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Grade Calculator | Calculator Hub';
+    document.title = "Grade Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,21 +24,29 @@ export default function GradeCalculatorPage({ onBack }: GradeCalculatorPageProps
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Grade Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Grade Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Convert letter grades (A+, A, B, C, etc.) to grade points and calculate GPA.
+              Convert letter grades (A+, A, B, C, etc.) to grade points and
+              calculate GPA.
             </p>
           </header>
 
           <GradeCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Grade Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Grade Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              The Grade Calculator converts letter grades to numerical grade points and calculates your overall GPA. The standard scale assigns A+ = 10, A = 9, B+ = 8, and so on.
+              The Grade Calculator converts letter grades to numerical grade
+              points and calculates your overall GPA. The standard scale assigns
+              A+ = 10, A = 9, B+ = 8, and so on.
             </p>
             <p className="text-muted-foreground">
-              Enter your letter grades and credit hours for each course to get your weighted GPA instantly.
+              Enter your letter grades and credit hours for each course to get
+              your weighted GPA instantly.
             </p>
           </section>
 

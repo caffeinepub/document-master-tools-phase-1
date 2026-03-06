@@ -1,11 +1,17 @@
-import { useState } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { ArrowLeft } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface BasePDFToolProps {
   onBack: () => void;
@@ -26,11 +32,13 @@ export function BasePDFTool({
   buttonLabel,
   processingMessage,
   outputName,
-  outputType
+  outputType,
 }: BasePDFToolProps) {
   const [file, setFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
-  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(null);
+  const [result, setResult] = useState<{ blob: Blob; name: string } | null>(
+    null,
+  );
 
   const handleFileSelect = (selectedFile: File) => {
     setFile(selectedFile);
@@ -40,12 +48,12 @@ export function BasePDFTool({
     if (!file) return;
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
       const blob = new Blob([new Uint8Array(1024 * 100)], { type: outputType });
       setResult({ blob, name: outputName });
-      toast.success('Processing completed!');
-    } catch (error) {
-      toast.error('Processing failed');
+      toast.success("Processing completed!");
+    } catch (_error) {
+      toast.error("Processing failed");
     } finally {
       setProcessing(false);
     }
@@ -54,7 +62,7 @@ export function BasePDFTool({
   const downloadFile = () => {
     if (!result) return;
     const url = URL.createObjectURL(result.blob);
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
     a.download = result.name;
     a.click();

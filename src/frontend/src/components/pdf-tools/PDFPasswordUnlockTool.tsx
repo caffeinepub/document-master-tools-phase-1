@@ -1,6 +1,8 @@
-import { BasePDFTool } from './BasePDFTool';
+import { BasePDFTool } from "./BasePDFTool";
 
-export default function PDFPasswordUnlockTool({ onBack }: { onBack: () => void }) {
+export default function PDFPasswordUnlockTool({
+  onBack,
+}: { onBack: () => void }) {
   return (
     <BasePDFTool
       onBack={onBack}

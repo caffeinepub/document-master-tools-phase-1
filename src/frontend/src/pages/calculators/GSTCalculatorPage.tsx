@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import GSTCalculator from '@/components/calculators/GSTCalculator';
+import GSTCalculator from "@/components/calculators/GSTCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface GSTCalculatorPageProps {
   onBack: () => void;
@@ -9,7 +9,7 @@ interface GSTCalculatorPageProps {
 
 export default function GSTCalculatorPage({ onBack }: GSTCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'GST Calculator (Add/Remove GST) | Calculator Hub';
+    document.title = "GST Calculator (Add/Remove GST) | Calculator Hub";
   }, []);
 
   return (
@@ -22,9 +22,12 @@ export default function GSTCalculatorPage({ onBack }: GSTCalculatorPageProps) {
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">GST Calculator (Add/Remove GST)</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              GST Calculator (Add/Remove GST)
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Add or remove GST from amount. Calculate GST with multiple tax rates.
+              Add or remove GST from amount. Calculate GST with multiple tax
+              rates.
             </p>
           </header>
 
@@ -33,10 +36,14 @@ export default function GSTCalculatorPage({ onBack }: GSTCalculatorPageProps) {
           <section className="mt-8 prose prose-sm max-w-none">
             <h2 className="text-xl font-semibold mb-3">About GST Calculator</h2>
             <p className="text-muted-foreground mb-4">
-              Calculate GST (Goods and Services Tax) by adding or removing it from amounts. Supports standard GST rates of 5%, 12%, 18%, 28%, and custom rates.
+              Calculate GST (Goods and Services Tax) by adding or removing it
+              from amounts. Supports standard GST rates of 5%, 12%, 18%, 28%,
+              and custom rates.
             </p>
             <p className="text-muted-foreground">
-              Add GST mode calculates total amount from base price. Remove GST mode extracts base amount from GST-inclusive price. Perfect for businesses and shoppers.
+              Add GST mode calculates total amount from base price. Remove GST
+              mode extracts base amount from GST-inclusive price. Perfect for
+              businesses and shoppers.
             </p>
           </section>
 

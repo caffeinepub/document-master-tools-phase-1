@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import SalaryHikeCalculator from '@/components/calculators/SalaryHikeCalculator';
+import SalaryHikeCalculator from "@/components/calculators/SalaryHikeCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface SalaryHikeCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function SalaryHikeCalculatorPage({ onBack }: SalaryHikeCalculatorPageProps) {
+export default function SalaryHikeCalculatorPage({
+  onBack,
+}: SalaryHikeCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Salary Hike Calculator | Calculator Hub';
+    document.title = "Salary Hike Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +24,9 @@ export default function SalaryHikeCalculatorPage({ onBack }: SalaryHikeCalculato
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Salary Hike Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Salary Hike Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
               Calculate new salary after hike and increment amount.
             </p>
@@ -31,12 +35,17 @@ export default function SalaryHikeCalculatorPage({ onBack }: SalaryHikeCalculato
           <SalaryHikeCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Salary Hike Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Salary Hike Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Calculate your new salary after a percentage hike or find out what percentage hike you need to reach a desired salary. See monthly and annual increment breakdowns.
+              Calculate your new salary after a percentage hike or find out what
+              percentage hike you need to reach a desired salary. See monthly
+              and annual increment breakdowns.
             </p>
             <p className="text-muted-foreground">
-              Perfect for salary negotiations, appraisal planning, and understanding your compensation growth.
+              Perfect for salary negotiations, appraisal planning, and
+              understanding your compensation growth.
             </p>
           </section>
 

@@ -1,9 +1,9 @@
-import { Plus, Trash2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card } from '@/components/ui/card';
-import { ResumeData, Education } from '@/types/resume';
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import type { Education, ResumeData } from "@/types/resume";
+import { Plus, Trash2 } from "lucide-react";
 
 interface EducationFormProps {
   data: ResumeData;
@@ -15,33 +15,33 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
   const handleAdd = () => {
     const newEducation: Education = {
       id: Date.now().toString(),
-      institution: '',
-      degree: '',
-      field: '',
-      startDate: '',
-      endDate: '',
-      grade: ''
+      institution: "",
+      degree: "",
+      field: "",
+      startDate: "",
+      endDate: "",
+      grade: "",
     };
 
     onChange({
       ...data,
-      education: [...data.education, newEducation]
+      education: [...data.education, newEducation],
     });
   };
 
   const handleRemove = (id: string) => {
     onChange({
       ...data,
-      education: data.education.filter(edu => edu.id !== id)
+      education: data.education.filter((edu) => edu.id !== id),
     });
   };
 
   const handleChange = (id: string, field: keyof Education, value: string) => {
     onChange({
       ...data,
-      education: data.education.map(edu =>
-        edu.id === id ? { ...edu, [field]: value } : edu
-      )
+      education: data.education.map((edu) =>
+        edu.id === id ? { ...edu, [field]: value } : edu,
+      ),
     });
   };
 
@@ -65,7 +65,9 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
               <Label>Institution *</Label>
               <Input
                 value={edu.institution}
-                onChange={(e) => handleChange(edu.id, 'institution', e.target.value)}
+                onChange={(e) =>
+                  handleChange(edu.id, "institution", e.target.value)
+                }
                 placeholder="University/College Name"
                 className="mt-1"
               />
@@ -75,7 +77,7 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
               <Label>Degree *</Label>
               <Input
                 value={edu.degree}
-                onChange={(e) => handleChange(edu.id, 'degree', e.target.value)}
+                onChange={(e) => handleChange(edu.id, "degree", e.target.value)}
                 placeholder="B.Tech, MBA, etc."
                 className="mt-1"
               />
@@ -84,8 +86,8 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
             <div>
               <Label>Field of Study</Label>
               <Input
-                value={edu.field || ''}
-                onChange={(e) => handleChange(edu.id, 'field', e.target.value)}
+                value={edu.field || ""}
+                onChange={(e) => handleChange(edu.id, "field", e.target.value)}
                 placeholder="Computer Science, Business, etc."
                 className="mt-1"
               />
@@ -96,7 +98,9 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
               <Input
                 type="month"
                 value={edu.startDate}
-                onChange={(e) => handleChange(edu.id, 'startDate', e.target.value)}
+                onChange={(e) =>
+                  handleChange(edu.id, "startDate", e.target.value)
+                }
                 className="mt-1"
               />
             </div>
@@ -106,7 +110,9 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
               <Input
                 type="month"
                 value={edu.endDate}
-                onChange={(e) => handleChange(edu.id, 'endDate', e.target.value)}
+                onChange={(e) =>
+                  handleChange(edu.id, "endDate", e.target.value)
+                }
                 className="mt-1"
               />
             </div>
@@ -114,8 +120,8 @@ export default function EducationForm({ data, onChange }: EducationFormProps) {
             <div className="md:col-span-2">
               <Label>Grade/CGPA</Label>
               <Input
-                value={edu.grade || ''}
-                onChange={(e) => handleChange(edu.id, 'grade', e.target.value)}
+                value={edu.grade || ""}
+                onChange={(e) => handleChange(edu.id, "grade", e.target.value)}
                 placeholder="8.5 CGPA, 85%, First Class, etc."
                 className="mt-1"
               />

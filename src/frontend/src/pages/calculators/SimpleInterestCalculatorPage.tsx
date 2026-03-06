@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import SimpleInterestCalculator from '@/components/calculators/SimpleInterestCalculator';
+import SimpleInterestCalculator from "@/components/calculators/SimpleInterestCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface SimpleInterestCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function SimpleInterestCalculatorPage({ onBack }: SimpleInterestCalculatorPageProps) {
+export default function SimpleInterestCalculatorPage({
+  onBack,
+}: SimpleInterestCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Simple Interest Calculator | Calculator Hub';
+    document.title = "Simple Interest Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +24,9 @@ export default function SimpleInterestCalculatorPage({ onBack }: SimpleInterestC
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Simple Interest Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Simple Interest Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
               Calculate simple interest from principal, rate, and time.
             </p>
@@ -31,12 +35,19 @@ export default function SimpleInterestCalculatorPage({ onBack }: SimpleInterestC
           <SimpleInterestCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Simple Interest Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Simple Interest Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Calculate simple interest on loans or investments using the straightforward formula: SI = (P × R × T) / 100. Enter principal amount, annual interest rate, and time period to get instant results.
+              Calculate simple interest on loans or investments using the
+              straightforward formula: SI = (P × R × T) / 100. Enter principal
+              amount, annual interest rate, and time period to get instant
+              results.
             </p>
             <p className="text-muted-foreground">
-              Simple interest is calculated only on the principal amount, making it easy to understand and calculate for short-term loans and deposits.
+              Simple interest is calculated only on the principal amount, making
+              it easy to understand and calculate for short-term loans and
+              deposits.
             </p>
           </section>
 

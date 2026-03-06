@@ -1,21 +1,26 @@
-import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Save, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Progress } from '@/components/ui/progress';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { ResumeData, ColorTheme } from '@/types/resume';
-import PersonalInfoForm from './forms/PersonalInfoForm';
-import EducationForm from './forms/EducationForm';
-import ExperienceForm from './forms/ExperienceForm';
-import SkillsForm from './forms/SkillsForm';
-import ProjectsForm from './forms/ProjectsForm';
-import CertificationsForm from './forms/CertificationsForm';
-import LanguagesForm from './forms/LanguagesForm';
-import AchievementsForm from './forms/AchievementsForm';
-import ReferencesForm from './forms/ReferencesForm';
-import ColorThemeSelector from './ColorThemeSelector';
-import { toast } from 'sonner';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Progress } from "@/components/ui/progress";
+import type { ColorTheme, ResumeData } from "@/types/resume";
+import { ChevronLeft, ChevronRight, Save, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import ColorThemeSelector from "./ColorThemeSelector";
+import AchievementsForm from "./forms/AchievementsForm";
+import CertificationsForm from "./forms/CertificationsForm";
+import EducationForm from "./forms/EducationForm";
+import ExperienceForm from "./forms/ExperienceForm";
+import LanguagesForm from "./forms/LanguagesForm";
+import PersonalInfoForm from "./forms/PersonalInfoForm";
+import ProjectsForm from "./forms/ProjectsForm";
+import ReferencesForm from "./forms/ReferencesForm";
+import SkillsForm from "./forms/SkillsForm";
 
 interface ResumeFormWizardProps {
   resumeData: ResumeData;
@@ -26,15 +31,19 @@ interface ResumeFormWizardProps {
 }
 
 const STEPS = [
-  { id: 'personal', label: 'Personal Info', component: PersonalInfoForm },
-  { id: 'education', label: 'Education', component: EducationForm },
-  { id: 'experience', label: 'Experience', component: ExperienceForm },
-  { id: 'skills', label: 'Skills', component: SkillsForm },
-  { id: 'projects', label: 'Projects', component: ProjectsForm },
-  { id: 'certifications', label: 'Certifications', component: CertificationsForm },
-  { id: 'languages', label: 'Languages', component: LanguagesForm },
-  { id: 'achievements', label: 'Achievements', component: AchievementsForm },
-  { id: 'references', label: 'References', component: ReferencesForm },
+  { id: "personal", label: "Personal Info", component: PersonalInfoForm },
+  { id: "education", label: "Education", component: EducationForm },
+  { id: "experience", label: "Experience", component: ExperienceForm },
+  { id: "skills", label: "Skills", component: SkillsForm },
+  { id: "projects", label: "Projects", component: ProjectsForm },
+  {
+    id: "certifications",
+    label: "Certifications",
+    component: CertificationsForm,
+  },
+  { id: "languages", label: "Languages", component: LanguagesForm },
+  { id: "achievements", label: "Achievements", component: AchievementsForm },
+  { id: "references", label: "References", component: ReferencesForm },
 ];
 
 export default function ResumeFormWizard({
@@ -42,10 +51,10 @@ export default function ResumeFormWizard({
   onChange,
   templateSlug,
   selectedTheme,
-  onThemeChange
+  onThemeChange,
 }: ResumeFormWizardProps) {
   const [currentStep, setCurrentStep] = useState(0);
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  const [isMobile, _setIsMobile] = useState(window.innerWidth < 768);
 
   const calculateProgress = (): number => {
     let filledFields = 0;
@@ -85,7 +94,7 @@ export default function ResumeFormWizard({
   };
 
   const handleSaveDraft = () => {
-    toast.success('Draft saved successfully!');
+    toast.success("Draft saved successfully!");
   };
 
   const CurrentFormComponent = STEPS[currentStep].component;
@@ -106,8 +115,11 @@ export default function ResumeFormWizard({
           </div>
         </CardHeader>
         <CardContent className="space-y-6">
-          <ColorThemeSelector selected={selectedTheme} onSelect={onThemeChange} />
-          
+          <ColorThemeSelector
+            selected={selectedTheme}
+            onSelect={onThemeChange}
+          />
+
           <Accordion type="single" collapsible value={STEPS[currentStep].id}>
             {STEPS.map((step, index) => (
               <AccordionItem key={step.id} value={step.id}>
@@ -126,7 +138,11 @@ export default function ResumeFormWizard({
           </Accordion>
 
           <div className="flex gap-2">
-            <Button onClick={handleSaveDraft} variant="outline" className="flex-1">
+            <Button
+              onClick={handleSaveDraft}
+              variant="outline"
+              className="flex-1"
+            >
               <Save className="mr-2 h-4 w-4" />
               Save Draft
             </Button>
@@ -143,7 +159,9 @@ export default function ResumeFormWizard({
         <CardTitle>Build Your Resume</CardTitle>
         <div className="space-y-2">
           <div className="flex justify-between text-sm text-muted-foreground">
-            <span>Step {currentStep + 1} of {STEPS.length}</span>
+            <span>
+              Step {currentStep + 1} of {STEPS.length}
+            </span>
             <span>{progress}% Complete</span>
           </div>
           <Progress value={progress} className="h-2" />
@@ -157,10 +175,10 @@ export default function ResumeFormWizard({
               key={step.id}
               className={`flex-1 text-center ${
                 index === currentStep
-                  ? 'text-primary font-semibold'
+                  ? "text-primary font-semibold"
                   : index < currentStep
-                  ? 'text-muted-foreground'
-                  : 'text-muted-foreground/50'
+                    ? "text-muted-foreground"
+                    : "text-muted-foreground/50"
               }`}
             >
               <div className="text-xs hidden md:block">{step.label}</div>
@@ -171,13 +189,18 @@ export default function ResumeFormWizard({
         {/* Color Theme Selector */}
         {currentStep === 0 && (
           <div className="mb-6">
-            <ColorThemeSelector selected={selectedTheme} onSelect={onThemeChange} />
+            <ColorThemeSelector
+              selected={selectedTheme}
+              onSelect={onThemeChange}
+            />
           </div>
         )}
 
         {/* Current Form */}
         <div className="min-h-[400px]">
-          <h3 className="text-xl font-semibold mb-4">{STEPS[currentStep].label}</h3>
+          <h3 className="text-xl font-semibold mb-4">
+            {STEPS[currentStep].label}
+          </h3>
           <CurrentFormComponent
             data={resumeData}
             onChange={onChange}

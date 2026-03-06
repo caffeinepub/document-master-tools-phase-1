@@ -1,17 +1,36 @@
-import { useState } from 'react';
-import { Card, CardContent } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useState } from "react";
 
 export default function DivisionCalculator() {
-  const [percentage, setPercentage] = useState('');
+  const [percentage, setPercentage] = useState("");
 
   const getDivision = () => {
-    const perc = parseFloat(percentage) || 0;
-    if (perc >= 60) return { division: 'First Division', color: 'text-green-600 dark:text-green-400', bg: 'bg-green-50 dark:bg-green-950/20' };
-    if (perc >= 50) return { division: 'Second Division', color: 'text-blue-600 dark:text-blue-400', bg: 'bg-blue-50 dark:bg-blue-950/20' };
-    if (perc >= 40) return { division: 'Third Division', color: 'text-yellow-600 dark:text-yellow-400', bg: 'bg-yellow-50 dark:bg-yellow-950/20' };
-    return { division: 'Fail', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-950/20' };
+    const perc = Number.parseFloat(percentage) || 0;
+    if (perc >= 60)
+      return {
+        division: "First Division",
+        color: "text-green-600 dark:text-green-400",
+        bg: "bg-green-50 dark:bg-green-950/20",
+      };
+    if (perc >= 50)
+      return {
+        division: "Second Division",
+        color: "text-blue-600 dark:text-blue-400",
+        bg: "bg-blue-50 dark:bg-blue-950/20",
+      };
+    if (perc >= 40)
+      return {
+        division: "Third Division",
+        color: "text-yellow-600 dark:text-yellow-400",
+        bg: "bg-yellow-50 dark:bg-yellow-950/20",
+      };
+    return {
+      division: "Fail",
+      color: "text-red-600 dark:text-red-400",
+      bg: "bg-red-50 dark:bg-red-950/20",
+    };
   };
 
   const result = getDivision();
@@ -20,7 +39,9 @@ export default function DivisionCalculator() {
     <div className="space-y-6">
       <Card className="bg-card border-border">
         <CardContent className="pt-6">
-          <Label htmlFor="percentage" className="text-sm font-medium">Percentage (0-100)</Label>
+          <Label htmlFor="percentage" className="text-sm font-medium">
+            Percentage (0-100)
+          </Label>
           <Input
             id="percentage"
             type="number"
@@ -39,7 +60,9 @@ export default function DivisionCalculator() {
         <CardContent className="pt-6">
           <div className="text-center">
             <p className="text-sm text-muted-foreground mb-2">Division</p>
-            <p className={`text-4xl font-bold ${result.color}`}>{result.division}</p>
+            <p className={`text-4xl font-bold ${result.color}`}>
+              {result.division}
+            </p>
           </div>
         </CardContent>
       </Card>

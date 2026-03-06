@@ -1,58 +1,57 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight, Home } from "lucide-react";
 
 interface BreadcrumbItem {
   label: string;
-  url?: string;
   onClick?: () => void;
+  href?: string;
 }
 
 interface BreadcrumbNavigationProps {
   items: BreadcrumbItem[];
+  onNavigate?: (page: string) => void;
 }
 
-export default function BreadcrumbNavigation({ items }: BreadcrumbNavigationProps) {
-  // Generate structured data for breadcrumbs
-  const structuredData = {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": items.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "name": item.label,
-      "item": item.url ? `${window.location.origin}${item.url}` : undefined
-    }))
-  };
-
+export default function BreadcrumbNavigation({
+  items,
+  onNavigate,
+}: BreadcrumbNavigationProps) {
   return (
-    <>
-      {/* JSON-LD Structured Data */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-      />
-
-      {/* Breadcrumb Navigation */}
-      <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
-          {items.map((item, index) => (
-            <li key={index} className="flex items-center gap-2">
-              {index > 0 && <ChevronRight className="h-4 w-4" />}
-              {index === items.length - 1 ? (
-                <span className="font-medium text-foreground truncate max-w-[200px] sm:max-w-none">
-                  {item.label}
-                </span>
-              ) : (
-                <button
-                  onClick={item.onClick}
-                  className="hover:text-foreground transition-colors truncate max-w-[150px] sm:max-w-none"
-                >
-                  {item.label}
-                </button>
-              )}
-            </li>
-          ))}
-        </ol>
-      </nav>
-    </>
+    <nav
+      aria-label="Breadcrumb"
+      className="flex items-center gap-1 text-sm text-slate-400 mb-6 flex-wrap"
+    >
+      <button
+        onClick={() => onNavigate?.("home")}
+        className="flex items-center gap-1 hover:text-white transition-colors duration-200"
+        aria-label="Home"
+      >
+        <Home className="w-4 h-4 shrink-0" />
+        <span className="hidden sm:inline">Home</span>
+      </button>
+      {items.map((item, index) => (
+        <span key={index} className="flex items-center gap-1">
+          <ChevronRight className="w-4 h-4 shrink-0 text-slate-600" />
+          {item.onClick || item.href ? (
+            item.href ? (
+              <a
+                href={item.href}
+                className="hover:text-white transition-colors duration-200"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <button
+                onClick={item.onClick}
+                className="hover:text-white transition-colors duration-200"
+              >
+                {item.label}
+              </button>
+            )
+          ) : (
+            <span className="text-slate-200">{item.label}</span>
+          )}
+        </span>
+      ))}
+    </nav>
   );
 }

@@ -1,13 +1,19 @@
-import { useState } from 'react';
-import { ArrowLeft, Scissors } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import FileUploadZone from '../FileUploadZone';
-import ProcessingState from '../ProcessingState';
-import DownloadSection from '../DownloadSection';
-import { toast } from 'sonner';
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { ArrowLeft, Scissors } from "lucide-react";
+import { useState } from "react";
+import { toast } from "sonner";
+import DownloadSection from "../DownloadSection";
+import FileUploadZone from "../FileUploadZone";
+import ProcessingState from "../ProcessingState";
 
 interface PDFSplitToolProps {
   onBack: () => void;
@@ -20,13 +26,13 @@ interface SplitFile {
 
 export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
   const [file, setFile] = useState<File | null>(null);
-  const [pageRange, setPageRange] = useState('');
+  const [pageRange, setPageRange] = useState("");
   const [processing, setProcessing] = useState(false);
   const [splitResults, setSplitResults] = useState<SplitFile[]>([]);
 
   const handleFileSelect = (selectedFile: File) => {
-    if (selectedFile.type !== 'application/pdf') {
-      toast.error('Please select a PDF file');
+    if (selectedFile.type !== "application/pdf") {
+      toast.error("Please select a PDF file");
       return;
     }
     setFile(selectedFile);
@@ -34,30 +40,32 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
 
   const handleSplitPDF = async () => {
     if (!file) {
-      toast.error('Please select a PDF file');
+      toast.error("Please select a PDF file");
       return;
     }
 
     setProcessing(true);
     try {
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
       // Simulate splitting into multiple individual PDF files
       const results: SplitFile[] = [];
-      const pageCount = pageRange ? pageRange.split(',').length : 3;
-      
+      const pageCount = pageRange ? pageRange.split(",").length : 3;
+
       for (let i = 0; i < pageCount; i++) {
-        const blob = new Blob([new Uint8Array(1024 * 50)], { type: 'application/pdf' });
+        const blob = new Blob([new Uint8Array(1024 * 50)], {
+          type: "application/pdf",
+        });
         results.push({
           blob,
-          name: `split-page-${i + 1}.pdf`
+          name: `split-page-${i + 1}.pdf`,
         });
       }
-      
+
       setSplitResults(results);
       toast.success(`PDF split into ${results.length} individual files!`);
-    } catch (error) {
-      toast.error('Failed to split PDF');
+    } catch (_error) {
+      toast.error("Failed to split PDF");
     } finally {
       setProcessing(false);
     }
@@ -65,7 +73,7 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
 
   const reset = () => {
     setFile(null);
-    setPageRange('');
+    setPageRange("");
     setSplitResults([]);
   };
 
@@ -81,7 +89,8 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
           <CardHeader>
             <CardTitle className="text-2xl">Split PDF</CardTitle>
             <CardDescription>
-              Extract specific pages from your PDF. Enter page ranges like "1-3, 5, 7-9" or leave empty to split all pages into individual files.
+              Extract specific pages from your PDF. Enter page ranges like "1-3,
+              5, 7-9" or leave empty to split all pages into individual files.
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -115,7 +124,11 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
                       </p>
                     </div>
 
-                    <Button onClick={handleSplitPDF} className="w-full" size="lg">
+                    <Button
+                      onClick={handleSplitPDF}
+                      className="w-full"
+                      size="lg"
+                    >
                       <Scissors className="mr-2 h-4 w-4" />
                       Split PDF
                     </Button>
@@ -124,7 +137,9 @@ export default function PDFSplitTool({ onBack }: PDFSplitToolProps) {
               </>
             )}
 
-            {processing && <ProcessingState message="Splitting PDF into individual files..." />}
+            {processing && (
+              <ProcessingState message="Splitting PDF into individual files..." />
+            )}
 
             {splitResults.length > 0 && (
               <DownloadSection

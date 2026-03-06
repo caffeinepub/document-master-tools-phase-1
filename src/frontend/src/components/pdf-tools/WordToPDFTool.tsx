@@ -1,4 +1,4 @@
-import { BasePDFTool } from './BasePDFTool';
+import { BasePDFTool } from "./BasePDFTool";
 
 export default function WordToPDFTool({ onBack }: { onBack: () => void }) {
   return (

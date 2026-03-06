@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import LoanCalculator from '@/components/calculators/LoanCalculator';
+import LoanCalculator from "@/components/calculators/LoanCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface LoanCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function LoanCalculatorPage({ onBack }: LoanCalculatorPageProps) {
+export default function LoanCalculatorPage({
+  onBack,
+}: LoanCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Loan Calculator | Calculator Hub';
+    document.title = "Loan Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,21 +24,29 @@ export default function LoanCalculatorPage({ onBack }: LoanCalculatorPageProps) 
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Loan Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Loan Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
-              Calculate loan tenure and total interest from monthly payment amount.
+              Calculate loan tenure and total interest from monthly payment
+              amount.
             </p>
           </header>
 
           <LoanCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Loan Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Loan Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Calculate how long it will take to repay a loan based on your monthly payment capacity. Enter loan amount, interest rate, and monthly payment to find out the tenure and total interest payable.
+              Calculate how long it will take to repay a loan based on your
+              monthly payment capacity. Enter loan amount, interest rate, and
+              monthly payment to find out the tenure and total interest payable.
             </p>
             <p className="text-muted-foreground">
-              The calculator validates that your monthly payment is sufficient to cover the interest, ensuring realistic repayment scenarios.
+              The calculator validates that your monthly payment is sufficient
+              to cover the interest, ensuring realistic repayment scenarios.
             </p>
           </section>
 

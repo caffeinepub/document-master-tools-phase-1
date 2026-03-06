@@ -1,15 +1,17 @@
-import { useEffect } from 'react';
-import { ArrowLeft } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import DateDifferenceCalculator from '@/components/calculators/DateDifferenceCalculator';
+import DateDifferenceCalculator from "@/components/calculators/DateDifferenceCalculator";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft } from "lucide-react";
+import { useEffect } from "react";
 
 interface DateDifferenceCalculatorPageProps {
   onBack: () => void;
 }
 
-export default function DateDifferenceCalculatorPage({ onBack }: DateDifferenceCalculatorPageProps) {
+export default function DateDifferenceCalculatorPage({
+  onBack,
+}: DateDifferenceCalculatorPageProps) {
   useEffect(() => {
-    document.title = 'Date Difference Calculator | Calculator Hub';
+    document.title = "Date Difference Calculator | Calculator Hub";
   }, []);
 
   return (
@@ -22,7 +24,9 @@ export default function DateDifferenceCalculatorPage({ onBack }: DateDifferenceC
 
         <article>
           <header className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold mb-3">Date Difference Calculator</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-3">
+              Date Difference Calculator
+            </h1>
             <p className="text-lg text-muted-foreground">
               Calculate difference between two dates in years, months, days.
             </p>
@@ -31,12 +35,17 @@ export default function DateDifferenceCalculatorPage({ onBack }: DateDifferenceC
           <DateDifferenceCalculator />
 
           <section className="mt-8 prose prose-sm max-w-none">
-            <h2 className="text-xl font-semibold mb-3">About Date Difference Calculator</h2>
+            <h2 className="text-xl font-semibold mb-3">
+              About Date Difference Calculator
+            </h2>
             <p className="text-muted-foreground mb-4">
-              Calculate the exact difference between two dates in years, months, and days. Also see total difference in weeks and days. Option to exclude weekends for business day calculations.
+              Calculate the exact difference between two dates in years, months,
+              and days. Also see total difference in weeks and days. Option to
+              exclude weekends for business day calculations.
             </p>
             <p className="text-muted-foreground">
-              Useful for project planning, calculating employment duration, tracking relationships, or any time-based calculations.
+              Useful for project planning, calculating employment duration,
+              tracking relationships, or any time-based calculations.
             </p>
           </section>
 

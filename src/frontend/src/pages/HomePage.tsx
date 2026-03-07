@@ -10,6 +10,8 @@ import {
   FileImage,
   FileOutput,
   FileText,
+  Flame,
+  Gamepad2,
   GraduationCap,
   Heart,
   Image,
@@ -29,6 +31,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import SEO from "../components/SEO";
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -343,6 +346,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
 
   return (
     <div className="min-h-screen">
+      <SEO
+        title="DocMasterTools.com – Free Online Document, PDF, Image & Typing Tools"
+        description="Free online tools for PDF, image editing, resume builder, calculators, and typing tests. All processing done locally in your browser – no uploads, no data stored."
+        canonicalUrl="https://docmastertools.com/"
+      />
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-16 md:py-24">
         <div className="absolute inset-0 bg-gradient-to-r from-blue-900/20 to-orange-900/20" />
@@ -694,6 +702,52 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               </h3>
               <p className="text-slate-400 text-xs">
                 Test WPM, accuracy &amp; mistakes — 1, 3 or 5 minute tests
+              </p>
+            </div>
+
+            <div
+              className="bg-slate-700 hover:bg-slate-600 rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-600 hover:border-slate-400 group"
+              onClick={() => onNavigate("typing-games")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  onNavigate("typing-games");
+              }}
+              // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+              role="button"
+              tabIndex={0}
+              data-ocid="typing_games.card"
+            >
+              <div className="text-purple-400 mb-3 group-hover:scale-110 transition-transform duration-200">
+                <Gamepad2 className="w-6 h-6" />
+              </div>
+              <h3 className="text-white font-semibold text-sm mb-1">
+                Typing Games
+              </h3>
+              <p className="text-slate-400 text-xs">
+                Speed Race, Falling Words &amp; Word Shooter — learn by playing
+              </p>
+            </div>
+
+            <div
+              className="bg-slate-700 hover:bg-slate-600 rounded-xl p-5 cursor-pointer transition-all duration-200 hover:shadow-lg border border-slate-600 hover:border-slate-400 group"
+              onClick={() => onNavigate("daily-typing-challenge")}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ")
+                  onNavigate("daily-typing-challenge");
+              }}
+              // biome-ignore lint/a11y/useSemanticElements: card layout requires div container
+              role="button"
+              tabIndex={0}
+              data-ocid="daily_typing_challenge.card"
+            >
+              <div className="text-orange-400 mb-3 group-hover:scale-110 transition-transform duration-200">
+                <Flame className="w-6 h-6" />
+              </div>
+              <h3 className="text-white font-semibold text-sm mb-1">
+                Daily Typing Challenge
+              </h3>
+              <p className="text-slate-400 text-xs">
+                New challenge every day — compete on today's leaderboard
               </p>
             </div>
           </div>

@@ -1,4 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import SEO from "../components/SEO";
+import TypingFAQ, {
+  type FAQItem,
+  type HowToStep,
+} from "../components/TypingFAQ";
+import TypingInternalLinks from "../components/TypingInternalLinks";
+import TypingProgressPanel from "../components/TypingProgressPanel";
+import { updateTypingProgress } from "../utils/typingProgress";
 
 // ---- Types ----
 type TestDuration = 1 | 3 | 5;
@@ -70,26 +78,45 @@ const TIPS: { title: string; body: string }[] = [
   },
 ];
 
-const INTERNAL_LINKS: { label: string; page: string; desc: string }[] = [
+const SEO_FAQS: FAQItem[] = [
   {
-    label: "Typing Test",
-    page: "typing-test",
-    desc: "Full-featured typing practice with Learn Typing and Practice Mode",
+    q: "What is a good typing speed?",
+    a: "A typing speed of 40–60 WPM is considered average. Professional typists typically achieve 65–75 WPM or more with high accuracy.",
   },
   {
-    label: "1 Minute Typing Test",
-    page: "typing-test-1-minute",
-    desc: "Quick 60-second speed check",
+    q: "How is WPM calculated?",
+    a: "WPM is calculated by dividing the total number of words typed by the duration of the test in minutes. Each 5 characters count as one word.",
   },
   {
-    label: "3 Minute Typing Test",
-    page: "typing-test-3-minute",
-    desc: "Balanced test for consistent WPM measurement",
+    q: "How can I improve my typing accuracy?",
+    a: "Slow down slightly, focus on hitting each key correctly, and practice the home row position. Accuracy always comes before speed.",
   },
   {
-    label: "5 Minute Typing Test",
-    page: "typing-test-5-minute",
-    desc: "Endurance test for serious typists",
+    q: "Should I take the 1, 3, or 5 minute test?",
+    a: "Start with the 1-minute test for a quick check. Use the 3-minute test for a reliable average. The 5-minute test measures sustained typing endurance.",
+  },
+  {
+    q: "Does practice typing daily help?",
+    a: "Yes. Even 10–15 minutes of daily typing practice leads to measurable improvement in speed and accuracy within a few weeks.",
+  },
+];
+
+const SEO_HOW_TO_STEPS: HowToStep[] = [
+  {
+    name: "Choose your test duration",
+    text: "Select 1, 3, or 5 minutes depending on whether you want a quick check or an endurance test.",
+  },
+  {
+    name: "Click Start Test",
+    text: "Press the Start Test button to begin. The timer will start and the text will be ready to type.",
+  },
+  {
+    name: "Type the displayed text as accurately as possible",
+    text: "Type each word carefully. Character highlighting shows correct (green) and incorrect (red) characters in real time.",
+  },
+  {
+    name: "Review your WPM and accuracy when the timer ends",
+    text: "Your final WPM, accuracy percentage, and mistake count are shown on the results screen.",
   },
 ];
 
@@ -178,7 +205,12 @@ export default function TypingTestSEOPage({
     if (timerRef.current) clearInterval(timerRef.current);
     setFinalStats({ ...liveStatsRef.current });
     setTestState("finished");
-  }, []);
+    updateTypingProgress(
+      liveStatsRef.current.wpm,
+      selectedDuration * 60 - timeLeft,
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedDuration, timeLeft]);
 
   const startTest = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -286,6 +318,12 @@ export default function TypingTestSEOPage({
         padding: "2rem 1rem 3rem",
       }}
     >
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        canonicalUrl={`https://docmastertools.com/typing-test-${duration}-minute`}
+        ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>
         {/* Page Header */}
         <div style={{ marginBottom: "1.75rem" }}>
@@ -588,69 +626,21 @@ export default function TypingTestSEOPage({
           </div>
         </div>
 
+        {/* Progress Panel */}
+        <TypingProgressPanel />
+
         {/* Internal Links Section */}
-        <div style={card}>
-          <h2 style={sectionHeading}>More Typing Tests</h2>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-              gap: "0.75rem",
-            }}
-          >
-            {INTERNAL_LINKS.map((link) => {
-              const isActive = link.page === `typing-test-${duration}-minute`;
-              return (
-                <button
-                  key={link.page}
-                  type="button"
-                  data-ocid={`seo_typing_test.nav.${link.page.replace(/-/g, "_")}.link`}
-                  onClick={() => onNavigate(link.page)}
-                  style={{
-                    background: isActive ? "#1e3a5f" : "#1e293b",
-                    border: isActive
-                      ? "1px solid #2563eb"
-                      : "1px solid #334155",
-                    borderRadius: "0.75rem",
-                    padding: "1rem",
-                    textAlign: "left",
-                    cursor: "pointer",
-                    transition: "all 0.15s",
-                  }}
-                >
-                  <div
-                    style={{
-                      color: isActive ? "#60a5fa" : "#ffffff",
-                      fontWeight: 700,
-                      fontSize: "0.9rem",
-                      marginBottom: "0.25rem",
-                    }}
-                  >
-                    {link.label}
-                    {isActive && (
-                      <span
-                        style={{
-                          marginLeft: "0.5rem",
-                          background: "#2563eb",
-                          color: "#fff",
-                          fontSize: "0.65rem",
-                          padding: "1px 6px",
-                          borderRadius: "0.25rem",
-                          verticalAlign: "middle",
-                        }}
-                      >
-                        Current
-                      </span>
-                    )}
-                  </div>
-                  <div style={{ color: "#64748b", fontSize: "0.78rem" }}>
-                    {link.desc}
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-        </div>
+        <TypingInternalLinks
+          onNavigate={onNavigate}
+          currentPage={`typing-test-${duration}-minute`}
+        />
+
+        {/* FAQ */}
+        <TypingFAQ
+          faqs={SEO_FAQS}
+          howToSteps={SEO_HOW_TO_STEPS}
+          howToName="How to Take a Typing Speed Test"
+        />
       </div>
     </div>
   );

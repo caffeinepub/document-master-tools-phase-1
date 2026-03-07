@@ -7,6 +7,10 @@ import {
   Share2,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import SEO from "../components/SEO";
+import TypingFAQ, { type FAQItem } from "../components/TypingFAQ";
+import TypingInternalLinks from "../components/TypingInternalLinks";
+import { updateTypingProgress } from "../utils/typingProgress";
 
 const SAMPLE_TEXTS = [
   "The quick brown fox jumps over the lazy dog. Practice makes perfect and consistent effort leads to improvement over time. Keep typing to build your speed and accuracy.",
@@ -207,11 +211,38 @@ const PRACTICE_PARAGRAPHS = [
   "Good typing habits start with the correct posture. Sit up straight, keep your wrists slightly elevated, and let your fingers rest lightly on the home row keys at all times.",
 ];
 
+const TYPING_TEST_FAQS: FAQItem[] = [
+  {
+    q: "How does the typing test work?",
+    a: "Click Start Test, select your duration (1, 3, or 5 minutes), and type the displayed text. Your WPM, accuracy, and mistakes are tracked live.",
+  },
+  {
+    q: "What is the Learn Typing tab?",
+    a: "The Learn Typing tab provides structured keyboard lessons including Home Row, Top Row, and Bottom Row drills with live accuracy feedback.",
+  },
+  {
+    q: "Can I generate a typing certificate?",
+    a: "Yes. After completing a test, click Generate Typing Certificate, enter your name, and download your certificate as a PNG.",
+  },
+  {
+    q: "How is my progress tracked?",
+    a: "Your best WPM, average WPM, and total tests are stored in your browser. The stats panel at the top updates after each completed test.",
+  },
+  {
+    q: "What is the typing leaderboard?",
+    a: "The leaderboard shows the top 10 scores from all tests taken in your browser session, sorted by WPM.",
+  },
+];
+
 interface TypingTestPageProps {
   onBack?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export default function TypingTestPage({ onBack }: TypingTestPageProps) {
+export default function TypingTestPage({
+  onBack,
+  onNavigate,
+}: TypingTestPageProps) {
   const [activeTab, setActiveTab] = useState<ActiveTab>("test");
 
   // --- Typing Test state ---
@@ -310,7 +341,7 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
     const stats = { ...liveStatsRef.current };
     setFinalStats(stats);
     setTestState("finished");
-    // Update progress tracking
+    // Update existing local progress tracking
     setProgress((prev) => {
       const updated: ProgressStats = {
         bestWpm: Math.max(prev.bestWpm, stats.wpm),
@@ -320,7 +351,9 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
       saveProgress(updated);
       return updated;
     });
-  }, []);
+    // Also update shared progress key so TypingProgressPanel picks it up
+    updateTypingProgress(stats.wpm, duration * 60);
+  }, [duration]);
 
   const startTest = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -818,6 +851,12 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white py-8 px-4">
+      <SEO
+        title="Free Typing Test & Learn Typing | DocMasterTools"
+        description="Take a free online typing test, learn touch typing with guided lessons, and track your progress. 1, 3, and 5 minute tests with WPM and accuracy tracking."
+        canonicalUrl="https://docmastertools.com/typing-test"
+        ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
       <div className="max-w-3xl mx-auto">
         {/* Back button */}
         {onBack && (
@@ -1897,6 +1936,15 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
           copied to clipboard!
         </div>
       )}
+
+      {/* Internal Links */}
+      <div className="max-w-3xl mx-auto mt-6">
+        <TypingInternalLinks
+          onNavigate={onNavigate ?? onBack ?? (() => {})}
+          currentPage="typing-test"
+        />
+        <TypingFAQ faqs={TYPING_TEST_FAQS} />
+      </div>
     </div>
   );
 }

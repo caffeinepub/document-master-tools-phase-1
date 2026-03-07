@@ -1,12 +1,17 @@
 import React, { useState, Suspense } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import OrganizationSchema from "./components/OrganizationSchema";
 import { LanguageProvider } from "./contexts/LanguageContext";
 
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const TypingTestPage = React.lazy(() => import("./pages/TypingTestPage"));
 const TypingTestSEOPage = React.lazy(() => import("./pages/TypingTestSEOPage"));
+const TypingGamesPage = React.lazy(() => import("./pages/TypingGamesPage"));
+const DailyTypingChallengePage = React.lazy(
+  () => import("./pages/DailyTypingChallengePage"),
+);
 
 // Legal pages
 const ContactUsPage = React.lazy(() => import("./pages/ContactUsPage"));
@@ -19,6 +24,18 @@ const VerifyCertificatePage = React.lazy(
   () => import("./pages/VerifyCertificatePage"),
 );
 const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage"));
+const TypingPracticePage = React.lazy(
+  () => import("./pages/TypingPracticePage"),
+);
+const LearnTouchTypingPage = React.lazy(
+  () => import("./pages/LearnTouchTypingPage"),
+);
+const FreeTypingLessonsPage = React.lazy(
+  () => import("./pages/FreeTypingLessonsPage"),
+);
+const TypingSpeedPracticePage = React.lazy(
+  () => import("./pages/TypingSpeedPracticePage"),
+);
 const PDFToolsPage = React.lazy(() => import("./pages/PDFToolsPage"));
 const ImageToolsPage = React.lazy(() => import("./pages/ImageToolsPage"));
 const ResumeBuilderPage = React.lazy(() => import("./pages/ResumeBuilderPage"));
@@ -194,10 +211,16 @@ type Page =
   | "image-background-remover"
   // typing
   | "typing-test"
+  | "typing-games"
+  | "daily-typing-challenge"
   | "typing-test-1-minute"
   | "typing-test-3-minute"
   | "typing-test-5-minute"
   | "verify-certificate"
+  | "typing-practice"
+  | "learn-touch-typing"
+  | "free-typing-lessons"
+  | "typing-speed-practice"
   // legal pages
   | "contact-us"
   | "about-us"
@@ -345,7 +368,26 @@ function App() {
         );
 
       case "typing-test":
-        return <TypingTestPage onBack={goHome} />;
+        return <TypingTestPage onBack={goHome} onNavigate={navigate} />;
+
+      case "typing-games":
+        return <TypingGamesPage onBack={goHome} onNavigate={navigate} />;
+
+      case "daily-typing-challenge":
+        return (
+          <DailyTypingChallengePage onBack={goHome} onNavigate={navigate} />
+        );
+
+      case "typing-practice":
+        return <TypingPracticePage onNavigate={navigate} onBack={goHome} />;
+      case "learn-touch-typing":
+        return <LearnTouchTypingPage onNavigate={navigate} onBack={goHome} />;
+      case "free-typing-lessons":
+        return <FreeTypingLessonsPage onNavigate={navigate} onBack={goHome} />;
+      case "typing-speed-practice":
+        return (
+          <TypingSpeedPracticePage onNavigate={navigate} onBack={goHome} />
+        );
 
       case "typing-test-1-minute":
         return (
@@ -530,6 +572,7 @@ function App() {
 
   return (
     <LanguageProvider>
+      <OrganizationSchema />
       <div className="min-h-screen bg-gray-900 flex flex-col">
         <Header onNavigate={navigate} onNavigateHome={goHome} />
         <main className="flex-1">

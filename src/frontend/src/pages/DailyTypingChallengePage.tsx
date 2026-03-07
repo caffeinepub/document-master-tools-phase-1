@@ -1,8 +1,10 @@
 import { ArrowLeft, Flame, Trophy } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, { type FAQItem } from "../components/TypingFAQ";
 import TypingInternalLinks from "../components/TypingInternalLinks";
+import { trackDailyChallengeCompleted } from "../utils/analytics";
 import { updateTypingProgress } from "../utils/typingProgress";
 
 // ─── Challenge Texts (30 entries, one per day of year rotation) ───────────────
@@ -235,6 +237,12 @@ export default function DailyTypingChallengePage({
       setFinalAccuracy(stats.accuracy);
       setFinalTime(currentElapsed);
       setState("finished");
+      // GA4: track daily challenge completion
+      trackDailyChallengeCompleted({
+        wpm: stats.wpm,
+        accuracy: stats.accuracy,
+        timeTaken: currentElapsed,
+      });
     },
     [calcStats],
   );
@@ -372,6 +380,15 @@ export default function DailyTypingChallengePage({
         description="Take the daily typing challenge on DocMasterTools. A fresh typing challenge text every day with a leaderboard. Improve your speed and accuracy daily."
         canonicalUrl="https://docmastertools.com/daily-typing-challenge"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Daily Typing Challenge",
+            url: "https://docmastertools.com/daily-typing-challenge",
+          },
+        ]}
       />
       <div style={{ maxWidth: "800px", margin: "0 auto" }}>
         {/* Back button */}

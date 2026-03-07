@@ -1,7 +1,9 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, { type FAQItem } from "../components/TypingFAQ";
 import TypingInternalLinks from "../components/TypingInternalLinks";
+import { trackTypingGamePlayed } from "../utils/analytics";
 
 // ─── Word lists ───────────────────────────────────────────────────────────────
 const EASY_WORDS = [
@@ -952,6 +954,19 @@ function SpeedRaceGame({
     setGameState("finished");
   }, [clearTimer]);
 
+  // GA4: track game completion
+  useEffect(() => {
+    if (gameState === "finished") {
+      trackTypingGamePlayed({
+        gameName: "speed_race",
+        score,
+        wpm,
+        accuracy,
+        timeTaken: GAME_DURATION - timeLeft,
+      });
+    }
+  }, [gameState, score, wpm, accuracy, timeLeft]);
+
   useEffect(() => {
     if (gameState === "playing") {
       timerRef.current = setInterval(() => {
@@ -1268,6 +1283,19 @@ function FallingWordsGame({
     gameStateRef.current = "finished";
     setGameState("finished");
   }, [clearAll]);
+
+  // GA4: track game completion
+  useEffect(() => {
+    if (gameState === "finished") {
+      trackTypingGamePlayed({
+        gameName: "falling_words",
+        score,
+        wpm,
+        accuracy,
+        timeTaken: GAME_DURATION - timeLeft,
+      });
+    }
+  }, [gameState, score, wpm, accuracy, timeLeft]);
 
   const spawnWord = useCallback(() => {
     if (gameStateRef.current !== "playing") return;
@@ -1604,6 +1632,19 @@ function WordShooterGame({
     gameStateRef.current = "finished";
     setGameState("finished");
   }, [clearAll]);
+
+  // GA4: track game completion
+  useEffect(() => {
+    if (gameState === "finished") {
+      trackTypingGamePlayed({
+        gameName: "word_shooter",
+        score,
+        wpm,
+        accuracy,
+        timeTaken: GAME_DURATION - timeLeft,
+      });
+    }
+  }, [gameState, score, wpm, accuracy, timeLeft]);
 
   const spawnTarget = useCallback(() => {
     if (gameStateRef.current !== "playing") return;
@@ -2039,6 +2080,15 @@ export default function TypingGamesPage({
         description="Play free typing games to improve your speed and accuracy. Speed Race, Falling Words, and Word Shooter — fun typing challenges with leaderboards."
         canonicalUrl="https://docmastertools.com/typing-games"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Typing Games",
+            url: "https://docmastertools.com/typing-games",
+          },
+        ]}
       />
       <div style={innerStyle}>
         {/* Header */}

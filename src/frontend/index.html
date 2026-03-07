@@ -5,6 +5,23 @@
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
         <title>Document Master Tools - Phase 7</title>
+        <!-- Google Analytics GA4 -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-0HQE1FK58V"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-0HQE1FK58V', {
+                send_page_view: false,
+                enhanced_measurement: {
+                    scroll: true,
+                    outbound_links: true,
+                    file_downloads: true,
+                    video_engagement: false,
+                    site_search: false
+                }
+            });
+        </script>
     </head>
     <body>
         <div id='root'></div>

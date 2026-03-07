@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, {
   type FAQItem,
@@ -217,6 +218,15 @@ export default function LearnTouchTypingPage({
         description="Learn touch typing from scratch with our free guide. Master finger placement, home row keys, and keyboard technique to type faster without looking."
         canonicalUrl="https://docmastertools.com/learn-touch-typing"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Learn Touch Typing",
+            url: "https://docmastertools.com/learn-touch-typing",
+          },
+        ]}
       />
 
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>

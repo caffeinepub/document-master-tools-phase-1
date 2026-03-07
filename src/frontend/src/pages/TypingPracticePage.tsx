@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, {
   type FAQItem,
@@ -211,6 +212,15 @@ export default function TypingPracticePage({
         description="Practice typing online with free exercises on DocMasterTools. Improve your WPM, accuracy, and build keyboard confidence with daily practice sessions."
         canonicalUrl="https://docmastertools.com/typing-practice"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Typing Practice",
+            url: "https://docmastertools.com/typing-practice",
+          },
+        ]}
       />
 
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>

@@ -1,8 +1,10 @@
-import React, { useState, Suspense } from "react";
+import React, { useState, Suspense, useEffect } from "react";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import OrganizationSchema from "./components/OrganizationSchema";
+import WebsiteSearchSchema from "./components/WebsiteSearchSchema";
 import { LanguageProvider } from "./contexts/LanguageContext";
+import { PAGE_META, trackPageView } from "./utils/analytics";
 
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
@@ -39,11 +41,120 @@ const TypingSpeedPracticePage = React.lazy(
 const PDFToolsPage = React.lazy(() => import("./pages/PDFToolsPage"));
 const ImageToolsPage = React.lazy(() => import("./pages/ImageToolsPage"));
 const ResumeBuilderPage = React.lazy(() => import("./pages/ResumeBuilderPage"));
+const SitemapPage = React.lazy(() => import("./pages/SitemapPage"));
 const SmartDocumentFixerPage = React.lazy(
   () => import("./pages/image-tools/SmartDocumentFixerPage"),
 );
 const AIDocumentEnhancerPage = React.lazy(
   () => import("./pages/image-tools/AIDocumentEnhancerPage"),
+);
+
+// New Typing SEO Pages
+const TypingSpeedTestPage = React.lazy(
+  () => import("./pages/seo-typing/TypingSpeedTestPage"),
+);
+const TypingTestOnlinePage = React.lazy(
+  () => import("./pages/seo-typing/TypingTestOnlinePage"),
+);
+const TypingTestFreePage = React.lazy(
+  () => import("./pages/seo-typing/TypingTestFreePage"),
+);
+const CheckTypingSpeedPage = React.lazy(
+  () => import("./pages/seo-typing/CheckTypingSpeedPage"),
+);
+const TypingTestCertificatePage = React.lazy(
+  () => import("./pages/seo-typing/TypingTestCertificatePage"),
+);
+const TypingPracticeOnlinePage = React.lazy(
+  () => import("./pages/seo-typing/TypingPracticeOnlinePage"),
+);
+const TouchTypingPracticePage = React.lazy(
+  () => import("./pages/seo-typing/TouchTypingPracticePage"),
+);
+const ImproveTypingSpeedPage = React.lazy(
+  () => import("./pages/seo-typing/ImproveTypingSpeedPage"),
+);
+const LearnTypingOnlinePage = React.lazy(
+  () => import("./pages/seo-typing/LearnTypingOnlinePage"),
+);
+const TypingTestForJobsPage = React.lazy(
+  () => import("./pages/seo-typing/TypingTestForJobsPage"),
+);
+const TypingTest30SecondsPage = React.lazy(
+  () => import("./pages/seo-typing/TypingTest30SecondsPage"),
+);
+const TypingTest2MinutePage = React.lazy(
+  () => import("./pages/seo-typing/TypingTest2MinutePage"),
+);
+const TypingTest10MinutePage = React.lazy(
+  () => import("./pages/seo-typing/TypingTest10MinutePage"),
+);
+
+// New Document Tool SEO Pages
+const ResizePassportPhotoPage = React.lazy(
+  () => import("./pages/seo-docs/ResizePassportPhotoPage"),
+);
+const PassportPhotoResizeSEOPage = React.lazy(
+  () => import("./pages/seo-docs/PassportPhotoResizeSEOPage"),
+);
+const AadhaarPhotoResizeSEOPage = React.lazy(
+  () => import("./pages/seo-docs/AadhaarPhotoResizeSEOPage"),
+);
+const ResizeAadhaarPhotoPage = React.lazy(
+  () => import("./pages/seo-docs/ResizeAadhaarPhotoPage"),
+);
+const PANCardPhotoResizePage = React.lazy(
+  () => import("./pages/seo-docs/PANCardPhotoResizePage"),
+);
+const SignatureResizeOnlinePage = React.lazy(
+  () => import("./pages/seo-docs/SignatureResizeOnlinePage"),
+);
+const CompressImageOnlinePage = React.lazy(
+  () => import("./pages/seo-docs/CompressImageOnlinePage"),
+);
+const ConvertJpgToPngPage = React.lazy(
+  () => import("./pages/seo-docs/ConvertJpgToPngPage"),
+);
+const PDFToWordPage = React.lazy(
+  () => import("./pages/seo-docs/PDFToWordPage"),
+);
+const MergePDFPage = React.lazy(() => import("./pages/seo-docs/MergePDFPage"));
+const CompressPDFPage = React.lazy(
+  () => import("./pages/seo-docs/CompressPDFPage"),
+);
+const ImageBackgroundRemoverSEOPage = React.lazy(
+  () => import("./pages/seo-docs/ImageBackgroundRemoverPage"),
+);
+
+// Utility Tool Pages
+const WordCountToolPage = React.lazy(
+  () => import("./pages/seo-docs/WordCountToolPage"),
+);
+const RandomPasswordGeneratorPage = React.lazy(
+  () => import("./pages/seo-docs/RandomPasswordGeneratorPage"),
+);
+const JSONFormatterPage = React.lazy(
+  () => import("./pages/seo-docs/JSONFormatterPage"),
+);
+
+// Calculator SEO Pages
+const PercentageCalculatorPage = React.lazy(
+  () => import("./pages/seo-calculators/PercentageCalculatorPage"),
+);
+const DiscountCalculatorSEOPage = React.lazy(
+  () => import("./pages/seo-calculators/DiscountCalculatorSEOPage"),
+);
+const LoanEMICalculatorPage = React.lazy(
+  () => import("./pages/seo-calculators/LoanEMICalculatorPage"),
+);
+const AgeCalculatorSEOPage = React.lazy(
+  () => import("./pages/seo-calculators/AgeCalculatorSEOPage"),
+);
+const DateDifferenceCalculatorSEOPage = React.lazy(
+  () => import("./pages/seo-calculators/DateDifferenceCalculatorSEOPage"),
+);
+const GSTCalculatorSEOPage = React.lazy(
+  () => import("./pages/seo-calculators/GSTCalculatorSEOPage"),
 );
 
 // Calculator pages
@@ -165,6 +276,7 @@ const ResumeTemplateBuilderPage = React.lazy(
 
 type Page =
   | "home"
+  | "sitemap"
   | "calculators"
   | "pdf-tools"
   | "image-tools"
@@ -221,6 +333,44 @@ type Page =
   | "learn-touch-typing"
   | "free-typing-lessons"
   | "typing-speed-practice"
+  // new typing SEO pages
+  | "typing-speed-test"
+  | "typing-test-online"
+  | "typing-test-free"
+  | "check-typing-speed"
+  | "typing-test-with-certificate"
+  | "typing-practice-online"
+  | "touch-typing-practice"
+  | "improve-typing-speed"
+  | "learn-typing-online"
+  | "typing-test-for-jobs"
+  | "typing-test-30-seconds"
+  | "typing-test-2-minute"
+  | "typing-test-10-minute"
+  // new document tool SEO pages
+  | "passport-photo-resize"
+  | "aadhaar-photo-resize"
+  | "resize-passport-photo-online"
+  | "resize-photo-for-aadhaar-card"
+  | "pan-card-photo-resize"
+  | "signature-resize-online"
+  | "compress-image-online-free"
+  | "convert-jpg-to-png-online"
+  | "pdf-to-word-converter"
+  | "merge-pdf-files-online"
+  | "compress-pdf-file"
+  | "seo-image-background-remover"
+  // utility tool pages
+  | "word-count-tool"
+  | "random-password-generator"
+  | "json-formatter-online"
+  // calculator SEO pages
+  | "percentage-calculator"
+  | "discount-calculator"
+  | "loan-emi-calculator"
+  | "age-calculator-online"
+  | "date-difference-calculator"
+  | "gst-calculator"
   // legal pages
   | "contact-us"
   | "about-us"
@@ -256,6 +406,16 @@ const LoadingFallback = () => (
 function App() {
   const [currentPage, setCurrentPage] = useState<Page>("home");
 
+  // Track page views on every SPA route change
+  useEffect(() => {
+    const meta = PAGE_META[currentPage];
+    trackPageView({
+      page_title: meta?.title ?? `${currentPage} — DocMasterTools`,
+      page_url: `https://docmastertools.com/${currentPage === "home" ? "" : currentPage}`,
+      page_category: meta?.category ?? "other",
+    });
+  }, [currentPage]);
+
   // Accept string, cast to Page internally
   const navigate = (page: string) => {
     setCurrentPage(page as Page);
@@ -268,6 +428,8 @@ function App() {
     switch (currentPage) {
       case "home":
         return <HomePage onNavigate={navigate} />;
+      case "sitemap":
+        return <SitemapPage onNavigate={navigate} />;
       case "calculators":
         return <CalculatorsPage onNavigate={navigate} onBack={goHome} />;
       case "pdf-tools":
@@ -416,6 +578,105 @@ function App() {
 
       case "verify-certificate":
         return <VerifyCertificatePage onBack={goHome} />;
+
+      // New Typing SEO Pages
+      case "typing-speed-test":
+        return <TypingSpeedTestPage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-online":
+        return <TypingTestOnlinePage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-free":
+        return <TypingTestFreePage onNavigate={navigate} onBack={goHome} />;
+      case "check-typing-speed":
+        return <CheckTypingSpeedPage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-with-certificate":
+        return (
+          <TypingTestCertificatePage onNavigate={navigate} onBack={goHome} />
+        );
+      case "typing-practice-online":
+        return (
+          <TypingPracticeOnlinePage onNavigate={navigate} onBack={goHome} />
+        );
+      case "touch-typing-practice":
+        return (
+          <TouchTypingPracticePage onNavigate={navigate} onBack={goHome} />
+        );
+      case "improve-typing-speed":
+        return <ImproveTypingSpeedPage onNavigate={navigate} onBack={goHome} />;
+      case "learn-typing-online":
+        return <LearnTypingOnlinePage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-for-jobs":
+        return <TypingTestForJobsPage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-30-seconds":
+        return (
+          <TypingTest30SecondsPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "typing-test-2-minute":
+        return <TypingTest2MinutePage onNavigate={navigate} onBack={goHome} />;
+      case "typing-test-10-minute":
+        return <TypingTest10MinutePage onNavigate={navigate} onBack={goHome} />;
+
+      // New Document Tool SEO Pages
+      case "passport-photo-resize":
+        return (
+          <PassportPhotoResizeSEOPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "aadhaar-photo-resize":
+        return (
+          <AadhaarPhotoResizeSEOPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "resize-passport-photo-online":
+        return <ResizePassportPhotoPage onNavigate={navigate} />;
+      case "resize-photo-for-aadhaar-card":
+        return <ResizeAadhaarPhotoPage onNavigate={navigate} />;
+      case "pan-card-photo-resize":
+        return <PANCardPhotoResizePage onNavigate={navigate} />;
+      case "signature-resize-online":
+        return <SignatureResizeOnlinePage onNavigate={navigate} />;
+      case "compress-image-online-free":
+        return <CompressImageOnlinePage onNavigate={navigate} />;
+      case "convert-jpg-to-png-online":
+        return <ConvertJpgToPngPage onNavigate={navigate} />;
+      case "pdf-to-word-converter":
+        return <PDFToWordPage onNavigate={navigate} />;
+      case "merge-pdf-files-online":
+        return <MergePDFPage onNavigate={navigate} />;
+      case "compress-pdf-file":
+        return <CompressPDFPage onNavigate={navigate} />;
+      case "seo-image-background-remover":
+        return <ImageBackgroundRemoverSEOPage onNavigate={navigate} />;
+
+      // Utility Tool Pages
+      case "word-count-tool":
+        return <WordCountToolPage onNavigate={navigate} onBack={goHome} />;
+      case "random-password-generator":
+        return (
+          <RandomPasswordGeneratorPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "json-formatter-online":
+        return <JSONFormatterPage onNavigate={navigate} onBack={goHome} />;
+
+      // Calculator SEO Pages
+      case "percentage-calculator":
+        return (
+          <PercentageCalculatorPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "discount-calculator":
+        return (
+          <DiscountCalculatorSEOPage onNavigate={navigate} onBack={goHome} />
+        );
+      case "loan-emi-calculator":
+        return <LoanEMICalculatorPage onNavigate={navigate} onBack={goHome} />;
+      case "age-calculator-online":
+        return <AgeCalculatorSEOPage onNavigate={navigate} onBack={goHome} />;
+      case "date-difference-calculator":
+        return (
+          <DateDifferenceCalculatorSEOPage
+            onNavigate={navigate}
+            onBack={goHome}
+          />
+        );
+      case "gst-calculator":
+        return <GSTCalculatorSEOPage onNavigate={navigate} onBack={goHome} />;
 
       // Legal pages
       case "contact-us":
@@ -573,6 +834,7 @@ function App() {
   return (
     <LanguageProvider>
       <OrganizationSchema />
+      <WebsiteSearchSchema />
       <div className="min-h-screen bg-gray-900 flex flex-col">
         <Header onNavigate={navigate} onNavigateHome={goHome} />
         <main className="flex-1">

@@ -7,9 +7,18 @@ import {
   Share2,
 } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, { type FAQItem } from "../components/TypingFAQ";
 import TypingInternalLinks from "../components/TypingInternalLinks";
+import {
+  trackCertificateGenerated,
+  trackCertificateShared,
+  trackLeaderboardSubmission,
+  trackShareClicked,
+  trackTypingTestComplete,
+  trackTypingTestStart,
+} from "../utils/analytics";
 import { updateTypingProgress } from "../utils/typingProgress";
 
 const SAMPLE_TEXTS = [
@@ -353,6 +362,13 @@ export default function TypingTestPage({
     });
     // Also update shared progress key so TypingProgressPanel picks it up
     updateTypingProgress(stats.wpm, duration * 60);
+    // GA4: track test completion
+    trackTypingTestComplete({
+      testDuration: duration,
+      wpm: stats.wpm,
+      accuracy: stats.accuracy,
+      mistakes: stats.mistakes,
+    });
   }, [duration]);
 
   const startTest = () => {
@@ -370,6 +386,7 @@ export default function TypingTestPage({
     setPlayerName("");
     setTestState("running");
     startTimeRef.current = Date.now();
+    trackTypingTestStart(duration);
     setTimeout(() => inputRef.current?.focus(), 50);
   };
 
@@ -802,6 +819,16 @@ export default function TypingTestPage({
   const shareWhatsApp = () => {
     const text = encodeURIComponent(getShareMessage());
     window.open(`https://wa.me/?text=${text}`, "_blank", "noopener,noreferrer");
+    trackCertificateShared({
+      certificateId: certId,
+      platform: "whatsapp",
+      wpm: finalStats?.wpm,
+      accuracy: finalStats?.accuracy,
+    });
+    trackShareClicked({
+      platform: "whatsapp",
+      contentType: "typing_certificate",
+    });
   };
 
   const shareFacebook = () => {
@@ -811,6 +838,16 @@ export default function TypingTestPage({
       "_blank",
       "noopener,noreferrer",
     );
+    trackCertificateShared({
+      certificateId: certId,
+      platform: "facebook",
+      wpm: finalStats?.wpm,
+      accuracy: finalStats?.accuracy,
+    });
+    trackShareClicked({
+      platform: "facebook",
+      contentType: "typing_certificate",
+    });
   };
 
   const shareTwitter = () => {
@@ -820,6 +857,16 @@ export default function TypingTestPage({
       "_blank",
       "noopener,noreferrer",
     );
+    trackCertificateShared({
+      certificateId: certId,
+      platform: "twitter",
+      wpm: finalStats?.wpm,
+      accuracy: finalStats?.accuracy,
+    });
+    trackShareClicked({
+      platform: "twitter",
+      contentType: "typing_certificate",
+    });
   };
 
   const copyShareLink = async () => {
@@ -827,6 +874,10 @@ export default function TypingTestPage({
       await navigator.clipboard.writeText(getShareMessage());
       setShareToastVisible(true);
       setTimeout(() => setShareToastVisible(false), 3000);
+      trackShareClicked({
+        platform: "clipboard",
+        contentType: "typing_certificate",
+      });
     } catch {
       // ignore
     }
@@ -856,6 +907,15 @@ export default function TypingTestPage({
         description="Take a free online typing test, learn touch typing with guided lessons, and track your progress. 1, 3, and 5 minute tests with WPM and accuracy tracking."
         canonicalUrl="https://docmastertools.com/typing-test"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Typing Test",
+            url: "https://docmastertools.com/typing-test",
+          },
+        ]}
       />
       <div className="max-w-3xl mx-auto">
         {/* Back button */}
@@ -1170,6 +1230,11 @@ export default function TypingTestPage({
                           setLeaderboard(updated);
                           saveLeaderboard(updated);
                           setScoreSubmitted(true);
+                          trackLeaderboardSubmission({
+                            wpm: finalStats.wpm,
+                            accuracy: finalStats.accuracy,
+                            playerName: playerName.trim(),
+                          });
                         }}
                         className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 disabled:cursor-not-allowed text-white px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200"
                       >
@@ -1193,6 +1258,13 @@ export default function TypingTestPage({
                       setCertId(newCertId);
                       setShowCertificate(true);
                       setCertName(playerName || "");
+                      if (finalStats) {
+                        trackCertificateGenerated({
+                          certificateId: newCertId,
+                          wpm: finalStats.wpm,
+                          accuracy: finalStats.accuracy,
+                        });
+                      }
                     }}
                     className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-lg font-semibold text-sm transition-all duration-200 flex items-center justify-center gap-2 shadow-lg shadow-blue-500/20"
                   >

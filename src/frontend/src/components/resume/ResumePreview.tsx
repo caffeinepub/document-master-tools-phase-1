@@ -5,6 +5,7 @@ import type { ColorTheme, ResumeData } from "@/types/resume";
 import { Download } from "lucide-react";
 import React from "react";
 import { toast } from "sonner";
+import { trackResumeCreated } from "../../utils/analytics";
 
 interface ResumePreviewProps {
   resumeData: ResumeData;
@@ -27,6 +28,9 @@ const ResumePreview = React.memo(
       setTimeout(() => {
         toast.success("PDF downloaded successfully!");
       }, 2000);
+
+      // GA4: track resume PDF download
+      trackResumeCreated(_templateSlug || "unknown");
     };
 
     const themeStyles = {

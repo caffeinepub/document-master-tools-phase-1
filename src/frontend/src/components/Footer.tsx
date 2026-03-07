@@ -109,6 +109,16 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
               <li>
                 <button
                   type="button"
+                  data-ocid="footer.sitemap.link"
+                  onClick={() => onNavigate("sitemap")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Site Map
+                </button>
+              </li>
+              <li>
+                <button
+                  type="button"
                   onClick={() => onNavigate("contact-us")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >

@@ -1,5 +1,6 @@
 import { ArrowLeft, CheckCircle, Search, ShieldX } from "lucide-react";
 import { useState } from "react";
+import { trackCertificateVerified } from "../utils/analytics";
 
 const CERTIFICATES_KEY = "typingmaster_certificates";
 
@@ -44,6 +45,8 @@ export default function VerifyCertificatePage({
     );
     setResult(found ?? null);
     setSearched(true);
+    // GA4: track certificate verification attempt
+    trackCertificateVerified(inputId.trim().toUpperCase());
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

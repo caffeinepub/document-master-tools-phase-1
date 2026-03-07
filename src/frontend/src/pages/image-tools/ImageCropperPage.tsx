@@ -1,7 +1,7 @@
 import BreadcrumbNavigation from "@/components/BreadcrumbNavigation";
 import FileUploadZone from "@/components/FileUploadZone";
 import SEO from "@/components/SEO";
-import { Download, RefreshCw } from "lucide-react";
+import { ArrowDown, ArrowUp, Download, RefreshCw } from "lucide-react";
 import { useRef, useState } from "react";
 
 interface ImageCropperPageProps {
@@ -32,13 +32,39 @@ export default function ImageCropperPage({
     "jpeg",
   );
   const [isProcessing, setIsProcessing] = useState(false);
+  const [originalSize, setOriginalSize] = useState<number>(0);
+  const [croppedSize, setCroppedSize] = useState<number>(0);
+  const [originalDimensions, setOriginalDimensions] = useState<{
+    w: number;
+    h: number;
+  } | null>(null);
+  const [croppedDimensions, setCroppedDimensions] = useState<{
+    w: number;
+    h: number;
+  } | null>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  const formatSize = (bytes: number) => {
+    if (bytes < 1024) return `${bytes} B`;
+    if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+    return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
+  };
 
   const handleFileSelect = (file: File) => {
     setOriginalFile(file);
+    setOriginalSize(file.size);
     setCroppedUrl(null);
+    setCroppedSize(0);
+    setCroppedDimensions(null);
     const reader = new FileReader();
-    reader.onload = (e) => setOriginalPreview(e.target?.result as string);
+    reader.onload = (e) => {
+      const dataUrl = e.target?.result as string;
+      setOriginalPreview(dataUrl);
+      // Get original dimensions
+      const img = new window.Image();
+      img.onload = () => setOriginalDimensions({ w: img.width, h: img.height });
+      img.src = dataUrl;
+    };
     reader.readAsDataURL(file);
   };
 
@@ -66,6 +92,8 @@ export default function ImageCropperPage({
         canvas.toBlob(
           (blob) => {
             if (blob) {
+              setCroppedSize(blob.size);
+              setCroppedDimensions({ w: Math.round(sw), h: Math.round(sh) });
               const url = URL.createObjectURL(blob);
               setCroppedUrl(url);
             }
@@ -97,7 +125,16 @@ export default function ImageCropperPage({
     setCropY(0);
     setCropWidth(100);
     setCropHeight(100);
+    setOriginalSize(0);
+    setCroppedSize(0);
+    setOriginalDimensions(null);
+    setCroppedDimensions(null);
   };
+
+  const sizeDiff = originalSize - croppedSize;
+  const sizePct =
+    croppedSize > 0 ? Math.round(Math.abs(sizeDiff / originalSize) * 100) : 0;
+  const isReduction = sizeDiff >= 0;
 
   return (
     <div
@@ -177,9 +214,12 @@ export default function ImageCropperPage({
                   <select
                     id="output-format-select"
                     value={outputFormat}
-                    onChange={(e) =>
-                      setOutputFormat(e.target.value as "jpeg" | "png" | "webp")
-                    }
+                    onChange={(e) => {
+                      setOutputFormat(
+                        e.target.value as "jpeg" | "png" | "webp",
+                      );
+                      setCroppedUrl(null);
+                    }}
                     className="w-full bg-gray-800 border border-gray-600 text-white rounded-lg px-3 py-2 text-sm"
                   >
                     <option value="jpeg">JPEG</option>
@@ -202,7 +242,10 @@ export default function ImageCropperPage({
                     min={0}
                     max={90}
                     value={cropX}
-                    onChange={(e) => setCropX(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCropX(Number(e.target.value));
+                      setCroppedUrl(null);
+                    }}
                     className="w-full accent-blue-500"
                   />
                 </div>
@@ -219,7 +262,10 @@ export default function ImageCropperPage({
                     min={0}
                     max={90}
                     value={cropY}
-                    onChange={(e) => setCropY(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCropY(Number(e.target.value));
+                      setCroppedUrl(null);
+                    }}
                     className="w-full accent-blue-500"
                   />
                 </div>
@@ -236,7 +282,10 @@ export default function ImageCropperPage({
                     min={10}
                     max={100}
                     value={cropWidth}
-                    onChange={(e) => setCropWidth(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCropWidth(Number(e.target.value));
+                      setCroppedUrl(null);
+                    }}
                     className="w-full accent-blue-500"
                   />
                 </div>
@@ -253,7 +302,10 @@ export default function ImageCropperPage({
                     min={10}
                     max={100}
                     value={cropHeight}
-                    onChange={(e) => setCropHeight(Number(e.target.value))}
+                    onChange={(e) => {
+                      setCropHeight(Number(e.target.value));
+                      setCroppedUrl(null);
+                    }}
                     className="w-full accent-blue-500"
                   />
                 </div>
@@ -271,7 +323,10 @@ export default function ImageCropperPage({
                   min={10}
                   max={100}
                   value={quality}
-                  onChange={(e) => setQuality(Number(e.target.value))}
+                  onChange={(e) => {
+                    setQuality(Number(e.target.value));
+                    setCroppedUrl(null);
+                  }}
                   className="w-full accent-blue-500"
                 />
               </div>
@@ -302,25 +357,120 @@ export default function ImageCropperPage({
             </div>
 
             {croppedUrl && (
-              <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
-                <h2 className="text-white font-semibold mb-4">
-                  Cropped Result
-                </h2>
-                <div className="text-center mb-4">
-                  <img
-                    src={croppedUrl}
-                    alt="Cropped"
-                    className="max-w-full rounded-lg mx-auto max-h-64 object-contain"
-                  />
+              <>
+                {/* Size Comparison Panel */}
+                <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
+                  <h2 className="text-white font-semibold mb-4 flex items-center gap-2">
+                    <span className="text-blue-400">⚡</span> Size Comparison
+                  </h2>
+                  <div className="grid grid-cols-3 gap-3 mb-4">
+                    <div className="bg-gray-800 rounded-lg p-3 text-center">
+                      <p className="text-gray-500 text-xs mb-1">
+                        Original Size
+                      </p>
+                      <p className="text-white text-sm font-semibold">
+                        {formatSize(originalSize)}
+                      </p>
+                    </div>
+                    <div className="bg-gray-800 rounded-lg p-3 text-center">
+                      <p className="text-gray-500 text-xs mb-1">New Size</p>
+                      <p className="text-green-400 text-sm font-semibold">
+                        {formatSize(croppedSize)}
+                      </p>
+                    </div>
+                    <div className="bg-gray-800 rounded-lg p-3 text-center">
+                      <p className="text-gray-500 text-xs mb-1">Change</p>
+                      <p
+                        className={`text-sm font-semibold flex items-center justify-center gap-1 ${isReduction ? "text-green-400" : "text-red-400"}`}
+                      >
+                        {isReduction ? (
+                          <ArrowDown className="w-3 h-3" />
+                        ) : (
+                          <ArrowUp className="w-3 h-3" />
+                        )}
+                        {sizePct}% {isReduction ? "smaller" : "larger"}
+                      </p>
+                    </div>
+                  </div>
+                  {/* Dimensions Comparison */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {originalDimensions && (
+                      <div className="bg-gray-800 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">
+                          Original Dimensions
+                        </p>
+                        <p className="text-white text-sm font-medium">
+                          {originalDimensions.w} × {originalDimensions.h} px
+                        </p>
+                      </div>
+                    )}
+                    {croppedDimensions && (
+                      <div className="bg-gray-800 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">
+                          Cropped Dimensions
+                        </p>
+                        <p className="text-blue-400 text-sm font-medium">
+                          {croppedDimensions.w} × {croppedDimensions.h} px
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
-                <button
-                  type="button"
-                  onClick={handleDownload}
-                  className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
-                >
-                  <Download className="w-4 h-4" /> Download Cropped Image
-                </button>
-              </div>
+
+                {/* Side-by-Side Preview */}
+                <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700 mb-6">
+                  <h2 className="text-white font-semibold mb-4">
+                    Side-by-Side Preview
+                  </h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-4">
+                    <div className="text-center">
+                      <p className="text-slate-400 text-xs font-medium uppercase tracking-wide mb-2">
+                        Original
+                      </p>
+                      <div className="bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center min-h-[160px] p-2">
+                        <img
+                          src={originalPreview!}
+                          alt="Original"
+                          className="max-w-full rounded object-contain max-h-48"
+                        />
+                      </div>
+                      <p className="text-gray-400 text-xs mt-2">
+                        {formatSize(originalSize)}
+                        {originalDimensions
+                          ? ` · ${originalDimensions.w}×${originalDimensions.h}px`
+                          : ""}
+                      </p>
+                    </div>
+                    <div className="text-center">
+                      <p className="text-slate-400 text-xs font-medium uppercase tracking-wide mb-2">
+                        Cropped
+                      </p>
+                      <div className="bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center min-h-[160px] p-2">
+                        <img
+                          src={croppedUrl}
+                          alt="Cropped"
+                          className="max-w-full rounded object-contain max-h-48"
+                        />
+                      </div>
+                      <p className="text-green-400 text-xs mt-2">
+                        {formatSize(croppedSize)}
+                        {croppedDimensions
+                          ? ` · ${croppedDimensions.w}×${croppedDimensions.h}px`
+                          : ""}
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Download Button — only shown after preview */}
+                  <button
+                    type="button"
+                    onClick={handleDownload}
+                    className="w-full min-h-[48px] px-6 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-md flex items-center justify-center gap-2"
+                  >
+                    <Download className="w-4 h-4" /> Download Cropped Image
+                  </button>
+                </div>
+              </>
             )}
           </>
         )}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export interface FAQItem {
   q: string;
@@ -22,6 +22,19 @@ export default function TypingFAQ({
   howToName = "How to Practice Typing",
 }: TypingFAQProps) {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
+
+  // Dev-only FAQ schema validation guard
+  useEffect(() => {
+    if (process.env.NODE_ENV !== "production") {
+      faqs.forEach((faq, idx) => {
+        if (!faq.q?.trim() || !faq.a?.trim()) {
+          console.warn(
+            `[FAQSchema] Item at index ${idx} has empty question or answer. This may break Google rich results.`,
+          );
+        }
+      });
+    }
+  }, [faqs]);
 
   // Build FAQ JSON-LD
   const faqSchema = {
@@ -64,14 +77,12 @@ export default function TypingFAQ({
       }}
     >
       {/* JSON-LD schemas */}
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe */}
       <script
         type="application/ld+json"
         // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       {howToSchema && (
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe
         <script
           type="application/ld+json"
           // biome-ignore lint/security/noDangerouslySetInnerHtml: JSON-LD structured data is safe

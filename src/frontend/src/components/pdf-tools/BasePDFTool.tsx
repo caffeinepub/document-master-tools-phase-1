@@ -9,6 +9,7 @@ import {
 import { ArrowLeft } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trackPdfToolUsed } from "../../utils/analytics";
 import DownloadSection from "../DownloadSection";
 import FileUploadZone from "../FileUploadZone";
 import ProcessingState from "../ProcessingState";
@@ -52,6 +53,12 @@ export function BasePDFTool({
       const blob = new Blob([new Uint8Array(1024 * 100)], { type: outputType });
       setResult({ blob, name: outputName });
       toast.success("Processing completed!");
+      // GA4: track PDF tool usage
+      trackPdfToolUsed({
+        toolName: title,
+        fileType: file.type || "application/pdf",
+        fileSize: file.size,
+      });
     } catch (_error) {
       toast.error("Processing failed");
     } finally {

@@ -1,15 +1,17 @@
 import {
   AlertCircle,
+  ArrowDown,
+  ArrowUp,
   CheckCircle,
   Download,
   Eye,
-  RotateCcw,
   Upload,
   X,
   Zap,
 } from "lucide-react";
 import type React from "react";
 import { useCallback, useRef, useState } from "react";
+import { trackFileProcessed } from "../utils/analytics";
 
 // ─── Exported types (used by image tool pages) ───────────────────────────────
 
@@ -30,6 +32,7 @@ export interface AdvancedToolShellProps {
   processingFunction: (file: File) => Promise<ProcessingResult>;
   outputFileName?: string;
   maxFileSizeMB?: number;
+  analyticsToolCategory?: string;
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -42,6 +45,7 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
   processingFunction,
   outputFileName,
   maxFileSizeMB = 20,
+  analyticsToolCategory = "image_tools",
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [isDragging, setIsDragging] = useState(false);
@@ -49,6 +53,10 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
   const [result, setResult] = useState<ProcessingResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [downloadTriggered, setDownloadTriggered] = useState(false);
+  const [originalDimensions, setOriginalDimensions] = useState<{
+    w: number;
+    h: number;
+  } | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFile = useCallback(
@@ -61,6 +69,18 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
       setResult(null);
       setError(null);
       setDownloadTriggered(false);
+      setOriginalDimensions(null);
+      // Read original image dimensions
+      if (f.type.startsWith("image/")) {
+        const url = URL.createObjectURL(f);
+        const img = new Image();
+        img.onload = () => {
+          setOriginalDimensions({ w: img.naturalWidth, h: img.naturalHeight });
+          URL.revokeObjectURL(url);
+        };
+        img.onerror = () => URL.revokeObjectURL(url);
+        img.src = url;
+      }
     },
     [maxFileSizeMB],
   );
@@ -91,6 +111,13 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
     try {
       const res = await processingFunction(file);
       setResult(res);
+      // GA4: track file processed
+      trackFileProcessed({
+        toolName: outputFileName?.split("-")[0] ?? "image_tool",
+        toolCategory: analyticsToolCategory,
+        fileType: file.type,
+        fileSize: file.size,
+      });
     } catch (err) {
       setError(
         err instanceof Error
@@ -118,6 +145,7 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
     setResult(null);
     setError(null);
     setDownloadTriggered(false);
+    setOriginalDimensions(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -125,6 +153,16 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
     if (bytes < 1024) return `${bytes} B`;
     if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+  };
+
+  // Parse processed dimensions from metadata (e.g. "1200×800px" or "1200×800")
+  const parseDimensions = (
+    dimStr?: string,
+  ): { w: number; h: number } | null => {
+    if (!dimStr) return null;
+    const match = dimStr.match(/(\d+)[×x](\d+)/);
+    if (!match) return null;
+    return { w: Number(match[1]), h: Number(match[2]) };
   };
 
   return (
@@ -243,52 +281,154 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
         </div>
       )}
 
-      {/* Preview */}
-      {result && (
+      {/* Preview + Size Comparison */}
+      {result && file && (
         <div className="space-y-4">
-          {/* Metadata */}
-          {result.metadata && Object.keys(result.metadata).length > 0 && (
-            <div className="bg-gray-700/30 rounded-xl p-4 border border-gray-600">
-              <h3 className="text-gray-200 font-semibold text-sm mb-3 flex items-center gap-2">
-                <Zap size={16} className="text-blue-400" />
-                Result Details
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
-                {Object.entries(result.metadata).map(([key, value]) => (
-                  <div key={key} className="bg-gray-800 rounded-lg p-3">
-                    <p className="text-gray-500 text-xs mb-1">{key}</p>
-                    <p className="text-gray-200 text-sm font-medium">{value}</p>
-                  </div>
-                ))}
+          {/* Size Comparison Panel */}
+          <div className="bg-gray-700/30 rounded-xl p-4 border border-gray-600">
+            <h3 className="text-gray-200 font-semibold text-sm mb-3 flex items-center gap-2">
+              <Zap size={16} className="text-blue-400" />
+              Size Comparison
+            </h3>
+            <div className="grid grid-cols-3 gap-3 mb-3">
+              {/* Original Size */}
+              <div className="bg-gray-800 rounded-lg p-3 text-center">
+                <p className="text-gray-500 text-xs mb-1">Original Size</p>
+                <p className="text-gray-200 text-sm font-semibold">
+                  {formatSize(file.size)}
+                </p>
+              </div>
+              {/* New Size */}
+              <div className="bg-gray-800 rounded-lg p-3 text-center">
+                <p className="text-gray-500 text-xs mb-1">New Size</p>
+                <p className="text-green-400 text-sm font-semibold">
+                  {formatSize(result.blob.size)}
+                </p>
+              </div>
+              {/* Reduction */}
+              <div className="bg-gray-800 rounded-lg p-3 text-center">
+                <p className="text-gray-500 text-xs mb-1">Change</p>
+                {(() => {
+                  const diff = file.size - result.blob.size;
+                  const pct = Math.round(Math.abs(diff / file.size) * 100);
+                  const isReduction = diff >= 0;
+                  return (
+                    <p
+                      className={`text-sm font-semibold flex items-center justify-center gap-1 ${isReduction ? "text-green-400" : "text-red-400"}`}
+                    >
+                      {isReduction ? (
+                        <ArrowDown size={12} />
+                      ) : (
+                        <ArrowUp size={12} />
+                      )}
+                      {pct}% {isReduction ? "smaller" : "larger"}
+                    </p>
+                  );
+                })()}
               </div>
             </div>
-          )}
+            {/* Dimension Comparison */}
+            {(() => {
+              const processedDim = parseDimensions(result.metadata?.Dimensions);
+              if (!originalDimensions && !processedDim) return null;
+              return (
+                <div className="grid grid-cols-2 gap-3">
+                  {originalDimensions && (
+                    <div className="bg-gray-800 rounded-lg p-3">
+                      <p className="text-gray-500 text-xs mb-1">
+                        Original Dimensions
+                      </p>
+                      <p className="text-gray-200 text-sm font-medium">
+                        {originalDimensions.w} × {originalDimensions.h} px
+                      </p>
+                    </div>
+                  )}
+                  {processedDim && (
+                    <div className="bg-gray-800 rounded-lg p-3">
+                      <p className="text-gray-500 text-xs mb-1">
+                        Processed Dimensions
+                      </p>
+                      <p className="text-blue-400 text-sm font-medium">
+                        {processedDim.w} × {processedDim.h} px
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
 
-          {/* Before / After */}
+          {/* Additional Metadata */}
+          {result.metadata &&
+            Object.keys(result.metadata).filter((k) => k !== "Dimensions")
+              .length > 0 && (
+              <div className="bg-gray-700/30 rounded-xl p-4 border border-gray-600">
+                <h3 className="text-gray-200 font-semibold text-sm mb-3">
+                  Output Details
+                </h3>
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                  {Object.entries(result.metadata)
+                    .filter(([k]) => k !== "Dimensions")
+                    .map(([key, value]) => (
+                      <div key={key} className="bg-gray-800 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">{key}</p>
+                        <p className="text-gray-200 text-sm font-medium">
+                          {value}
+                        </p>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+
+          {/* Before / After Side-by-Side Preview */}
           <div className="bg-gray-700/30 rounded-xl p-4 border border-gray-600">
             <h3 className="text-gray-200 font-semibold text-sm mb-3">
-              Preview
+              Side-by-Side Preview
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <p className="text-gray-400 text-xs mb-2 text-center">
+                <p className="text-gray-400 text-xs mb-2 text-center font-medium uppercase tracking-wide">
                   Original
                 </p>
-                <img
-                  src={file ? URL.createObjectURL(file) : ""}
-                  alt="Original"
-                  className="w-full rounded-lg object-contain max-h-64 bg-gray-800"
-                />
+                <div className="bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center min-h-[180px] p-2">
+                  <img
+                    src={URL.createObjectURL(file)}
+                    alt="Original"
+                    className="max-w-full rounded object-contain max-h-64"
+                  />
+                </div>
+                <p className="text-gray-500 text-xs text-center mt-1">
+                  {formatSize(file.size)}
+                  {originalDimensions
+                    ? ` · ${originalDimensions.w}×${originalDimensions.h}px`
+                    : ""}
+                </p>
               </div>
               <div>
-                <p className="text-gray-400 text-xs mb-2 text-center">
+                <p className="text-gray-400 text-xs mb-2 text-center font-medium uppercase tracking-wide">
                   Processed
                 </p>
-                <img
-                  src={result.previewUrl}
-                  alt="Processed"
-                  className="w-full rounded-lg object-contain max-h-64 bg-gray-800"
-                />
+                <div className="bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center min-h-[180px] p-2">
+                  <img
+                    src={result.previewUrl}
+                    alt="Processed"
+                    className="max-w-full rounded object-contain max-h-64"
+                  />
+                </div>
+                {(() => {
+                  const processedDim = parseDimensions(
+                    result.metadata?.Dimensions,
+                  );
+                  return (
+                    <p className="text-green-400 text-xs text-center mt-1">
+                      {formatSize(result.blob.size)}
+                      {processedDim
+                        ? ` · ${processedDim.w}×${processedDim.h}px`
+                        : ""}
+                    </p>
+                  );
+                })()}
               </div>
             </div>
           </div>

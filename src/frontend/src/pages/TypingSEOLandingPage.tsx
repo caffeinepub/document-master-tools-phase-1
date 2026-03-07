@@ -9,8 +9,27 @@ import TypingInternalLinks from "../components/TypingInternalLinks";
 import TypingProgressPanel from "../components/TypingProgressPanel";
 import { updateTypingProgress } from "../utils/typingProgress";
 
-// ---- Types ----
-type TestDuration = 1 | 3 | 5;
+export interface TypingSEOPageConfig {
+  slug: string;
+  defaultDuration?: number;
+  durations?: number[];
+  title: string;
+  description: string;
+  h1: string;
+  intro: string;
+  whatIsSection: { heading: string; body: string };
+  howItWorks: { heading: string; steps: { title: string; body: string }[] };
+  benefits: { heading: string; items: { title: string; body: string }[] };
+  tips: { heading: string; items: { title: string; body: string }[] };
+  extraContent?: { heading: string; body: string };
+  faqs: FAQItem[];
+  howToSteps: HowToStep[];
+  howToName: string;
+  ctaHeading: string;
+  ctaBody: string;
+}
+
+type TestDuration = number;
 type TestState = "idle" | "running" | "finished";
 
 const SAMPLE_TEXTS = [
@@ -22,141 +41,19 @@ const SAMPLE_TEXTS = [
   "Document processing tools help you work smarter and faster. From converting files to resizing images the right tools make complex tasks simple and quick to complete.",
 ];
 
-const SEO_META: Record<
-  TestDuration,
-  { title: string; description: string; heading: string; intro: string }
-> = {
-  1: {
-    title: "1 Minute Typing Test – Check Your Speed | DocMasterTools",
-    description:
-      "Take the 1 minute typing test to measure your typing speed and accuracy. Practice typing online with DocMasterTools.",
-    heading: "1 Minute Typing Test",
-    intro:
-      "The 1 minute typing test is ideal for a quick speed check. In just 60 seconds, you can measure your current WPM (words per minute) and accuracy, making it perfect for daily practice sessions or warm-up before longer tests.",
-  },
-  3: {
-    title: "3 Minute Typing Test – Test Your WPM | DocMasterTools",
-    description:
-      "Take the 3 minute typing test to measure your typing speed and accuracy. Practice and improve your WPM online with DocMasterTools.",
-    heading: "3 Minute Typing Test",
-    intro:
-      "The 3 minute typing test gives you a balanced challenge — long enough to measure your sustained typing speed and endurance, yet short enough to stay focused throughout. It is the most popular test duration used by professionals to assess real-world typing ability.",
-  },
-  5: {
-    title: "5 Minute Typing Test – Improve Typing Speed | DocMasterTools",
-    description:
-      "Take the 5 minute typing test to measure your long-form typing speed and accuracy. Build stamina and improve your WPM with DocMasterTools.",
-    heading: "5 Minute Typing Test",
-    intro:
-      "The 5 minute typing test is designed for serious typists who want to measure their endurance and consistency over a longer duration. It reflects realistic typing conditions such as writing emails or documents, and is often used in professional typing assessments.",
-  },
-};
-
-const TIPS: { title: string; body: string }[] = [
-  {
-    title: "Focus on Accuracy First",
-    body: "Speed will follow naturally once your fingers learn the correct positions. Prioritise hitting the right keys before trying to type faster.",
-  },
-  {
-    title: "Use All 10 Fingers",
-    body: "Touch typing with all fingers reduces hand movement and significantly increases speed. Start by mastering the home row: A S D F and J K L ;",
-  },
-  {
-    title: "Never Look at the Keyboard",
-    body: "Train yourself to keep your eyes on the screen. Looking down breaks your rhythm and slows you down. Use the raised bumps on F and J to find the home row by feel.",
-  },
-  {
-    title: "Practice Every Day",
-    body: "Even 10–15 minutes of daily practice leads to noticeable improvement within weeks. Consistency matters more than long but infrequent sessions.",
-  },
-  {
-    title: "Relax Your Hands",
-    body: "Tension in your fingers and wrists slows you down. Keep your hands relaxed and your wrists slightly elevated above the keyboard.",
-  },
-  {
-    title: "Review Your Mistakes",
-    body: "After each test, notice which keys you consistently miss. Focus extra practice on those letters, and your overall accuracy will improve quickly.",
-  },
-];
-
-const SEO_FAQS: FAQItem[] = [
-  {
-    q: "What is a good typing speed?",
-    a: "A typing speed of 40–60 WPM is considered average. Professional typists typically achieve 65–75 WPM or more with high accuracy.",
-  },
-  {
-    q: "How is WPM calculated?",
-    a: "WPM is calculated by dividing the total number of words typed by the duration of the test in minutes. Each 5 characters count as one word.",
-  },
-  {
-    q: "How can I improve my typing accuracy?",
-    a: "Slow down slightly, focus on hitting each key correctly, and practice the home row position. Accuracy always comes before speed.",
-  },
-  {
-    q: "Should I take the 1, 3, or 5 minute test?",
-    a: "Start with the 1-minute test for a quick check. Use the 3-minute test for a reliable average. The 5-minute test measures sustained typing endurance.",
-  },
-  {
-    q: "Does practice typing daily help?",
-    a: "Yes. Even 10–15 minutes of daily typing practice leads to measurable improvement in speed and accuracy within a few weeks.",
-  },
-];
-
-const SEO_HOW_TO_STEPS: HowToStep[] = [
-  {
-    name: "Choose your test duration",
-    text: "Select 1, 3, or 5 minutes depending on whether you want a quick check or an endurance test.",
-  },
-  {
-    name: "Click Start Test",
-    text: "Press the Start Test button to begin. The timer will start and the text will be ready to type.",
-  },
-  {
-    name: "Type the displayed text as accurately as possible",
-    text: "Type each word carefully. Character highlighting shows correct (green) and incorrect (red) characters in real time.",
-  },
-  {
-    name: "Review your WPM and accuracy when the timer ends",
-    text: "Your final WPM, accuracy percentage, and mistake count are shown on the results screen.",
-  },
-];
-
-// ---- Component ----
-
-interface TypingTestSEOPageProps {
-  duration: TestDuration;
+interface Props {
+  config: TypingSEOPageConfig;
   onNavigate: (page: string) => void;
-  onBack: () => void;
 }
 
-export default function TypingTestSEOPage({
-  duration,
-  onNavigate,
-}: TypingTestSEOPageProps) {
-  const meta = SEO_META[duration];
-
-  // Update document title and meta description
-  useEffect(() => {
-    document.title = meta.title;
-    let metaDesc = document.querySelector('meta[name="description"]');
-    if (!metaDesc) {
-      metaDesc = document.createElement("meta");
-      metaDesc.setAttribute("name", "description");
-      document.head.appendChild(metaDesc);
-    }
-    metaDesc.setAttribute("content", meta.description);
-    return () => {
-      document.title = "DocMasterTools – Free Document & Utility Tools";
-    };
-  }, [meta]);
-
-  // ---- Typing test state ----
-  const [selectedDuration, setSelectedDuration] =
-    useState<TestDuration>(duration);
+export default function TypingSEOLandingPage({ config, onNavigate }: Props) {
+  const [selectedDuration, setSelectedDuration] = useState<TestDuration>(
+    config.defaultDuration ?? 3,
+  );
   const [testState, setTestState] = useState<TestState>("idle");
   const [sampleText, setSampleText] = useState(SAMPLE_TEXTS[0]);
   const [typed, setTyped] = useState("");
-  const [timeLeft, setTimeLeft] = useState(duration * 60);
+  const [timeLeft, setTimeLeft] = useState((config.defaultDuration ?? 3) * 60);
   const [wpm, setWpm] = useState(0);
   const [accuracy, setAccuracy] = useState(100);
   const [mistakes, setMistakes] = useState(0);
@@ -264,9 +161,7 @@ export default function TypingTestSEOPage({
   const renderColoredText = () =>
     sampleText.split("").map((char, i) => {
       let color = "#94a3b8";
-      if (i < typed.length) {
-        color = typed[i] === char ? "#4ade80" : "#f87171";
-      }
+      if (i < typed.length) color = typed[i] === char ? "#4ade80" : "#f87171";
       return (
         // biome-ignore lint/suspicious/noArrayIndexKey: character-level render requires index key
         <span key={i} style={{ color, transition: "color 0.08s" }}>
@@ -274,6 +169,11 @@ export default function TypingTestSEOPage({
         </span>
       );
     });
+
+  const formatDurationLabel = (d: number) => {
+    if (d < 1) return `${Math.round(d * 60)}s`;
+    return `${d} min`;
+  };
 
   const handleDurationChange = (d: TestDuration) => {
     setSelectedDuration(d);
@@ -285,7 +185,7 @@ export default function TypingTestSEOPage({
     }
   };
 
-  // ---- Styles ----
+  // Styles
   const card: React.CSSProperties = {
     background: "#111827",
     borderRadius: "1rem",
@@ -320,47 +220,51 @@ export default function TypingTestSEOPage({
       }}
     >
       <SEO
-        title={meta.title}
-        description={meta.description}
-        canonicalUrl={`https://docmastertools.com/typing-test-${duration}-minute`}
+        title={config.title}
+        description={config.description}
+        canonicalUrl={`https://docmastertools.com/${config.slug}`}
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
       />
       <BreadcrumbSchema
         items={[
           { name: "Home", url: "https://docmastertools.com/" },
           {
-            name: "Typing Test",
+            name: "Typing Tools",
             url: "https://docmastertools.com/typing-test",
           },
-          {
-            name: `${duration} Minute Typing Test`,
-            url: `https://docmastertools.com/typing-test-${duration}-minute`,
-          },
+          { name: config.h1, url: `https://docmastertools.com/${config.slug}` },
         ]}
       />
-      <div style={{ maxWidth: "820px", margin: "0 auto" }}>
+
+      <div style={{ maxWidth: "860px", margin: "0 auto" }}>
         {/* Page Header */}
         <div style={{ marginBottom: "1.75rem" }}>
           <h1
             style={{
               color: "#ffffff",
-              fontSize: "clamp(1.5rem, 4vw, 2rem)",
+              fontSize: "clamp(1.5rem, 4vw, 2.1rem)",
               fontWeight: 800,
               marginBottom: "0.5rem",
             }}
           >
-            ⌨️ {meta.heading}
+            ⌨️ {config.h1}
           </h1>
           <p style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: 1.7 }}>
-            {meta.intro}
+            {config.intro}
           </p>
         </div>
 
-        {/* Typing Test Card */}
+        {/* What Is Section */}
         <div style={card}>
-          <h2 style={sectionHeading}>Typing Test</h2>
+          <h2 style={sectionHeading}>{config.whatIsSection.heading}</h2>
+          <p style={{ color: "#94a3b8", fontSize: "0.95rem", lineHeight: 1.8 }}>
+            {config.whatIsSection.body}
+          </p>
+        </div>
 
-          {/* Duration selector */}
+        {/* Embedded Typing Widget */}
+        <div style={card}>
+          <h2 style={sectionHeading}>Try the Typing Test Now</h2>
           <div
             style={{
               display: "flex",
@@ -369,11 +273,11 @@ export default function TypingTestSEOPage({
               flexWrap: "wrap",
             }}
           >
-            {([1, 3, 5] as TestDuration[]).map((d) => (
+            {(config.durations ?? [1, 3, 5]).map((d) => (
               <button
                 key={d}
                 type="button"
-                data-ocid={`seo_typing_test.duration_${d}.button`}
+                data-ocid={`${config.slug.replace(/-/g, "_")}.duration_${String(d).replace(".", "_")}.button`}
                 onClick={() => handleDurationChange(d)}
                 style={{
                   background: selectedDuration === d ? "#2563eb" : "#1e293b",
@@ -387,15 +291,13 @@ export default function TypingTestSEOPage({
                   fontWeight: 600,
                   fontSize: "0.9rem",
                   cursor: "pointer",
-                  transition: "all 0.15s",
                 }}
               >
-                {d} min
+                {formatDurationLabel(d)}
               </button>
             ))}
           </div>
 
-          {/* Stats Bar */}
           <div
             style={{
               display: "flex",
@@ -436,7 +338,6 @@ export default function TypingTestSEOPage({
             ))}
           </div>
 
-          {/* Sample Text Display */}
           <div
             style={{
               background: "#1e293b",
@@ -453,7 +354,6 @@ export default function TypingTestSEOPage({
             {renderColoredText()}
           </div>
 
-          {/* Typing Input */}
           {testState === "running" && (
             <textarea
               ref={inputRef}
@@ -461,7 +361,7 @@ export default function TypingTestSEOPage({
               onChange={handleInput}
               rows={3}
               placeholder="Start typing here..."
-              data-ocid="seo_typing_test.textarea"
+              data-ocid={`${config.slug.replace(/-/g, "_")}.textarea`}
               style={{
                 width: "100%",
                 background: "#0f172a",
@@ -479,7 +379,6 @@ export default function TypingTestSEOPage({
             />
           )}
 
-          {/* Result */}
           {testState === "finished" && finalStats && (
             <div
               style={{
@@ -515,12 +414,11 @@ export default function TypingTestSEOPage({
             </div>
           )}
 
-          {/* Action Buttons */}
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
             {testState === "idle" && (
               <button
                 type="button"
-                data-ocid="seo_typing_test.start.primary_button"
+                data-ocid={`${config.slug.replace(/-/g, "_")}.start.primary_button`}
                 onClick={startTest}
                 style={{
                   background: "#2563eb",
@@ -539,7 +437,7 @@ export default function TypingTestSEOPage({
             {testState === "running" && (
               <button
                 type="button"
-                data-ocid="seo_typing_test.stop.secondary_button"
+                data-ocid={`${config.slug.replace(/-/g, "_")}.stop.secondary_button`}
                 onClick={stopTest}
                 style={{
                   background: "#dc2626",
@@ -559,7 +457,7 @@ export default function TypingTestSEOPage({
               <>
                 <button
                   type="button"
-                  data-ocid="seo_typing_test.restart.primary_button"
+                  data-ocid={`${config.slug.replace(/-/g, "_")}.restart.primary_button`}
                   onClick={startTest}
                   style={{
                     background: "#2563eb",
@@ -576,7 +474,7 @@ export default function TypingTestSEOPage({
                 </button>
                 <button
                   type="button"
-                  data-ocid="seo_typing_test.full_test.secondary_button"
+                  data-ocid={`${config.slug.replace(/-/g, "_")}.full_test.secondary_button`}
                   onClick={() => onNavigate("typing-test")}
                   style={{
                     background: "#1e293b",
@@ -589,24 +487,126 @@ export default function TypingTestSEOPage({
                     cursor: "pointer",
                   }}
                 >
-                  Full Typing Test
+                  Full Typing Platform
                 </button>
               </>
             )}
           </div>
         </div>
 
-        {/* Tips Section */}
+        {/* How It Works */}
         <div style={card}>
-          <h2 style={sectionHeading}>Tips to Improve Typing Speed</h2>
+          <h2 style={sectionHeading}>{config.howItWorks.heading}</h2>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
+            {config.howItWorks.steps.map((step, i) => (
+              <div
+                key={step.title}
+                style={{
+                  display: "flex",
+                  gap: "1rem",
+                  alignItems: "flex-start",
+                }}
+              >
+                <div
+                  style={{
+                    background: "#2563eb",
+                    color: "#fff",
+                    borderRadius: "50%",
+                    width: "28px",
+                    height: "28px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontWeight: 700,
+                    fontSize: "0.85rem",
+                    flexShrink: 0,
+                  }}
+                >
+                  {i + 1}
+                </div>
+                <div>
+                  <div
+                    style={{
+                      color: "#e2e8f0",
+                      fontWeight: 700,
+                      fontSize: "0.9rem",
+                      marginBottom: "0.2rem",
+                    }}
+                  >
+                    {step.title}
+                  </div>
+                  <div
+                    style={{
+                      color: "#94a3b8",
+                      fontSize: "0.85rem",
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    {step.body}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Benefits */}
+        <div style={card}>
+          <h2 style={sectionHeading}>{config.benefits.heading}</h2>
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
               gap: "1rem",
             }}
           >
-            {TIPS.map((tip) => (
+            {config.benefits.items.map((item) => (
+              <div
+                key={item.title}
+                style={{
+                  background: "#1e293b",
+                  borderRadius: "0.75rem",
+                  padding: "1rem 1.25rem",
+                  borderLeft: "3px solid #10b981",
+                }}
+              >
+                <div
+                  style={{
+                    color: "#34d399",
+                    fontWeight: 700,
+                    fontSize: "0.9rem",
+                    marginBottom: "0.35rem",
+                  }}
+                >
+                  {item.title}
+                </div>
+                <div
+                  style={{
+                    color: "#94a3b8",
+                    fontSize: "0.85rem",
+                    lineHeight: 1.6,
+                  }}
+                >
+                  {item.body}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Tips */}
+        <div style={card}>
+          <h2 style={sectionHeading}>{config.tips.heading}</h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))",
+              gap: "1rem",
+            }}
+          >
+            {config.tips.items.map((tip) => (
               <div
                 key={tip.title}
                 style={{
@@ -621,7 +621,7 @@ export default function TypingTestSEOPage({
                     color: "#38bdf8",
                     fontWeight: 700,
                     fontSize: "0.9rem",
-                    marginBottom: "0.4rem",
+                    marginBottom: "0.35rem",
                   }}
                 >
                   {tip.title}
@@ -640,20 +640,105 @@ export default function TypingTestSEOPage({
           </div>
         </div>
 
+        {/* Extra Content (optional) */}
+        {config.extraContent && (
+          <div style={card}>
+            <h2 style={sectionHeading}>{config.extraContent.heading}</h2>
+            <p
+              style={{ color: "#94a3b8", fontSize: "0.95rem", lineHeight: 1.8 }}
+            >
+              {config.extraContent.body}
+            </p>
+          </div>
+        )}
+
         {/* Progress Panel */}
         <TypingProgressPanel />
 
-        {/* Internal Links Section */}
+        {/* CTA */}
+        <div
+          style={{
+            ...card,
+            background: "linear-gradient(135deg, #1e3a5f, #0f172a)",
+            border: "1px solid #2563eb",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              color: "#ffffff",
+              fontSize: "1.2rem",
+              fontWeight: 800,
+              marginBottom: "0.5rem",
+            }}
+          >
+            {config.ctaHeading}
+          </h2>
+          <p
+            style={{
+              color: "#94a3b8",
+              fontSize: "0.9rem",
+              marginBottom: "1.25rem",
+            }}
+          >
+            {config.ctaBody}
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: "0.75rem",
+              justifyContent: "center",
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              type="button"
+              data-ocid={`${config.slug.replace(/-/g, "_")}.cta.primary_button`}
+              onClick={() => onNavigate("typing-test")}
+              style={{
+                background: "#2563eb",
+                color: "#fff",
+                border: "none",
+                borderRadius: "0.5rem",
+                padding: "0.75rem 2rem",
+                fontSize: "1rem",
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              Start Typing Test
+            </button>
+            <button
+              type="button"
+              data-ocid={`${config.slug.replace(/-/g, "_")}.cta_games.secondary_button`}
+              onClick={() => onNavigate("typing-games")}
+              style={{
+                background: "#1e293b",
+                color: "#94a3b8",
+                border: "1px solid #334155",
+                borderRadius: "0.5rem",
+                padding: "0.75rem 2rem",
+                fontSize: "1rem",
+                fontWeight: 600,
+                cursor: "pointer",
+              }}
+            >
+              Try Typing Games
+            </button>
+          </div>
+        </div>
+
+        {/* Internal Links */}
         <TypingInternalLinks
           onNavigate={onNavigate}
-          currentPage={`typing-test-${duration}-minute`}
+          currentPage={config.slug}
         />
 
         {/* FAQ */}
         <TypingFAQ
-          faqs={SEO_FAQS}
-          howToSteps={SEO_HOW_TO_STEPS}
-          howToName="How to Take a Typing Speed Test"
+          faqs={config.faqs}
+          howToSteps={config.howToSteps}
+          howToName={config.howToName}
         />
       </div>
     </div>

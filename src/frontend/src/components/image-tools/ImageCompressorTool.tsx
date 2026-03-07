@@ -11,6 +11,7 @@ import { Slider } from "@/components/ui/slider";
 import { ArrowLeft, Minimize2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
+import { trackImageToolUsed } from "../../utils/analytics";
 import DownloadSection from "../DownloadSection";
 import FileUploadZone from "../FileUploadZone";
 import ProcessingState from "../ProcessingState";
@@ -55,6 +56,11 @@ export default function ImageCompressorTool({
         originalSize: file.size,
       });
       toast.success("Image compressed successfully!");
+      trackImageToolUsed({
+        toolName: "image_compressor",
+        fileType: file.type,
+        fileSize: file.size,
+      });
     } catch (_error) {
       toast.error("Failed to compress image");
     } finally {

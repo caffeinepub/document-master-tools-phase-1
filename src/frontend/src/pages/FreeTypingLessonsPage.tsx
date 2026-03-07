@@ -1,4 +1,5 @@
 import { useCallback, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, {
   type FAQItem,
@@ -224,6 +225,15 @@ export default function FreeTypingLessonsPage({
         description="Start learning to type with free beginner typing lessons. Step-by-step lessons for home row, top row, bottom row, common words, and full sentences."
         canonicalUrl="https://docmastertools.com/free-typing-lessons"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Free Typing Lessons",
+            url: "https://docmastertools.com/free-typing-lessons",
+          },
+        ]}
       />
 
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>

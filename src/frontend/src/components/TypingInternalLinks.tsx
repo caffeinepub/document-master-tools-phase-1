@@ -64,6 +64,84 @@ const ALL_LINKS: {
     desc: "Endurance test",
     emoji: "⏱️",
   },
+  {
+    page: "typing-speed-test",
+    label: "Typing Speed Test",
+    desc: "Measure WPM instantly",
+    emoji: "🚀",
+  },
+  {
+    page: "typing-test-online",
+    label: "Typing Test Online",
+    desc: "Browser-based speed test",
+    emoji: "🌐",
+  },
+  {
+    page: "typing-test-free",
+    label: "Free Typing Test",
+    desc: "No signup, no cost",
+    emoji: "🆓",
+  },
+  {
+    page: "check-typing-speed",
+    label: "Check Typing Speed",
+    desc: "Instant WPM checker",
+    emoji: "⚡",
+  },
+  {
+    page: "typing-test-with-certificate",
+    label: "Test with Certificate",
+    desc: "Download proof of speed",
+    emoji: "🏆",
+  },
+  {
+    page: "typing-practice-online",
+    label: "Practice Online",
+    desc: "Structured daily exercises",
+    emoji: "🎯",
+  },
+  {
+    page: "touch-typing-practice",
+    label: "Touch Typing",
+    desc: "10-finger technique",
+    emoji: "🖐️",
+  },
+  {
+    page: "improve-typing-speed",
+    label: "Improve Speed",
+    desc: "Proven methods & tips",
+    emoji: "📈",
+  },
+  {
+    page: "learn-typing-online",
+    label: "Learn Typing",
+    desc: "Beginner to advanced",
+    emoji: "📖",
+  },
+  {
+    page: "typing-test-for-jobs",
+    label: "Test for Jobs",
+    desc: "Government & office prep",
+    emoji: "💼",
+  },
+  {
+    page: "typing-test-30-seconds",
+    label: "30 Second Test",
+    desc: "Quick burst speed check",
+    emoji: "⚡",
+  },
+  {
+    page: "typing-test-2-minute",
+    label: "2 Minute Test",
+    desc: "Balanced WPM benchmark",
+    emoji: "⏱️",
+  },
+  {
+    page: "typing-test-10-minute",
+    label: "10 Minute Test",
+    desc: "Full endurance test",
+    emoji: "🏋️",
+  },
 ];
 
 interface TypingInternalLinksProps {

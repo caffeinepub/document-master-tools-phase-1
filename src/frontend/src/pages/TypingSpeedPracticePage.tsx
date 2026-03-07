@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import BreadcrumbSchema from "../components/BreadcrumbSchema";
 import SEO from "../components/SEO";
 import TypingFAQ, {
   type FAQItem,
@@ -221,6 +222,15 @@ export default function TypingSpeedPracticePage({
         description="Boost your typing speed with targeted speed drills on DocMasterTools. Practice word sprints, speed bursts, and paragraph drills to increase your WPM fast."
         canonicalUrl="https://docmastertools.com/typing-speed-practice"
         ogImage="/assets/generated/docmastertools-logo.dim_540x270.png"
+      />
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", url: "https://docmastertools.com/" },
+          {
+            name: "Typing Speed Practice",
+            url: "https://docmastertools.com/typing-speed-practice",
+          },
+        ]}
       />
 
       <div style={{ maxWidth: "820px", margin: "0 auto" }}>

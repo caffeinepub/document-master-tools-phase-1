@@ -47,6 +47,46 @@ function saveProgress(stats: ProgressStats) {
   }
 }
 
+// ---- Certificate Storage ----
+
+const CERTIFICATES_KEY = "typingmaster_certificates";
+const CERT_COUNTER_KEY = "typingmaster_cert_counter";
+
+export interface CertificateRecord {
+  certificateId: string;
+  name: string;
+  wpm: number;
+  accuracy: number;
+  duration: number;
+  date: string;
+}
+
+function generateCertificateId(): string {
+  try {
+    const year = new Date().getFullYear();
+    const raw = localStorage.getItem(CERT_COUNTER_KEY);
+    const counter = raw ? Number.parseInt(raw, 10) + 1 : 1;
+    localStorage.setItem(CERT_COUNTER_KEY, String(counter));
+    const padded = String(counter).padStart(6, "0");
+    return `DMT-${year}-${padded}`;
+  } catch {
+    return `DMT-${new Date().getFullYear()}-${Date.now().toString().slice(-6)}`;
+  }
+}
+
+function saveCertificate(record: CertificateRecord): void {
+  try {
+    const raw = localStorage.getItem(CERTIFICATES_KEY);
+    const existing: CertificateRecord[] = raw
+      ? (JSON.parse(raw) as CertificateRecord[])
+      : [];
+    existing.push(record);
+    localStorage.setItem(CERTIFICATES_KEY, JSON.stringify(existing));
+  } catch {
+    // ignore
+  }
+}
+
 // ---- Leaderboard ----
 
 const LEADERBOARD_KEY = "typingmaster_leaderboard";
@@ -201,6 +241,7 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
   // --- Certificate state ---
   const [showCertificate, setShowCertificate] = useState(false);
   const [certName, setCertName] = useState("");
+  const [certId, setCertId] = useState("");
   const [shareToastVisible, setShareToastVisible] = useState(false);
   const [showSharePanel, setShowSharePanel] = useState(false);
   const certRef = useRef<HTMLDivElement>(null);
@@ -678,7 +719,12 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
       month: "long",
       year: "numeric",
     });
-    ctx.fillText(`Date: ${dateStr}`, W / 2, 432);
+    ctx.fillText(`Date: ${dateStr}`, W / 2, 418);
+
+    // Certificate ID
+    ctx.fillStyle = "#60a5fa";
+    ctx.font = "bold 13px 'Segoe UI', Arial, sans-serif";
+    ctx.fillText(`Certificate ID: ${certId}`, W / 2, 438);
 
     // Footer line
     ctx.strokeStyle = "rgba(59,130,246,0.3)";
@@ -695,6 +741,20 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
       W / 2,
       476,
     );
+
+    // Save certificate data to localStorage
+    saveCertificate({
+      certificateId: certId,
+      name: certName || "Typist",
+      wpm: finalStats.wpm,
+      accuracy: finalStats.accuracy,
+      duration,
+      date: new Date().toLocaleDateString("en-IN", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+      }),
+    });
 
     // Download
     const link = document.createElement("a");
@@ -1090,6 +1150,8 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                     type="button"
                     data-ocid="certificate.open_modal_button"
                     onClick={() => {
+                      const newCertId = generateCertificateId();
+                      setCertId(newCertId);
                       setShowCertificate(true);
                       setCertName(playerName || "");
                     }}
@@ -1097,6 +1159,27 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                   >
                     <Award className="w-4 h-4" /> Generate Typing Certificate
                   </button>
+                  <a
+                    href="/verify-certificate"
+                    data-ocid="certificate.verify.link"
+                    className="mt-2 w-full flex items-center justify-center gap-1.5 text-blue-400 hover:text-blue-300 text-xs font-medium transition-colors py-1"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="w-3.5 h-3.5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                      <polyline points="22 4 12 14.01 9 11.01" />
+                    </svg>
+                    Verify Certificate
+                  </a>
                 </div>
               </div>
             )}
@@ -1667,8 +1750,8 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                   ))}
                 </div>
 
-                {/* Date */}
-                <p className="text-slate-500 text-xs mb-4">
+                {/* Date and Certificate ID */}
+                <p className="text-slate-500 text-xs mb-1">
                   Date:{" "}
                   {new Date().toLocaleDateString("en-IN", {
                     day: "2-digit",
@@ -1676,6 +1759,11 @@ export default function TypingTestPage({ onBack }: TypingTestPageProps) {
                     year: "numeric",
                   })}
                 </p>
+                {certId && (
+                  <p className="text-blue-400 font-bold text-sm mb-4 tracking-wide">
+                    Certificate ID: {certId}
+                  </p>
+                )}
 
                 {/* Footer */}
                 <div className="border-t border-slate-600 pt-4">

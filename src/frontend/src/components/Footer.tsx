@@ -160,6 +160,16 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   DMCA Policy
                 </button>
               </li>
+              <li>
+                <button
+                  type="button"
+                  data-ocid="footer.verify_certificate.link"
+                  onClick={() => onNavigate("verify-certificate")}
+                  className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
+                >
+                  Verify Certificate
+                </button>
+              </li>
             </ul>
           </div>
 

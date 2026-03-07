@@ -1,23 +1,45 @@
-# Specification
+# DocMasterTools — SEO Typing Test Pages
 
-## Summary
-**Goal:** Audit and fix all existing tools, pages, components, and routing across the DocMasterTools platform to ensure everything works correctly end-to-end without errors.
+## Current State
 
-**Planned changes:**
-- Fix all 16 PDF tool components to correctly use the AdvancedToolShell workflow (settings panel, Apply & Preview, disabled Download until preview, post-download navigation).
-- Fix all image tool pages to ensure file upload, settings controls, Apply & Preview with before/after comparison, and Download flow all work correctly.
-- Fix SmartDocumentFixerPage and its sub-components (BeforeAfterPreviewPanel, AutoPhotoSizeGenerator, AutoFeaturesPanel, ExportOptionsPanel, ProPricingModal) including canvas operations, freemium gating via localStorage, and Pro modal flow.
-- Fix AIDocumentEnhancerPage rendering, login/subscription gate, Pro badge, ProPricingModal pricing (₹399/month, ₹3000/year), and route registration in App.tsx.
-- Fix Resume Builder pages: template grid (14 templates), multi-step form wizard, live preview, color theme selector, PDF download, and localStorage auto-save.
-- Fix App.tsx routing so all routes (calculators, PDF tools, image tools, resume builder, smart-document-fixer, ai-document-enhancer, and language-prefixed variants) resolve correctly with React.lazy and Suspense.
-- Fix Header and LanguageSelector components: all 6 nav links, hamburger mobile menu, 19 languages in dropdown, language switching without reload, RTL for Arabic, and localStorage persistence.
-- Fix BreadcrumbNavigation integration on all non-calculator tool pages with correct hierarchical paths and Schema.org JSON-LD.
-- Fix BackToHomeButton integration on all non-calculator tool pages (top-left above H1, 44×44px tap target).
-- Fix PostDownloadNavigation integration on all image and PDF tool pages (correct hub URLs, full-width on mobile).
-- Fix batch file processing (BatchFileQueue, useBatchProcessor hook, JSZip) on all applicable image and PDF tool pages.
-- Fix CalculatorsPage and all 20 calculator pages for rendering, navigation, and SEO metadata without changing any calculation logic.
-- Fix ImageToolsPage and PDFToolsPage hub pages: all tool cards, PRO badges on Smart Document Fixer and AI Document Enhancer, correct navigation, and AdPlaceholder positions.
-- Fix HomePage: all sections (hero, trust badges, Calculator Hub, PDF Tools, Image Tools, Resume Builder, Pro Tools), PRO badges only on Pro tools, and no changes to the footer.
-- Fix global mobile responsiveness on all non-calculator tool pages (stacked layouts below 768px, full-width buttons with min-height 48px, breadcrumb truncation, batch queue scrolling).
+The app uses a custom SPA routing system (App.tsx `useState`-based navigation). The Typing Test lives at `typing-test` page key in `TypingTestPage.tsx`. A `sitemap.xml` exists in `public/` covering all existing pages. Header and Footer components are already present.
 
-**User-visible outcome:** Every tool, page, and navigation element across the platform works correctly — users can upload files, configure settings, preview results, and download outputs on all PDF tools, image tools, resume builder, and smart/AI document tools, with correct routing, breadcrumbs, mobile layouts, and language switching throughout.
+## Requested Changes (Diff)
+
+### Add
+
+- `TypingTestSEOPage.tsx` — a shared wrapper component that accepts a `duration` prop (1 | 3 | 5) and renders:
+  - SEO meta tags injected via `<Helmet>`-style `document.title` / `<meta>` updates in a `useEffect`
+  - A short description section (above the test) tailored to the specific duration
+  - A self-contained typing test with the correct duration pre-selected; user can change duration manually
+  - A "Tips to Improve Typing Speed" section below the test
+  - An internal links panel linking to `/typing-test`, `/typing-test-1-minute`, `/typing-test-3-minute`, `/typing-test-5-minute`
+  - The same Header and Footer (inherited from App.tsx shell — no duplication needed)
+- Three new page keys in App.tsx: `typing-test-1-minute`, `typing-test-3-minute`, `typing-test-5-minute`
+- `sitemap.xml` updated to include the three new SEO pages and `/typing-test`
+
+### Modify
+
+- `App.tsx` — add three new entries to the `Page` type union and three new `case` blocks rendering `TypingTestSEOPage` with the appropriate `duration` prop
+- `sitemap.xml` — append four new `<url>` entries: `/typing-test`, `/typing-test-1-minute`, `/typing-test-3-minute`, `/typing-test-5-minute`
+
+### Remove
+
+Nothing removed.
+
+## Implementation Plan
+
+1. Create `src/pages/TypingTestSEOPage.tsx`:
+   - Props: `duration: 1 | 3 | 5`, `onNavigate: (page: string) => void`, `onBack: () => void`
+   - Use `useEffect` to set `document.title` and update the `<meta name="description">` tag
+   - Embed a full typing test (reusing logic from `TypingTestPage.tsx`) with `defaultDuration` pre-set
+   - Sections: Hero/description → Typing Test → Tips → Internal Links nav panel
+   - Keep same dark theme inline styles consistent with TypingTestPage
+
+2. Update `App.tsx`:
+   - Add `typing-test-1-minute | typing-test-3-minute | typing-test-5-minute` to `Page` type
+   - Lazy-import `TypingTestSEOPage`
+   - Add three `case` entries in `renderPage()`
+
+3. Update `public/sitemap.xml`:
+   - Add entries for `/typing-test`, `/typing-test-1-minute`, `/typing-test-3-minute`, `/typing-test-5-minute` with `priority 0.9`

@@ -6,6 +6,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Lazy load pages
 const HomePage = React.lazy(() => import("./pages/HomePage"));
 const TypingTestPage = React.lazy(() => import("./pages/TypingTestPage"));
+const TypingTestSEOPage = React.lazy(() => import("./pages/TypingTestSEOPage"));
 
 // Legal pages
 const ContactUsPage = React.lazy(() => import("./pages/ContactUsPage"));
@@ -14,6 +15,9 @@ const PrivacyPolicyPage = React.lazy(() => import("./pages/PrivacyPolicyPage"));
 const DisclaimerPage = React.lazy(() => import("./pages/DisclaimerPage"));
 const TermsOfUsePage = React.lazy(() => import("./pages/TermsOfUsePage"));
 const DMCAPolicyPage = React.lazy(() => import("./pages/DMCAPolicyPage"));
+const VerifyCertificatePage = React.lazy(
+  () => import("./pages/VerifyCertificatePage"),
+);
 const CalculatorsPage = React.lazy(() => import("./pages/CalculatorsPage"));
 const PDFToolsPage = React.lazy(() => import("./pages/PDFToolsPage"));
 const ImageToolsPage = React.lazy(() => import("./pages/ImageToolsPage"));
@@ -190,6 +194,10 @@ type Page =
   | "image-background-remover"
   // typing
   | "typing-test"
+  | "typing-test-1-minute"
+  | "typing-test-3-minute"
+  | "typing-test-5-minute"
+  | "verify-certificate"
   // legal pages
   | "contact-us"
   | "about-us"
@@ -338,6 +346,34 @@ function App() {
 
       case "typing-test":
         return <TypingTestPage onBack={goHome} />;
+
+      case "typing-test-1-minute":
+        return (
+          <TypingTestSEOPage
+            duration={1}
+            onNavigate={navigate}
+            onBack={goHome}
+          />
+        );
+      case "typing-test-3-minute":
+        return (
+          <TypingTestSEOPage
+            duration={3}
+            onNavigate={navigate}
+            onBack={goHome}
+          />
+        );
+      case "typing-test-5-minute":
+        return (
+          <TypingTestSEOPage
+            duration={5}
+            onNavigate={navigate}
+            onBack={goHome}
+          />
+        );
+
+      case "verify-certificate":
+        return <VerifyCertificatePage onBack={goHome} />;
 
       // Legal pages
       case "contact-us":

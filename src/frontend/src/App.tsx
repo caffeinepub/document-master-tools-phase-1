@@ -425,6 +425,12 @@ function App() {
   const goHome = () => navigate("home");
 
   const renderPage = () => {
+    // Handle pdf-tools sub-routes (e.g. "pdf-tools/pdf-to-jpg")
+    if (currentPage.startsWith("pdf-tools/")) {
+      const toolId = currentPage.slice("pdf-tools/".length);
+      return <PDFToolsPage onNavigate={navigate} currentTool={toolId} />;
+    }
+
     switch (currentPage) {
       case "home":
         return <HomePage onNavigate={navigate} />;
@@ -434,6 +440,7 @@ function App() {
         return <CalculatorsPage onNavigate={navigate} onBack={goHome} />;
       case "pdf-tools":
         return <PDFToolsPage onNavigate={navigate} />;
+
       case "image-tools":
         return <ImageToolsPage onNavigate={navigate} />;
       case "resume-builder":

@@ -115,6 +115,10 @@ const CustomImageResizePage: React.FC<{
   const [customWidth, setCustomWidth] = useState<number>(1920);
   const [customHeight, setCustomHeight] = useState<number>(1080);
   const [maintainAspect, setMaintainAspect] = useState(true);
+  // Tracks the locked aspect ratio (height/width) when maintain aspect ratio is on
+  const [lockedAspectRatio, setLockedAspectRatio] = useState<number | null>(
+    null,
+  );
 
   // File Size
   const [fileSizePreset, setFileSizePreset] = useState<number>(500);
@@ -166,9 +170,8 @@ const CustomImageResizePage: React.FC<{
             } else if (activeTab === "dimensions") {
               if (isCustomDim) {
                 targetW = customWidth;
-                targetH = maintainAspect
-                  ? Math.round(customWidth * (origH / origW))
-                  : customHeight;
+                // Use the live customHeight which is already updated by the aspect ratio lock in the UI
+                targetH = customHeight;
               } else {
                 const preset = DIMENSION_PRESETS.find(
                   (p) => p.label === dimPreset,
@@ -306,7 +309,6 @@ const CustomImageResizePage: React.FC<{
       isCustomDim,
       customWidth,
       customHeight,
-      maintainAspect,
       dimPreset,
       fileSizePreset,
       isCustomFileSize,
@@ -451,7 +453,15 @@ const CustomImageResizePage: React.FC<{
                   type="number"
                   min={1}
                   value={customWidth}
-                  onChange={(e) => setCustomWidth(Number(e.target.value))}
+                  onChange={(e) => {
+                    const w = Math.max(1, Number(e.target.value));
+                    setCustomWidth(w);
+                    if (maintainAspect && lockedAspectRatio !== null) {
+                      setCustomHeight(
+                        Math.max(1, Math.round(w * lockedAspectRatio)),
+                      );
+                    }
+                  }}
                   className="bg-gray-700 border-gray-600 text-gray-100"
                 />
               </div>
@@ -461,7 +471,16 @@ const CustomImageResizePage: React.FC<{
                   type="number"
                   min={1}
                   value={customHeight}
-                  onChange={(e) => setCustomHeight(Number(e.target.value))}
+                  onChange={(e) => {
+                    const h = Math.max(1, Number(e.target.value));
+                    setCustomHeight(h);
+                    if (!maintainAspect) {
+                      // When aspect ratio is unlocked, update the lock ratio based on new height
+                      setLockedAspectRatio(
+                        customWidth > 0 ? h / customWidth : null,
+                      );
+                    }
+                  }}
                   disabled={maintainAspect}
                   className="bg-gray-700 border-gray-600 text-gray-100 disabled:opacity-50"
                 />
@@ -472,7 +491,14 @@ const CustomImageResizePage: React.FC<{
             <input
               type="checkbox"
               checked={maintainAspect}
-              onChange={(e) => setMaintainAspect(e.target.checked)}
+              onChange={(e) => {
+                const checked = e.target.checked;
+                setMaintainAspect(checked);
+                if (checked && customWidth > 0 && customHeight > 0) {
+                  // Lock current ratio when enabling
+                  setLockedAspectRatio(customHeight / customWidth);
+                }
+              }}
               className="accent-blue-500"
             />
             <span className="text-gray-200 text-sm">Maintain aspect ratio</span>
@@ -693,7 +719,6 @@ const CustomImageResizePage: React.FC<{
             acceptedFileTypesLabel="Supports JPEG, PNG, WebP, GIF, BMP"
             settingsSlot={settingsSlot}
             processingFunction={processingFunction}
-            outputFileName="resized-image.jpg"
           />
         </div>
       </main>

@@ -10,7 +10,7 @@ import {
   Zap,
 } from "lucide-react";
 import type React from "react";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { trackFileProcessed } from "../utils/analytics";
 
 // ─── Exported types (used by image tool pages) ───────────────────────────────
@@ -57,7 +57,19 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
     w: number;
     h: number;
   } | null>(null);
+  // Stable object URL for the original image preview (avoids memory leaks from inline createObjectURL)
+  const [originalPreviewUrl, setOriginalPreviewUrl] = useState<string | null>(
+    null,
+  );
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Revoke original preview URL when file changes or component unmounts
+  useEffect(() => {
+    return () => {
+      if (originalPreviewUrl) URL.revokeObjectURL(originalPreviewUrl);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [originalPreviewUrl]);
 
   const handleFile = useCallback(
     (f: File) => {
@@ -70,16 +82,24 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
       setError(null);
       setDownloadTriggered(false);
       setOriginalDimensions(null);
-      // Read original image dimensions
+      // Build a stable preview URL for the original image
       if (f.type.startsWith("image/")) {
         const url = URL.createObjectURL(f);
+        setOriginalPreviewUrl((prev) => {
+          if (prev) URL.revokeObjectURL(prev);
+          return url;
+        });
         const img = new Image();
         img.onload = () => {
           setOriginalDimensions({ w: img.naturalWidth, h: img.naturalHeight });
-          URL.revokeObjectURL(url);
         };
-        img.onerror = () => URL.revokeObjectURL(url);
+        img.onerror = () => {};
         img.src = url;
+      } else {
+        setOriginalPreviewUrl((prev) => {
+          if (prev) URL.revokeObjectURL(prev);
+          return null;
+        });
       }
     },
     [maxFileSizeMB],
@@ -146,6 +166,10 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
     setError(null);
     setDownloadTriggered(false);
     setOriginalDimensions(null);
+    setOriginalPreviewUrl((prev) => {
+      if (prev) URL.revokeObjectURL(prev);
+      return null;
+    });
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
@@ -392,11 +416,13 @@ const AdvancedToolShell: React.FC<AdvancedToolShellProps> = ({
                   Original
                 </p>
                 <div className="bg-gray-800 rounded-lg overflow-hidden flex items-center justify-center min-h-[180px] p-2">
-                  <img
-                    src={URL.createObjectURL(file)}
-                    alt="Original"
-                    className="max-w-full rounded object-contain max-h-64"
-                  />
+                  {originalPreviewUrl && (
+                    <img
+                      src={originalPreviewUrl}
+                      alt="Original"
+                      className="max-w-full rounded object-contain max-h-64"
+                    />
+                  )}
                 </div>
                 <p className="text-gray-500 text-xs text-center mt-1">
                   {formatSize(file.size)}

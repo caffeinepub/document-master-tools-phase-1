@@ -1,7 +1,14 @@
-import { Document, HeadingLevel, Packer, Paragraph, TextRun } from "docx";
-import { AlertTriangle, ArrowLeft, Download, FileText, X } from "lucide-react";
+import {
+  AlertTriangle,
+  ArrowLeft,
+  Download,
+  FileText,
+  Table,
+  X,
+} from "lucide-react";
 import * as pdfjs from "pdfjs-dist";
 import { useRef, useState } from "react";
+import * as XLSX from "xlsx";
 import { trackPdfToolUsed } from "../../utils/analytics";
 
 // Set up PDF.js worker
@@ -10,17 +17,39 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
   import.meta.url,
 ).toString();
 
-interface ExtractedPage {
-  pageNum: number;
-  text: string;
+interface ExtractedRow {
+  cells: string[];
 }
 
-export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
+interface ExtractedSheet {
+  pageNum: number;
+  rows: ExtractedRow[];
+  rawText: string;
+}
+
+function parseTextToRows(text: string): ExtractedRow[] {
+  // Try to detect table-like structure from text
+  const lines = text
+    .split(/\n+/)
+    .map((l) => l.trim())
+    .filter((l) => l.length > 0);
+
+  return lines.map((line) => {
+    // Split by 2+ spaces or tab-like gaps
+    const cells = line
+      .split(/\s{2,}|\t/)
+      .map((c) => c.trim())
+      .filter((c) => c.length > 0);
+    return { cells: cells.length > 0 ? cells : [line] };
+  });
+}
+
+export default function PDFToExcelTool({ onBack }: { onBack: () => void }) {
   const [file, setFile] = useState<File | null>(null);
   const [dragging, setDragging] = useState(false);
   const [processing, setProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [extractedPages, setExtractedPages] = useState<ExtractedPage[]>([]);
+  const [sheets, setSheets] = useState<ExtractedSheet[]>([]);
   const [resultBlob, setResultBlob] = useState<Blob | null>(null);
   const [error, setError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -34,7 +63,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
       return;
     }
     setFile(f);
-    setExtractedPages([]);
+    setSheets([]);
     setResultBlob(null);
     setError(null);
   };
@@ -51,74 +80,77 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
     setProcessing(true);
     setProgress(0);
     setError(null);
-    setExtractedPages([]);
+    setSheets([]);
     setResultBlob(null);
 
     try {
       const arrayBuffer = await file.arrayBuffer();
       const pdf = await pdfjs.getDocument({ data: arrayBuffer }).promise;
       const totalPages = pdf.numPages;
-      const pages: ExtractedPage[] = [];
+      const extractedSheets: ExtractedSheet[] = [];
 
       for (let i = 1; i <= totalPages; i++) {
         const page = await pdf.getPage(i);
         const textContent = await page.getTextContent();
-        const pageText = textContent.items
-          .map((item) => ("str" in item ? item.str : ""))
-          .join(" ")
-          .replace(/\s+/g, " ")
-          .trim();
-        pages.push({ pageNum: i, text: pageText });
-        setProgress(Math.round((i / totalPages) * 60));
+
+        // Reconstruct lines using y-coordinates for better table detection
+        const itemsByY: Map<number, string[]> = new Map();
+        for (const item of textContent.items) {
+          if (!("str" in item)) continue;
+          if (!item.str.trim()) continue;
+          const transform = item.transform;
+          const y = Math.round(transform[5]); // y coordinate
+          if (!itemsByY.has(y)) itemsByY.set(y, []);
+          itemsByY.get(y)!.push(item.str);
+        }
+
+        // Sort by y descending (top of page first)
+        const sortedYs = Array.from(itemsByY.keys()).sort((a, b) => b - a);
+        const rawLines = sortedYs.map((y) => itemsByY.get(y)!.join(" "));
+        const rawText = rawLines.join("\n");
+        const rows = parseTextToRows(rawText);
+
+        extractedSheets.push({ pageNum: i, rows, rawText });
+        setProgress(Math.round((i / totalPages) * 70));
       }
 
-      setExtractedPages(pages);
-      setProgress(70);
+      setSheets(extractedSheets);
+      setProgress(80);
 
-      // Build .docx with docx library
-      const docChildren = pages.flatMap((pg, idx) => {
-        const paragraphs: Paragraph[] = [];
-        if (totalPages > 1) {
-          paragraphs.push(
-            new Paragraph({
-              text: `Page ${pg.pageNum}`,
-              heading: HeadingLevel.HEADING_2,
-              spacing: { before: idx === 0 ? 0 : 400, after: 120 },
-            }),
-          );
-        }
-        // Split by double spaces as crude line breaks
-        const lines = pg.text.split(/ {2,}/).filter((l) => l.trim().length > 0);
-        if (lines.length === 0) {
-          paragraphs.push(new Paragraph({ text: "" }));
-        } else {
-          for (const line of lines) {
-            paragraphs.push(
-              new Paragraph({
-                children: [
-                  new TextRun({ text: line, size: 24, font: "Calibri" }),
-                ],
-                spacing: { after: 100 },
-              }),
-            );
-          }
-        }
-        return paragraphs;
+      // Build workbook
+      const workbook = XLSX.utils.book_new();
+
+      for (const sheet of extractedSheets) {
+        const wsData = sheet.rows.map((row) => row.cells);
+        const ws = XLSX.utils.aoa_to_sheet(wsData);
+
+        // Auto column widths
+        const colWidths = wsData.reduce((acc: number[], row) => {
+          row.forEach((cell, i) => {
+            acc[i] = Math.max(acc[i] || 0, String(cell).length + 2);
+          });
+          return acc;
+        }, []);
+        ws["!cols"] = colWidths.map((w) => ({ wch: Math.min(w, 50) }));
+
+        const sheetName =
+          extractedSheets.length > 1 ? `Page ${sheet.pageNum}` : "Sheet1";
+        XLSX.utils.book_append_sheet(workbook, ws, sheetName);
+      }
+
+      setProgress(95);
+      const xlsxData = XLSX.write(workbook, {
+        type: "array",
+        bookType: "xlsx",
       });
-
-      const doc = new Document({
-        sections: [{ children: docChildren }],
-        creator: "DocMasterTools",
-        title: file.name.replace(/\.pdf$/i, ""),
+      const blob = new Blob([xlsxData], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
-
-      setProgress(90);
-      const blob = await Packer.toBlob(doc);
       setResultBlob(blob);
       setProgress(100);
 
       trackPdfToolUsed({
-        toolName: "PDF to Word",
+        toolName: "PDF to Excel",
         fileType: "application/pdf",
         fileSize: file.size,
       });
@@ -137,18 +169,21 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
     const url = URL.createObjectURL(resultBlob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `${file.name.replace(/\.pdf$/i, "")}.docx`;
+    a.download = `${file.name.replace(/\.pdf$/i, "")}.xlsx`;
     a.click();
     URL.revokeObjectURL(url);
   };
 
   const reset = () => {
     setFile(null);
-    setExtractedPages([]);
+    setSheets([]);
     setResultBlob(null);
     setError(null);
     setProgress(0);
   };
+
+  const previewSheet = sheets[0];
+  const previewRows = previewSheet?.rows.slice(0, 8) ?? [];
 
   return (
     <div
@@ -161,7 +196,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
           type="button"
           onClick={onBack}
           className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors duration-200 group"
-          data-ocid="pdf-to-word.link"
+          data-ocid="pdf-to-excel.link"
         >
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
           Back to PDF Tools
@@ -170,10 +205,10 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
-            PDF to Word
+            PDF to Excel
           </h1>
           <p className="text-slate-300">
-            Convert PDF documents to editable Word (.docx) files. Processing
+            Extract tables and text from PDF into Excel (.xlsx). Processing
             happens entirely in your browser.
           </p>
         </div>
@@ -182,10 +217,10 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
         <div className="flex items-start gap-3 bg-yellow-900/30 border border-yellow-700/50 rounded-lg p-4 mb-6">
           <AlertTriangle className="w-5 h-5 text-yellow-400 shrink-0 mt-0.5" />
           <div className="text-sm text-yellow-200">
-            <strong>Conversion limitations:</strong> This tool extracts text
-            from digital PDFs. Scanned documents (image-based PDFs), complex
-            formatting, tables, columns, and fonts may not convert perfectly.
-            The output is plain text in a .docx file.
+            <strong>Conversion limitations:</strong> Text and table-like content
+            is extracted from digital PDFs. Scanned documents, complex merged
+            cells, charts, and embedded images cannot be extracted. Best results
+            are from PDFs with clear tabular data.
           </div>
         </div>
 
@@ -193,7 +228,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
           {/* Upload zone */}
           {!file && !processing && (
             <div
-              className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-colors duration-200 ${dragging ? "border-blue-400 bg-blue-900/20" : "border-gray-600 hover:border-gray-400"}`}
+              className={`border-2 border-dashed rounded-xl p-10 text-center cursor-pointer transition-colors duration-200 ${dragging ? "border-green-400 bg-green-900/20" : "border-gray-600 hover:border-gray-400"}`}
               onDragOver={(e) => {
                 e.preventDefault();
                 setDragging(true);
@@ -208,14 +243,14 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
               // biome-ignore lint/a11y/useSemanticElements: drop zone requires div
               role="button"
               tabIndex={0}
-              data-ocid="pdf-to-word.dropzone"
+              data-ocid="pdf-to-excel.dropzone"
             >
-              <FileText className="w-12 h-12 text-blue-400 mx-auto mb-4" />
+              <Table className="w-12 h-12 text-green-400 mx-auto mb-4" />
               <p className="text-white font-semibold mb-2">
                 Drop your PDF here or click to upload
               </p>
               <p className="text-slate-400 text-sm">
-                Supports PDF files up to 100MB
+                Best results with PDFs containing tables or structured data
               </p>
               <input
                 ref={fileInputRef}
@@ -226,17 +261,17 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
                   const f = e.target.files?.[0];
                   if (f) handleFile(f);
                 }}
-                data-ocid="pdf-to-word.upload_button"
+                data-ocid="pdf-to-excel.upload_button"
               />
             </div>
           )}
 
-          {/* File selected, ready to convert */}
+          {/* File selected */}
           {file && !processing && !resultBlob && (
             <div className="space-y-4">
               <div className="flex items-center justify-between bg-gray-800 rounded-lg p-4">
                 <div className="flex items-center gap-3">
-                  <FileText className="w-8 h-8 text-blue-400 shrink-0" />
+                  <FileText className="w-8 h-8 text-green-400 shrink-0" />
                   <div>
                     <p className="text-white font-medium">{file.name}</p>
                     <p className="text-slate-400 text-sm">
@@ -248,7 +283,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
                   type="button"
                   onClick={reset}
                   className="text-slate-400 hover:text-white transition-colors"
-                  data-ocid="pdf-to-word.delete_button"
+                  data-ocid="pdf-to-excel.delete_button"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -256,7 +291,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
               {error && (
                 <div
                   className="bg-red-900/30 border border-red-700/50 rounded-lg p-3 text-red-300 text-sm"
-                  data-ocid="pdf-to-word.error_state"
+                  data-ocid="pdf-to-excel.error_state"
                 >
                   {error}
                 </div>
@@ -264,10 +299,10 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
               <button
                 type="button"
                 onClick={handleConvert}
-                className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
-                data-ocid="pdf-to-word.primary_button"
+                className="w-full py-3 bg-green-700 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200"
+                data-ocid="pdf-to-excel.primary_button"
               >
-                Convert to Word (.docx)
+                Convert to Excel (.xlsx)
               </button>
             </div>
           )}
@@ -276,15 +311,15 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
           {processing && (
             <div
               className="space-y-4 text-center py-6"
-              data-ocid="pdf-to-word.loading_state"
+              data-ocid="pdf-to-excel.loading_state"
             >
-              <div className="w-12 h-12 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto" />
+              <div className="w-12 h-12 border-4 border-green-600 border-t-transparent rounded-full animate-spin mx-auto" />
               <p className="text-white font-medium">
-                Extracting text from PDF...
+                Extracting data from PDF...
               </p>
               <div className="w-full bg-gray-700 rounded-full h-3">
                 <div
-                  className="bg-blue-600 h-3 rounded-full transition-all duration-300"
+                  className="bg-green-600 h-3 rounded-full transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -293,59 +328,84 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
           )}
 
           {/* Preview + download */}
-          {resultBlob && extractedPages.length > 0 && (
-            <div className="space-y-4" data-ocid="pdf-to-word.success_state">
+          {resultBlob && sheets.length > 0 && (
+            <div className="space-y-4" data-ocid="pdf-to-excel.success_state">
               <div className="flex items-center gap-3 bg-green-900/30 border border-green-700/50 rounded-lg p-4">
                 <div className="w-3 h-3 bg-green-400 rounded-full shrink-0" />
                 <p className="text-green-300 font-medium">
-                  Conversion complete — {extractedPages.length} page
-                  {extractedPages.length !== 1 ? "s" : ""} extracted
+                  Extraction complete — {sheets.length} sheet
+                  {sheets.length !== 1 ? "s" : ""} created
                 </p>
               </div>
 
-              {/* Text preview */}
-              <div>
-                <p className="text-slate-300 text-sm font-medium mb-2">
-                  Extracted text preview:
-                </p>
-                <div className="bg-gray-800 rounded-lg p-4 max-h-64 overflow-y-auto border border-gray-600">
-                  {extractedPages.slice(0, 3).map((pg) => (
-                    <div key={pg.pageNum} className="mb-3">
-                      {extractedPages.length > 1 && (
-                        <p className="text-blue-400 text-xs font-semibold mb-1">
-                          — Page {pg.pageNum} —
-                        </p>
-                      )}
-                      <p className="text-slate-300 text-sm whitespace-pre-wrap leading-relaxed">
-                        {pg.text.slice(0, 500)}
-                        {pg.text.length > 500 ? "…" : ""}
-                      </p>
-                    </div>
-                  ))}
-                  {extractedPages.length > 3 && (
-                    <p className="text-slate-500 text-xs italic mt-2">
-                      ...and {extractedPages.length - 3} more page(s) included
-                      in the download
-                    </p>
-                  )}
+              {/* Table preview */}
+              {previewRows.length > 0 && (
+                <div>
+                  <p className="text-slate-300 text-sm font-medium mb-2">
+                    Data preview (Page 1
+                    {sheets.length > 1
+                      ? `, +${sheets.length - 1} more sheet(s)`
+                      : ""}
+                    ):
+                  </p>
+                  <div className="overflow-x-auto border border-gray-600 rounded-lg">
+                    <table className="w-full text-sm text-left">
+                      <tbody>
+                        {previewRows.map((row, ri) => {
+                          const rowKey = `row-${ri}`;
+                          return (
+                            <tr
+                              key={rowKey}
+                              className={
+                                ri % 2 === 0 ? "bg-gray-800" : "bg-gray-750"
+                              }
+                            >
+                              {row.cells.map((cell, ci) => {
+                                const cellKey = `cell-${ri}-${ci}`;
+                                return (
+                                  <td
+                                    key={cellKey}
+                                    className="px-3 py-2 text-slate-300 border-r border-gray-600 last:border-r-0 max-w-[200px] truncate"
+                                  >
+                                    {cell}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          );
+                        })}
+                        {previewSheet.rows.length > 8 && (
+                          <tr className="bg-gray-800">
+                            <td
+                              colSpan={10}
+                              className="px-3 py-2 text-slate-500 text-xs italic"
+                            >
+                              ...{previewSheet.rows.length - 8} more rows in
+                              download
+                            </td>
+                          </tr>
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
-              </div>
+              )}
 
               <div className="flex gap-3 pt-2">
                 <button
                   type="button"
                   onClick={handleDownload}
-                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
-                  data-ocid="pdf-to-word.secondary_button"
+                  className="flex-1 flex items-center justify-center gap-2 py-3 bg-green-700 hover:bg-green-600 text-white font-semibold rounded-lg transition-colors duration-200"
+                  data-ocid="pdf-to-excel.secondary_button"
                 >
                   <Download className="w-5 h-5" />
-                  Download .docx ({(resultBlob.size / 1024).toFixed(0)} KB)
+                  Download .xlsx ({(resultBlob.size / 1024).toFixed(0)} KB)
                 </button>
                 <button
                   type="button"
                   onClick={reset}
                   className="px-5 py-3 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors duration-200"
-                  data-ocid="pdf-to-word.cancel_button"
+                  data-ocid="pdf-to-excel.cancel_button"
                 >
                   Convert Another
                 </button>
@@ -353,12 +413,12 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
             </div>
           )}
 
-          {/* Error after processing attempt */}
-          {!processing && error && file && (
+          {/* Error after processing */}
+          {!processing && error && file && !resultBlob && (
             <div className="space-y-3 mt-4">
               <div
                 className="bg-red-900/30 border border-red-700/50 rounded-lg p-4 text-red-300 text-sm"
-                data-ocid="pdf-to-word.error_state"
+                data-ocid="pdf-to-excel.error_state"
               >
                 <strong>Error:</strong> {error}
               </div>
@@ -366,7 +426,7 @@ export default function PDFToWordTool({ onBack }: { onBack: () => void }) {
                 type="button"
                 onClick={reset}
                 className="py-2 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
-                data-ocid="pdf-to-word.cancel_button"
+                data-ocid="pdf-to-excel.cancel_button"
               >
                 Try Another File
               </button>

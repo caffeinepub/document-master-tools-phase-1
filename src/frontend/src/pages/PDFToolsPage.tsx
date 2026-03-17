@@ -1,4 +1,19 @@
 import { BasePDFTool } from "@/components/pdf-tools/BasePDFTool";
+import ExcelToPDFTool from "@/components/pdf-tools/ExcelToPDFTool";
+import PDFCompressTool from "@/components/pdf-tools/PDFCompressTool";
+import PDFMergeTool from "@/components/pdf-tools/PDFMergeTool";
+import PDFAddPageNumbersTool from "@/components/pdf-tools/PDFPageNumbersTool";
+import PDFProtectTool from "@/components/pdf-tools/PDFProtectTool";
+import PDFRotateTool from "@/components/pdf-tools/PDFRotateTool";
+import PDFSplitTool from "@/components/pdf-tools/PDFSplitTool";
+import PDFToExcelTool from "@/components/pdf-tools/PDFToExcelTool";
+import PDFToJPGTool from "@/components/pdf-tools/PDFToJPGTool";
+import PDFToPNGTool from "@/components/pdf-tools/PDFToPNGTool";
+import PDFToWordTool from "@/components/pdf-tools/PDFToWordTool";
+import PDFUnlockTool from "@/components/pdf-tools/PDFUnlockTool";
+import PDFWatermarkTool from "@/components/pdf-tools/PDFWatermarkTool";
+import PNGToPDFTool from "@/components/pdf-tools/PNGToPDFTool";
+import WordToPDFTool from "@/components/pdf-tools/WordToPDFTool";
 import {
   ArrowLeft,
   BookOpen,
@@ -224,6 +239,133 @@ export default function PDFToolsPage({
   currentTool,
 }: PDFToolsPageProps) {
   if (currentTool) {
+    const goBack = () => onNavigate("pdf-tools");
+
+    // Specialized tool components
+    if (currentTool === "merge") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFMergeTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "split") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFSplitTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "compress") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFCompressTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "pdf-to-jpg") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFToJPGTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "pdf-to-png") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFToPNGTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "png-to-pdf") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PNGToPDFTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "pdf-to-word") {
+      return <PDFToWordTool onBack={goBack} />;
+    }
+    if (currentTool === "pdf-to-excel") {
+      return <PDFToExcelTool onBack={goBack} />;
+    }
+    if (currentTool === "word-to-pdf") {
+      return <WordToPDFTool onBack={goBack} />;
+    }
+    if (currentTool === "excel-to-pdf") {
+      return <ExcelToPDFTool onBack={goBack} />;
+    }
+    if (currentTool === "rotate") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFRotateTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "watermark") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFWatermarkTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "protect") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFProtectTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "unlock") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFUnlockTool onBack={goBack} />
+        </div>
+      );
+    }
+    if (currentTool === "page-numbers") {
+      return (
+        <div
+          className="min-h-screen py-8 px-4"
+          style={{ background: "linear-gradient(135deg, #0f172a, #1e293b)" }}
+        >
+          <PDFAddPageNumbersTool onBack={goBack} />
+        </div>
+      );
+    }
+
+    // Generic fallback for other tools
     const toolConfig = pdfToolsConfig.find((t) => t.id === currentTool);
     if (toolConfig) {
       return (
@@ -234,7 +376,7 @@ export default function PDFToolsPage({
           <div className="max-w-4xl mx-auto">
             <button
               type="button"
-              onClick={() => onNavigate("pdf-tools")}
+              onClick={goBack}
               className="flex items-center gap-2 text-slate-300 hover:text-white mb-8 transition-colors duration-200 group"
             >
               <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
@@ -248,7 +390,7 @@ export default function PDFToolsPage({
             </div>
             <div className="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-700">
               <BasePDFTool
-                onBack={() => onNavigate("pdf-tools")}
+                onBack={goBack}
                 title={toolConfig.title}
                 description={toolConfig.description}
                 accept={toolConfig.accept}

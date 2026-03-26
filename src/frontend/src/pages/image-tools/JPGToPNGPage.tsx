@@ -16,6 +16,36 @@ import AdvancedToolShell, {
 import BreadcrumbNavigation from "../../components/BreadcrumbNavigation";
 import SEO from "../../components/SEO";
 
+const compressToTargetSize = (
+  canvas: HTMLCanvasElement,
+  mimeType: string,
+  maxBytes: number,
+  startQuality: number,
+): Promise<Blob> => {
+  return new Promise((resolve, reject) => {
+    let q = Math.min(startQuality / 100, 0.92);
+    const minQ = 0.05;
+    const tryCompress = () => {
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) {
+            reject(new Error("Conversion failed"));
+            return;
+          }
+          if (blob.size <= maxBytes || q <= minQ) resolve(blob);
+          else {
+            q = Math.max(minQ, q - 0.08);
+            tryCompress();
+          }
+        },
+        mimeType,
+        q,
+      );
+    };
+    tryCompress();
+  });
+};
+
 const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
   onNavigate,
 }) => {
@@ -30,7 +60,7 @@ const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
       return new Promise((resolve, reject) => {
         const img = new Image();
         const url = URL.createObjectURL(file);
-        img.onload = () => {
+        img.onload = async () => {
           URL.revokeObjectURL(url);
           const canvas = document.createElement("canvas");
           canvas.width = img.naturalWidth;
@@ -40,43 +70,69 @@ const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
             reject(new Error("Canvas not supported"));
             return;
           }
+
+          // PNG supports transparency — don't fill background
           ctx.drawImage(img, 0, 0);
 
           const mimeType = `image/${format}`;
-          const q = format === "webp" ? quality / 100 : undefined;
+          const ext = format === "webp" ? "webp" : "png";
+          const baseName = file.name.replace(/\.[^.]+$/, "");
+          const outputFileName = `${baseName}.${ext}`;
 
-          canvas.toBlob(
-            (blob) => {
-              if (!blob) {
-                reject(new Error("Conversion failed"));
-                return;
-              }
-              const baseName = file.name.replace(/\.[^.]+$/, "");
-              const ext = format === "webp" ? "webp" : "png";
-              const outputFileName = `${baseName}.${ext}`;
-              const previewUrl = URL.createObjectURL(blob);
-              resolve({
-                blob,
-                previewUrl,
-                outputFileName,
-                metadata: {
-                  Format: format.toUpperCase(),
-                  Dimensions: `${img.naturalWidth}×${img.naturalHeight}px`,
-                },
+          try {
+            let blob: Blob;
+            if (targetSizeEnabled) {
+              const maxBytes =
+                targetSizeUnit === "MB"
+                  ? targetSize * 1024 * 1024
+                  : targetSize * 1024;
+              blob = await compressToTargetSize(
+                canvas,
+                mimeType,
+                maxBytes,
+                quality,
+              );
+            } else {
+              const q = format === "webp" ? quality / 100 : undefined;
+              blob = await new Promise<Blob>((res, rej) => {
+                canvas.toBlob(
+                  (b) => (b ? res(b) : rej(new Error("Conversion failed"))),
+                  mimeType,
+                  q,
+                );
               });
-            },
-            mimeType,
-            q,
-          );
+            }
+            const previewUrl = URL.createObjectURL(blob);
+            resolve({
+              blob,
+              previewUrl,
+              outputFileName,
+              metadata: {
+                Format: format.toUpperCase(),
+                Dimensions: `${img.naturalWidth}×${img.naturalHeight}px`,
+                Quality: targetSizeEnabled
+                  ? `Target ≤${targetSize}${targetSizeUnit}`
+                  : format === "webp"
+                    ? `${quality}%`
+                    : "Lossless",
+              },
+            });
+          } catch (err) {
+            reject(err instanceof Error ? err : new Error("Conversion failed"));
+          }
         };
         img.onerror = () => {
           URL.revokeObjectURL(url);
-          reject(new Error("Failed to load image"));
+          reject(
+            new Error(
+              "Failed to load image. File may be corrupted or unsupported.",
+            ),
+          );
         };
         img.src = url;
       });
     },
-    [format, quality],
+    [format, quality, targetSizeEnabled, targetSize, targetSizeUnit],
   );
 
   const settingsSlot = (
@@ -93,8 +149,10 @@ const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
             <SelectValue />
           </SelectTrigger>
           <SelectContent className="bg-gray-800 border-gray-600">
-            <SelectItem value="png">PNG (lossless)</SelectItem>
-            <SelectItem value="webp">WebP (modern)</SelectItem>
+            <SelectItem value="png">
+              PNG (lossless, transparent support)
+            </SelectItem>
+            <SelectItem value="webp">WebP (modern, smaller)</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -133,6 +191,11 @@ const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
           >
             Target File Size (optional)
           </Label>
+          {targetSizeEnabled && (
+            <span className="text-blue-400 text-xs">
+              (auto-adjusts quality)
+            </span>
+          )}
         </div>
         {targetSizeEnabled && (
           <div className="flex gap-2 mt-2">
@@ -191,11 +254,10 @@ const JPGToPNGPage: React.FC<{ onNavigate?: (page: string) => void }> = ({
         <div className="bg-gray-800 rounded-2xl border border-gray-700 p-6">
           <AdvancedToolShell
             toolTitle="JPG to PNG"
-            acceptedFileTypes="image/jpeg,image/jpg"
+            acceptedFileTypes="image/jpeg,image/jpg,image/*"
             acceptedFileTypesLabel="Accepts JPEG/JPG files"
             settingsSlot={settingsSlot}
             processingFunction={processingFunction}
-            outputFileName="converted.png"
           />
         </div>
       </main>

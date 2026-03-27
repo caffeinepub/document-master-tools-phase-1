@@ -196,7 +196,7 @@ export default function PDFUnlockTool({ onBack }: PDFUnlockToolProps) {
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6"
+          className="mb-6 text-slate-200 hover:text-white"
           data-ocid="unlock_pdf.cancel_button"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />

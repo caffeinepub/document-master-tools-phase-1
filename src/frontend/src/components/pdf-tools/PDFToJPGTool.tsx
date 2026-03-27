@@ -138,7 +138,7 @@ export default function PDFToJPGTool({ onBack }: PDFToJPGToolProps) {
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6"
+          className="mb-6 text-slate-200 hover:text-white"
           data-ocid="pdf_to_jpg.back_button"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />

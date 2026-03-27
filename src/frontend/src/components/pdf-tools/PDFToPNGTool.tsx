@@ -137,7 +137,7 @@ export default function PDFToPNGTool({ onBack }: PDFToPNGToolProps) {
         <Button
           variant="ghost"
           onClick={onBack}
-          className="mb-6"
+          className="mb-6 text-slate-200 hover:text-white"
           data-ocid="pdf_to_png.back_button"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />

@@ -4,8 +4,11 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
+import i18n, { SUPPORTED_LANGUAGE_CODES, autoTranslate } from "../i18n";
 
 interface LanguageContextType {
   language: string;
@@ -21,109 +24,76 @@ const LanguageContext = createContext<LanguageContextType>({
   t: (key: string) => key,
 });
 
-const SUPPORTED_LANGUAGES = [
-  "en",
-  "hi",
-  "bn",
-  "ta",
-  "te",
-  "mr",
-  "gu",
-  "kn",
-  "ml",
-  "ur",
-  "ar",
-  "fr",
-  "es",
-  "de",
-  "zh",
-  "pt",
-  "ru",
-  "ja",
-  "id",
-];
 const STORAGE_KEY = "preferred_language";
 
-// Locale cache
-const localeCache: Record<string, Record<string, string>> = {};
-
-async function loadLocale(code: string): Promise<Record<string, string>> {
-  if (localeCache[code]) return localeCache[code];
-  try {
-    const module = await import(`../locales/${code}.json`);
-    localeCache[code] = module.default || module;
-    return localeCache[code];
-  } catch {
-    // fallback to empty
-    localeCache[code] = {};
-    return {};
-  }
-}
-
-function detectBrowserLanguage(): string {
-  try {
-    const nav = navigator as Navigator;
-    const langs = nav.languages || [nav.language];
-    for (const lang of langs) {
-      const code = lang.split("-")[0].toLowerCase();
-      if (SUPPORTED_LANGUAGES.includes(code)) return code;
-    }
-  } catch {
-    // ignore
-  }
-  return "en";
-}
+// Module-level cache for dynamically translated strings
+const dynamicTranslations: Record<string, Record<string, string>> = {};
 
 export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const getInitialLanguage = (): string => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEY);
-      if (stored && SUPPORTED_LANGUAGES.includes(stored)) return stored;
-    } catch {
-      // ignore
-    }
-    return detectBrowserLanguage();
-  };
+  // useTranslation triggers re-renders when i18next language changes
+  const { i18n: i18nInstance } = useTranslation();
+  const language = i18nInstance.language || "en";
 
-  const [language, setLanguageState] = useState<string>(getInitialLanguage);
-  const [translations, setTranslations] = useState<Record<string, string>>({});
+  // Ref to trigger re-render when async translations arrive
+  const [, setRenderTick] = useState(0);
+  const setRenderTickRef = useRef(setRenderTick);
+  setRenderTickRef.current = setRenderTick;
 
-  const applyLanguage = useCallback(async (code: string) => {
-    const locale = await loadLocale(code);
-    setTranslations(locale);
-
-    // Apply RTL for Arabic
-    if (code === "ar") {
-      document.documentElement.dir = "rtl";
-      document.documentElement.lang = "ar";
-    } else {
-      document.documentElement.dir = "ltr";
-      document.documentElement.lang = code;
-    }
-  }, []);
-
+  // Keep html lang and dir in sync
   useEffect(() => {
-    applyLanguage(language);
-  }, [language, applyLanguage]);
+    const onLangChanged = (lng: string) => {
+      const rtlLangs = ["ar", "ur"];
+      document.documentElement.dir = rtlLangs.includes(lng) ? "rtl" : "ltr";
+      document.documentElement.lang = lng;
+    };
+    i18n.on("languageChanged", onLangChanged);
+    onLangChanged(language);
+    return () => i18n.off("languageChanged", onLangChanged);
+  }, [language]);
 
   const setLanguage = useCallback((code: string) => {
-    if (!SUPPORTED_LANGUAGES.includes(code)) return;
-    setLanguageState(code);
+    if (!SUPPORTED_LANGUAGE_CODES.includes(code)) return;
+    i18n.changeLanguage(code);
     try {
       localStorage.setItem(STORAGE_KEY, code);
     } catch {
-      // ignore
+      /* ignore */
     }
   }, []);
 
-  const t = useCallback(
-    (key: string): string => {
-      return translations[key] || key;
-    },
-    [translations],
-  );
+  // Stable function — reads i18n.language at call time, so no deps needed
+  const t = useCallback((key: string): string => {
+    // Try i18next first (handles dot-notation and lazy-loaded locales)
+    const result = i18n.t(key);
+    if (result !== key) return result;
+
+    const lng = i18n.language;
+
+    // Check dynamic auto-translation cache
+    if (dynamicTranslations[lng]?.[key]) {
+      return dynamicTranslations[lng][key];
+    }
+
+    // Fallback to English text for untranslated keys
+    const englishText = i18n.t(key, { lng: "en" });
+    const textToTranslate = englishText !== key ? englishText : key;
+
+    // Fire-and-forget async auto-translation for missing keys
+    if (lng !== "en" && textToTranslate !== key) {
+      autoTranslate(textToTranslate, lng).then((translated) => {
+        if (translated && translated !== textToTranslate) {
+          if (!dynamicTranslations[lng]) dynamicTranslations[lng] = {};
+          dynamicTranslations[lng][key] = translated;
+          setRenderTickRef.current((n) => n + 1);
+        }
+      });
+    }
+
+    return textToTranslate;
+    // biome-ignore lint/correctness/useExhaustiveDependencies: intentionally stable; reads i18n.language at call time
+  }, []);
 
   return (
     <LanguageContext.Provider
@@ -135,5 +105,7 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({
 };
 
 export const useLanguage = () => useContext(LanguageContext);
+
+export const useI18nTranslation = () => useTranslation();
 
 export default LanguageContext;

@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import SEO from "../components/SEO";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface HomePageProps {
   onNavigate: (page: string) => void;
@@ -39,6 +40,7 @@ interface HomePageProps {
 
 export default function HomePage({ onNavigate }: HomePageProps) {
   const [_hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const { t } = useLanguage();
 
   const calculatorCategories = [
     {
@@ -365,13 +367,11 @@ export default function HomePage({ onNavigate }: HomePageProps) {
           </div>
 
           <h1 className="text-3xl md:text-5xl font-bold mb-4 text-white">
-            Welcome to{" "}
-            <span className="text-orange-400">DocMasterTools.com</span>
+            {t("home.hero.heading")}{" "}
+            <span className="text-orange-400">{t("home.hero.brand")}</span>
           </h1>
           <p className="text-lg md:text-xl text-slate-300 mb-8 max-w-3xl mx-auto">
-            Your all-in-one platform for document processing, image tools,
-            calculators, and resume building. Fast, free, and 100% private — all
-            processing happens in your browser.
+            {t("home.hero.tagline")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button
@@ -380,7 +380,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
               <Calculator className="w-5 h-5" />
-              Try Calculators
+              {t("home.buttons.exploreCalculators")}
             </button>
             <button
               type="button"
@@ -388,7 +388,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
               <FileText className="w-5 h-5" />
-              PDF Tools
+              {t("home.buttons.explorePDF")}
             </button>
             <button
               type="button"
@@ -396,7 +396,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg flex items-center gap-2"
             >
               <Image className="w-5 h-5" />
-              Image Tools
+              {t("home.buttons.exploreImage")}
             </button>
           </div>
 
@@ -427,10 +427,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Calculator Hub
+              {t("home.calculatorHub.title")}
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Powerful calculators for academic, financial, and health needs
+              {t("home.calculatorHub.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -489,10 +489,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              PDF Tools
+              {t("home.pdfTools.title")}
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Complete PDF toolkit — merge, split, compress, convert and more
+              {t("home.pdfTools.description")}
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
@@ -525,7 +525,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               onClick={() => onNavigate("pdf-tools")}
               className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
-              View All PDF Tools <ChevronRight className="w-4 h-4" />
+              {t("home.buttons.explorePDF")}{" "}
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -536,11 +537,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Image Tools
+              {t("home.imageTools.title")}
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Resize, compress, convert and enhance images — all free, all
-              private
+              {t("home.imageTools.description")}
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8">
@@ -617,7 +617,8 @@ export default function HomePage({ onNavigate }: HomePageProps) {
               onClick={() => onNavigate("image-tools")}
               className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-200 hover:shadow-lg inline-flex items-center gap-2"
             >
-              View All Image Tools <ChevronRight className="w-4 h-4" />
+              {t("home.imageTools.viewAll")}{" "}
+              <ChevronRight className="w-4 h-4" />
             </button>
           </div>
         </div>
@@ -628,10 +629,10 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <div className="max-w-6xl mx-auto px-4">
           <div className="text-center mb-10">
             <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
-              Resume Builder
+              {t("home.resumeBuilder.title")}
             </h2>
             <p className="text-slate-300 max-w-2xl mx-auto">
-              Create professional resumes with our easy-to-use templates
+              {t("home.resumeBuilder.description")}
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">

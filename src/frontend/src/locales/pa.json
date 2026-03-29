@@ -1,0 +1,84 @@
+{
+  "nav": {
+    "home": "ਘਰ",
+    "calculators": "ਕੈਲਕੁਲੇਟਰ",
+    "pdfTools": "PDF ਟੂਲਜ਼",
+    "imageTools": "ਚਿੱਤਰ ਟੂਲਜ਼",
+    "resumeBuilder": "ਰਿਜ਼ਿਊਮੇ ਬਿਲਡਰ",
+    "privacy": "ਗੋਪਨੀਯਤਾ ਨੀਤੀ",
+    "terms": "ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ",
+    "disclaimer": "ਅਸਵੀਕਰਨ"
+  },
+  "home": {
+    "title": "ਡੌਕੂਮੈਂਟ ਮਾਸਟਰ ਟੂਲਜ਼ - ਮੁਫ਼ਤ ਔਨਲਾਈਨ ਕੈਲਕੁਲੇਟਰ, PDF ਅਤੇ ਚਿੱਤਰ ਟੂਲਜ਼",
+    "description": "DocMasterTools.com ਵਿਦਿਆਰਥੀਆਂ, ਪੇਸ਼ੇਵਰਾਂ ਅਤੇ ਰੋਜ਼ਾਨਾ ਵਰਤੋਂਕਾਰਾਂ ਲਈ 52+ ਮੁਫ਼ਤ ਔਨਲਾਈਨ ਟੂਲਜ਼ ਪੇਸ਼ ਕਰਦਾ ਹੈ।",
+    "hero": {
+      "heading": "ਜੀ ਆਇਆਂ ਨੂੰ",
+      "brand": "DocMasterTools.com",
+      "tagline": "ਤੁਹਾਡਾ ਆਲ-ਇਨ-ਵਨ ਡੌਕੂਮੈਂਟ, ਚਿੱਤਰ ਅਤੇ PDF ਪਲੇਟਫਾਰਮ",
+      "description": "DocMasterTools.com ਤੁਹਾਨੂੰ ਦਸਤਾਵੇਜ਼ਾਂ ਨੂੰ ਆਸਾਨੀ ਨਾਲ ਪ੍ਰਬੰਧਿਤ ਕਰਨ ਵਿੱਚ ਮਦਦ ਕਰਦਾ ਹੈ।",
+      "private": "ਨਿੱਜੀ",
+      "tools": "ਟੂਲਜ਼",
+      "free": "ਹਮੇਸ਼ਾ ਲਈ"
+    },
+    "calculatorHub": {
+      "title": "ਕੈਲਕੁਲੇਟਰ ਹੱਬ",
+      "description": "ਅਕਾਦਮਿਕ, ਵਿੱਤੀ ਅਤੇ ਸਿਹਤ ਲੋੜਾਂ ਲਈ 20 ਕੈਲਕੁਲੇਟਰ",
+      "academic": "ਅਕਾਦਮਿਕ ਕੈਲਕੁਲੇਟਰ",
+      "academicDesc": "ਵਿਦਿਆਰਥੀਆਂ ਲਈ 9 ਕੈਲਕੁਲੇਟਰ",
+      "financial": "ਵਿੱਤੀ ਕੈਲਕੁਲੇਟਰ",
+      "financialDesc": "ਵਿੱਤ ਲਈ 8 ਕੈਲਕੁਲੇਟਰ",
+      "health": "ਸਿਹਤ ਅਤੇ ਆਮ",
+      "healthDesc": "ਸਿਹਤ ਅਤੇ ਸਮੇਂ ਲਈ 4 ਕੈਲਕੁਲੇਟਰ"
+    },
+    "pdfTools": {
+      "title": "PDF ਟੂਲਜ਼",
+      "description": "PDF ਪ੍ਰੋਸੈਸਿੰਗ ਅਤੇ ਕਨਵਰਜ਼ਨ ਲਈ 16 ਟੂਲ"
+    },
+    "imageTools": {
+      "title": "ਚਿੱਤਰ ਟੂਲਜ਼",
+      "description": "ਚਿੱਤਰ ਪ੍ਰੋਸੈਸਿੰਗ ਅਤੇ ਸੰਪਾਦਨ ਲਈ 16 ਟੂਲ",
+      "exploreTitle": "ਸਾਰੇ ਚਿੱਤਰ ਟੂਲਜ਼ ਦੇਖੋ",
+      "exploreDesc": "ਚਿੱਤਰਾਂ ਦਾ ਆਕਾਰ ਬਦਲੋ, ਸੰਕੁਚਿਤ ਕਰੋ, ਬਦਲੋ ਅਤੇ ਸੰਪਾਦਿਤ ਕਰੋ।",
+      "viewAll": "ਸਾਰੇ ਚਿੱਤਰ ਟੂਲਜ਼ ਦੇਖੋ"
+    },
+    "resumeBuilder": {
+      "title": "ਰਿਜ਼ਿਊਮੇ ਬਿਲਡਰ",
+      "description": "ਆਸਾਨੀ ਨਾਲ ਪੇਸ਼ੇਵਰ ਰਿਜ਼ਿਊਮੇ ਬਣਾਓ"
+    },
+    "buttons": {
+      "explorePDF": "PDF ਟੂਲਜ਼ ਦੇਖੋ",
+      "exploreImage": "ਚਿੱਤਰ ਟੂਲਜ਼ ਦੇਖੋ",
+      "exploreCalculators": "ਕੈਲਕੁਲੇਟਰ ਦੇਖੋ"
+    },
+    "appBanner": {
+      "title": "ਸਾਡੀ ਮੋਬਾਈਲ ਐਪ ਪ੍ਰਾਪਤ ਕਰੋ",
+      "description": "ਚੱਲਦੇ-ਫਿਰਦੇ ਸਾਰੇ ਟੂਲਜ਼ ਵਰਤੋ। Android ਅਤੇ iOS ਲਈ ਹੁਣੇ ਡਾਊਨਲੋਡ ਕਰੋ!",
+      "download": "ਐਪ ਡਾਊਨਲੋਡ ਕਰੋ"
+    }
+  },
+  "footer": {
+    "description": "PDF, ਚਿੱਤਰਾਂ ਅਤੇ ਰਿਜ਼ਿਊਮੇ ਲਈ ਪੇਸ਼ੇਵਰ ਦਸਤਾਵੇਜ਼ ਪ੍ਰੋਸੈਸਿੰਗ ਟੂਲਜ਼।",
+    "quickLinks": "ਤੁਰੰਤ ਲਿੰਕ",
+    "legal": "ਕਾਨੂੰਨੀ",
+    "calculatorHub": "ਕੈਲਕੁਲੇਟਰ ਹੱਬ"
+  },
+  "common": {
+    "calculate": "ਗਣਨਾ ਕਰੋ",
+    "download": "ਡਾਊਨਲੋਡ",
+    "upload": "ਅਪਲੋਡ",
+    "clear": "ਸਾਫ਼ ਕਰੋ",
+    "reset": "ਰੀਸੈਟ",
+    "back": "ਵਾਪਸ",
+    "next": "ਅਗਲਾ",
+    "previous": "ਪਿਛਲਾ",
+    "save": "ਸੁਰੱਖਿਅਤ ਕਰੋ",
+    "cancel": "ਰੱਦ ਕਰੋ",
+    "close": "ਬੰਦ ਕਰੋ",
+    "loading": "ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+    "error": "ਗਲਤੀ",
+    "success": "ਸਫਲਤਾ",
+    "tryNow": "ਹੁਣੇ ਅਜ਼ਮਾਓ",
+    "learnMore": "ਹੋਰ ਜਾਣੋ"
+  }
+}

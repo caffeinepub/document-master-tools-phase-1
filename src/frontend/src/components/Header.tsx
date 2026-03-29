@@ -1,6 +1,7 @@
 import { Menu, X } from "lucide-react";
 import type React from "react";
 import { useState } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 import LanguageSelector from "./LanguageSelector";
 
 interface HeaderProps {
@@ -10,6 +11,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const handleHome = () => {
     if (onNavigateHome) onNavigateHome();
@@ -23,10 +25,10 @@ const Header: React.FC<HeaderProps> = ({ onNavigate, onNavigateHome }) => {
   };
 
   const navLinks = [
-    { label: "Calculator Hub", page: "calculators", external: false },
-    { label: "PDF Tools", page: "pdf-tools", external: false },
-    { label: "Image Tools", page: "image-tools", external: false },
-    { label: "Resume Builder", page: "resume-builder", external: false },
+    { label: t("nav.calculators"), page: "calculators", external: false },
+    { label: t("nav.pdfTools"), page: "pdf-tools", external: false },
+    { label: t("nav.imageTools"), page: "image-tools", external: false },
+    { label: t("nav.resumeBuilder"), page: "resume-builder", external: false },
     { label: "JobsIndiaa.com", page: "https://jobsindiaa.com", external: true },
     {
       label: "RJY Total Manpowers",

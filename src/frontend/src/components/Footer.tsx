@@ -1,4 +1,5 @@
 import type React from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface FooterProps {
   onNavigate: (page: string) => void;
@@ -6,6 +7,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
   const currentYear = new Date().getFullYear();
+  const { t } = useLanguage();
   const appId = encodeURIComponent(
     typeof window !== "undefined" ? window.location.hostname : "docmastertools",
   );
@@ -32,7 +34,9 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-bold text-base mb-4">Quick Links</h3>
+            <h3 className="text-white font-bold text-base mb-4">
+              {t("footer.quickLinks")}
+            </h3>
             <ul className="space-y-2">
               <li>
                 <button
@@ -40,7 +44,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate("calculators")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
-                  Calculator Hub
+                  {t("nav.calculators")}
                 </button>
               </li>
               <li>
@@ -49,7 +53,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate("pdf-tools")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
-                  PDF Tools
+                  {t("nav.pdfTools")}
                 </button>
               </li>
               <li>
@@ -58,7 +62,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate("image-tools")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
-                  Image Tools
+                  {t("nav.imageTools")}
                 </button>
               </li>
               <li>
@@ -67,7 +71,7 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
                   onClick={() => onNavigate("resume-builder")}
                   className="text-gray-400 hover:text-orange-400 transition-colors text-sm"
                 >
-                  Resume Builder
+                  {t("nav.resumeBuilder")}
                 </button>
               </li>
               <li>
@@ -104,7 +108,9 @@ const Footer: React.FC<FooterProps> = ({ onNavigate }) => {
 
           {/* Legal */}
           <div>
-            <h3 className="text-white font-bold text-base mb-4">Legal</h3>
+            <h3 className="text-white font-bold text-base mb-4">
+              {t("footer.legal")}
+            </h3>
             <ul className="space-y-2">
               <li>
                 <button

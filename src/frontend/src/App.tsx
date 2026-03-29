@@ -425,13 +425,56 @@ function App() {
   const goHome = () => navigate("home");
 
   const renderPage = () => {
+    // Normalize image-tools/ sub-routes to flat image tool page IDs
+    let effectivePage: string = currentPage;
+    if (effectivePage.startsWith("image-tools/")) {
+      const toolId = effectivePage.slice("image-tools/".length);
+      if (
+        toolId === "ai-document-enhancer" ||
+        toolId === "smart-document-fixer"
+      ) {
+        effectivePage = toolId;
+      } else if (toolId.startsWith("image-")) {
+        effectivePage = toolId; // already has image- prefix (e.g. image-compressor)
+      } else {
+        effectivePage = `image-${toolId}`;
+      }
+    }
+
     // Handle pdf-tools sub-routes (e.g. "pdf-tools/pdf-to-jpg")
-    if (currentPage.startsWith("pdf-tools/")) {
-      const toolId = currentPage.slice("pdf-tools/".length);
+    if (effectivePage.startsWith("pdf-tools/")) {
+      const toolId = effectivePage.slice("pdf-tools/".length);
       return <PDFToolsPage onNavigate={navigate} currentTool={toolId} />;
     }
 
-    switch (currentPage) {
+    // Normalize CalculatorsPage IDs to App.tsx switch case names
+    const calcIdMap: Record<string, string> = {
+      "cgpa-calculator": "calc-cgpa",
+      "sgpa-calculator": "calc-sgpa",
+      "cgpa-to-percentage-converter": "calc-cgpa-to-percentage",
+      "percentage-to-cgpa-converter": "calc-percentage-to-cgpa",
+      "grade-calculator": "calc-grade",
+      "gpa-calculator": "calc-gpa",
+      "marks-percentage-calculator": "calc-marks-percentage",
+      "division-calculator": "calc-division",
+      "gst-calculator": "calc-gst",
+      "emi-calculator": "calc-emi",
+      "loan-calculator": "calc-loan",
+      "compound-interest-calculator": "calc-compound-interest",
+      "simple-interest-calculator": "calc-simple-interest",
+      "discount-calculator": "calc-discount",
+      "profit-loss-calculator": "calc-profit-loss",
+      "salary-hike-calculator": "calc-salary-hike",
+      "bmi-calculator": "calc-bmi",
+      "age-calculator": "calc-age",
+      "date-difference-calculator": "calc-date-difference",
+      "time-duration-calculator": "calc-time-duration",
+    };
+    if (calcIdMap[effectivePage]) {
+      effectivePage = calcIdMap[effectivePage];
+    }
+
+    switch (effectivePage) {
       case "home":
         return <HomePage onNavigate={navigate} />;
       case "sitemap":

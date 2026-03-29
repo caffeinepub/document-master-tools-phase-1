@@ -17,7 +17,11 @@ export default function DiscountCalculatorPage({
   return (
     <main className="py-8 md:py-12">
       <div className="container mx-auto px-4 max-w-4xl">
-        <Button variant="ghost" onClick={onBack} className="mb-6">
+        <Button
+          variant="ghost"
+          onClick={onBack}
+          className="mb-6 text-slate-200 hover:text-white hover:bg-gray-700"
+        >
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Calculators
         </Button>

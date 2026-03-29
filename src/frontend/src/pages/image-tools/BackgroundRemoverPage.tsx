@@ -235,6 +235,13 @@ const BackgroundRemoverPage: React.FC<{
         canonicalUrl="https://docmastertools.com/background-remover"
       />
       <main className="max-w-4xl mx-auto px-4 py-8">
+        <button
+          type="button"
+          onClick={() => onNavigate?.("image-tools")}
+          className="flex items-center gap-2 text-slate-200 hover:text-white mb-6 transition-colors"
+        >
+          ← Back to Image Tools
+        </button>
         <BreadcrumbNavigation
           items={[
             { label: "Home", onClick: () => onNavigate?.("home") },

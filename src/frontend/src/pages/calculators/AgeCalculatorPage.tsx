@@ -71,7 +71,7 @@ export default function AgeCalculatorPage({ onBack }: AgeCalculatorPageProps) {
               <Button
                 variant="ghost"
                 onClick={onBack}
-                className="mb-6 min-h-[44px]"
+                className="mb-6 min-h-[44px] text-slate-200 hover:text-white hover:bg-gray-700"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Calculators

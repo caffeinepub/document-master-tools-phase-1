@@ -1,5 +1,4 @@
 import AdPlaceholder from "@/components/AdPlaceholder";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardDescription,
@@ -135,10 +134,14 @@ export default function CalculatorsPage({
   return (
     <div className="py-8 md:py-12">
       <div className="container mx-auto px-4">
-        <Button variant="ghost" onClick={onBack} className="mb-6 min-h-[44px]">
-          <ArrowLeft className="mr-2 h-4 w-4" />
+        <button
+          type="button"
+          onClick={onBack}
+          className="flex items-center gap-2 text-slate-300 hover:text-white mb-6 transition-colors duration-200 group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform duration-200" />
           Back to Home
-        </Button>
+        </button>
 
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold mb-3">
